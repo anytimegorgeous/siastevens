@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Editor's Letter — A Million Green Flags</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --deep: #0E1A14;
+      --forest: #1C3A28;
+      --sage: #3D6B4F;
+      --sage-mid: #6A9E7A;
+      --sage-pale: #C2D9C8;
+      --cream: #F7F3EC;
+      --warm-white: #FDFAF5;
+      --gold: #B8902A;
+      --gold-pale: #F0E4C0;
+      --ink: #1A1612;
+      --ink-mid: #3D3228;
+      --ink-light: #8A7E72;
+      --rule: rgba(61,107,79,0.25);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'Libre Baskerville', serif;
+      line-height: 1.8;
+      min-height: 100vh;
+    }
+
+    /* ── LETTERHEAD ── */
+    .letterhead {
+      background: var(--deep);
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .letterhead::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(to right, var(--sage), var(--gold), var(--sage));
+    }
+
+    .letterhead-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 40px 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+    @media (max-width: 640px) {
+      .letterhead-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    .pub-house {
+      flex: 1;
+    }
+
+    .pub-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(26px, 4vw, 44px);
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .pub-name span {
+      color: var(--sage-pale);
+      font-style: italic;
+    }
+
+    .pub-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage-mid);
+      margin-bottom: 16px;
+    }
+
+    .pub-address {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      color: #5A7060;
+      line-height: 1.9;
+      letter-spacing: 0.02em;
+    }
+
+    .letterhead-seal {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 2px solid rgba(194,217,200,0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      text-align: center;
+      padding: 12px;
+    }
+
+    .seal-year {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--sage-mid);
+      text-transform: uppercase;
+    }
+
+    .seal-est {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--sage-pale);
+      line-height: 1;
+    }
+
+    .seal-text {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 8px;
+      letter-spacing: 0.12em;
+      color: var(--sage-mid);
+      text-transform: uppercase;
+    }
+
+    /* ── DOCUMENT BAND ── */
+    .doc-band {
+      background: var(--forest);
+      padding: 12px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: none;
+    }
+
+    .doc-band-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sage-pale);
+    }
+
+    .doc-band-date {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      color: var(--sage-mid);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── MAIN BODY ── */
+    .letter-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 40px 80px;
+    }
+
+    @media (max-width: 600px) { .letter-wrap { padding: 0 20px 60px; } }
+
+    /* salutation block */
+    .salutation-block {
+      padding: 52px 0 36px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 44px;
+    }
+
+    .to-line {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 28px;
+    }
+
+    .letter-subject {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 600;
+      line-height: 1.1;
+      color: var(--forest);
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+
+    .letter-subject em {
+      font-style: italic;
+      color: var(--sage);
+    }
+
+    .letter-sub {
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic;
+      font-size: 17px;
+      color: var(--ink-mid);
+      line-height: 1.6;
+      max-width: 680px;
+    }
+
+    /* editor sig at top */
+    .editor-from {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .editor-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--sage-pale), var(--sage));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--deep);
+      flex-shrink: 0;
+    }
+
+    .editor-info-name {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+
+    .editor-info-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      color: var(--sage);
+      letter-spacing: 0.04em;
+    }
+
+    /* body text */
+    .letter-body p {
+      font-size: 17px;
+      line-height: 1.9;
+      color: var(--ink-mid);
+      margin-bottom: 24px;
+    }
+
+    .letter-body p strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    /* drop cap */
+    .letter-body p:first-of-type::first-letter {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 80px;
+      font-weight: 600;
+      float: left;
+      line-height: 0.78;
+      margin-right: 10px;
+      margin-top: 10px;
+      color: var(--forest);
+    }
+
+    /* pull quote — emphatic */
+    .pull {
+      border-top: 3px solid var(--sage);
+      border-bottom: 1px solid var(--rule);
+      padding: 30px 0 28px;
+      margin: 40px 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(20px, 3vw, 28px);
+      font-weight: 400;
+      color: var(--forest);
+      line-height: 1.45;
+    }
+
+    .pull::before {
+      content: '"';
+      font-size: 60px;
+      line-height: 0;
+      vertical-align: -22px;
+      color: var(--sage);
+      margin-right: 4px;
+    }
+
+    /* book passage */
+    .passage {
+      background: var(--warm-white);
+      border-left: 4px solid var(--sage);
+      padding: 24px 28px;
+      margin: 32px 0;
+      position: relative;
+    }
+
+    .passage::before {
+      content: 'FROM THE BOOK';
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sage-mid);
+      display: block;
+      margin-bottom: 14px;
+    }
+
+    .passage-text {
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic;
+      font-size: 16px;
+      color: var(--ink-mid);
+      line-height: 1.8;
+    }
+
+    .passage-cite {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      color: var(--ink-light);
+      letter-spacing: 0.08em;
+      margin-top: 12px;
+    }
+
+    /* section divider */
+    .section-break {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 44px 0 36px;
+    }
+
+    .section-break-line {
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    .section-break-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--sage-mid);
+      white-space: nowrap;
+    }
+
+    /* urgent call-out box */
+    .urgency-box {
+      background: var(--forest);
+      color: #fff;
+      padding: 36px 40px;
+      margin: 44px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .urgency-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--gold), var(--sage-pale));
+    }
+
+    .urgency-box-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage-mid);
+      margin-bottom: 16px;
+    }
+
+    .urgency-box h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(20px, 3vw, 28px);
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+
+    .urgency-box p {
+      font-size: 15px;
+      color: var(--sage-pale);
+      line-height: 1.8;
+    }
+
+    /* stat blocks */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin: 36px 0;
+    }
+
+    @media (max-width: 560px) { .stats-row { grid-template-columns: 1fr; } }
+
+    .stat-block {
+      background: var(--warm-white);
+      padding: 24px 20px;
+      text-align: center;
+      border-top: 3px solid var(--sage);
+    }
+
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      font-weight: 300;
+      color: var(--forest);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      color: var(--ink-light);
+      letter-spacing: 0.08em;
+      line-height: 1.5;
+    }
+
+    /* closing signature block */
+    .closing-block {
+      border-top: 1px solid var(--rule);
+      padding-top: 44px;
+      margin-top: 52px;
+    }
+
+    .closing-salutation {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 17px;
+      color: var(--ink-mid);
+      margin-bottom: 32px;
+    }
+
+    .signature {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--forest);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .sig-name {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: 0.04em;
+    }
+
+    .sig-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      color: var(--sage);
+      letter-spacing: 0.06em;
+      margin-top: 2px;
+    }
+
+    .pub-stamp {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .stamp-bar {
+      width: 48px;
+      height: 3px;
+      background: linear-gradient(to right, var(--sage), var(--gold));
+    }
+
+    .stamp-text {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+
+    /* footer */
+    .letter-footer {
+      background: var(--deep);
+      padding: 24px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-pub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--sage-pale);
+      letter-spacing: 0.04em;
+    }
+
+    .footer-copy {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      color: #3D5A45;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .letter-wrap { animation: riseIn 0.8s ease forwards; }
+  </style>
+</head>
+<body>
+<!-- LETTERHEAD -->
+  <header class="letterhead">
+    <div class="letterhead-inner">
+      <div class="pub-house">
+        <div class="pub-sub">An Editorial Letter From</div>
+        <div class="pub-name">Vessel <span>&amp; Ink Press</span></div>
+        <div class="pub-sub" style="margin-top:4px; margin-bottom:20px;">Publishers of Consequential Books</div>
+        <div class="pub-address">
+          44 West Harbour Lane, Suite 800 &nbsp;·&nbsp; New York, NY 10013<br>
+          <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4623222f3229342f272a0630233535232a2728222f282d6825292b">[email&#160;protected]</a> &nbsp;·&nbsp; vesselandink.com
+        </div>
+      </div>
+      <div class="letterhead-seal">
+        <div class="seal-year">Est.</div>
+        <div class="seal-est">V&amp;I</div>
+        <div class="seal-text">Since 1994</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="doc-band">
+    <div class="doc-band-label">Editorial Review &amp; Publisher's Recommendation</div>
+    <div class="doc-band-date">February 2026 &nbsp;·&nbsp; Confidential</div>
+  </div>
+
+  <!-- LETTER -->
+  <div class="letter-wrap">
+
+    <div class="salutation-block">
+      <div class="to-line">To: Our Readers, Booksellers &amp; Fellow Publishers</div>
+      <h1 class="letter-subject">The Book the World<br>Needs to Read <em>Right Now</em></h1>
+      <p class="letter-sub">An open editorial letter on why <em>A Million Green Flags</em> by Sia Stevens is the most important book about human connection published in a generation — and why we believe it has the power to change the world, one reader at a time.</p>
+      <div class="editor-from">
+        <div class="editor-avatar">JM</div>
+        <div>
+          <div class="editor-info-name">Jonathan Marsh</div>
+          <div class="editor-info-title">Senior Acquisitions Editor, Vessel &amp; Ink Press</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="letter-body">
+
+      <p>I want to tell you about the night I finished reading <em>A Million Green Flags</em> for the first time. It was past midnight. The manuscript had arrived in my inbox two weeks prior from a scout in Seattle, flagged with a single line — "this one is different" — which is, in thirty years of publishing, a phrase I have learned to read with extreme skepticism. I opened it on a Tuesday evening, intending to read the first fifty pages and form an opinion. I finished it at 12:47 in the morning, sitting at my kitchen table, and then I sat there for a while longer, the way you do after something has genuinely shaken you. Not shaken you with information — shaken you with recognition. With the sudden, vertiginous feeling that someone has just described your world with more accuracy than you had managed to yourself.</p>
+
+      <p>That is not something that happens to me often. In this profession, you become — necessarily, defensively — a careful reader. You learn to admire without being moved. You learn to assess without being changed. I am telling you that this book moved me. And I believe, with the kind of conviction I reserve for perhaps four or five books in a career, that it has the capacity to move a great many other people too. Not because it is flawless. But because it is <em>necessary</em>.</p>
+
+      <div class="section-break">
+        <div class="section-break-line"></div>
+        <div class="section-break-label">The World This Book Enters</div>
+        <div class="section-break-line"></div>
+      </div>
+
+      <p>Let me be direct about the world in which this book arrives, because the world matters. In 2023, the United States Surgeon General issued what can only be described as an emergency declaration about loneliness — calling it an epidemic with health consequences comparable to smoking fifteen cigarettes a day. In 2024, studies across twelve countries found that young adults aged 18 to 34, the most digitally connected generation in human history, reported the highest rates of loneliness ever recorded. Dating app usage has more than tripled since 2015. Marriage rates in the Western world have fallen to historic lows. Friendship depth — measured by the number of people a person would turn to in a personal crisis — has been declining steadily for three decades. We are surrounded by more human faces, more human voices, more human data than any generation that has ever lived. And we are, by every measurable indicator, increasingly alone.</p>
+
+      <div class="stats-row">
+        <div class="stat-block">
+          <div class="stat-number">58%</div>
+          <div class="stat-label">of Americans report feeling lonely sometimes or always — US Surgeon General, 2023</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-number">3×</div>
+          <div class="stat-label">increase in dating app usage since 2015, alongside falling rates of lasting relationships</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-number">15</div>
+          <div class="stat-label">cigarettes per day — the health equivalent of chronic loneliness, per Harvard Medical School</div>
+        </div>
+      </div>
+
+      <p>Into this world comes a book that does not wring its hands at these statistics. It does not lecture. It does not produce a five-step framework or a compatibility quiz. It does something far more difficult and far more valuable: it <strong>explains</strong>. It asks the question that none of the thinkpieces and podcasts and TED talks have satisfactorily answered, which is simply: <em>why?</em> Why, with all of our tools and our apps and our self-awareness, are we failing each other at such scale? And then it answers it — methodically, warmly, with humor and philosophy and genuine humanity — in a way that makes you feel not judged but understood. Not broken but repairable.</p>
+
+      <div class="pull">This is not a book about how to find the right person. It is a book about how to become one. That is a rarer and more important thing to write.</div>
+
+      <div class="section-break">
+        <div class="section-break-line"></div>
+        <div class="section-break-label">What Makes This Book Different</div>
+        <div class="section-break-line"></div>
+      </div>
+
+      <p>In thirty years of acquiring books, I have read approximately four hundred manuscripts on the subject of love and relationships. I know the genre's vocabulary. I know its evasions. I know the way most authors in this space reach for the wise-sounding aphorism and then do not quite have the intellectual substance to back it up. What sets <em>A Million Green Flags</em> apart is not that it is more optimistic or more poetic or more emotionally resonant than its peers — though it is all of those things. It is that it has a <strong>thesis</strong>. A real one. A rigorously argued, scientifically grounded, philosophically coherent thesis about why the human capacity for love is not failing but being systematically starved — and what we would need to do, individually and collectively, to feed it again.</p>
+
+      <p>Stevens argues that the human brain evolved four specific superpowers — Memory, Language, Empathy, and Creativity — not for the purposes of building civilizations or achieving ambitions, but specifically for the purpose of building and maintaining deep bonds between people. That these are the precise capacities being most aggressively eroded by the design of modern digital life. And that the loneliness epidemic is therefore not an accident, not a personal failure, not a generational weakness — it is the predictable consequence of a civilization that has systematically underinvested in the very faculties that make us capable of love.</p>
+
+      <div class="passage">
+        <div class="passage-text">"We were never designed to scroll through five hundred faces a week and feel nothing. We were designed to remember one face across fifty years and feel everything. The machine is not broken. It is simply being asked to do something it was never built for."</div>
+        <div class="passage-cite">— A Million Green Flags, Chapter 4</div>
+      </div>
+
+      <p>That is not a self-help insight. That is a civilizational argument. And Stevens makes it with the lightness of a gifted storyteller — through a beloved psychology professor over café croissants, through a millionaire's waterfront party, through a Himalayan monastery and the ruins of Athens and a late-night conversation among women friends — so that by the time you reach the destination you have been traveling the whole time, you arrive at the conclusion feeling not that you have been instructed but that you have <em>discovered</em>.</p>
+
+      <div class="section-break">
+        <div class="section-break-line"></div>
+        <div class="section-break-label">The Chapter That Stopped Me Cold</div>
+        <div class="section-break-line"></div>
+      </div>
+
+      <p>I want to speak about one chapter specifically, because it is the chapter I have returned to most often and the one I believe contains the most important idea in the book. Chapter 34. "Shortcuts." In it, Stevens is walking through Seattle and encounters a young man on the street — homeless, hollowed out, holding a cardboard sign — and finds herself not pitying him but recognizing him. Recognizing in his compulsive return to a substance that destroys him the exact mirror of her own compulsive return to a relationship that destroyed her. And from that recognition she extracts an idea that I have not been able to stop thinking about since I first read it.</p>
+
+      <p>We are not addicted to drugs, she writes. We are not addicted to people. We are addicted to <strong>shortcuts</strong>. To the bypass of effort. To the dopamine hit that arrives without the slow labor of earning it. And modern romantic life — swiping, ghosting, the frictionless replacement of depth with novelty — is the same addiction wearing a socially respectable mask. We have not become bad at love. We have become addicted to everything that feels like love without requiring us to do the work that love actually demands.</p>
+
+      <div class="passage">
+        <div class="passage-text">"We are the most distracted generation in history, living in a time designed to profit from our distraction. The apps that promise connection are engineered to prevent it. The platforms that sell us community are built on the business model of loneliness. They need us to keep scrolling. A person who has found real love does not scroll."</div>
+        <div class="passage-cite">— A Million Green Flags, Chapter 34</div>
+      </div>
+
+      <p>That is not a comfortable idea. It is not designed to make you feel better about yourself. It is designed to make you see clearly — and then, having seen clearly, to choose differently. That is the highest function a book can serve, and it is the function this one most consistently delivers.</p>
+
+      <div class="urgency-box">
+        <div class="urgency-box-label">Why This Book, Why Now</div>
+        <h3>We Are Publishing This Book Because We Believe Some Books Are Not Optional</h3>
+        <p>There are books we publish because they are good. There are books we publish because they will sell. And there are — rarely, maybe twice in a decade — books we publish because we believe the world is measurably worse without them. <em>A Million Green Flags</em> is the third kind. The loneliness epidemic is not a metaphor. It is a documented public health crisis. And this book is the most human, most readable, most genuinely hopeful response to that crisis we have encountered. It will not fix the world alone. But it will change the reader who reads it. And readers who are changed change rooms. And rooms change buildings. And buildings, eventually, change cities. That is how it has always worked. That is why books matter. That is why this one does.</p>
+      </div>
+
+      <div class="section-break">
+        <div class="section-break-line"></div>
+        <div class="section-break-label">On the Writing Itself</div>
+        <div class="section-break-line"></div>
+      </div>
+
+      <p>I would be failing in my duty as an editor if I did not speak to the quality of the prose, because the argument alone does not explain why this book is a pleasure to read. Stevens is a natural writer in the most specific sense of that phrase — she has a voice. Not a cultivated voice, not an imitated voice, but a voice that is recognizably, irreducibly hers. It is warm and precise and occasionally very funny. There is a scene in a university library where the narrator and a brilliant, burned-out scientist friend systematically dismantle Myers-Briggs compatibility, love languages, and the entire podcast-psychology industrial complex with the affectionate savagery of two people who have thought seriously about these things and found them wanting. I laughed twice in that chapter. Genuinely laughed, the way you do when someone says exactly the thing you had been failing to articulate.</p>
+
+      <p>She is also a writer who knows how to use beauty. The opening image — two birds in a garden, one singing, one simply choosing to listen — is a metaphor that unfolds slowly across the book's entire length, and by the time it returns in the closing pages it carries three hundred pages of accumulated meaning. The Greece section is written with the warmth of someone who has actually stood in olive groves and felt the sun on old stone. The monastery section is serene in the way serene things are when they are earned rather than described. And the final speech — delivered to an auditorium full of women who came expecting an evening about red flags and received instead a full reckoning with what modern love has cost them — is the kind of writing that makes readers feel they were in the room.</p>
+
+      <div class="pull">She writes the way the best teachers teach — making you feel that the discovery was yours all along, that she only asked the right question at the right moment.</div>
+
+      <div class="section-break">
+        <div class="section-break-line"></div>
+        <div class="section-break-label">Who Needs This Book</div>
+        <div class="section-break-line"></div>
+      </div>
+
+      <p>The honest answer is: everyone. But let me be more useful than that. This book is essential for anyone who has swiped through a hundred faces and felt lonelier afterward. For anyone who has left a relationship and wondered not just why it ended but why they keep ending. For anyone who is in a long relationship and has felt the unsettling sensation of being together and still somehow apart. For anyone who has a friend or a child or a sibling they are watching drift — into screens, into emotional distance, into the effortless anesthesia of constant entertainment — and cannot find the words to describe what they are losing.</p>
+
+      <p>But I also want to say this directly: this book is important for people who think they do not need it. The people who are fine. The people who are managing. The people who have convinced themselves that independence is the same as wholeness. The people who have optimized their lives for comfort and efficiency and somehow arrived at a life in which nobody really knows them. This book will not accuse them of anything. It will simply hold up a mirror — gently, warmly, with enormous generosity — and let them decide what they see.</p>
+
+      <p>Stevens has written something that belongs in the same conversation as the greatest works on human connection of our time. It is not a perfect book. No book that reaches this far ever is. But it is a book that reaches — and in reaching, touches something true. Something the reader needed touched. Something many readers did not even know was there until the book found it.</p>
+
+      <p>We are proud to publish it. We are more proud to send it into the world. And we believe — with the kind of conviction you are allowed to feel only once or twice in a career — that the world it enters will be a little different for its having arrived.</p>
+
+      <p>Please read it. Then give it to someone you love.</p>
+
+    </div>
+
+    <!-- CLOSING -->
+    <div class="closing-block">
+      <p class="closing-salutation">With conviction and without reservation,</p>
+      <div class="signature">Jonathan Marsh</div>
+      <div class="sig-name">Jonathan Marsh</div>
+      <div class="sig-title">Senior Acquisitions Editor &nbsp;·&nbsp; Vessel &amp; Ink Press &nbsp;·&nbsp; New York</div>
+      <div class="pub-stamp">
+        <div class="stamp-bar"></div>
+        <div class="stamp-text">Vessel &amp; Ink Press &nbsp;·&nbsp; Publishers of Consequential Books &nbsp;·&nbsp; New York &nbsp;·&nbsp; Est. 1994</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="letter-footer">
+    <div class="footer-pub">Vessel &amp; Ink Press</div>
+    <div class="footer-copy">© 2026 Vessel &amp; I

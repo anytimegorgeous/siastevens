@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sia Stevens | A Million Green Flags — How to Build Lasting Relationships in the Digital Era</title>
+  <meta name="description" content="A Million Green Flags by Sia Stevens. An original framework for understanding attraction, connection, and lasting love — grounded in evolutionary psychology, neuroscience, and behavioral economics.">
+  <meta property="og:title" content="A Million Green Flags — Sia Stevens">
+  <meta property="og:description" content="How to Build Lasting Relationships in the Digital Era">
+  <meta property="og:image" content="images/book-cover.jpg">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Josefin+Sans:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white: #FFFFFF;
+      --off-white: #FDFAFA;
+      --cream: #FFFCEC;
+      --charcoal: #2F2E2E;
+      --text: #2F2E2E;
+      --text-mid: #5C5A51;
+      --text-muted: #ADAA9A;
+      --border: #D8D8D8;
+      --gray: #727272;
+      --light-gray: #B0B0B0;
+      --teal: #39575A;
+      --teal-dark: #1D2C2D;
+      --red: #ED1C24;
+      --green: #27ae60;
+      --heading: 'Josefin Sans', 'Arial Black', sans-serif;
+      --body: 'Poppins', 'Helvetica Neue', sans-serif;
+      --serif: 'Playfair Display', 'Times New Roman', serif;
+      --light: 'Poppins', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--white);
+      color: var(--text);
+      font-family: var(--body);
+      font-size: 15px; line-height: 1.6; font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ═══ GRADIENT DIVIDER ═══ */
+    .gradient-divider {
+      height: 2px;
+      background: linear-gradient(90deg, var(--red), #e8a030 30%, #c4b840 50%, #6fb84a 70%, var(--green));
+      opacity: 0.6;
+    }
+
+    /* ═══ NAV ADDITIONS ═══ */
+    .nav-right { display: flex; align-items: center; gap: 14px; }
+    .nav-order {
+      padding: 8px 18px; background: var(--charcoal); color: var(--white);
+      font-family: var(--heading); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      transition: opacity 0.2s; border-radius: 1px;
+    }
+    .nav-order:hover { opacity: 0.8; }
+
+    /* ═══ FLOATING CTA ═══ */
+    .floating-cta {
+      position: fixed; bottom: 28px; right: 28px; z-index: 999;
+      padding: 14px 28px;
+      background: linear-gradient(135deg, var(--red), var(--green));
+      color: var(--white);
+      font-family: var(--heading); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+      transition: all 0.4s ease; border-radius: 2px;
+      opacity: 0; transform: translateY(20px); pointer-events: none;
+    }
+    .floating-cta.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .floating-cta:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.3); transform: translateY(-2px); }
+
+    /* ═══ NAV ═══ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(20px, 4vw, 48px); height: 60px;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      transition: box-shadow 0.3s;
+    }
+    .nav.scrolled { box-shadow: 0 1px 12px rgba(0,0,0,0.06); }
+    .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+    .nav-links a {
+      font-family: var(--body); font-size: 13px; font-weight: 400;
+      color: var(--text-mid); letter-spacing: 0.02em; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--charcoal); }
+    .nav-icons { display: flex; gap: 10px; }
+    .nav-icons a {
+      width: 26px; height: 26px; border-radius: 50%; background: var(--charcoal);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white); font-size: 11px; transition: opacity 0.2s;
+    }
+    .nav-icons a:hover { opacity: 0.7; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+    .hamburger span { width: 20px; height: 1.5px; background: var(--charcoal); }
+
+    /* ═══ HERO ═══ */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .hero-bg { position: absolute; inset: 0; background: url('images/banner.png') center/cover no-repeat; }
+    .hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.32); }
+    .hero-inner {
+      position: relative; z-index: 2;
+      display: flex; align-items: center;
+      gap: clamp(36px, 5vw, 70px);
+      max-width: 1060px; padding: 100px clamp(20px, 4vw, 48px) 60px; width: 100%;
+    }
+    .hero-text { flex: 1; text-align: center; }
+    .hero-kicker {
+      font-family: var(--heading); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(253,250,250,0.6); margin-bottom: 16px;
+      opacity: 0; animation: fadeUp 0.6s 0.15s ease forwards;
+    }
+    .hero-name {
+      font-family: var(--heading);
+      font-size: clamp(42px, 7vw, 73px); font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--off-white); line-height: 1.1; margin-bottom: 18px;
+      opacity: 0; animation: fadeUp 0.6s 0.3s ease forwards;
+    }
+    .hero-name a { color: var(--off-white); }
+    .hero-book-title {
+      font-family: var(--serif);
+      font-size: clamp(20px, 2.8vw, 33px); font-weight: 400;
+      color: var(--off-white); margin-bottom: 8px;
+      opacity: 0; animation: fadeUp 0.6s 0.4s ease forwards;
+    }
+    .hero-sub {
+      font-family: var(--heading);
+      font-size: clamp(9px, 1.2vw, 11px); font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(253,250,250,0.7); margin-bottom: 6px;
+      opacity: 0; animation: fadeUp 0.6s 0.45s ease forwards;
+    }
+    .hero-release {
+      font-family: var(--light); font-size: 11px; font-weight: 300;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(253,250,250,0.55); margin-bottom: 30px;
+      opacity: 0; animation: fadeUp 0.6s 0.5s ease forwards;
+    }
+    .hero-btn {
+      display: inline-block; padding: 14px 42px;
+      border: 2px solid var(--off-white); color: var(--off-white);
+      font-family: var(--heading); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      transition: all 0.3s;
+      opacity: 0; animation: fadeUp 0.6s 0.6s ease forwards;
+    }
+    .hero-btn:hover { background: var(--off-white); color: var(--charcoal); }
+    .hero-cover { flex-shrink: 0; opacity: 0; animation: fadeUp 0.8s 0.35s ease forwards; }
+    .hero-cover img {
+      width: clamp(220px, 22vw, 300px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4); transition: transform 0.5s;
+    }
+    .hero-cover:hover img { transform: translateY(-6px) rotateY(-3deg); }
+
+    /* ═══ CREDIBILITY STRIP ═══ */
+    .cred-strip {
+      background: var(--charcoal); color: var(--off-white);
+      padding: 14px clamp(20px, 4vw, 48px);
+      text-align: center;
+      font-family: var(--heading); font-size: 8px; font-weight: 700;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      opacity: 0.85;
+    }
+    .cred-strip span { opacity: 0.4; margin: 0 12px; }
+
+    /* ═══ SOCIAL PROOF BAR ═══ */
+    .proof-bar {
+      background: var(--cream); border-bottom: 1px solid var(--border);
+      padding: 36px clamp(20px, 4vw, 48px); text-align: center;
+    }
+    .proof-quote {
+      font-family: var(--serif);
+      font-size: clamp(16px, 2vw, 20px); font-style: italic; font-weight: 400;
+      color: var(--text); max-width: 700px; margin: 0 auto 10px; line-height: 1.65;
+    }
+    .proof-author {
+      font-family: var(--heading); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted);
+    }
+
+    /* ═══ ABOUT THE BOOK ═══ */
+    .about-book {
+      padding: clamp(50px, 7vw, 80px) clamp(20px, 4vw, 48px);
+      max-width: 880px; margin: 0 auto;
+    }
+    .ab-label {
+      font-family: var(--heading); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--text-muted); text-align: center; margin-bottom: 10px;
+    }
+    .ab-heading {
+      font-family: var(--serif);
+      font-size: clamp(26px, 3.2vw, 34px); font-weight: 400;
+      color: var(--charcoal); text-align: center; line-height: 1.35; margin-bottom: 24px;
+    }
+    .ab-hook {
+      font-family: var(--body); font-size: 16px; font-weight: 300;
+      color: var(--text-mid); text-align: center;
+      max-width: 620px; margin: 0 auto 36px; line-height: 1.75;
+    }
+    .ab-highlights {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 20px; margin-bottom: 28px;
+    }
+    .ab-card {
+      text-align: center; padding: 24px 18px;
+      background: var(--cream); border: 1px solid var(--border);
+    }
+    .ab-card-icon { font-size: 26px; margin-bottom: 10px; }
+    .ab-card h4 {
+      font-family: var(--heading); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--charcoal); margin-bottom: 8px;
+    }
+    .ab-card p {
+      font-family: var(--body); font-size: 13px; font-weight: 300;
+      color: var(--text-mid); line-height: 1.6;
+    }
+    .ab-expand { text-align: center; }
+    .ab-full {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 16px; line-height: 1.85; color: var(--text);
+      text-align: center; max-width: 680px; margin: 0 auto;
+      overflow: hidden; max-height: 0;
+      transition: max-height 0.5s ease, opacity 0.5s; opacity: 0;
+    }
+    .ab-full.open { max-height: 600px; opacity: 1; margin-top: 20px; }
+    .ab-full p + p { margin-top: 14px; }
+    .ab-toggle {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-family: var(--body); font-size: 12px; font-weight: 500;
+      color: var(--teal); cursor: pointer; border: none; background: none;
+      margin-top: 14px; transition: color 0.2s;
+    }
+    .ab-toggle:hover { color: var(--teal-dark); }
+    .ab-toggle .arrow { transition: transform 0.3s; display: inline-block; }
+    .ab-toggle.open .arrow { transform: rotate(180deg); }
+
+    /* ═══ WHAT YOU'LL LEARN ═══ */
+    .learn-section {
+      padding: clamp(45px, 6vw, 70px) clamp(20px, 4vw, 48px);
+      background: var(--cream); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .learn-inner { max-width: 860px; margin: 0 auto; }
+    .learn-label {
+      font-family: var(--heading); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--text-muted); text-align: center; margin-bottom: 10px;
+    }
+    .learn-heading {
+      font-family: var(--serif); font-size: 26px; font-weight: 400;
+      color: var(--charcoal); text-align: center; margin-bottom: 36px;
+    }
+    .learn-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+    }
+    .learn-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 18px 20px; background: var(--white); border: 1px solid var(--border);
+    }
+    .learn-num {
+      font-family: var(--heading); font-size: 22px; font-weight: 700;
+      color: var(--border); line-height: 1; flex-shrink: 0; min-width: 28px;
+    }
+    .learn-item h4 {
+      font-family: var(--body); font-size: 14px; font-weight: 500;
+      color: var(--charcoal); margin-bottom: 4px; line-height: 1.3;
+    }
+    .learn-item p {
+      font-family: var(--body); font-size: 12px; font-weight: 300;
+      color: var(--text-mid); line-height: 1.55;
+    }
+
+    /* ═══ ABOUT THE AUTHOR ═══ */
+    .about-author {
+      padding: clamp(50px, 6vw, 80px) clamp(20px, 4vw, 48px);
+    }
+    .aa-inner {
+      max-width: 900px; margin: 0 auto;
+      display: flex; gap: clamp(24px, 4vw, 40px); align-items: center;
+    }
+    .aa-poster {
+      flex-shrink: 0;
+      width: clamp(280px, 32vw, 380px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    }
+    .aa-content { flex: 1; }
+    .aa-label {
+      font-family: var(--heading); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 8px;
+    }
+    .aa-name {
+      font-family: var(--heading); font-size: 16px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--charcoal); margin-bottom: 14px;
+    }
+    .aa-bio {
+      font-family: var(--body); font-size: 14px; font-weight: 300;
+      color: var(--text-mid); line-height: 1.8;
+    }
+    .aa-bio p + p { margin-top: 12px; }
+
+    /* ═══ READER QUOTES SLIDER ═══ */
+    .quotes-section {
+      padding: clamp(45px, 5vw, 65px) clamp(20px, 4vw, 48px);
+      background: var(--cream); border-top: 1px solid var(--border);
+    }
+    .qs-heading {
+      font-family: var(--heading); font-size: 12px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--charcoal); text-align: center; margin-bottom: 30px;
+    }
+    .qs-slider { max-width: 620px; margin: 0 auto; position: relative; overflow: hidden; }
+    .qs-track { display: flex; transition: transform 0.5s ease; }
+    .qs-slide { min-width: 100%; text-align: center; padding: 0 36px; }
+    .qs-quote {
+      font-family: var(--serif); font-size: 17px; font-style: italic; font-weight: 400;
+      color: var(--text); line-height: 1.8; margin-bottom: 14px;
+    }
+    .qs-name {
+      font-family: var(--heading); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted);
+    }
+    .qs-dots { display: flex; gap: 8px; justify-content: center; margin-top: 24px; }
+    .qs-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--border); border: none; cursor: pointer; transition: all 0.3s;
+    }
+    .qs-dot.active { background: var(--charcoal); }
+    .qs-arrows {
+      position: absolute; top: 50%; left: 0; right: 0;
+      transform: translateY(-50%); display: flex; justify-content: space-between; pointer-events: none;
+    }
+    .qs-arrow {
+      pointer-events: auto; background: none; border: none;
+      font-size: 22px; color: var(--light-gray); cursor: pointer;
+      padding: 4px; transition: color 0.2s;
+    }
+    .qs-arrow:hover { color: var(--charcoal); }
+
+    /* ═══ PRESS / REVIEWS ═══ */
+    .press-section {
+      padding: clamp(45px, 5vw, 65px) clamp(20px, 4vw, 48px);
+      border-top: 1px solid var(--border);
+    }
+    .ps-label {
+      font-family: var(--heading); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--text-muted); text-align: center; margin-bottom: 8px;
+    }
+    .ps-heading {
+      font-family: var(--serif); font-size: 26px; font-weight: 400;
+      color: var(--charcoal); text-align: center; margin-bottom: 36px;
+    }
+    .press-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 18px; max-width: 960px; margin: 0 auto;
+    }
+    .press-card {
+      background: var(--white); border: 1px solid var(--border);
+      padding: 24px 22px 22px; display: flex; flex-direction: column;
+      transition: all 0.35s; text-decoration: none; color: var(--text);
+      position: relative; overflow: hidden;
+    }
+    .press-card::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--red), var(--green));
+      transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+    }
+    .press-card:hover::after { transform: scaleX(1); }
+    .press-card:hover { transform: translateY(-3px); box-shadow: 0 6px 24px rgba(0,0,0,0.06); }
+    .pc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .pc-pub {
+      font-family: var(--heading); font-size: 8px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted);
+    }
+    .pc-stars { color: var(--teal); font-size: 11px; letter-spacing: 1px; }
+    .pc-title {
+      font-family: var(--serif); font-size: 18px; font-weight: 400;
+      color: var(--charcoal); line-height: 1.3; margin-bottom: 10px;
+    }
+    .pc-excerpt {
+      font-family: var(--serif); font-size: 13px; font-style: italic; font-weight: 400;
+      color: var(--text-muted); line-height: 1.6; flex: 1; margin-bottom: 16px;
+    }
+    .pc-meta {
+      font-family: var(--body); font-size: 10px; font-weight: 400;
+      color: var(--light-gray); margin-bottom: 12px;
+    }
+    .pc-link {
+      font-family: var(--heading); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal);
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+    .pc-link::after { content: '\2192'; transition: transform 0.25s; }
+    .press-card:hover .pc-link::after { transform: translateX(4px); }
+
+    /* ═══ EVENTS ═══ */
+    .events-section {
+      padding: clamp(40px, 5vw, 60px) clamp(20px, 4vw, 48px);
+      max-width: 780px; margin: 0 auto; border-top: 1px solid var(--border);
+    }
+    .ev-label {
+      font-family: var(--heading); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--text-muted); text-align: center; margin-bottom: 8px;
+    }
+    .ev-heading {
+      font-family: var(--serif); font-size: 22px; font-weight: 400;
+      color: var(--charcoal); text-align: center; margin-bottom: 24px;
+    }
+    .ev-card {
+      display: flex; gap: 24px; align-items: center;
+      background: var(--cream); border: 1px solid var(--border);
+      padding: 24px; max-width: 500px; margin: 0 auto;
+    }
+    .ev-date { text-align: center; flex-shrink: 0; min-width: 60px; }
+    .ev-date .month {
+      font-family: var(--heading); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal);
+    }
+    .ev-date .day { font-size: 30px; font-weight: 700; color: var(--charcoal); line-height: 1.1; }
+    .ev-date .year { font-size: 11px; font-weight: 300; color: var(--text-muted); }
+    .ev-info h4 {
+      font-family: var(--heading); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--charcoal); margin-bottom: 6px;
+    }
+    .ev-info p {
+      font-family: var(--body); font-size: 13px; font-weight: 300;
+      color: var(--text-mid); line-height: 1.6;
+    }
+    .ev-btn {
+      display: inline-block; margin-top: 12px; padding: 10px 22px;
+      border: 1px solid var(--charcoal); color: var(--charcoal);
+      font-family: var(--heading); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; transition: all 0.3s;
+    }
+    .ev-btn:hover { background: var(--charcoal); color: var(--white); }
+
+    /* ═══ CONTACT ═══ */
+    .contact-section {
+      padding: clamp(40px, 5vw, 60px) clamp(20px, 4vw, 48px);
+      text-align: center; max-width: 780px; margin: 0 auto; border-top: 1px solid var(--border);
+    }
+    .ct-heading {
+      font-family: var(--heading); font-size: 12px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--charcoal); margin-bottom: 6px;
+    }
+    .ct-sub {
+      font-family: var(--body); font-size: 13px; font-weight: 300;
+      color: var(--text-mid); margin-bottom: 18px;
+    }
+    .ct-items { display: flex; gap: 36px; justify-content: center; flex-wrap: wrap; }
+    .ct-item { text-align: center; }
+    .ct-label {
+      font-family: var(--heading); font-size: 8px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 4px;
+    }
+    .ct-item a, .ct-item p {
+      font-family: var(--body); font-size: 13px; font-weight: 300;
+      color: var(--text); line-height: 1.6;
+    }
+    .ct-item a { text-decoration: underline; }
+
+    /* ═══ FOOTER ═══ */
+    .footer {
+      background: var(--charcoal); padding: 30px clamp(20px, 4vw, 48px);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 14px;
+    }
+    .footer-copy {
+      font-family: var(--body); font-size: 11px; font-weight: 300;
+      color: rgba(255,255,255,0.4);
+    }
+    .footer-icons { display: flex; gap: 10px; }
+    .footer-icons a {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white); font-size: 10px; transition: background 0.2s;
+    }
+    .footer-icons a:hover { background: rgba(255,255,255,0.3); }
+
+    /* ═══ THIS BOOK IS FOR YOU ═══ */
+    .for-you {
+      padding: clamp(45px, 5vw, 65px) clamp(20px, 4vw, 48px);
+      background: var(--charcoal); color: var(--off-white);
+    }
+    .fy-inner { max-width: 760px; margin: 0 auto; text-align: center; }
+    .fy-label {
+      font-family: var(--heading); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(253,250,250,0.5); margin-bottom: 10px;
+    }
+    .fy-heading {
+      font-family: var(--serif); font-size: clamp(24px, 3vw, 32px); font-weight: 400;
+      color: var(--off-white); margin-bottom: 36px; line-height: 1.4;
+    }
+    .fy-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; text-align: left;
+    }
+    .fy-item {
+      display: flex; gap: 12px; align-items: flex-start;
+      padding: 16px 18px;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+    }
+    .fy-check {
+      flex-shrink: 0; width: 20px; height: 20px; margin-top: 1px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--red), var(--green));
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 10px; font-weight: 700;
+    }
+    .fy-item p {
+      font-family: var(--body); font-size: 13px; font-weight: 300;
+      color: rgba(253,250,250,0.85); line-height: 1.6;
+    }
+
+    /* ═══ PEEK INSIDE ═══ */
+    .peek-section {
+      padding: clamp(50px, 6vw, 75px) clamp(20px, 4vw, 48px);
+      border-top: 1px solid var(--border);
+    }
+    .peek-inner { max-width: 780px; margin: 0 auto; }
+    .peek-label {
+      font-family: var(--heading); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--text-muted); text-align: center; margin-bottom: 10px;
+    }
+    .peek-heading {
+      font-family: var(--serif); font-size: 26px; font-weight: 400;
+      color: var(--charcoal); text-align: center; margin-bottom: 40px;
+    }
+    .peek-excerpt {
+      position: relative; padding: 28px 32px; margin-bottom: 24px;
+      background: var(--cream);
+      border-left: 3px solid transparent;
+      border-image: linear-gradient(to bottom, var(--red), var(--green)) 1;
+    }
+    .peek-excerpt blockquote {
+      font-family: var(--serif); font-size: 17px; font-style: italic;
+      font-weight: 400; color: var(--text); line-height: 1.8;
+    }
+    .peek-chapter {
+      font-family: var(--heading); font-size: 8px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-muted); margin-top: 12px;
+    }
+    .peek-cta { text-align: center; margin-top: 32px; }
+    .peek-btn {
+      display: inline-block; padding: 12px 36px;
+      border: 1px solid var(--charcoal); color: var(--charcoal);
+      font-family: var(--heading); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase; transition: all 0.3s;
+    }
+    .peek-btn:hover { background: var(--charcoal); color: var(--white); }
+
+    /* ═══ PRESS SHOW MORE ═══ */
+    .press-card.hidden-card { display: none; }
+    .press-show-more { text-align: center; margin-top: 28px; }
+    .press-more-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--heading); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--teal); background: none; border: 1px solid var(--teal);
+      padding: 12px 28px; cursor: pointer; transition: all 0.3s;
+    }
+    .press-more-btn:hover { background: var(--teal); color: var(--white); }
+
+    /* ═══ ANIMATIONS ═══ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(16px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nav-links.open {
+        display: flex; flex-direction: column;
+        position: absolute; top: 60px; left: 0; right: 0;
+        background: var(--white); border-bottom: 1px solid var(--border);
+        padding: 16px 24px; gap: 12px;
+      }
+      .nav-order { display: none; }
+      .hero-inner { flex-direction: column-reverse; text-align: center; }
+      .hero-cover img { width: 200px; }
+      .ab-highlights { grid-template-columns: 1fr; }
+      .fy-grid { grid-template-columns: 1fr; }
+      .aa-inner { flex-direction: column; text-align: center; }
+      .aa-poster { width: 260px; }
+      .learn-grid { grid-template-columns: 1fr; }
+      .press-grid { grid-template-columns: 1fr; }
+      .ev-card { flex-direction: column; text-align: center; }
+      .ct-items { flex-direction: column; gap: 18px; }
+      .footer { flex-direction: column; text-align: center; }
+      .floating-cta { bottom: 16px; right: 16px; padding: 12px 20px; font-size: 9px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about-book">About</a></li>
+    <li><a href="#peek">Peek Inside</a></li>
+    <li><a href="#press">Press</a></li>
+    <li><a href="#events">Book Signing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://a.co/d/boGMom0" target="_blank" rel="noopener" class="nav-order">Order Now</a>
+    <div class="nav-icons">
+      <a href="https://x.com/amgf_book" target="_blank" rel="noopener">&#120143;</a>
+      <a href="https://www.facebook.com/profile.php?id=61587128354436" target="_blank" rel="noopener">f</a>
+      <a href="https://www.instagram.com/amilliongreenflags/" target="_blank" rel="noopener">&#9678;</a>
+    </div>
+  </div>
+  <div class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+
+<!-- FLOATING CTA -->
+<a href="https://a.co/d/boGMom0" target="_blank" rel="noopener" class="floating-cta" id="floatingCta">Order the Book</a>
+
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="hero-kicker">Psychology · Relationships · Personal Growth</p>
+      <h1 class="hero-name"><a href="index.html">Sia Stevens</a></h1>
+      <h2 class="hero-book-title">A Million Green Flags</h2>
+      <p class="hero-sub">How to Build Lasting Relationships in the Digital Era</p>
+      <p class="hero-release">Released 2026</p>
+      <a href="https://a.co/d/boGMom0" target="_blank" rel="noopener" class="hero-btn">Order Now</a>
+    </div>
+    <div class="hero-cover">
+      <img src="images/book-cover.jpg" alt="A Million Green Flags by Sia Stevens — book cover showing pixelated red heart transforming into solid green heart">
+    </div>
+  </div>
+</section>
+
+<!-- CREDIBILITY STRIP -->
+<div class="cred-strip">
+  Evolutionary Psychology <span>·</span> Neuroscience of Bonding <span>·</span> Behavioral Economics of Attraction <span>·</span> Original Three-Stage Framework
+</div>
+
+<!-- SOCIAL PROOF BAR -->
+<div class="proof-bar">
+  <p class="proof-quote">"Eat, Pray, Love meets The Female Brain — with the cinematic texture of Wild and the precision of 12 Rules for Life, through a feminine lens."</p>
+  <p class="proof-author">Elizabeth Moore, Senior Editor</p>
+</div>
+
+<div class="gradient-divider"></div>
+
+<!-- ABOUT THE BOOK -->
+<div class="about-book reveal" id="about-book">
+  <p class="ab-label">About the Book</p>
+  <h2 class="ab-heading">Why modern relationships fail — and an original framework for building ones that last</h2>
+  <p class="ab-hook">We have more freedom than any generation before us, and yet we feel emptier, lonelier, and more replaceable than ever. This book explains why — and what to do about it.</p>
+  <div class="ab-highlights">
+    <div class="ab-card">
+      <div class="ab-card-icon">🧠</div>
+      <h4>The Science of Attraction</h4>
+      <p>Why we're drawn to certain people, how neurochemistry mirrors addiction, and what the economics of value reveal about who we choose and why.</p>
+    </div>
+    <div class="ab-card">
+      <div class="ab-card-icon">📐</div>
+      <h4>A Three-Stage Framework</h4>
+      <p>Attraction → Reciprocation → Co-creation. An original model grounded in psychology, economics, and evolutionary biology.</p>
+    </div>
+    <div class="ab-card">
+      <div class="ab-card-icon">🔑</div>
+      <h4>A Practical Toolkit</h4>
+      <p>How to recognize green flags in yourself and others, cultivate genuine connection, and transform relationships from the inside out.</p>
+    </div>
+  </div>
+  <div class="ab-expand">
+    <button class="ab-toggle" onclick="toggleAbout(this)">Read the Full Description <span class="arrow">↓</span></button>
+    <div class="ab-full" id="aboutFull">
+      <p>When a young woman struggles to get over her breakup, she doesn't realize the journey ahead will take her far beyond regret and healing. From the sleepless glow of Seattle's towers to the stillness of the mountains, from Hollywood's glittering hills to the wisdom of ancient temples, she begins tracing the lost thread of what makes relationships truly work.</p>
+      <p>What creates attraction? What sustains it? Is love built on chemistry or consistency? Attention or intention? Freedom, or something deeper that makes commitment possible?</p>
+      <p>A Million Green Flags is part memoir, part manifesto, and part meditation — an exploration of lasting love in a world that mistakes access for intimacy. If you are tired of red flags, this book is for you. It won't teach you how to avoid red flags, but something even better: how to cultivate the green ones. Because transformation is possible, and the strongest connections aren't found. They're built — one green flag at a time.</p>
+    </div>
+  </div>
+</div>
+
+<!-- THIS BOOK IS FOR YOU -->
+<div class="for-you reveal">
+  <div class="fy-inner">
+    <p class="fy-label">Is This Book for You?</p>
+    <h3 class="fy-heading">This book is for you if&hellip;</h3>
+    <div class="fy-grid">
+      <div class="fy-item">
+        <div class="fy-check">&#10003;</div>
+        <p>You&rsquo;ve read all the relationship advice and still feel stuck, confused, or heartbroken</p>
+      </div>
+      <div class="fy-item">
+        <div class="fy-check">&#10003;</div>
+        <p>You want to understand <em>why</em> you&rsquo;re attracted to the people you are &mdash; not just be told to &ldquo;love yourself first&rdquo;</p>
+      </div>
+      <div class="fy-item">
+        <div class="fy-check">&#10003;</div>
+        <p>You suspect modern dating culture is broken but can&rsquo;t quite articulate how or why</p>
+      </div>
+      <div class="fy-item">
+        <div class="fy-check">&#10003;</div>
+        <p>You crave a book that treats you as intelligent &mdash; not one that talks down to you with checklists</p>
+      </div>
+      <div class="fy-item">
+        <div class="fy-check">&#10003;</div>
+        <p>You want a framework you can actually use, grounded in science and tested in real life</p>
+      </div>
+      <div class="fy-item">
+        <div class="fy-check">&#10003;</div>
+        <p>You believe lasting love is possible &mdash; and want to know what it actually takes to build it</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="gradient-divider"></div>
+
+<!-- WHAT YOU'LL LEARN -->
+<div class="learn-section">
+  <div class="learn-inner reveal">
+    <p class="learn-label">Key Insights</p>
+    <h3 class="learn-heading">What You'll Take Away</h3>
+    <div class="learn-grid">
+      <div class="learn-item">
+        <div class="learn-num">01</div>
+        <div>
+          <h4>Why attraction follows economic principles</h4>
+          <p>How the marketplace of modern dating creates scarcity, inflation of standards, and the illusion that someone better is always one swipe away.</p>
+        </div>
+      </div>
+      <div class="learn-item">
+        <div class="learn-num">02</div>
+        <div>
+          <h4>The three stages every lasting relationship passes through</h4>
+          <p>Attraction, Reciprocation, and Co-creation — a cyclical framework that deepens with each revolution, showing where relationships stall and how to move forward.</p>
+        </div>
+      </div>
+      <div class="learn-item">
+        <div class="learn-num">03</div>
+        <div>
+          <h4>How love and addiction share the same neurochemistry</h4>
+          <p>What dopamine, oxytocin, and cortisol reveal about why we stay in bad relationships and struggle to build good ones.</p>
+        </div>
+      </div>
+      <div class="learn-item">
+        <div class="learn-num">04</div>
+        <div>
+          <h4>Why connection is the human superpower — not intelligence</h4>
+          <p>How our evolutionary wiring for connection is being hijacked by technology, and what we can reclaim.</p>
+        </div>
+      </div>
+      <div class="learn-item">
+        <div class="learn-num">05</div>
+        <div>
+          <h4>How to recognize green flags in yourself and others</h4>
+          <p>Red and green flags aren't fixed identities — they're behaviors you can learn to see, cultivate, and build on.</p>
+        </div>
+      </div>
+      <div class="learn-item">
+        <div class="learn-num">06</div>
+        <div>
+          <h4>Why modern dating culture is starving us of what we need</h4>
+          <p>A cultural diagnosis of how access replaced intimacy, optionality replaced commitment, and what we lost in the exchange.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PEEK INSIDE -->
+<div class="peek-section" id="peek">
+  <div class="peek-inner reveal">
+    <p class="peek-label">Peek Inside</p>
+    <h3 class="peek-heading">From the Pages of the Book</h3>
+    <div class="peek-excerpt">
+      <blockquote>&ldquo;People aren&rsquo;t addicted to drugs. They&rsquo;re addicted to shortcuts&hellip; Instead of earning someone&rsquo;s love with patience, we swipe. Instead of building connection through vulnerability, we perform. Instead of growing through discomfort, we ghost.&rdquo;</blockquote>
+      <div class="peek-chapter">From the Chapter on Shortcuts</div>
+    </div>
+    <div class="peek-excerpt">
+      <blockquote>&ldquo;Connection isn&rsquo;t a luxury. It&rsquo;s an evolutionary necessity. We developed memory so we could recognize each other. Language so we could understand each other. Empathy so we could feel each other. Creativity so we could build worlds together. These are not intellectual talents. They are bonding technologies.&rdquo;</blockquote>
+      <div class="peek-chapter">From the Four Superpowers</div>
+    </div>
+    <div class="peek-excerpt">
+      <blockquote>&ldquo;A society becomes what it chooses to reward. And a person becomes what they choose to value. The question was never &lsquo;how do I find the right person?&rsquo; The question was always &lsquo;how do I become someone who grows green flags?&rsquo;&rdquo;</blockquote>
+      <div class="peek-chapter">From the Final Chapter</div>
+    </div>
+    <div class="peek-cta">
+      <a href="https://a.co/d/boGMom0" target="_blank" rel="noopener" class="peek-btn">Read the Rest &rarr;</a>
+    </div>
+  </div>
+</div>
+
+<div class="gradient-divider"></div>
+
+<!-- ABOUT THE AUTHOR -->
+<div class="about-author" id="about-author">
+  <div class="aa-inner reveal">
+    <img src="images/poster.png" alt="A Million Green Flags promotional poster featuring author Sia Stevens, Seattle skyline, and book cover" class="aa-poster">
+    <div class="aa-content">
+      <p class="aa-label">About the Author</p>
+      <h3 class="aa-name">Sia Stevens</h3>
+      <div class="aa-bio">
+        <p>Sia Stevens is a writer and researcher exploring the intersection of psychology, neuroscience, and human relationships. Her work draws on evolutionary psychology, behavioral economics, and the neuroscience of bonding to understand why modern relationships fail — and what it actually takes to build ones that last.</p>
+        <p>A Million Green Flags grew from a personal reckoning with heartbreak into a multi-year investigation spanning twelve locations, from university research libraries to Himalayan monasteries to the olive groves of Greece. The result is an original framework for understanding attraction, connection, and lasting love — written not from a clinical distance, but from the messy, honest experience of learning it firsthand.</p>
+        <p>She lives in Seattle, where she continues to write about connection, personal growth, and the science of what brings people together.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- READER QUOTES -->
+<div class="quotes-section">
+  <h3 class="qs-heading">Reader's Voice</h3>
+  <div class="qs-slider">
+    <div class="qs-track" id="qsTrack">
+      <div class="qs-slide">
+        <p class="qs-quote">"Sia writes with empathy but also strength. I finished the book feeling less anxious about love and more confident in my ability to build something real."</p>
+        <p class="qs-name">Sarah Collins, Book Lover</p>
+      </div>
+      <div class="qs-slide">
+        <p class="qs-quote">"I've read plenty of dating books, but this one stood out immediately. It doesn't demonize technology or modern dating but explains how to navigate it with clarity and intention."</p>
+        <p class="qs-name">Mike Johnson, Literature Enthusiast</p>
+      </div>
+      <div class="qs-slide">
+        <p class="qs-quote">"I found myself rethinking past relationships without shame and finally moving on from them. This is the kind of book you underline and come back to."</p>
+        <p class="qs-name">Emily Ward, Creative Writer</p>
+      </div>
+      <div class="qs-slide">
+        <p class="qs-quote">"So many relationship books focus on what's wrong with people. This one focuses on what's possible. Thoughtful, modern and beautifully written."</p>
+        <p class="qs-name">Lauren Mitchell, New York</p>
+      </div>
+    </div>
+    <div class="qs-arrows">
+      <button class="qs-arrow" onclick="moveSlide(-1)">&#8249;</button>
+      <button class="qs-arrow" onclick="moveSlide(1)">&#8250;</button>
+    </div>
+    <div class="qs-dots" id="qsDots"></div>
+  </div>
+</div>
+
+<div class="gradient-divider"></div>
+
+<!-- PRESS -->
+<div class="press-section" id="press">
+  <p class="ps-label">Press &amp; Reviews</p>
+  <h3 class="ps-heading">What Critics Are Saying</h3>
+  <div class="press-grid" id="pressGrid">
+    <a href="reviews/the-margin.html" class="press-card reveal" target="_blank" rel="noopener">
+      <div class="pc-top"><span class="pc-pub">The Margin</span><span class="pc-stars">&#9733;&#9733;&#9733;&#9733;&frac12;</span></div>
+      <div class="pc-title">A Bold, Brainy Debut That Dares to Diagnose Modern Romance</div>
+      <div class="pc-excerpt">&ldquo;The Attraction, Reciprocation, Co-creation framework is elegant, research-grounded, and actually useful for understanding your own relationships.&rdquo;</div>
+      <div class="pc-meta">Long Read &middot; Section-by-Section Analysis</div>
+      <span class="pc-link">Read Full Review</span>
+    </a>
+    <a href="reviews/nyt-review.html" class="press-card reveal" target="_blank" rel="noopener">
+      <div class="pc-top"><span class="pc-pub">The Metropolitan Review</span><span class="pc-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="pc-title">A Search for Connection in an Age of Isolation</div>
+      <div class="pc-excerpt">&ldquo;Stevens&rsquo; ambitious debut blends psychology, philosophy, and cultural criticism to explain why modern humans struggle to connect &mdash; and offers a framework for doing it better.&rdquo;</div>
+      <div class="pc-meta">Book Review &middot; February 2026</div>
+      <span class="pc-link">Read Full Review</span>
+    </a>
+    <a href="reviews/literary-review.html" class="press-card reveal" target="_blank" rel="noopener">
+      <div class="pc-top"><span class="pc-pub">Literary Review</span><span class="pc-stars">&#9733;&#9733;&#9733;&#9733;&frac12;</span></div>
+      <div class="pc-title">A Million Green Flags: The Complete Assessment</div>
+      <div class="pc-excerpt">&ldquo;An original framework for understanding attraction and commitment, scored across readability, scientific rigor, originality, and practical insight.&rdquo;</div>
+      <div class="pc-meta">Rated Review &middot; Readability &middot; Originality &middot; Insight</div>
+      <span class="pc-link">Read Full Review</span>
+    </a>
+    <a href="reviews/contemporary-review.html" class="press-card reveal" target="_blank" rel="noopener">
+      <div class="pc-top"><span class="pc-pub">The Contemporary Review</span><span class="pc-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="pc-title">When Science Becomes Liberation</div>
+      <div class="pc-excerpt">&ldquo;The neuroscience of bonding, the economics of attraction, the psychology of connection &mdash; Stevens synthesizes it all into something that reads like a conversation with a brilliant friend.&rdquo;</div>
+      <div class="pc-meta">Featured Review &middot; Books &middot; Culture &middot; Ideas</div>
+      <span class="pc-link">Read Full Review</span>
+    </a>
+    <a href="reviews/the-review.html" class="press-card reveal" target="_blank" rel="noopener">
+      <div class="pc-top"><span class="pc-pub">The Review</span><span class="pc-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="pc-title">The Manual We Were Never Given</div>
+      <div class="pc-excerpt">&ldquo;Stevens does what decades of self-help literature have failed to do: she makes the science of human bonding feel like the most urgent thing in the world.&rdquo;</div>
+      <div class="pc-meta">Staff Review &middot; Five Stars</div>
+      <span class="pc-link">Read Full Review</span>
+    </a>
+    <a href="reviews/atlantic-review.html" class="press-card reveal" target="_blank" rel="noopener">
+      <div class="pc-top"><span class="pc-pub">The Atlantic Review of Books</span><span class="pc-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="pc-title">The Four Superpowers We Forgot We Had</div>
+      <div class="pc-excerpt">&ldquo;Once you accept that our four great neurological superpowers were specifically evolved for human connection, the catastrophic cost of modern distraction becomes devastatingly clear.&rdquo;</div>
+      <div class="pc-meta">Featured Review &middot; Psychology &middot; Culture</div>
+      <span class="pc-link">Read Full Review</span>
+    </a>
+    <a href="reviews/nyt-feature.html" class="press-card hidden-card reveal" target="_blank" rel="noopener">
+      <div class="pc-top"><span class="pc-pub">The New York Review</span><span class="pc-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="pc-title">A Book That Feels Genuinely Necessary for This Moment</div>
+      <div class="pc-excerpt">&ldquo;In an era saturated with diagnostic language &mdash; narcissists, love languages &mdash; Stevens offers something more hopeful: the idea that connection is a skill that can be learned.&rdquo;</div>
+      <div class="pc-meta">Feature Review &middot; February 2026</div>
+      <span class="pc-link">Read Full Review</span>
+    </a>
+    <a href="reviews/literary-chronicle.html" class="press-card hidden-card reveal" target="_blank" rel="noopener">
+      <div class="pc-top"><span class="pc-pub">The Literary Chronicle</span><span class="pc-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="pc-title">The Relationship Book That Refuses to Be a Relationship Book</div>
+      <div class="pc-excerpt">&ldquo;A heartbroken woman&rsquo;s odyssey through neuroscience, mythology, and a Greek grandmother&rsquo;s kitchen becomes something startlingly original.&rdquo;</div>
+      <div class="pc-meta">Featured Review &middot; Books &middot; Ideas</div>
+      <span class="pc-link">Read Full Review</span>
+    </a>
+    <a href="reviews/margin-deep-dive.html" class="press-card hidden-card reveal" target="_blank" rel="noopener">
+      <div class="pc-top"><span class="pc-pub">The Margin</span><span class="pc-stars">&#9733;&#9733;&#9733;&#9733;&frac12;</span></div>
+      <div class="pc-title">Chapter by Chapter: The Architecture of a Heartbreak</div>
+      <div class="pc-excerpt">&ldquo;Stevens skewers compatibility charts and self-help platitudes with a wit rare in this genre &mdash; but never loses sight of the sadness underneath.&rdquo;</div>
+      <div class="pc-meta">Deep Dive &middot; Chapter-by-Chapter Analysis</div>
+      <span class="pc-link">Read Full Review</span>
+    </a>
+    <a href="reviews/editors-letter.html" class="press-card hidden-card reveal" target="_blank" rel="noopener">
+      <div class="pc-top"><span class="pc-pub">Vessel &amp; Ink Press</span><span class="pc-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="pc-title">Editor&rsquo;s Letter: Why We Published This Book</div>
+      <div class="pc-excerpt">&ldquo;This is not a book about how to find the right person. It is a book about how to become one. That is a rarer and more important thing.&rdquo;</div>
+      <div class="pc-meta">Editor&rsquo;s Letter &middot; Publisher&rsquo;s Note</div>
+      <span class="pc-link">Read Full Letter</span>
+    </a>
+    <a href="reviews/literary-review-full.html" class="press-card hidden-card reveal" target="_blank" rel="noopener">
+      <div class="pc-top"><span class="pc-pub">Literary Review</span><span class="pc-stars">&#9733;&#9733;&#9733;&#9733;&frac12;</span></div>
+      <div class="pc-title">The Chapter on Shortcuts Is the Best Writing in the Book</div>
+      <div class="pc-excerpt">&ldquo;Sia Stevens&rsquo;s debut is wildly ambitious, frequently brilliant, and more honest about its own era than almost any relationship book in recent memory.&rdquo;</div>
+      <div class="pc-meta">Full-Length Review &middot; Critical Assessment</div>
+      <span class="pc-link">Read Full Review</span>
+    </a>
+    <a href="reviews/love-algorithm.html" class="press-card hidden-card reveal" target="_blank" rel="noopener">
+      <div class="pc-top"><span class="pc-pub">The Quarterly Review</span><span class="pc-stars">&#9733;&#9733;&#9733;&#9733;&frac12;</span></div>
+      <div class="pc-title">Love in the Age of the Algorithm</div>
+      <div class="pc-excerpt">&ldquo;A bold, brainy debut that dares to diagnose modern romance &mdash; and prescribe a revolution.&rdquo;</div>
+      <div class="pc-meta">Critical Essay &middot; Long Read</div>
+      <span class="pc-link">Read Full Review</span>
+    </a>
+    <a href="reviews/literary-standard.html" class="press-card hidden-card reveal" target="_blank" rel="noopener">
+      <div class="pc-top"><span class="pc-pub">The Literary Standard</span><span class="pc-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+      <div class="pc-title">A Brilliant, Genre-Defying Exploration of Connection</div>
+      <div class="pc-excerpt">&ldquo;A genuinely unusual book &mdash; and &lsquo;unusual&rsquo; is a compliment of the highest order. Stevens has crafted something that refuses to sit comfortably in any single genre.&rdquo;</div>
+      <div class="pc-meta">Featured Review &middot; Books &middot; Culture</div>
+      <span class="pc-link">Read Full Review</span>
+    </a>
+  </div>
+  <div class="press-show-more" id="pressShowMore">
+    <button class="press-more-btn" onclick="showMoreReviews()">Show More Reviews &darr;</button>
+  </div>
+</div>
+
+<!-- EVENTS -->
+<div class="events-section" id="events">
+  <p class="ev-label">Events</p>
+  <h3 class="ev-heading">Upcoming Events</h3>
+  <div class="ev-card reveal">
+    <div class="ev-date">
+      <div class="month">Jun</div>
+      <div class="day">02</div>
+      <div class="year">2026</div>
+    </div>
+    <div class="ev-info">
+      <h4>Book Signing</h4>
+      <p>7:00 PM · The Book Shop<br>500 Terry A Francois Blvd<br>San Francisco, CA 94158</p>
+      <a href="mailto:amilliongreenflags@gmail.com" class="ev-btn">Register Now</a>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <h3 class="ct-heading">Contact Us</h3>
+  <p class="ct-sub">For any media inquiries, please contact:</p>
+  <div class="ct-items">
+    <div class="ct-item">
+      <div class="ct-label">Email</div>
+      <a href="mailto:amilliongreenflags@gmail.com">amilliongreenflags@gmail.com</a>
+    </div>
+    <div class="ct-item">
+      <div class="ct-label">Phone</div>
+      <p>206-549-6164</p>
+    </div>
+    <div class="ct-item">
+      <div class="ct-label">Location</div>
+      <p>Seattle, WA</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-copy">&copy; 2026 Vessel &amp; Ink Press</div>
+  <div class="footer-icons">
+    <a href="https://x.com/amgf_book" target="_blank" rel="noopener">𝕏</a>
+    <a href="https://www.facebook.com/profile.php?id=61587128354436" target="_blank" rel="noopener">f</a>
+    <a href="https://www.instagram.com/amilliongreenflags/" target="_blank" rel="noopener">◎</a>
+  </div>
+</footer>
+
+<script>
+/* Nav scroll effect */
+window.addEventListener('scroll', function() {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 20);
+});
+
+/* Smooth scroll nav links */
+document.querySelectorAll('.nav-links a').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var h = this.getAttribute('href');
+    if (h.charAt(0) === '#') {
+      e.preventDefault();
+      var t = document.querySelector(h);
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById('navLinks').classList.remove('open');
+    }
+  });
+});
+
+/* About toggle */
+function toggleAbout(btn) {
+  var el = document.getElementById('aboutFull');
+  el.classList.toggle('open');
+  btn.classList.toggle('open');
+  btn.innerHTML = el.classList.contains('open')
+    ? 'Read Less <span class="arrow" style="display:inline-block;transform:rotate(180deg)">&darr;</span>'
+    : 'Read the Full Description <span class="arrow">&darr;</span>';
+}
+
+/* Reader quotes slider */
+var cur = 0;
+var track = document.getElementById('qsTrack');
+var total = track.children.length;
+var dots = document.getElementById('qsDots');
+for (var i = 0; i < total; i++) {
+  var d = document.createElement('button');
+  d.className = 'qs-dot' + (i === 0 ? ' active' : '');
+  d.setAttribute('data-i', i);
+  d.onclick = function() { go(+this.getAttribute('data-i')); };
+  dots.appendChild(d);
+}
+function go(n) {
+  cur = n;
+  track.style.transform = 'translateX(-' + (n * 100) + '%)';
+  var all = dots.querySelectorAll('.qs-dot');
+  for (var j = 0; j < all.length; j++) all[j].classList.toggle('active', j === n);
+}
+function moveSlide(dir) {
+  var next = cur + dir;
+  if (next < 0) next = total - 1;
+  if (next >= total) next = 0;
+  go(next);
+}
+setInterval(function() { moveSlide(1); }, 5000);
+
+/* Floating CTA - appears after scrolling past hero */
+var floatingCta = document.getElementById('floatingCta');
+var heroEl = document.querySelector('.hero');
+window.addEventListener('scroll', function() {
+  var heroBottom = heroEl.offsetTop + heroEl.offsetHeight;
+  floatingCta.classList.toggle('visible', window.scrollY > heroBottom - 100);
+});
+
+/* Show More Reviews */
+function showMoreReviews() {
+  var hidden = document.querySelectorAll('.press-card.hidden-card');
+  hidden.forEach(function(card) {
+    card.classList.remove('hidden-card');
+    card.classList.add('visible');
+  });
+  document.getElementById('pressShowMore').style.display = 'none';
+}
+
+/* Reveal on scroll */
+var reveals = document.querySelectorAll('.reveal');
+var obs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.15 });
+reveals.forEach(function(el) { obs.observe(el); });
+</script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Review: A Million Green Flags by Sia Stevens</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    :root {
+      --text: #2d2d2d;
+      --text-light: #5a5a5a;
+      --text-muted: #888;
+      --accent: #d63447;
+      --accent-soft: #ff6b81;
+      --green: #27ae60;
+      --bg: #fff;
+      --bg-subtle: #fafafa;
+      --border: #e5e5e5;
+    }
+
+    body {
+      font-family: 'Crimson Text', Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 20px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      background: var(--text);
+      color: #fff;
+      padding: 20px 40px;
+      border-bottom: 4px solid var(--accent);
+    }
+    .pub-name {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .tagline {
+      font-size: 13px;
+      opacity: 0.75;
+      margin-top: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--green) 100%);
+      padding: 72px 40px;
+      color: #fff;
+    }
+    .hero-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .hero-kicker {
+      font-size: 13px;
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.9;
+      margin-bottom: 16px;
+    }
+    .hero-title {
+      font-size: clamp(36px, 5.5vw, 68px);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    }
+    .hero-subtitle {
+      font-size: clamp(19px, 2.5vw, 26px);
+      line-height: 1.5;
+      font-style: italic;
+      opacity: 0.95;
+      margin-bottom: 24px;
+    }
+    .hero-meta {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 14px;
+      opacity: 0.85;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 64px 40px 100px;
+    }
+
+    h2 {
+      font-size: 32px;
+      font-weight: 700;
+      margin: 56px 0 24px;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    h2:first-of-type { margin-top: 0; }
+
+    h3 {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 40px 0 16px;
+      color: var(--text);
+    }
+
+    p {
+      margin-bottom: 24px;
+      line-height: 1.75;
+    }
+
+    .lead {
+      font-size: 23px;
+      line-height: 1.7;
+      color: var(--text-light);
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .quote-block {
+      background: var(--bg-subtle);
+      border-left: 5px solid var(--green);
+      padding: 28px 32px;
+      margin: 36px 0;
+      font-style: italic;
+      font-size: 21px;
+      line-height: 1.65;
+      color: var(--text-light);
+    }
+
+    .highlight-box {
+      background: #fff;
+      border: 2px solid var(--accent-soft);
+      border-radius: 6px;
+      padding: 28px 32px;
+      margin: 36px 0;
+    }
+    .highlight-label {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .highlight-box p {
+      margin: 0;
+      font-size: 19px;
+    }
+
+    .rating-box {
+      background: var(--text);
+      color: #f5f5f5;
+      padding: 48px;
+      margin: 72px 0;
+      border-radius: 6px;
+      text-align: center;
+    }
+    .rating-title {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: var(--accent-soft);
+      font-weight: 600;
+    }
+    .rating-text {
+      font-size: 20px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .stars {
+      font-size: 32px;
+      color: var(--accent-soft);
+      letter-spacing: 10px;
+    }
+
+    .section-divider {
+      text-align: center;
+      margin: 56px 0;
+      color: var(--border);
+      font-size: 24px;
+      letter-spacing: 16px;
+    }
+
+    footer {
+      background: var(--bg-subtle);
+      border-top: 1px solid var(--border);
+      padding: 40px;
+      text-align: center;
+      font-size: 14px;
+      font-family: 'Work Sans', sans-serif;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 40px 24px 70px; }
+      h2 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+<header>
+    <div class="pub-name">The Contemporary Review</div>
+    <div class="tagline">Books · Culture · Ideas</div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-container">
+      <div class="hero-kicker">Book Review</div>
+      <h1 class="hero-title">A Million Green Flags</h1>
+      <p class="hero-subtitle">Sia Stevens has written the relationship book that refuses to behave—and it's all the better for it</p>
+      <div class="hero-meta">By Julia Baird · February 16, 2026</div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <p class="lead">There's a moment in <em>A Million Green Flags</em> where Sia Stevens sits across from her psychology professor and he asks her a simple question: "What do birds enjoy most?" She answers—flying. Fish? Swimming. Wolves? Howling. And then he asks: what's <em>our</em> superpower? She hesitates. Intelligence, she guesses. He shakes his head. "Connection," he says. "Our ability to bond, to form deep, lasting relationships. That's what built everything."</p>
+
+    <p>That exchange—barely two pages long—reframes everything you thought you knew about why relationships matter. This isn't a book about finding love. It's a book about understanding the evolutionary machinery that makes us <em>human</em>, and confronting the uncomfortable truth that modern life has switched it off.</p>
+
+    <p>Stevens has written something rare: a relationship book with genuine intellectual weight. Not another "love yourself" manual. Not another personality-test framework. This is a book that synthesizes neuroscience, evolutionary psychology, economics, and mythology into an argument that feels both urgent and devastatingly accurate: we are the species that built civilizations through connection, and we are destroying ourselves by dismantling the very conditions that make connection possible.</p>
+
+    <h2>When Science Becomes Liberation</h2>
+
+    <p>The book's most powerful insight arrives in an unexpected place: a conversation about addiction. Stevens learns from a coworker named Rob that love operates on the same neurochemical pathways as drugs. The dopamine flooding your brain when you meet someone you're attracted to? Chemically indistinguishable from cocaine. The obsessive thinking, the reorganized priorities, the reckless behavior? That's not character weakness. That's your reward system doing exactly what evolution designed it to do.</p>
+
+    <p>And then comes the line that will stay with you: "I hadn't been broken. I had been human."</p>
+
+    <p>If you've ever blamed yourself for staying too long, for giving too much, for losing yourself in someone who didn't deserve it—this reframe is <em>absolution</em>. Stevens takes the shame out of heartbreak by showing you the mechanism. You weren't weak. You were high. And understanding that changes everything.</p>
+
+    <p>But she doesn't stop there. She introduces the concept of <em>tolerance</em>—the way your brain adapts to pleasure over time. "The same face that once felt like heroin becomes wine, then water, then noise. Not because the person changed, but because <em>we</em> did." This explains what no dating advice will touch: why even good relationships lose intensity. Why the person who once reorganized your entire world can start to feel ordinary.</p>
+
+    <div class="quote-block">
+      "We're like kids in a candy store, dazzled by choice, grabbing tastes of everything, committing to nothing. Tempted, but never satisfied."
+    </div>
+
+    <p>The brilliance here isn't just that Stevens names the problem—it's that she gives you the framework to <em>see</em> it operating in your own life. Suddenly the patterns make sense. The fading spark isn't personal failure. It's biology you can actually work with.</p>
+
+    <h2>The Frameworks That Unlock Everything</h2>
+
+    <p>What separates this book from the self-help avalanche is its <em>architecture</em>. Stevens doesn't throw ideas at you. She builds <strong>frameworks</strong>—conceptual tools you can actually use.</p>
+
+    <p>The four-superpower framework (memory, language, empathy, creativity) redefines what we think of as "relationship skills." These aren't soft skills you learn in therapy. They're evolutionary tools we already possess but have stopped using. Memory isn't just recall—it's the ability to build continuity and trust over time. Language isn't just communication—it's the willingness to make your inner world visible. The insight isn't "get better at these things." It's "stop living in conditions that make them impossible to use."</p>
+
+    <p>Then there's the consumption-versus-creation framework, delivered by a Hollywood actress who's been married for thirty years. Most relationships today, she explains, are <em>consumptive</em>. You consume each other's time, attention, bodies. You enjoy moments. But nothing is built. Nothing multiplies. When the pleasure fades—and it always does—there's nothing left.</p>
+
+    <p>Creation mindset measures love differently: What exists in the world because of your love that didn't exist before? Children. Businesses. Art. Traditions. Meaning. A <em>life</em> you can call your own.</p>
+
+    <div class="highlight-box">
+      <div class="highlight-label">The Question That Changes Everything</div>
+      <p>"What exists in the world because of your love that didn't exist before?" This single question—asked at a dinner table in Hollywood—reframes the entire book. It's the kind of question you'll carry with you long after you finish reading.</p>
+    </div>
+
+    <p>This isn't abstract philosophy. It's immediately actionable. After reading this section, you'll look at your own relationships differently. Are we building something, or just enjoying each other? The question cuts through sentiment and gets to structure.</p>
+
+    <h2>Why Your Generation Is Starving</h2>
+
+    <p>Stevens writes with the authority of someone who's done the research. She cites the Harvard Grant Study—the longest-running study on human happiness—which found that relationships matter more than wealth, fame, or achievement. She references the U.S. Surgeon General's declaration that loneliness is an epidemic "more dangerous than smoking fifteen cigarettes a day." She traces marriage rates collapsing, fertility at historic lows, young men increasingly isolated, young women increasingly exhausted.</p>
+
+    <p>But what makes her diagnosis valuable is that she doesn't just <em>describe</em> the crisis. She explains the <em>mechanism</em>.</p>
+
+    <p>Modern life, she argues, has created a perfect storm: We're overexposed to stimuli our brains never evolved to handle (infinite faces on Instagram, endless pornography, algorithmic feeds), which creates tolerance and kills desire. We've replaced interdependence with independence, meaning we don't actually <em>need</em> each other for anything meaningful anymore. We've monetized loneliness instead of solving it—because "a cure for loneliness doesn't sell shampoo."</p>
+
+    <p>The observation about Dunbar's Number hits particularly hard: humans evolved to maintain about 150 deep relationships, but social media offers us thousands of shallow ones. The result? Cognitive overload and emotional starvation. "We plant a new flower every day, dazzled by its novelty, we neglect the ones from before. Eventually, the garden dries out."</p>
+
+    <div class="quote-block">
+      "We mapped glaciers, split the atom, decoded genomes, walked on the moon. But the thing that determines whether we're lonely or loved? Still a total mystery."
+    </div>
+
+    <p>Reading this feels like someone finally naming what you've been feeling but couldn't articulate. The exhaustion. The paradox of feeling simultaneously connected and utterly alone. The sense that something fundamental is broken but you can't quite identify what.</p>
+
+    <h2>The Argument You'll Be Thinking About for Months</h2>
+
+    <p>The book's most provocative thesis arrives in Greece, beneath the Parthenon. Stevens's friend Rhea asks a question that lands like a bomb: Why have we been told that men bring order and women bring chaos, when history suggests the opposite?</p>
+
+    <p>The evidence Stevens marshals is uncomfortable but statistically grounded. Men commit the vast majority of violent crimes. Cause most traffic accidents. Start most wars. Women, by contrast, build routines, maintain households, preserve social networks, teach language, pass down knowledge. "We're the ones who planted, fed, nurtured," Stevens writes. "Men burned more than they built."</p>
+
+    <p>Then comes the most radical framework: that women's "gossip"—dismissed by men as trivial—is actually <em>intelligence sharing</em>. An old Greek woman in a farmhouse explains it with devastating clarity: "In my village, if a man dared to be disloyal, the whole village knew by sundown. We kept each other safe." Information, shared between women, creates accountability. Silence lets bad behavior perpetuate.</p>
+
+    <p>This leads to the book's most controversial proposal: a database where women share integrity scores for men, similar to credit scores. It's bold. It's provocative. And whether you agree with it or not, you'll be arguing about it with friends for weeks.</p>
+
+    <h2>The Scenes That Won't Leave You</h2>
+
+    <p>What makes this book unforgettable isn't just the ideas—it's the <em>moments</em>. Stevens has a gift for dramatizing insight in ways that bypass your intellect and hit you in the chest.</p>
+
+    <p>There's the scene where she complains to her professor about people being bad communicators, and he responds flatly: "Have you considered that maybe they're just not interested in talking to you?" The silence that follows is devastating. Then he shows her 30,000-year-old cave paintings and asks: if ancient humans could express themselves with pigment and stone, why do we claim we "can't communicate"? His conclusion: "It's not a gap in skill. It's a lack of will."</p>
+
+    <p>There's the moment at a launch party where she watches her successful friend Richie—once invisible to women, now surrounded by them—ignore his beautiful girlfriend to flirt with strangers. The backstory makes it sting: in college, Richie stood outside a girl's dorm with flowers, only to watch her walk past him without a glance. "I ducked behind the bushes so nobody would see me standing there like a fool." That humiliation became his fuel. And now, with power, he's doing to someone else exactly what was done to him.</p>
+
+    <p>There's the campfire debate with Adam, a stoic hiker who insists love should be "silent and divine." An older man dismantles his argument by pointing to the worn jacket Adam's wearing, the knitted wristband, the patch on his backpack—all gifts from women who loved him. "You say you want it silent," the old man says quietly, "but even divinity has sound."</p>
+
+    <p>These aren't anecdotes. They're <em>evidence</em>. And they stick with you because Stevens has made the ideas <em>felt</em>.</p>
+
+    <h2>What It Gets Right About Modern Dating</h2>
+
+    <p>Stevens's treatment of attraction is bracingly unsentimental. Drawing on evolutionary psychology and economics, she argues that attraction isn't mysterious—it's a recognition of <em>value</em>. We're drawn to what promises to enrich our lives. Beauty, intelligence, humor, status. "Attention is the currency of connection," she writes. "Just as you cannot trade without money, you cannot form a relationship without attention."</p>
+
+    <p>But value is <em>relative</em>. When options are scarce, ordinary becomes luminous. When options are infinite, even the extraordinary feels disposable. This explains why dating apps feel simultaneously abundant and empty. Why relationships that begin with intense chemistry often fizzle. Why the paradox of choice leaves so many people paralyzed.</p>
+
+    <p>The chapter on beauty is particularly gutting. Stevens traces how beauty—once rare and therefore powerful—has been commodified and mass-produced until it no longer holds leverage. "Instagram delivers more flawless faces in a morning scroll than ancient Athens saw in a century." The result? Men stop trying. Women feel replaceable. Desire flattens into boredom.</p>
+
+    <p>At a party, she uses cake as metaphor: frosting (surface attraction) draws you in, but cake (depth, connection) sustains you. "If all you ever taste is frosting, you stay hungry." It's simple. It's visual. And you'll never look at dating the same way.</p>
+
+    <h2>Why This Matters Beyond Your Love Life</h2>
+
+    <p>The deepest insight in the book has nothing to do with romance. It's about what makes us <em>human</em>. Stevens argues that we've been sold a lie: that independence is strength, that needing people is weakness, that the goal is self-sufficiency.</p>
+
+    <p>But humans didn't conquer the planet through independence. We did it through <em>interdependence</em>. "Nature works through networks," she writes, pointing to bees and flowers, wolves and forests, fungi passing nutrients tree to tree. "We're no different." The monks she visits in a Himalayan monastery aren't disconnected—they're deeply interdependent, living in community, serving purposes larger than themselves.</p>
+
+    <p>The modern catastrophe isn't that we want connection. It's that we've built systems that make it structurally impossible. We've replaced people with products, community with consumption, memory with algorithms. And we wonder why we're miserable.</p>
+
+    <div class="quote-block">
+      "Those who learn to live with less never feel a shortage; those who live in excess never feel enough."
+    </div>
+
+    <h2>What Doesn't Land</h2>
+
+    <p>The book isn't perfect. At 75 chapters, it sprawls. Some sections feel like they belong in different books. The database proposal, while provocative, needs more ethical scaffolding—how would false accusations be handled? The gender analysis, while often brilliant, occasionally tips from observation into polemic, risking alienating readers who'd otherwise find value in the message.</p>
+
+    <p>But these are quibbles. What Stevens has achieved is far more important than what she's missed.</p>
+
+    <h2>Who This Book Will Transform</h2>
+
+    <p>If you've ever felt the gap between what you understand intellectually about relationships and what you can actually <em>do</em>—this book is for you.</p>
+
+    <p>If you're tired of dating advice that treats symptoms instead of diagnosing the disease—this book is for you.</p>
+
+    <p>If you've wondered why an entire generation seems to be struggling with the one thing that matters most to human happiness—this book will give you the answer.</p>
+
+    <p>If you've ever blamed yourself for your own heartbreak and carried that shame like a stone—this book will lift it.</p>
+
+    <p>Stevens has written something genuinely rare: a book that will change not just how you think about relationships, but how you think about what it means to be human. The frameworks she offers aren't self-help platitudes. They're conceptual tools that actually <em>work</em>. And once you see through her lens, you can't unsee it.</p>
+
+    <div class="rating-box">
+      <div class="rating-title">Final Verdict</div>
+      <p class="rating-text">This is the book your generation has been waiting for—the one that finally explains why modern love feels so broken and offers frameworks that actually illuminate the path forward. Ambitious, intellectually fearless, and emotionally honest. <em>A Million Green Flags</em> isn't just important. It's essential. Read it. Argue with it. Give it to everyone you know who's ever wondered why connection became so hard.</p>
+      <div class="stars">★ ★ ★ ★ ★</div>
+    </div>
+
+  </div>
+
+  <footer>
+    The Contemporary Review · Independent Literary Criticism Since 1994
+  </footer>
+
+</body>
+</html>
