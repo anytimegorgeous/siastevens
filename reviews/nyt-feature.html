@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Million Green Flags - Book Review | The New York Review</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,700;1,700&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --text-primary: #121212;
+            --text-secondary: #555;
+            --bg-main: #fafafa;
+            --accent: #326891;
+            --border: #e5e5e5;
+            --highlight-bg: #fff8dc;
+            --quote-border: #d4af37;
+        }
+
+        body {
+            font-family: 'Crimson Pro', Georgia, serif;
+            background: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 19px;
+        }
+
+        .header {
+            background: #fff;
+            border-bottom: 1px solid #000;
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .nav {
+            display: flex;
+            gap: 24px;
+            margin-top: 12px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: sans-serif;
+        }
+
+        .nav a {
+            color: #000;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .article-container {
+            max-width: 760px;
+            margin: 60px auto;
+            padding: 0 30px;
+            background: #fff;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .category {
+            font-family: sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 16px;
+            padding-top: 40px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 52px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-family: 'Crimson Pro', serif;
+            font-size: 26px;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        .meta {
+            font-family: sans-serif;
+            font-size: 13px;
+            color: var(--text-secondary);
+            padding: 20px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 40px;
+        }
+
+        .meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .byline {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .book-details {
+            background: linear-gradient(135deg, #f8f8f8 0%, #fff 100%);
+            border-left: 4px solid var(--quote-border);
+            padding: 24px;
+            margin: 40px 0;
+            font-family: sans-serif;
+            font-size: 14px;
+        }
+
+        .book-details h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .book-details p {
+            margin: 6px 0;
+            color: var(--text-secondary);
+        }
+
+        .book-details .author {
+            font-size: 18px;
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .rating {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .stars {
+            color: var(--quote-border);
+            font-size: 20px;
+            letter-spacing: 4px;
+        }
+
+        .article-body {
+            padding: 20px 0 60px;
+        }
+
+        .article-body p {
+            margin-bottom: 24px;
+        }
+
+        .article-body h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            margin: 48px 0 24px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .article-body h3 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 22px;
+            margin: 36px 0 18px;
+            font-weight: 700;
+        }
+
+        .pullquote {
+            background: var(--highlight-bg);
+            border-left: 5px solid var(--quote-border);
+            padding: 28px 32px;
+            margin: 40px 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            line-height: 1.5;
+            font-style: italic;
+            color: #2c2c2c;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .pullquote cite {
+            display: block;
+            margin-top: 12px;
+            font-size: 14px;
+            font-family: sans-serif;
+            font-style: normal;
+            color: var(--text-secondary);
+            text-align: right;
+        }
+
+        .highlight {
+            background: linear-gradient(180deg, transparent 60%, var(--highlight-bg) 60%);
+            padding: 2px 0;
+            font-weight: 600;
+        }
+
+        .section-break {
+            text-align: center;
+            margin: 50px 0;
+            font-size: 24px;
+            color: var(--border);
+        }
+
+        .critics-pick {
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            font-family: sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 6px 12px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .inline-quote {
+            font-style: italic;
+            color: var(--text-primary);
+        }
+
+        .emphasis-box {
+            background: #f9f9f9;
+            border: 1px solid var(--border);
+            padding: 20px 24px;
+            margin: 32px 0;
+            font-size: 17px;
+        }
+
+        .emphasis-box h4 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 18px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .emphasis-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .emphasis-box li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .emphasis-box li:before {
+            content: "▪";
+            position: absolute;
+            left: 0;
+            color: var(--quote-border);
+            font-size: 20px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+            
+            .subtitle {
+                font-size: 20px;
+            }
+            
+            .pullquote {
+                font-size: 20px;
+                padding: 20px;
+            }
+            
+            .article-container {
+                margin: 20px auto;
+                padding: 0 20px;
+            }
+        }
+
+        .verdict {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #fff;
+            padding: 32px;
+            margin: 48px 0;
+            border-radius: 2px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .verdict h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            margin-bottom: 16px;
+            color: var(--quote-border);
+        }
+
+        .verdict p {
+            margin-bottom: 16px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+<header class="header">
+        <div class="header-content">
+            <a href="#" class="logo">The New York Review</a>
+            <nav class="nav">
+                <a href="#">Books</a>
+                <a href="#">Reviews</a>
+                <a href="#">Fiction</a>
+                <a href="#">Nonfiction</a>
+                <a href="#">Best Sellers</a>
+            </nav>
+        </div>
+    </header>
+
+    <article class="article-container fade-in">
+        <div class="category">Book Review · Nonfiction</div>
+        
+        <span class="critics-pick">Critics' Pick</span>
+        
+        <h1>A Search for Connection in an Age of Isolation</h1>
+        
+        <p class="subtitle">Sia Stevens' ambitious debut blends memoir, philosophy, and cultural criticism to explore why modern humans struggle to connect—and how we might build something better.</p>
+        
+        <div class="meta">
+            <div class="meta-row">
+                <span class="byline">By Sarah Martinez</span>
+                <span>Feb. 16, 2026</span>
+            </div>
+        </div>
+
+        <div class="book-details">
+            <h3>A Million Green Flags</h3>
+            <p class="author">By Sia Stevens</p>
+            <p>Vessel & Ink Press. 89,000 words. $28.</p>
+            <div class="rating">
+                <div class="stars">★★★★☆</div>
+            </div>
+        </div>
+
+        <div class="article-body">
+            <p><span style="font-size: 24px; font-weight: 600; line-height: 1;">I</span>n an era saturated with relationship advice that focuses almost exclusively on what to avoid—"red flags," toxic behaviors, narcissistic patterns—Sia Stevens arrives with a genuinely unusual proposition. What if, instead of cataloging dysfunction, we learned to recognize and cultivate what actually works? What if the loneliness epidemic gripping modern society isn't a collection of individual failures but a systemic crisis that demands systemic solutions?</p>
+
+            <p><span class="highlight">This is a genuinely unusual book — and 'unusual' is a compliment.</span> <em>A Million Green Flags</em> doesn't sit comfortably in any single genre. It begins as a personal memoir of heartbreak, transforms into a philosophical conversation about evolutionary psychology, detours through party scenes and mountain treks, visits Hollywood legends and Greek matriarchs, and ends as a manifesto for a new kind of female agency. That restlessness is both the book's greatest strength and its biggest structural challenge.</p>
+
+            <div class="pullquote">
+                "Think of a flower: it never demands attention. It earns it."
+                <cite>— From A Million Green Flags</cite>
+            </div>
+
+            <p>The book opens with what may be <span class="highlight">the most distilled and perfect opening image</span>: two birds in a fig tree, one singing, one witnessing. It earns its place not just as a scene but as a structural anchor for everything that follows. The insight that value is what draws attention, not the other way around, is sophisticated and counterintuitive without being contrarian.</p>
+
+            <h2>The Intellectual Backbone</h2>
+
+            <p>The café conversations with Dr. Alan Meyer are <span class="highlight">intellectually the richest section of the book</span>. The four-superpower framework—Memory, Language, Empathy, Creativity—is a genuinely original way to explain why connection is uniquely human, and it provides the conceptual backbone for everything that follows.</p>
+
+            <p>The Memory chapter is particularly strong. The Dunbar's Number insight—that humans evolved for 150 deep relationships but social media gives us thousands of shallow ones, leaving us cognitively overloaded and emotionally starved—is expressed through a beautiful garden metaphor that earns its length.</p>
+
+            <div class="pullquote">
+                "We plant a new flower every day and dazzled by its novelty, we neglect the ones from before."
+                <cite>— Chapter 5</cite>
+            </div>
+
+            <p><span class="highlight">The book's best surprise moment</span> comes in the Language chapter, when Sia complains about people being bad communicators and Dr. Meyer responds, "Have you considered that maybe they're just not interested in talking to you?" The beat of silence that follows—and Sia's slow realization—is the most dramatically alive moment in the academic conversations.</p>
+
+            <h2>The Sharpest Social Criticism</h2>
+
+            <p>The Library section delivers <span class="highlight">the book's sharpest social criticism with tremendous wit</span>. The classmate doing a PhD on better shampoo foam is a perfect comic device: brilliant, sad, and entirely believable. The library scene—searching shelf by shelf for a manual on relationships and finding only trauma recovery guides—dramatizes the book's central argument better than any lecture could.</p>
+
+            <div class="pullquote">
+                "Shelf after shelf of coping mechanisms. Heartbreak, heartbreak, heartbreak. Where's the education on how not to break in the first place?"
+                <cite>— Chapter 11</cite>
+            </div>
+
+            <p>Here Stevens makes what is arguably <span class="highlight">the most politically courageous statement in the book</span>, one stated with admirable clarity: "We broke gender roles, marriage norms, and the rules of intimacy—and built nothing to replace them." This observation about the demolition of old structures without reconstruction will resonate with readers across the political spectrum.</p>
+
+            <div class="emphasis-box">
+                <h4>Particularly Strong Passages</h4>
+                <ul>
+                    <li>"We mapped glaciers, split the atom, decoded genomes, walked on the moon. But the thing that determines whether we're lonely or loved? Still a total mystery."</li>
+                    <li>"A phone finds its purpose in the voice of someone you love. A million-dollar home, in the laughter of its guests. A fancy car, in the joy of riding alongside another."</li>
+                    <li>"Life itself began with collision. Nothing in this universe comes alive in isolation. Stars are born from pressure. Fire needs a strike."</li>
+                </ul>
+            </div>
+
+            <h2>Attraction, Value, and Moral Evenhandedness</h2>
+
+            <p>The Launch Party section introduces <span class="highlight">the book's most interesting sustained argument</span>: that attraction is fundamentally about perceived value, not physical appearance alone. Watching Richie—once invisible to women—become magnetic after success gives the thesis a compelling, lived illustration.</p>
+
+            <p>The character of Lena is handled with real intelligence. The narrator resists the easy 'gold digger' framing and instead asks the uncomfortable symmetrical question: if Richie is attracted to Lena's beauty, why is Lena's attraction to his wealth judged differently? <span class="highlight">This moral evenhandedness elevates the book considerably.</span></p>
+
+            <div class="section-break">* * *</div>
+
+            <h2>The Mountain and the Campfire</h2>
+
+            <p>The Mount Rainier section is <span class="highlight">structurally the bravest part of the book</span>—it abandons argument entirely for nearly five chapters and simply lets the narrator live inside an experience. It earns its length. The summit isolation is genuinely moving: the stillness that felt like medicine slowly becomes terrifying, and the realization that engagement—even messy, noisy, imperfect engagement—is what makes us feel alive is one of the book's truest insights.</p>
+
+            <div class="pullquote">
+                "Solitude gives us calm. But engagement—messy, noisy, chaotic engagement—is what gives us life."
+                <cite>— Chapter 22</cite>
+            </div>
+
+            <p>The campfire debate in Chapter 23 is <span class="highlight">the best dramatic scene in the entire book</span>. Adam's stubbornly held position—that love should be wordless and pure—and Sia's pushback—that love without expression is like eating once and claiming it's enough for life—are both genuinely held positions, and the arrival of the older man who mediates with authority adds real structural weight.</p>
+
+            <div class="pullquote">
+                "Love without expression dries up—like a river without rain, shrinking day by day until all that's left is dust."
+                <cite>— Chapter 23</cite>
+            </div>
+
+            <h2>The Bookshelf Philosophy</h2>
+
+            <p>The Thanksgiving homecoming section is one of the book's <span class="highlight">most emotionally grounded</span> movements. Liam's question—'Who am I, Sia?'—and Sia's bookshelf metaphor produces <span class="highlight">one of the book's most quotable passages</span>:</p>
+
+            <div class="pullquote">
+                "We treat life like a suitcase—there's only so much room, so we keep tossing things out to make space for the next thing. But we should treat life like a bookshelf. You keep adding new books as you grow, but you don't throw the old ones away."
+                <cite>— Chapter 28</cite>
+            </div>
+
+            <p>The palm tree imagery that follows—roots as the source of height, not its enemy—is graceful and earns the section's central theme about relatability: that connection requires common ground, and that modern drift erodes the ground people need to stand on together.</p>
+
+            <h2>Addiction, Tolerance, and Love</h2>
+
+            <p>The purse snatching and Rob's subsequent explanation of addiction is <span class="highlight">the book's most formally inventive section</span>—using a street crime as a gateway into neuroscience. Rob's teaching is clear and well-researched, managing to be educational without feeling like a lecture.</p>
+
+            <p>Chapter 31 marks <span class="highlight">a genuinely bold structural move</span> where the argument pivots most sharply: tolerance applies not just to drugs but to love itself. When Rob says "Especially love," the reader feels the weight of it because the book has spent seven chapters arguing for the uniqueness and preciousness of human connection—and here is the neurological explanation for why it degrades anyway.</p>
+
+            <p>The flashback to first meeting Victor is <span class="highlight">the book's most romantically written chapter</span>. The slowed-time meeting, the current that shoots through their handshake, the 'worldview becoming golden' passage—this is maximalist romantic prose and it works because it's clearly meant to illustrate the very addiction Rob has just described. The framing earns the indulgence.</p>
+
+            <div class="section-break">* * *</div>
+
+            <h2>The Emotional Keystone</h2>
+
+            <p>The Hollywood section represents <span class="highlight">the book's most ambitious tonal shift</span>, moving from street-level Seattle to a Hollywood limousine, a vineyard estate, and a 30-year love story told in retrospect. It largely succeeds.</p>
+
+            <p>Sophia's answer to the book's central question—'What have you two built together?'—is <span class="highlight">the emotional keystone of the entire narrative</span>. Harold Bennett's dinner-table question is <span class="highlight">the book's most powerful single line</span>:</p>
+
+            <div class="pullquote">
+                "What exists in the world because of your love that didn't exist before?"
+                <cite>— Harold Bennett, Chapter 38</cite>
+            </div>
+
+            <p>This reframes love from a feeling to a practice, from something you have to something you make. As Sophia explains:</p>
+
+            <div class="pullquote">
+                "Great loves are built, not just felt. They transform you. They multiply. They create not just fun moments but lasting memories—family, children, meaning. A life you can call your own."
+                <cite>— Sophia Maren, Chapter 38</cite>
+            </div>
+
+            <p>The consumption mindset versus the creation mindset is <span class="highlight">the book's most original psychological framework</span>. The wine, the vineyards, the patient aging of fruit—these are metaphors that cohere rather than compete.</p>
+
+            <h2>Spiritual Counterweight</h2>
+
+            <p>The Himalayan monastery section provides <span class="highlight">the book's spiritual counterweight</span> to everything that has come before. Having spent the previous sections arguing for connection, engagement, and creation, the narrator now tests the opposite: can solitude be its own form of wholeness?</p>
+
+            <p>Chapter 42 contains <span class="highlight">the book's best single insight about the monastic life</span>:</p>
+
+            <div class="pullquote">
+                "Those who learn to live with less never feel a shortage; those who live in excess never feel enough."
+                <cite>— Chapter 42</cite>
+            </div>
+
+            <p>The idea that desire is elastic—it can be trained to shrink as well as to grow—is deeply practical and complements the tolerance argument in The Streets section.</p>
+
+            <p>The Pillow Talk chapters, where Sia reconnects with Rhea and takes her broken-hearted friend through a sleepover, bring the book back to earth beautifully. Rhea's story is <span class="highlight">emotionally the most fully realized character portrait in the book</span>.</p>
+
+            <h2>The Clay Pot Mythology</h2>
+
+            <p>The Greece section contains what may be <span class="highlight">the book's most original idea</span>: the pot mythology. Civilization began not with conquest but with containment, with the woman who shaped clay to hold water and freed herself from dependence. This is a beautiful origin story for female agency.</p>
+
+            <p>The old woman in the Greek farmhouse is <span class="highlight">the book's most enchanting character</span>. Her wry humor ('Never give the fruit away too soon,' followed by a wink), her practical divinity, and her hospitality that seems to anticipate need all create a character who feels both real and symbolic.</p>
+
+            <h2>A Framework for Action</h2>
+
+            <p>The final section, structured as a speech, allows the narrator to sum up the book's entire argument directly. The three-stage model of relationships—Attraction → Reciprocation → Co-creation—is <span class="highlight">the book's most practical framework and one of its most publishable ideas</span>. It's clear, memorable, and sequenced in a way that will help readers apply it.</p>
+
+            <p>The proposal for a women's 'data center'—an integrity-score database for men—is <span class="highlight">genuinely original and philosophically defensible</span>. It addresses a real problem: the information asymmetry in dating that can leave people vulnerable to patterns they can't see.</p>
+
+            <p>Chapter 75 provides <span class="highlight">a graceful, luminous ending</span>. The cliff above the Pacific, the business card in the wind, the Sanskrit mantra—this is the right note to end on.</p>
+
+            <div class="verdict">
+                <h3>The Verdict</h3>
+                <p><span class="highlight">The narrator is the book's greatest strength.</span> She is intelligent without being condescending, funny without being flippant, and self-aware enough to admit her own mistakes. Her curiosity—the quality Dr. Meyer explicitly names as her defining trait—is felt on every page.</p>
+                
+                <p><span class="highlight">Stevens' voice throughout is warm, witty, intellectually alive, and refreshingly candid about her own contradictions.</span> She is a trustworthy guide precisely because she positions herself as a fellow traveler rather than an expert who has arrived.</p>
+                
+                <p>The thesis is compelling and the ambition is real: Stevens is asking why modern humans—the species that built civilizations through connection—have become so profoundly disconnected, and whether there's a path back. The framing device of 'green flags' as an antidote to the culture of red-flag-hunting is fresh and timely.</p>
+            </div>
+
+            <h2>A Voice for Our Moment</h2>
+
+            <p>Dr. Alan Meyer emerges as <span class="highlight">the book's best supporting character</span>. His intellectual authority is established early and never cheapened. The details that humanize him—the dramatic flourish with his fork, the way he uses his spoon like a judge passing a verdict, the moment his children invade the gazebo—make him feel like a person rather than a device.</p>
+
+            <p>Rob appears in only five chapters but is <span class="highlight">among the most memorable characters</span>. His way of 'drilling down to root causes'—whether in code or in human behavior—makes him the most intellectually compatible conversation partner Sia encounters. The chemistry between them is the book's most interesting romantic possibility, handled with admirable restraint.</p>
+
+            <p>Richie's arc—invisible college boy becomes sought-after entrepreneur—is <span class="highlight">the best illustration of the book's value-attraction thesis</span>. The scene where he reveals his motivation (hiding behind bushes with flowers while Rachel walked past him) is <span class="highlight">the most emotionally precise backstory in the book</span>.</p>
+
+            <div class="section-break">* * *</div>
+
+            <p>What emerges is a book that feels genuinely necessary for this moment. In an era saturated with diagnostic language—narcissists, attachment styles, love languages—Stevens offers something more hopeful: the idea that connection is a skill that can be learned, that value can be cultivated, and that the loneliness so many of us feel is not a personal failing but a systemic problem in need of systemic solutions.</p>
+
+            <p>The book's central insight may be the simplest: that great loves are built, not just felt. That they require not just attraction but reciprocation, not just reciprocation but co-creation. And that the point of connection is not to fill a void but to make something together—a life, a memory, a meaning—that wouldn't exist otherwise.</p>
+
+            <p><em>A Million Green Flags</em> won't be for everyone. The structure asks readers to follow a circuitous path, and some sections feel like adjacent but separate books. But for readers willing to take a winding journey through ideas about evolution, neuroscience, mythology, and meaning, this debut offers something increasingly rare: <span class="highlight">a genuine attempt to understand why we struggle to connect in an age of unprecedented communication, and what we might do about it.</span></p>
+
+            <p>It's an optimistic vision, and one this reader found worth the journey.</p>
+
+            <div style="margin-top: 60px; padding-top: 30px; border-top: 2px solid #000; font-family: sans-serif; font-size: 13px; color: #666;">
+                <p><strong>A Million Green Flags</strong><br>
+                By Sia Stevens<br>
+                Vessel & Ink Press. 75 chapters. ~89,000 words. $28.</p>
+            </div>
+        </div>
+    </article>
+
+    <script>
+        // Smooth scroll reveal for pullquotes
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeIn 0.8s ease-in';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.pullquote, .emphasis-box, .verdict').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

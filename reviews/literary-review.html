@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Million Green Flags — Literary Review</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --ink: #1a1512;
+    --sage: #6b7c5e;
+    --rust: #b84c2b;
+    --gold: #c8a84b;
+    --muted: #7a6f63;
+    --light-sage: #e8ede4;
+    --border: rgba(26,21,18,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'EB Garamond', serif;
+    font-size: 19px;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  .masthead {
+    background-color: var(--ink);
+    color: var(--cream);
+    text-align: center;
+    padding: 70px 40px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .masthead::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(200,168,75,0.18) 0%, transparent 65%);
+  }
+
+  .masthead-label {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  .book-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.2rem, 8vw, 6rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    position: relative;
+    margin-bottom: 12px;
+  }
+
+  .book-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .book-author {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    color: rgba(245,240,232,0.6);
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  .rating-row {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .rating-pill {
+    background: rgba(245,240,232,0.07);
+    border: 1px solid rgba(245,240,232,0.15);
+    border-radius: 2px;
+    padding: 10px 22px;
+    text-align: center;
+  }
+
+  .rating-pill .label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .rating-pill .value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--cream);
+  }
+
+  /* VERDICT BAR */
+  .verdict-bar {
+    background: var(--sage);
+    color: var(--cream);
+    text-align: center;
+    padding: 18px 30px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+
+  .verdict-bar span {
+    color: #d4edaa;
+    font-weight: 500;
+  }
+
+  /* MAIN LAYOUT */
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* OPENER QUOTE */
+  .opener {
+    padding: 70px 0 50px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .opener blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.35rem, 3vw, 1.75rem);
+    font-style: italic;
+    line-height: 1.55;
+    color: var(--ink);
+    padding-left: 28px;
+    border-left: 3px solid var(--gold);
+    margin-bottom: 18px;
+  }
+
+  .opener cite {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-left: 28px;
+  }
+
+  /* SECTION STYLES */
+  .section {
+    padding: 56px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section:last-child {
+    border-bottom: none;
+  }
+
+  .section-tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9.5px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .section-tag::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 28px;
+    letter-spacing: -0.01em;
+  }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--sage);
+    margin: 36px 0 12px;
+  }
+
+  p {
+    margin-bottom: 22px;
+    color: var(--ink);
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  strong {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* SCORE CARDS */
+  .score-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2px;
+    margin: 36px 0;
+    border: 1px solid var(--border);
+  }
+
+  .score-card {
+    background: white;
+    padding: 26px 24px;
+    position: relative;
+  }
+
+  .score-card:nth-child(even) {
+    background: var(--light-sage);
+  }
+
+  .score-card .metric {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .score-card .score-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .score-card .score-max {
+    font-size: 1rem;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .score-card .score-bar {
+    height: 3px;
+    background: var(--border);
+    margin-top: 12px;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .score-card .score-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--sage);
+    transition: width 1s ease;
+  }
+
+  .score-card .score-fill.high { background: var(--sage); }
+  .score-card .score-fill.mid { background: var(--gold); }
+  .score-card .score-fill.low { background: var(--rust); }
+
+  .score-card .verdict {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  /* JOURNEY MAP */
+  .journey {
+    margin: 36px 0;
+  }
+
+  .journey-item {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 0 22px;
+    position: relative;
+    margin-bottom: 0;
+  }
+
+  .journey-item::before {
+    content: '';
+    position: absolute;
+    left: 34px;
+    top: 40px;
+    bottom: -1px;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .journey-item:last-child::before { display: none; }
+
+  .journey-num {
+    width: 70px;
+    padding-top: 4px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .journey-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    margin: 0 auto;
+  }
+
+  .journey-content {
+    padding-bottom: 34px;
+  }
+
+  .journey-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+
+  .journey-desc {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* COMPARISON TABLE */
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 28px 0;
+    font-size: 0.9rem;
+  }
+
+  .comp-table th {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .comp-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .comp-table tr:last-child td { border-bottom: none; }
+
+  .comp-table .book-name {
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  /* PULL QUOTE */
+  .pull-quote {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 44px 48px;
+    margin: 40px 0;
+    position: relative;
+  }
+
+  .pull-quote::before {
+    content: '\201C';
+    font-family: 'Playfair Display', serif;
+    font-size: 8rem;
+    color: var(--gold);
+    opacity: 0.3;
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    line-height: 1;
+  }
+
+  .pull-quote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    line-height: 1.55;
+    color: var(--cream);
+    position: relative;
+    margin: 0;
+  }
+
+  /* FINAL VERDICT */
+  .final-verdict {
+    background: var(--light-sage);
+    border-top: 4px solid var(--sage);
+    padding: 52px 44px;
+    margin-top: 50px;
+    margin-bottom: 0;
+  }
+
+  .final-verdict h2 {
+    color: var(--ink);
+  }
+
+  .verdict-score-large {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--sage);
+    margin: 20px 0 8px;
+  }
+
+  .verdict-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  .tag {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 5px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.73rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .tag.green { background: #e8f0e0; border-color: var(--sage); color: var(--sage); }
+  .tag.amber { background: #f6f0d8; border-color: var(--gold); color: #9a7a25; }
+  .tag.red { background: #faeae4; border-color: var(--rust); color: var(--rust); }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: rgba(245,240,232,0.4);
+    text-align: center;
+    padding: 32px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  /* DECORATIVE */
+  .ornament {
+    text-align: center;
+    font-size: 1.4rem;
+    color: var(--gold);
+    margin: 0 0 32px;
+    opacity: 0.6;
+  }
+
+  .inline-em {
+    font-style: italic;
+    color: var(--sage);
+  }
+
+  @media (max-width: 600px) {
+    .score-grid { grid-template-columns: 1fr 1fr; }
+    .pull-quote { padding: 32px 28px; }
+    .final-verdict { padding: 36px 24px; }
+    .masthead { padding: 50px 24px 44px; }
+    .comp-table { font-size: 0.82rem; }
+    .comp-table td, .comp-table th { padding: 10px 10px; }
+  }
+</style>
+</head>
+<body>
+<!-- MASTHEAD -->
+<div class="masthead">
+  <p class="masthead-label">Literary Review &nbsp;·&nbsp; February 2026</p>
+  <h1 class="book-title">A Million<br><em>Green Flags</em></h1>
+  <p class="book-author">by Sia Stevens &nbsp;·&nbsp; Vessel & Ink Press, Seattle</p>
+  <div class="rating-row">
+    <div class="rating-pill"><span class="label">Readability</span><span class="value">9/10</span></div>
+    <div class="rating-pill"><span class="label">Originality</span><span class="value">8/10</span></div>
+    <div class="rating-pill"><span class="label">Insight Value</span><span class="value">9/10</span></div>
+    <div class="rating-pill"><span class="label">Entertainment</span><span class="value">8/10</span></div>
+    <div class="rating-pill"><span class="label">Bestseller Potential</span><span class="value">Strong</span></div>
+  </div>
+</div>
+
+<!-- VERDICT BAR -->
+<div class="verdict-bar">
+  Verdict: <span>Compelling, emotionally resonant, and intellectually rich — with genuine commercial promise</span>
+</div>
+
+<!-- BODY -->
+<div class="container">
+
+  <!-- OPENER -->
+  <div class="opener">
+    <blockquote>"The question at the heart of every relationship is not 'Do you love me?' but 'Do you see me?'"</blockquote>
+    <cite>— A Million Green Flags, Chapter 1</cite>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="section">
+    <p class="section-tag">Overview</p>
+    <h2>What Kind of Book Is This, Exactly?</h2>
+
+    <p><em>A Million Green Flags</em> is one of those genuinely difficult books to classify — and that may be its greatest strength. It is simultaneously a memoir-flavored personal journey, a popular-psychology exploration of human connection, a feminist meditation on modern relationships, and an intimate piece of narrative nonfiction. Think of it as <span class="inline-em">Eat, Pray, Love</span> if Elizabeth Gilbert had also sat down with a neuroscientist and a Greek grandmother and asked them to explain civilization.</p>
+
+    <p>The narrator, Sia, emerges from heartbreak and — across ten episodic "worlds" spanning seventy chapters — moves through grief, curiosity, intellectual awakening, and finally purpose. She is not a passive protagonist. She interrogates everyone she meets, from her psychology professor to a recovering addict on the street, a Hollywood director, Himalayan monks, and a 90-year-old Greek matriarch in a mountain village. Each encounter adds another layer to a central argument: that human connection is not a soft, emotional luxury but the core operating system of civilization — and that we are currently crashing it.</p>
+
+    <p>The book's architecture is elegant. Every chapter is named after an abstract concept (Connection, Memory, Tolerance, Creativity, Femininity, Abundance) and each section is grounded in a real place and encounter — a Seattle café, a mountain trek, a Thanksgiving table, the Hollywood Hills, a Himalayan monastery, a Greek island. The movement between ideas and experience, between theory and story, is smooth and engaging throughout.</p>
+  </div>
+
+  <!-- FUN TO READ -->
+  <div class="section">
+    <p class="section-tag">Readability & Fun</p>
+    <h2>How Enjoyable Is It to Read?</h2>
+
+    <div class="score-grid">
+      <div class="score-card">
+        <p class="metric">Voice & Warmth</p>
+        <p class="score-num">9<span class="score-max">/10</span></p>
+        <div class="score-bar"><div class="score-fill high" style="width:90%"></div></div>
+        <p class="verdict">Intimate, curious, unguarded</p>
+      </div>
+      <div class="score-card">
+        <p class="metric">Pacing</p>
+        <p class="score-num">8<span class="score-max">/10</span></p>
+        <div class="score-bar"><div class="score-fill high" style="width:80%"></div></div>
+        <p class="verdict">Flows with occasional lulls</p>
+      </div>
+      <div class="score-card">
+        <p class="metric">Prose Quality</p>
+        <p class="score-num">8<span class="score-max">/10</span></p>
+        <div class="score-bar"><div class="score-fill mid" style="width:80%"></div></div>
+        <p class="verdict">Genuinely beautiful in places</p>
+      </div>
+      <div class="score-card">
+        <p class="metric">Dialogue</p>
+        <p class="score-num">7<span class="score-max">/10</span></p>
+        <div class="score-bar"><div class="score-fill mid" style="width:70%"></div></div>
+        <p class="verdict">Natural; occasionally didactic</p>
+      </div>
+    </div>
+
+    <p>The book opens beautifully. The image of two birds in a fig tree — one singing, one listening — is a quietly powerful metaphor that the author returns to again and again without it feeling forced. The prose in the opening chapters has the intimate, slightly breathless quality of someone working through something real. Sia's voice is warm, self-deprecating, funny at moments, and never self-pitying.</p>
+
+    <p>The café conversations with Dr. Meyer are genuinely enjoyable. They have the feel of a dinner party where someone brilliant finally says the thing you always suspected but couldn't articulate. The professor is rendered with affection and dimensionality — he's not just a talking encyclopedia but a man with kids climbing on him and a family that illustrates his own philosophy. The scene where Sia helps him fix the Lego roof is a lovely small moment.</p>
+
+    <p>The Thanksgiving section (chapters 25–28) is among the best prose in the book. The contrast between Noah and Liam — brothers shaped differently by the same hometown — is handled with real literary craft. The ice cream shop scene, the pickup truck, the dock at dusk — these scenes don't just illustrate ideas, they live. Similarly, the Himalayan monastery chapters (41–48) carry a meditative beauty that is rare in this genre.</p>
+
+    <div class="pull-quote">
+      <p>The pages flow. You will not find yourself skipping paragraphs. Sia's curiosity is infectious, and the book never talks at you — it thinks alongside you. That is its central and most disarming quality.</p>
+    </div>
+
+    <p>Where readability occasionally dips is in the Hollywood section, which sometimes sacrifices scene for summary, and in the middle stretch of "The Greek Goddess" chapters, where the conceptual density temporarily outpaces the narrative drive. But these are minor complaints in a book that sustains engagement across 300+ pages.</p>
+  </div>
+
+  <!-- STRUCTURE / JOURNEY -->
+  <div class="section">
+    <p class="section-tag">Structure</p>
+    <h2>The Architecture of the Journey</h2>
+    <p>The book's ten movements each function as a distinct lens on human connection. Together they form a spiral — returning to the same questions from higher and higher altitudes.</p>
+
+    <div class="journey">
+      <div class="journey-item">
+        <div class="journey-num"><div class="journey-circle">I</div></div>
+        <div class="journey-content">
+          <p class="journey-title">A Story of Two Birds — The Wound</p>
+          <p class="journey-desc">Heartbreak, a fig tree, two birds. The seed question: what is connection? Introduces attention and value as the currency of relationships. The emotional ground floor.</p>
+        </div>
+      </div>
+      <div class="journey-item">
+        <div class="journey-num"><div class="journey-circle">II</div></div>
+        <div class="journey-content">
+          <p class="journey-title">Conversations with My Professor — The Mind</p>
+          <p class="journey-desc">Four superpowers of the human brain: memory, language, empathy, creativity. Argues that modern life is systematically dismantling these gifts. The book's intellectual engine.</p>
+        </div>
+      </div>
+      <div class="journey-item">
+        <div class="journey-num"><div class="journey-circle">III</div></div>
+        <div class="journey-content">
+          <p class="journey-title">The Library — The Pattern</p>
+          <p class="journey-desc">The search for a "relationship manual." Discovery of the cyclical, three-phase nature of all living systems. The first framework begins to emerge.</p>
+        </div>
+      </div>
+      <div class="journey-item">
+        <div class="journey-num"><div class="journey-circle">IV</div></div>
+        <div class="journey-content">
+          <p class="journey-title">The Launch Party — The World</p>
+          <p class="journey-desc">Drive, value, attraction, beauty, power, personality. Richard's story. The tension between presenting ourselves and sustaining ourselves in love.</p>
+        </div>
+      </div>
+      <div class="journey-item">
+        <div class="journey-num"><div class="journey-circle">V</div></div>
+        <div class="journey-content">
+          <p class="journey-title">Mountain Trek — The Shadow</p>
+          <p class="journey-desc">Deception, avoidance, engagement, friction, exchange. The honest reckoning with what kills relationships: the gap between courtship and commitment.</p>
+        </div>
+      </div>
+      <div class="journey-item">
+        <div class="journey-num"><div class="journey-circle">VI</div></div>
+        <div class="journey-content">
+          <p class="journey-title">Thanksgiving — The Roots</p>
+          <p class="journey-desc">Home, memory, identity. Two brothers, one town. What it means to carry where you came from versus what happens when you abandon it entirely.</p>
+        </div>
+      </div>
+      <div class="journey-item">
+        <div class="journey-num"><div class="journey-circle">VII</div></div>
+        <div class="journey-content">
+          <p class="journey-title">The Streets — The Chemistry</p>
+          <p class="journey-desc">Addiction, dopamine, tolerance, love as a drug. Rob's street-level neuroscience. The moment Sia forgives herself for Victor by understanding the chemistry of falling.</p>
+        </div>
+      </div>
+      <div class="journey-item">
+        <div class="journey-num"><div class="journey-circle">VIII</div></div>
+        <div class="journey-content">
+          <p class="journey-title">A Hollywood Story — The Forever Question</p>
+          <p class="journey-desc">Romance, creation, mindsets. Sophia and Rafe's legendary love story as told by Bennett. Does "happily ever after" exist — and what does it require?</p>
+        </div>
+      </div>
+      <div class="journey-item">
+        <div class="journey-num"><div class="journey-circle">IX</div></div>
+        <div class="journey-content">
+          <p class="journey-title">The Monastery + Pillow Talk + The Greek Goddess — The Height</p>
+          <p class="journey-desc">Detachment, abundance, the two paths to fulfillment. Rhea's heartbreak. The Greek matriarch's warning about civilization. The Hercules myth as a framework for transformation.</p>
+        </div>
+      </div>
+      <div class="journey-item">
+        <div class="journey-num"><div class="journey-circle">X</div></div>
+        <div class="journey-content">
+          <p class="journey-title">The Auditorium — The Answer</p>
+          <p class="journey-desc">The full framework revealed on a stage in Seattle. Red flags, green flags, the imbalance, the solution, and the closing vision of a civilization that chooses to tend its garden.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORIGINALITY -->
+  <div class="section">
+    <p class="section-tag">Originality of Idea</p>
+    <h2>How Fresh Is the Central Concept?</h2>
+
+    <div class="score-grid">
+      <div class="score-card">
+        <p class="metric">Conceptual Freshness</p>
+        <p class="score-num">8<span class="score-max">/10</span></p>
+        <div class="score-bar"><div class="score-fill high" style="width:80%"></div></div>
+        <p class="verdict">Familiar territory, unfamiliar synthesis</p>
+      </div>
+      <div class="score-card">
+        <p class="metric">Structural Originality</p>
+        <p class="score-num">9<span class="score-max">/10</span></p>
+        <div class="score-bar"><div class="score-fill high" style="width:90%"></div></div>
+        <p class="verdict">The journey-as-research format is distinct</p>
+      </div>
+      <div class="score-card">
+        <p class="metric">Argument Novelty</p>
+        <p class="score-num">8<span class="score-max">/10</span></p>
+        <div class="score-bar"><div class="score-fill mid" style="width:80%"></div></div>
+        <p class="verdict">The "containment" thesis is genuinely new</p>
+      </div>
+      <div class="score-card">
+        <p class="metric">Voice Distinctiveness</p>
+        <p class="score-num">9<span class="score-max">/10</span></p>
+        <div class="score-bar"><div class="score-fill high" style="width:90%"></div></div>
+        <p class="verdict">Few books sound like this one</p>
+      </div>
+    </div>
+
+    <p>The territory here — relationships, modern loneliness, neuroscience of love, generational disconnect — is well-traveled. Robin Dunbar, Helen Fisher, and Robert Waldinger have covered parts of this ground in academic and popular forms. The self-help shelf is crowded with relationship guides. So what does this book add?</p>
+
+    <h3>What Makes It Genuinely Original</h3>
+
+    <p>First, the <strong>synthesis</strong>. Few books successfully marry memoir, popular science, cultural criticism, and philosophical inquiry inside a single continuous narrative without feeling like a Frankenstein. Stevens pulls this off by grounding every idea in a felt moment — a conversation, a landscape, an encounter. The ideas don't float; they arrive embodied.</p>
+
+    <p>Second, the <strong>"containment" thesis</strong>. The Greek matriarch's pot metaphor — that our generation's core challenge is not to eliminate desire and addiction but to contain and channel it — is a genuinely original organizing idea. It transcends the usual "put down your phone" advice. It reframes the problem as one of direction rather than abstinence. The Hercules reading (destructive energy transformed into civilization-building through directed labor) is both mythologically literate and surprisingly applicable to modern masculinity discourse.</p>
+
+    <p>Third, the <strong>two-path conclusion</strong>. The monastery versus Hollywood framework — fulfillment through engagement vs. fulfillment through detachment — is elegant, non-prescriptive, and leaves the reader with genuine philosophical latitude rather than a listicle. It is a mature conclusion that avoids the genre's usual prescriptive traps.</p>
+
+    <p>Fourth, the <strong>feminist architecture</strong>. This is a book by a woman, for women, that does not treat men as villains. The arc — from personal wound to structural observation to collective call-to-action — is intellectually honest rather than cathartic. The critique of modern masculinity is sharp but grounded in evolutionary and social context, not resentment.</p>
+  </div>
+
+  <!-- INSIGHTS -->
+  <div class="section">
+    <p class="section-tag">Insights Gained</p>
+    <h2>What Will Readers Walk Away With?</h2>
+
+    <p>This is perhaps the book's most impressive quality: it leaves readers with an integrated set of ideas rather than a scattershot list of tips. Let's examine the most durable insights:</p>
+
+    <h3>1. Connection Is the Superpower, Not Intelligence</h3>
+    <p>Dr. Meyer's argument — that humans survived and built civilization not through individual intelligence but through the capacity for deep, sustained social bonding — is more radical than it first appears. It reframes loneliness not as a lifestyle problem but as an evolutionary emergency. The four brain superpowers (memory, language, empathy, creativity) as tools for bonding rather than mere cognitive functions is a compelling reframe that will change how readers think about "productivity" culture.</p>
+
+    <h3>2. Attention as the Currency of Connection</h3>
+    <p>The idea that relationships are fundamentally attention-exchange systems — that what we hunger for is not love in the abstract but to be <em>witnessed</em> — is not new, but it is rendered here with unusual intimacy and precision. The shame around "seeking attention" being reframed as a healthy human need, badly managed, is liberating for many readers.</p>
+
+    <h3>3. Love and Addiction Are Neurochemically Parallel</h3>
+    <p>Rob's street-level neuroscience on dopamine, tolerance, and withdrawal as they apply to romantic love gives the reader a language for understanding behavior they previously only felt shame about. The moment Sia says Victor's name without shame — because she now understands the chemistry of falling — is one of the most emotionally effective passages in the book.</p>
+
+    <h3>4. Red and Green Flags Are Not Fixed Identities</h3>
+    <p>The auditorium speech's central insight — that green and red flags are not who people are but what they express given the environment created around them — is both hopeful and demanding. It shifts agency from passive flag-spotting to active environment-building. The Hercules myth as evidence that transformation is real and historically documented is bold and effective.</p>
+
+    <h3>5. The Two Paths to Abundance</h3>
+    <p>The monastery-vs-Hollywood conclusion offers something rare in this genre: a non-prescriptive philosophy of happiness that honors both engagement and detachment, both love-seeking and solitude-finding, as equally valid paths. It rejects the binary that so much relationship content enforces.</p>
+  </div>
+
+  <!-- LITERARY COMPARISON -->
+  <div class="section">
+    <p class="section-tag">Literary Context</p>
+    <h2>How Does It Compare to Its Peers?</h2>
+
+    <table class="comp-table">
+      <tr>
+        <th>Book</th>
+        <th>Shared Territory</th>
+        <th>How AMF Differs</th>
+      </tr>
+      <tr>
+        <td class="book-name">Eat, Pray, Love<br><small>Elizabeth Gilbert</small></td>
+        <td>Heartbreak, travel-as-healing, self-discovery</td>
+        <td>AMF is more intellectually structured and less solipsistic — the journey is in service of an argument, not just the self</td>
+      </tr>
+      <tr>
+        <td class="book-name">Why Has Nobody Told Me This Before<br><small>Julie Smith</small></td>
+        <td>Psychology + accessible insight + personal narrative</td>
+        <td>AMF has richer narrative fabric and wider sociological scope; Smith is more clinical</td>
+      </tr>
+      <tr>
+        <td class="book-name">All About Love<br><small>bell hooks</small></td>
+        <td>Structural critique of modern love and relationships</td>
+        <td>AMF is warmer, more narrative, and more neuroscience-grounded; hooks is more philosophical and austere</td>
+      </tr>
+      <tr>
+        <td class="book-name">The Course of Love<br><small>Alain de Botton</small></td>
+        <td>What sustains relationships over time</td>
+        <td>De Botton uses fiction; AMG uses lived experience + research. AMG is more accessible, de Botton more literary</td>
+      </tr>
+      <tr>
+        <td class="book-name">Attached<br><small>Levine & Heller</small></td>
+        <td>Psychology of romantic attachment</td>
+        <td>AMG is broader — it contextualizes the personal within culture, evolution, and civilization. Less clinical, more humanistic</td>
+      </tr>
+    </table>
+
+    <p>In short: <em>A Million Green Flags</em> occupies a genuinely distinct position. It is too intellectually ambitious for pure self-help, too personal for popular science, and too accessible for literary nonfiction. Its closest cousins might be Glennon Doyle's <em>Untamed</em> (for emotional directness and feminist scope) or a more narrative version of Johann Hari's <em>Lost Connections</em> (for the thesis that modern life is structurally damaging our capacity for human bonding). But it doesn't feel derivative of either.</p>
+  </div>
+
+  <!-- WEAKNESSES -->
+  <div class="section">
+    <p class="section-tag">Honest Assessment</p>
+    <h2>Where the Book Could Be Stronger</h2>
+
+    <p>A thorough review must be honest. The book has real vulnerabilities that a strong editor could help address:</p>
+
+    <p><strong>The dialogue occasionally becomes a lecture delivery system.</strong> The professor, Rob, and Bennett all speak in paragraphs that are a little too perfectly formed — ideas too fully-shaped, transitions too smooth. Real people interrupt themselves, circle back, and contradict. The book would benefit from a few more moments of messiness in conversation. The best exception is Richard (Richie), whose party confession feels genuinely spontaneous and human.</p>
+
+    <p><strong>The middle section sags slightly.</strong> The Hollywood chapters covering the Sophia-and-Rafe story, while beautifully written in places, run long. The reader occasionally senses the author enjoying the storytelling at the expense of forward momentum. Tighter editing in chapters 37–40 would sharpen the effect considerably.</p>
+
+    <p><strong>The "database of men" solution in the Auditorium may divide readers.</strong> The practical proposal — a shared record of men's integrity and behavior — is provocative and will generate exactly the debate the book wants. But it arrives rather quickly and without the same depth of philosophical grounding as the earlier ideas. It needs either more rigor or more explicit framing as a starting question rather than a finished answer.</p>
+
+    <p><strong>Some insights are stated rather than dramatized.</strong> The book is at its best when it shows Sia living the idea — the Lego piece, the fig tree, the ice cream shop, the pot from the old woman's hands. It is slightly less effective when the narrator steps back and explains the lesson directly. Trust the reader more. The images speak for themselves.</p>
+
+    <p>These are notes from a strong foundation, not signs of a weak book. They point toward a revision that could elevate an already compelling manuscript into something exceptional.</p>
+  </div>
+
+  <!-- BESTSELLER POTENTIAL -->
+  <div class="section">
+    <p class="section-tag">Commercial Assessment</p>
+    <h2>Will People Read This Book? Can It Be a Bestseller?</h2>
+
+    <div class="score-grid">
+      <div class="score-card">
+        <p class="metric">Core Audience Fit</p>
+        <p class="score-num">9<span class="score-max">/10</span></p>
+        <div class="score-bar"><div class="score-fill high" style="width:90%"></div></div>
+        <p class="verdict">Women 25–45 who read Glennon Doyle and listen to Brené Brown</p>
+      </div>
+      <div class="score-card">
+        <p class="metric">Crossover Potential</p>
+        <p class="score-num">7<span class="score-max">/10</span></p>
+        <div class="score-bar"><div class="score-fill mid" style="width:70%"></div></div>
+        <p class="verdict">Will reach curious men who read popular science</p>
+      </div>
+      <div class="score-card">
+        <p class="metric">Word-of-Mouth Factor</p>
+        <p class="score-num">9<span class="score-max">/10</span></p>
+        <div class="score-bar"><div class="score-fill high" style="width:90%"></div></div>
+        <p class="verdict">People will send chapters to people they love</p>
+      </div>
+      <div class="score-card">
+        <p class="metric">Book Club Suitability</p>
+        <p class="score-num">10<span class="score-max">/10</span></p>
+        <div class="score-bar"><div class="score-fill high" style="width:100%"></div></div>
+        <p class="verdict">Exceptional — every chapter generates discussion</p>
+      </div>
+    </div>
+
+    <p>Yes, people will read this book. The answer is close to certain for three reasons. First, the subject — the loneliness epidemic, the failure of modern romance, why we feel so disconnected despite being so connected — is the defining anxiety of this decade. It is not a niche topic. It is what people talk about at dinner tables and lie awake thinking about. Second, the book meets readers where they are: it doesn't demand academic fluency or philosophical training. It asks only that you have felt something.</p>
+
+    <p>Third: it is a book you will want to give someone. The gift-book quality of this — the sense that a friend who loves you would press it into your hands saying "read this, it explains something I couldn't explain to you" — is real. That is a powerful commercial engine.</p>
+
+    <p>Can it be a bestseller? Genuinely, yes — with the right backing. The market comparisons are encouraging: <em>Untamed</em> by Doyle, <em>Lost Connections</em> by Hari, <em>Why Has Nobody Told Me This Before</em> by Julie Smith — all of these are structurally and temperamentally proximate, and all were major bestsellers. What this book has that many of its competitors lack is the combination of intellectual architecture and emotional intimacy. It argues as well as it feels.</p>
+
+    <p>The caveat: the auditorium speech (the final "solution" chapters) will need to be airtight before the book reaches a wide mainstream audience. It is currently the least defended part of the argument. Strengthen that, and this becomes a genuinely formidable commercial and literary proposition.</p>
+  </div>
+
+  <!-- FINAL VERDICT -->
+  <div class="section final-verdict">
+    <p class="section-tag">Final Verdict</p>
+    <h2>The Reviewer's Summary</h2>
+    <div class="verdict-score-large">8.6<span style="font-size:2rem;color:var(--muted)">/10</span></div>
+    <p class="verdict-label">Overall Rating</p>
+
+    <p><em>A Million Green Flags</em> is a book that earns its ambition. It sets out to explain why human connection is failing in the modern world — and it largely succeeds. The voice is distinctive and warm. The ideas are genuinely interesting. The structure, while unconventional, holds. The prose has real moments of beauty. And the central thesis — that we are systematically starving our evolutionary superpower, and that the solution is not to retreat but to contain and redirect — is both timely and original.</p>
+
+    <p>Sia Stevens writes like someone who has lived the questions, not just researched them. That is rarer than it sounds. In a genre crowded with borrowed wisdom and recycled frameworks, this book has the texture of genuine discovery. You feel the author thinking, changing her mind, being surprised. That quality — intellectual honesty dressed in narrative warmth — is what will make readers trust it, finish it, and pass it on.</p>
+
+    <p>Read it if you have ever wondered why modern life feels hollow despite all its abundance. Read it if you want to understand yourself better in love. Read it if you are writing your own book and want to understand what emotionally honest nonfiction looks like from the inside. And absolutely read it before you dismiss it as another relationship guide — because it is far more than that.</p>
+
+    <div class="tag-row">
+      <span class="tag green">✓ Emotionally resonant</span>
+      <span class="tag green">✓ Intellectually ambitious</span>
+      <span class="tag green">✓ Beautifully structured</span>
+      <span class="tag green">✓ Commercially viable</span>
+      <span class="tag green">✓ Highly giftable</span>
+      <span class="tag amber">△ Middle pacing</span>
+      <span class="tag amber">△ Dialogue slightly polished</span>
+      <span class="tag amber">△ Final solution needs depth</span>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Literary Review &nbsp;·&nbsp; A Million Green Flags by Sia Stevens &nbsp;·&nbsp; Reviewed February 2026
+</footer>
+
+</body>
+</html>

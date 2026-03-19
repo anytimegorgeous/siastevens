@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>A Million Green Flags — Review | The Atlantic Review of Books</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --paper:       #FAFAF7;
+      --off-white:   #F4F2EC;
+      --ink:         #111010;
+      --ink-mid:     #2E2B28;
+      --ink-soft:    #5A5550;
+      --ink-muted:   #8C8780;
+      --rule:        #D4CEC4;
+      --red:         #C0282A;
+      --red-pale:    #F7ECEC;
+      --gold:        #A07828;
+      --gold-pale:   #F5EDD8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Lora', serif;
+      font-size: 17px;
+      line-height: 1.85;
+    }
+
+    /* ── TOP BAR ── */
+    .top-bar {
+      background: var(--ink);
+      color: #fff;
+      padding: 10px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .top-bar-date { color: #888; }
+    .top-bar-nav { display: flex; gap: 24px; color: #aaa; }
+
+    /* ── MASTHEAD ── */
+    .masthead {
+      text-align: center;
+      padding: 36px 32px 28px;
+      border-bottom: 3px double var(--ink);
+    }
+
+    .masthead-kicker {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9.5px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 10px;
+    }
+
+    .masthead-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 6vw, 64px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 0.95;
+      color: var(--ink);
+    }
+
+    .masthead-rule {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 18px auto;
+      max-width: 480px;
+    }
+
+    .masthead-rule-line {
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    .masthead-rule-diamond {
+      width: 6px; height: 6px;
+      background: var(--ink);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    .masthead-tagline {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--ink-muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── SECTION STRIP ── */
+    .section-strip {
+      background: var(--red);
+      color: #fff;
+      text-align: center;
+      padding: 9px 32px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+    }
+
+    /* ── PAGE LAYOUT ── */
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 28px;
+      display: grid;
+      grid-template-columns: 1fr 272px;
+      gap: 0 52px;
+      align-items: start;
+    }
+
+    @media (max-width: 760px) {
+      .page { grid-template-columns: 1fr; }
+      .sidebar { border-top: 2px solid var(--rule); padding-top: 36px; }
+    }
+
+    /* ── MAIN ── */
+    .main { padding: 48px 0 80px; }
+
+    /* headline group */
+    .hed-group {
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 28px;
+    }
+
+    .hed-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hed-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--red-pale);
+    }
+
+    .hed {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(30px, 5vw, 54px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+
+    .hed em {
+      font-style: italic;
+      color: var(--red);
+    }
+
+    .dek {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 19px;
+      font-weight: 400;
+      color: var(--ink-soft);
+      line-height: 1.5;
+      border-left: 3px solid var(--rule);
+      padding-left: 18px;
+      margin-bottom: 22px;
+    }
+
+    .byline-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-top: 18px;
+      border-top: 1px solid var(--rule);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11.5px;
+    }
+
+    .byline-row .by { color: var(--ink-muted); }
+    .byline-row .by span { color: var(--ink); font-weight: 500; }
+    .byline-row .pub-date { color: var(--ink-muted); letter-spacing: 0.04em; }
+
+    /* body copy */
+    .body p {
+      color: var(--ink-mid);
+      margin-bottom: 22px;
+      font-size: 17px;
+      line-height: 1.88;
+    }
+
+    /* drop cap */
+    .body p:first-of-type::first-letter {
+      font-family: 'Playfair Display', serif;
+      font-size: 78px;
+      font-weight: 900;
+      float: left;
+      line-height: 0.78;
+      margin: 8px 10px 0 0;
+      color: var(--ink);
+    }
+
+    .body p strong { color: var(--ink); font-weight: 600; }
+    .body p em { font-style: italic; }
+
+    /* subhead */
+    .subhead {
+      font-family: 'Playfair Display', serif;
+      font-size: 21px;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 42px 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* pull quote */
+    .pull {
+      border-top: 3px solid var(--ink);
+      border-bottom: 1px solid var(--rule);
+      padding: 26px 0 24px;
+      margin: 36px 0;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(19px, 2.5vw, 24px);
+      line-height: 1.45;
+      color: var(--ink);
+    }
+
+    /* book excerpt */
+    .excerpt {
+      background: var(--off-white);
+      border-left: 3px solid var(--red);
+      padding: 20px 26px;
+      margin: 28px 0;
+    }
+
+    .excerpt-kicker {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 12px;
+    }
+
+    .excerpt-text {
+      font-style: italic;
+      font-size: 16px;
+      color: var(--ink-mid);
+      line-height: 1.78;
+    }
+
+    .excerpt-source {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10.5px;
+      color: var(--ink-muted);
+      margin-top: 10px;
+      letter-spacing: 0.06em;
+    }
+
+    /* framework box — special callout */
+    .framework-box {
+      background: var(--ink);
+      color: #fff;
+      padding: 34px 36px;
+      margin: 40px 0;
+      position: relative;
+    }
+
+    .framework-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(to right, var(--red), var(--gold), var(--red));
+    }
+
+    .fw-kicker {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 14px;
+    }
+
+    .fw-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .fw-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 500px) { .fw-grid { grid-template-columns: 1fr; } }
+
+    .fw-item {
+      border-top: 1px solid #333;
+      padding-top: 14px;
+    }
+
+    .fw-item-name {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .fw-item-desc {
+      font-family: 'Lora', serif;
+      font-size: 13.5px;
+      color: #C8C0B8;
+      line-height: 1.6;
+    }
+
+    /* verdict strip */
+    .verdict-strip {
+      border-top: 3px double var(--ink);
+      border-bottom: 3px double var(--ink);
+      padding: 28px 0;
+      margin: 44px 0 0;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    @media (max-width: 540px) { .verdict-strip { grid-template-columns: 1fr; } }
+
+    .verdict-score-wrap {
+      text-align: center;
+      padding-right: 28px;
+      border-right: 1px solid var(--rule);
+    }
+
+    @media (max-width: 540px) {
+      .verdict-score-wrap { border-right: none; border-bottom: 1px solid var(--rule); padding-right: 0; padding-bottom: 20px; }
+    }
+
+    .verdict-score-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 64px;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .verdict-score-denom {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--ink-muted);
+      letter-spacing: 0.1em;
+    }
+
+    .verdict-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-top: 4px;
+    }
+
+    .verdict-text-wrap {}
+
+    .verdict-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+
+    .verdict-body {
+      font-size: 14.5px;
+      color: var(--ink-soft);
+      line-height: 1.75;
+    }
+
+    /* category bars */
+    .cat-bars {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .cat-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cat-name {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      color: var(--ink-muted);
+      width: 108px;
+      flex-shrink: 0;
+      letter-spacing: 0.04em;
+    }
+
+    .cat-track {
+      flex: 1;
+      height: 2px;
+      background: var(--rule);
+    }
+
+    .cat-fill {
+      height: 100%;
+      background: var(--ink);
+    }
+
+    .cat-val {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10.5px;
+      color: var(--ink-soft);
+      width: 28px;
+      text-align: right;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      padding: 48px 0 80px;
+    }
+
+    .sb-block {
+      border-top: 2px solid var(--ink);
+      padding-top: 20px;
+      margin-bottom: 32px;
+    }
+
+    .sb-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* book card */
+    .sb-book-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .sb-book-author {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 13.5px;
+      color: var(--ink-muted);
+      margin-bottom: 18px;
+    }
+
+    .sb-meta {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      color: var(--ink-soft);
+      line-height: 2;
+    }
+
+    .sb-meta strong { color: var(--ink); font-weight: 500; }
+
+    /* highlights list */
+    .sb-highlights li {
+      font-family: 'Lora', serif;
+      font-size: 13px;
+      color: var(--ink-mid);
+      line-height: 1.6;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--rule);
+      list-style: none;
+      display: flex;
+      gap: 10px;
+    }
+
+    .sb-highlights li:last-child { border-bottom: none; }
+
+    .hi-icon { color: var(--red); flex-shrink: 0; font-size: 12px; margin-top: 2px; }
+
+    /* who should read */
+    .sb-who p {
+      font-family: 'Lora', serif;
+      font-size: 13px;
+      color: var(--ink-mid);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--rule);
+      line-height: 1.6;
+    }
+
+    .sb-who p::before { content: '→ '; color: var(--red); }
+    .sb-who p:last-child { border-bottom: none; }
+
+    /* compare */
+    .sb-compare-item {
+      font-family: 'Lora', serif;
+      font-size: 13px;
+      color: var(--ink-mid);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--rule);
+      line-height: 1.6;
+    }
+
+    .sb-compare-item:last-child { border-bottom: none; }
+    .sb-compare-item em { font-style: italic; color: var(--ink); }
+
+    /* minor critique box */
+    .crit-box {
+      background: var(--off-white);
+      border: 1px solid var(--rule);
+      border-top: 2px solid var(--gold);
+      padding: 18px 20px;
+      margin-top: 28px;
+    }
+
+    .crit-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .crit-text {
+      font-family: 'Lora', serif;
+      font-size: 12.5px;
+      color: var(--ink-soft);
+      line-height: 1.7;
+    }
+
+    /* footer */
+    .page-footer {
+      background: var(--ink);
+      color: #555;
+      text-align: center;
+      padding: 22px 32px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border-top: 3px solid var(--red);
+    }
+
+    /* animation */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .main  { animation: fadeUp 0.65s ease forwards; }
+    .sidebar { animation: fadeUp 0.65s 0.12s ease both; }
+  </style>
+</head>
+<body>
+<!-- TOP BAR -->
+  <div class="top-bar">
+    <div>The Atlantic Review of Books</div>
+    <div class="top-bar-nav">
+      <span>Books</span><span>Culture</span><span>Ideas</span><span>Society</span>
+    </div>
+    <div class="top-bar-date">February 15, 2026</div>
+  </div>
+
+  <!-- MASTHEAD -->
+  <div class="masthead">
+    <div class="masthead-kicker">The Atlantic Review of Books</div>
+    <div class="masthead-title">Books &amp; Ideas</div>
+    <div class="masthead-rule">
+      <div class="masthead-rule-line"></div>
+      <div class="masthead-rule-diamond"></div>
+      <div class="masthead-rule-line"></div>
+    </div>
+    <div class="masthead-tagline">Independent Literary Criticism &nbsp;·&nbsp; Est. 2001</div>
+  </div>
+
+  <div class="section-strip">Relationships &nbsp;·&nbsp; Society &nbsp;·&nbsp; Philosophy &nbsp;·&nbsp; Debut Nonfiction</div>
+
+  <!-- PAGE -->
+  <div class="page">
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <div class="hed-group">
+        <div class="hed-label">★ Featured Review</div>
+        <h1 class="hed">A Landmark Book for the Age of <em>Loneliness</em></h1>
+        <p class="dek">In her astonishing debut, Sia Stevens does what a generation of self-help writers, relationship podcasters, and pop psychologists failed to do: she explains, precisely and movingly, why modern humans have become so catastrophically bad at loving each other — and offers a framework for finding our way back.</p>
+        <div class="byline-row">
+          <div class="by">Reviewed by <span>Margaret Calloway</span>, Senior Books Editor</div>
+          <div class="pub-date">February 15, 2026</div>
+        </div>
+      </div>
+
+      <!-- BODY -->
+      <div class="body">
+
+        <p>Begin with the birds. Two of them, in a garden at dawn — one singing with the full abandon of a creature that exists for nothing else, the other watching from a nearby branch in a silence that is not absence but a kind of devotion, a complete and attentive presence. It is the opening image of <em>A Million Green Flags</em>, Sia Stevens's debut work of narrative nonfiction, and it is the image that lingers longest after the book is done. A book does not often earn the right to its own metaphors. Stevens earns hers on every subsequent page, and by the time those two birds return in the final chapter — transformed, by everything the book has argued and felt and discovered in the intervening pages — the reader understands with quiet certainty that they have been inside something genuinely rare: a book that knew, from its very first sentence, exactly what it wanted to say about the world. And said it.</p>
+
+        <p>The argument of <em>A Million Green Flags</em> is not complicated to state, though it takes considerable intelligence and craft to make it felt. We are living through a loneliness epidemic. The United States Surgeon General declared it a public health crisis in 2023. Marriage rates have fallen to historic lows. Studies across twelve countries find that adults aged 18 to 34 — the most connected generation ever to draw breath — report the highest rates of loneliness ever recorded. Dating app usage has tripled since 2015. And yet, for all our thinkpieces and podcasts and self-help bestsellers, nobody has satisfactorily answered the question underneath all of it: <em>why?</em> Why, with all our awareness and technology and unprecedented access to other human beings, are we failing at the most fundamentally human thing we do?</p>
+
+        <p>Stevens answers that question. Methodically, warmly, with humor and philosophy and genuine humanity — and with a framework so elegant and well-grounded that the wonder is not that someone thought of it but that nobody apparently had before.</p>
+
+        <div class="subhead">The Four Superpowers: A Framework That Changes Everything</div>
+
+        <p>At the intellectual center of <em>A Million Green Flags</em> is a proposition that Stevens develops across a series of unforgettable conversations with Dr. Alan Meyer, a veteran psychology professor, in a Seattle café over croissants and shared curiosity. The proposition is this: the human brain did not evolve its most extraordinary capacities — Memory, Language, Empathy, and Creativity — for the purposes of building civilizations or achieving ambitions or winning wars. It evolved them specifically, precisely, and almost exclusively for the purpose of building and maintaining deep bonds between people. These are not general-purpose cognitive tools that happen to be useful in relationships. They are, in Stevens's formulation, our four great <strong>superpowers for connection</strong> — and the modern world is systematically dismantling all four of them.</p>
+
+        <div class="framework-box">
+          <div class="fw-kicker">The Central Framework · A Million Green Flags</div>
+          <div class="fw-title">The Four Human Superpowers for Connection</div>
+          <div class="fw-grid">
+            <div class="fw-item">
+              <div class="fw-item-name">Memory</div>
+              <div class="fw-item-desc">The capacity to accumulate shared history — the bedrock of all lasting bonds. Every real relationship is an archive. Stevens argues we are losing the patience to build one.</div>
+            </div>
+            <div class="fw-item">
+              <div class="fw-item-name">Language</div>
+              <div class="fw-item-desc">Not merely communication but revelation — the courage to make yourself known and the discipline to truly hear another. The communication gap, she argues, is always a gap of will before it is a gap of skill.</div>
+            </div>
+            <div class="fw-item">
+              <div class="fw-item-name">Empathy</div>
+              <div class="fw-item-desc">The neurological miracle of feeling another person's inner life as though it were your own. Stevens traces its erosion through digital distance and the replacement of presence with performance.</div>
+            </div>
+            <div class="fw-item">
+              <div class="fw-item-name">Creativity</div>
+              <div class="fw-item-desc">The most underestimated of the four — the ongoing invention of new ways to show love, to surprise, to make a person feel uniquely seen. The book's argument: we give our creativity to work and our exhaustion to love.</div>
+            </div>
+          </div>
+        </div>
+
+        <p>What makes this framework compelling is not merely its elegance — it is its explanatory power. Once you accept that these four capacities are specifically designed for deep human bonding, the catastrophes of modern romantic life snap into focus with uncomfortable clarity. The reason swipe-culture feels hollow is not that the people on the other end are wrong but that the medium actively prevents the accumulation of shared memory. The reason so many relationships stall at surface-level is not incompatibility but the failure of language — the choice, daily and mostly unconscious, not to reveal oneself fully. The reason modern couples report feeling like strangers after years together is not the absence of love but the atrophy of empathy in an environment that rewards performance over presence. The reason relationships lose their vitality is not the dimming of passion but the withdrawal of creative investment — the day we stopped inventing new ways to make the other person feel alive.</p>
+
+        <p>This is not therapeutic language dressed up as philosophy. This is a genuine intellectual reckoning with the mechanisms of love's failure — and it is more original than anything the genre has produced in years.</p>
+
+        <div class="subhead">The Shortcuts Revelation</div>
+
+        <p>If the superpowers framework is the book's intellectual spine, Chapter 34 — "Shortcuts" — is its emotional heart. It is also, in this reviewer's assessment, the finest single piece of writing the book contains, and one of the most penetrating diagnoses of modern behavioral addiction to appear in popular nonfiction in recent memory.</p>
+
+        <p>The chapter begins with Stevens walking through Seattle and encountering a young man on the street — homeless, visibly compulsive, caught in a loop he cannot break. She recognizes in him not an object of pity but a mirror. The parallel she draws between substance addiction and romantic addiction is not new science; researchers have documented the neurological overlap for decades. What is new is the conclusion Stevens extracts from it — a conclusion so clean and so uncomfortable that it refuses to leave the mind once encountered.</p>
+
+        <div class="excerpt">
+          <div class="excerpt-kicker">From Chapter 34 · "Shortcuts"</div>
+          <div class="excerpt-text">"People aren't addicted to drugs. They're addicted to shortcuts. The relief without the labor. The reward without the earning. Instead of building love slowly, with patience and accumulated memory, we swipe right and expect intimacy to arrive on demand. Instead of repairing what is broken, we replace it — because replacement is faster, and we are a generation that has confused speed with progress."</div>
+          <div class="excerpt-source">— A Million Green Flags, Chapter 34</div>
+        </div>
+
+        <p>The implication is devastating and clarifying in equal measure: we are not addicted to other people, or to our phones, or to the dopamine hit of a new match. We are addicted to the shortcut itself. To the bypass of effort. To everything that delivers the sensation of connection without requiring us to do the patient, unglamorous, daily work that real connection demands. And modern romantic infrastructure — the apps, the ghosting, the frictionless replacement of one person with the next — is not a new way of finding love. It is a new and socially acceptable delivery mechanism for the oldest addiction in the human repertoire.</p>
+
+        <p>This is not a comfortable argument. It does not tell the reader that they have simply been unlucky or that the right person is out there if they just keep looking. It tells them that the looking itself may be the problem. And it says so without cruelty — with the empathy of someone who has been inside the same loop and found, at last, the name for it.</p>
+
+        <div class="pull">Once you accept that our four great neurological superpowers were specifically evolved for human connection, the catastrophes of modern romantic life snap into focus with uncomfortable clarity.</div>
+
+        <div class="subhead">The Journey: From Seattle to the Himalayas to Athens</div>
+
+        <p>Stevens is also, it must be said, a natural storyteller — and <em>A Million Green Flags</em> works as travel narrative and character study as well as it does as philosophy. The book traces its protagonist across a series of encounters — a millionaire's launch party on Lake Washington, a mountain trek with strangers, a Thanksgiving table of competing brothers, Seattle's streets with a social worker named Rob, a Hollywood director's villa, a Himalayan monastery, the ruins of Athens — and each encounter is rendered with an eye for the specific, the sensory, and the human detail that makes philosophical ideas feel lived-in rather than constructed.</p>
+
+        <p>The Greek section of the book is where Stevens's ambitions rise highest — and, remarkably, are most fully met. Threading through the mythologies of Zeus, Ares, Alexander, Poseidon, and finally Athena, she builds toward a reading of ancient culture that is both rigorous and emotionally resonant. The revelation that Athens bears a woman's name not from conquest but from an act of collective judgment — that the city chose Athena's enduring olive tree over Poseidon's spectacular but useless saltwater spring, sustenance over force, wisdom over power — arrives with genuine intellectual surprise. It is followed by the book's most counterintuitive and most hopeful idea: the Hercules argument.</p>
+
+        <p>Hercules, Stevens reminds us, murdered his own family in a fit of destructive rage. He then became, through the discipline of twelve directed labors, the hero civilization sings about for three thousand years. The application to the book's central concern is startling in its simplicity: <strong>red flags are not permanent.</strong> Environment determines which nature emerges. People are not fixed by their worst chapters. The same energy that destroys, properly channeled and properly directed, can build something the world remembers. It is the most counterintuitive argument in a book full of them — and it is given enough room, in Stevens's hands, to become genuinely moving.</p>
+
+        <div class="excerpt">
+          <div class="excerpt-kicker">From the Greek Section</div>
+          <div class="excerpt-text">"Hercules did not become a hero by becoming a different person. He became a hero by directing the same energy differently. The question is never whether the fire in you is too much. The question is what you choose to build with it."</div>
+          <div class="excerpt-source">— A Million Green Flags, The Greek Goddess</div>
+        </div>
+
+        <div class="subhead">The Wisdom of Women and the Auditorium Speech</div>
+
+        <p>One of the book's quieter achievements is its treatment of women's wisdom across generations and cultures. From the Greek matriarch in her sunlit kitchen, to the Hollywood actress who survived the industry's particular cruelties with her sense of self intact, to the women gathered in the Seattle auditorium who came expecting an evening about red flags and received instead a full reckoning with what modern love has cost them — Stevens is building, section by section, a portrait of female intelligence that is neither idealized nor diminished. The Athena chapter is its culmination: a genuinely sophisticated feminist argument that civilization's most enduring contributions come from wisdom, strategy, and sustenance rather than conquest and spectacle, delivered through myth in a way that makes the argument feel ancient and urgent simultaneously.</p>
+
+        <p>The auditorium speech that closes the book is its most formally ambitious set piece — a monologue that synthesizes everything the book has argued into a single sustained address to the women in the room and, by extension, to every reader who has ever felt that the language of modern love — the red flags, the green flags, the checklists and the algorithms — has somehow failed to describe the thing they were actually looking for. Stevens does not end by providing the answer. She ends by providing the better question. And in doing so, she does something more useful than any answer could manage: she sends the reader back into their own life with different eyes.</p>
+
+        <div class="subhead">On the Joy of Reading It</div>
+
+        <p>It would be a failure to discuss only what <em>A Million Green Flags</em> argues and not how it feels to read — because one of its most disarming qualities is that it is genuinely enjoyable. Stevens writes dialogue that has real rhythm and wit. The library chapter, in which she and a brilliant, burned-out scientist friend systematically dismantle love languages, Myers-Briggs compatibility, and the podcast-psychology industrial complex with the affectionate savagery of two people who have thought very seriously about these things and found them wanting, is the funniest sequence in the book and the most shareable. The Hollywood section has cinematic atmosphere and a love story embedded within it that manages to be both romantic and devastating. The monastery is serenely rendered. The mountain trek has the specific, physical intimacy of people sharing difficulty together — which is, as the book argues, one of the oldest and most reliable ways humans have ever forged bonds.</p>
+
+        <p>She is also capable, at her best, of sentences that make the reader stop and reread. <em>"I do not hold grudges; I only carry questions."</em> <em>"Learning through endless heartbreaks is an expensive way to master a lesson, especially when the currency is your soul."</em> <em>"The question isn't how to find someone waving green flags. It's how to become someone who grows them."</em> These are not borrowed wisdoms or aphorisms retrofitted to a pre-existing argument. They are earned — arrived at through the book's accumulated intelligence — and they carry the weight of that earning. A writer who produces lines like these in a debut is a writer worth following closely.</p>
+
+        <div class="subhead">Where the Book Could Go Further</div>
+
+        <p>Criticism, where it is due: <em>A Million Green Flags</em> arrives at 75 chapters, and a tighter editorial hand would have found the book's essential shape at fifty. The structural repetition — particularly in the Mountain Trek and Pillow Talk sections — occasionally dilutes the cumulative force of what is, at its best, a relentlessly building argument. A few of the later chapters on the practical stages of relationship development, while well-intentioned, do not quite reach the philosophical altitude of the book's most ambitious sections. And the central character's defining heartbreak — the relationship that precipitates the entire journey — is referenced so briefly that the grief, however eloquently described, lacks the specific human face that would make the healing feel fully earned.</p>
+
+        <p>These are the critiques of a book that has set itself a very high standard and mostly met it. They are the things a second edition — or a second book — might address. They do not meaningfully diminish what the book achieves. They simply mark the distance between very good and great, a distance that many first books never close and that this one closes more often than not.</p>
+
+        <div class="subhead">The Verdict</div>
+
+        <p>There are books that arrive at exactly the moment they are needed and somehow know it. <em>A Million Green Flags</em> is one of those books. It enters a world in which loneliness has been declared a public health emergency, in which the infrastructure of modern romance actively works against the formation of deep bonds, in which an entire generation has grown up knowing how to swipe and ghost and optimize but not, quite, how to stay — and it offers not a solution but something more durable than a solution. A framework. A set of lenses. A vocabulary for the problem that makes the problem finally speakable. And then, having made it speakable, suggests — quietly, with enormous generosity and without a trace of condescension — that it might also be solvable. Not through better apps or better algorithms or better checklists. Through the patient, effortful, creative, empathetic, memory-building work of becoming, one relationship at a time, the person that love requires.</p>
+
+        <p>Sia Stevens has written a book that will be pressed into the hands of strangers on buses, left on tables for adult children to find, read in the early hours after a breakup, carried into couples therapy, quoted in wedding speeches, and returned to again and again by the kind of reader who earns their dog-ears. That is not a small thing to have done with a first book. It is, in fact, the only thing that ultimately matters.</p>
+
+      </div>
+
+      <!-- VERDICT -->
+      <div class="verdict-strip">
+        <div class="verdict-score-wrap">
+          <div class="verdict-score-num">9</div>
+          <div class="verdict-score-denom">out of 10</div>
+          <div class="verdict-label">Our Rating</div>
+        </div>
+        <div class="verdict-text-wrap">
+          <div class="verdict-title">Essential, Urgent, and Beautifully Alive</div>
+          <div class="verdict-body">A debut of rare intellectual ambition and genuine emotional intelligence that earns its place among the most important books written about human connection in a generation. Stevens's four-superpowers framework is the most original contribution to relationship science to appear in popular nonfiction in years. The Shortcuts chapter alone justifies the price of admission. A book for anyone who has loved, lost, or quietly wondered whether the modern world has made both harder than they need to be. Which is to say: a book for everyone.</div>
+          <div class="cat-bars">
+            <div class="cat-row">
+              <div class="cat-name">Writing Quality</div>
+              <div class="cat-track"><div class="cat-fill" style="width:86%"></div></div>
+              <div class="cat-val">8.6</div>
+            </div>
+            <div class="cat-row">
+              <div class="cat-name">Ideas &amp; Insight</div>
+              <div class="cat-track"><div class="cat-fill" style="width:93%"></div></div>
+              <div class="cat-val">9.3</div>
+            </div>
+            <div class="cat-row">
+              <div class="cat-name">Readability</div>
+              <div class="cat-track"><div class="cat-fill" style="width:90%"></div></div>
+              <div class="cat-val">9.0</div>
+            </div>
+            <div class="cat-row">
+              <div class="cat-name">Originality</div>
+              <div class="cat-track"><div class="cat-fill" style="width:88%"></div></div>
+              <div class="cat-val">8.8</div>
+            </div>
+            <div class="cat-row">
+              <div class="cat-name">Cultural Urgency</div>
+              <div class="cat-track"><div class="cat-fill" style="width:97%"></div></div>
+              <div class="cat-val">9.7</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="sb-block">
+        <div class="sb-label">Book Details</div>
+        <div class="sb-book-title">A Million Green Flags</div>
+        <div class="sb-book-author">by Sia Stevens</div>
+        <div class="sb-meta">
+          <strong>Publisher</strong><br>Vessel &amp; Ink Press<br><br>
+          <strong>Published</strong><br>2026 · First Edition<br><br>
+          <strong>Format</strong><br>Memoir / Social Philosophy<br><br>
+          <strong>Length</strong><br>75 Chapters · 12 Sections<br><br>
+          <strong>Setting</strong><br>Seattle · Hollywood · Himalayas · Greece
+        </div>
+      </div>
+
+      <div class="sb-block">
+        <div class="sb-label">What Stays With You</div>
+        <ul class="sb-highlights">
+          <li><span class="hi-icon">◆</span> The four superpowers framework — original, rigorous, and immediately applicable</li>
+          <li><span class="hi-icon">◆</span> Chapter 34 on shortcuts and behavioral addiction — the book's intellectual peak</li>
+          <li><span class="hi-icon">◆</span> The Hercules argument: red flags are not permanent. Environment determines which nature emerges</li>
+          <li><span class="hi-icon">◆</span> The Athena revelation — civilization chose wisdom over power, and named itself accordingly</li>
+          <li><span class="hi-icon">◆</span> The auditorium speech — a synthesis that earns every word it costs</li>
+          <li><span class="hi-icon">◆</span> The birds. The opening and closing image that holds the whole book together</li>
+        </ul>
+      </div>
+
+      <div class="sb-block">
+        <div class="sb-label">Read This If You...</div>
+        <div class="sb-who">
+          <p>Have ever felt lonelier inside a relationship than outside one</p>
+          <p>Want to understand why modern dating is broken — not just how to survive it</p>
+          <p>Are in a long relationship and sense that something has quietly gone missing</p>
+          <p>Read self-help but require it to be genuinely intelligent</p>
+          <p>Have someone in your life you want to reach but can't find the words</p>
+          <p>Believe the world is meaningfully better when people love each other well</p>
+        </div>
+      </div>
+
+      <div class="sb-block">
+        <div class="sb-label">If You Liked These</div>
+        <div class="sb-compare-item"><em>Mating in Captivity</em> · Esther Perel — similar territory, more clinical</div>
+        <div class="sb-compare-item"><em>Essays in Love</em> · Alain de Botton — philosophy-memoir hybrid; less warm</div>
+        <div class="sb-compare-item"><em>Alone Together</em> · Sherry Turkle — deeper on technology, less readable</div>
+        <div class="sb-compare-item"><em>Why We Love</em> · Helen Fisher — the neuroscience, without the journey</div>
+        <div class="sb-compare-item"><em>The Righteous Mind</em> · Jonathan Haidt — same quality of moral argument, different domain</div>
+      </div>
+
+      <div class="crit-box">
+        <div class="crit-label">Minor Reservations</div>
+        <div class="crit-text">At 75 chapters, the book occasionally repeats itself where it might have trusted the reader more. The central heartbreak that precipitates the journey could be rendered with more specific emotional detail. These are the growing pains of a debut that aimed very high. A second book will correct them.</div>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <footer class="page-footer">
+    © 2026 The Atlantic Review of Books &nbsp;·&nbsp; All Rights Reserved &nbsp;·&nbsp; Independent Literary Criticism Since 2001
+  </footer>
+
+</body>
+</html>
