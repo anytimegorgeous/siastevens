@@ -10,7 +10,7 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Sia Stevens — Author of What Happened to Us and A Million Green Flags">
-  <meta property="og:description" content="Modern love makes more sense. A fable to feel it. A framework to build it.">
+  <meta property="og:description" content="Modern love, finally explained. A fable to feel it. A framework to build it.">
   <meta property="og:image" content="https://siastevens.com/images/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -20,7 +20,7 @@
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Sia Stevens — Author of What Happened to Us and A Million Green Flags">
-  <meta name="twitter:description" content="Modern love makes more sense. A fable to feel it. A framework to build it.">
+  <meta name="twitter:description" content="Modern love, finally explained. A fable to feel it. A framework to build it.">
   <meta name="twitter:image" content="https://siastevens.com/images/og.jpg">
   <meta name="twitter:site" content="@amgf_book">
 
@@ -42,6 +42,7 @@
           "https://www.instagram.com/amilliongreenflags/",
           "https://www.facebook.com/profile.php?id=61587128354436",
           "https://relationships101.co",
+          "https://www.redflagdetector.pro",
           "https://www.alttherapy.co"
         ]
       },
@@ -57,7 +58,7 @@
         "genre": ["Fiction", "Relationships", "Fable"],
         "description": "A fable of modern love. It ended on a Tuesday, over takeout they didn't finish. One engineer spent a year finding out why — and brought home a framework.",
         "image": "https://siastevens.com/images/what-happened-to-us.jpg",
-        "offers": { "@type": "Offer", "url": "https://a.co/d/06A67f2d", "availability": "https://schema.org/InStock" }
+        "offers": { "@type": "Offer", "url": "https://a.co/d/0b4c8N7Y", "availability": "https://schema.org/InStock" }
       },
       {
         "@type": "Book",
@@ -71,13 +72,14 @@
         "genre": ["Psychology", "Relationships", "Self-Help", "Nonfiction"],
         "description": "The manual nobody handed you. Twenty-seven chapters, twenty-nine activities, and a three-stage framework for building relationships that last: attraction, reciprocation, co-creation.",
         "image": "https://siastevens.com/images/a-million-green-flags.jpg",
-        "offers": { "@type": "Offer", "url": "https://a.co/d/0b4c8N7Y", "availability": "https://schema.org/InStock" }
+        "offers": { "@type": "Offer", "url": "https://a.co/d/06A67f2d", "availability": "https://schema.org/InStock" }
       }
     ]
   }
   </script>
 
-  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
   <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Josefin+Sans:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <style>
@@ -128,7 +130,7 @@
     .hamburger span { width: 20px; height: 1.5px; background: var(--charcoal); }
 
     /* HERO */
-    .hero { position: relative; height: clamp(500px, calc(42.85vw + 62px), 960px); display: flex; align-items: center; overflow: hidden; background: #F3E4DA; }
+    .hero { position: relative; z-index: 5; height: clamp(500px, calc(42.85vw + 62px), 960px); display: flex; align-items: center; background: #F3E4DA; }
     .hero-bg { position: absolute; inset: 0; background: url('images/hero.jpg') center bottom/100% auto no-repeat; }
     .hero-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(251,244,236,.93) 0%, rgba(251,244,236,.9) 26%, rgba(251,244,236,.55) 38%, rgba(251,244,236,0) 46%); }
     .hero-inner { position: relative; z-index: 2; width: 100%; padding: 92px clamp(20px, 4vw, 48px) 30px; }
@@ -137,6 +139,20 @@
     .hero-name { font-family: var(--heading); font-size: clamp(30px, 3.6vw, 50px); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--navy); line-height: 1.05; margin-bottom: 22px; animation: fadeUp .6s .25s ease both; }
     .hero-line { font-family: var(--serif); font-style: italic; font-size: clamp(26px, 2.9vw, 40px); color: #9E2A3A; line-height: 1.12; margin-bottom: 14px; animation: fadeUp .6s .4s ease both; }
     .hero-sub { font-family: var(--heading); font-size: clamp(10px, 1.1vw, 12px); font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--navy); line-height: 1.9; margin-bottom: 28px; animation: fadeUp .6s .5s ease both; }
+    .buy { position: relative; }
+    .buy-btn { cursor: pointer; }
+    .caret { display: inline-block; width: 6px; height: 6px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-3px) rotate(45deg); margin-left: 8px; transition: transform .25s; }
+    .buy.open .caret { transform: translateY(1px) rotate(225deg); }
+    .buy-panel { position: absolute; top: calc(100% + 10px); left: 0; min-width: 300px; background: var(--white); border: 1px solid var(--border); border-radius: 2px; box-shadow: 0 18px 40px rgba(43,42,40,.18); padding: 8px; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: all .22s ease; z-index: 20; }
+    .buy.open .buy-panel { opacity: 1; visibility: visible; transform: translateY(0); }
+    .buy-panel a { display: flex; align-items: center; gap: 14px; padding: 10px 12px; border-radius: 2px; color: var(--charcoal); transition: background .2s; }
+    .buy-panel a:hover { background: var(--off-white); }
+    .buy-panel img { width: 42px; height: 63px; object-fit: cover; border-radius: 1px; box-shadow: 0 3px 8px rgba(0,0,0,.2); flex-shrink: 0; }
+    .buy-panel span { display: flex; flex-direction: column; gap: 3px; }
+    .buy-panel strong { font-family: var(--heading); font-size: 14px; font-weight: 700; letter-spacing: .02em; }
+    .buy-panel em { font-style: normal; font-size: 12px; color: var(--text-mid); letter-spacing: .04em; }
+    .buy-panel a:first-child strong { color: var(--crimson); }
+    .buy-panel a:last-child strong { color: var(--leaf); }
     .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; animation: fadeUp .6s .6s ease both; }
     .btn.navy { border-color: var(--navy); color: var(--navy); }
     .btn.navy:hover { background: var(--navy); color: #fff; }
@@ -254,6 +270,8 @@
       .hero-inner { padding: 30px clamp(20px, 4vw, 48px) 44px; text-align: center; }
       .hero-text { margin: 0 auto; }
       .hero-btns { justify-content: center; }
+      .buy-panel { left: 50%; transform: translate(-50%, -6px); }
+      .buy.open .buy-panel { transform: translate(-50%, 0); }
       .books-grid, .ex-grid { grid-template-columns: 1fr; }
       .book-top { flex-direction: column; align-items: center; text-align: center; }
       .book-bottom { justify-content: center; }
@@ -293,8 +311,8 @@
 
 <!-- FLOATING CTA -->
 <div class="floating-cta" id="floatingCta">
-  <a class="f1" href="https://a.co/d/06A67f2d" target="_blank" rel="noopener">The Fable</a>
-  <a class="f2" href="https://a.co/d/0b4c8N7Y" target="_blank" rel="noopener">The Manual</a>
+  <a class="f1" href="https://a.co/d/0b4c8N7Y" target="_blank" rel="noopener">The Fable</a>
+  <a class="f2" href="https://a.co/d/06A67f2d" target="_blank" rel="noopener">The Manual</a>
 </div>
 
 <!-- HERO -->
@@ -305,11 +323,22 @@
     <div class="hero-text">
       <p class="hero-kicker">Stories &middot; Science &middot; Stronger Relationships</p>
       <h1 class="hero-name">Sia Stevens</h1>
-      <p class="hero-line">Modern love makes more sense.</p>
+      <p class="hero-line">Modern love, finally explained.</p>
       <p class="hero-sub">A fable to feel it.<br>A framework to build it.</p>
       <div class="hero-btns">
-        <a href="#books" class="btn navy solid">The Books</a>
-        <a href="#framework" class="btn navy">The Framework</a>
+        <div class="buy" id="buyMenu">
+          <button type="button" class="btn navy solid buy-btn" id="buyBtn" aria-haspopup="true" aria-expanded="false" aria-controls="buyPanel">Buy on Amazon <span class="caret" aria-hidden="true"></span></button>
+          <div class="buy-panel" id="buyPanel" role="menu" aria-label="Choose a book">
+            <a role="menuitem" href="https://a.co/d/0b4c8N7Y" target="_blank" rel="noopener">
+              <img src="images/what-happened-to-us.jpg" alt="">
+              <span><strong>What Happened to Us</strong><em>The fable &middot; a novel</em></span>
+            </a>
+            <a role="menuitem" href="https://a.co/d/06A67f2d" target="_blank" rel="noopener">
+              <img src="images/a-million-green-flags.jpg" alt="">
+              <span><strong>A Million Green Flags</strong><em>The manual &middot; a workbook</em></span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -345,7 +374,7 @@
         </div>
         <div class="book-facts">Sixty short chapters <span>&middot;</span> Paperback &amp; Kindle <span>&middot;</span> Illustrated section openers</div>
         <div class="book-bottom">
-          <a href="https://a.co/d/06A67f2d" target="_blank" rel="noopener" class="btn coral">Order on Amazon</a>
+          <a href="https://a.co/d/0b4c8N7Y" target="_blank" rel="noopener" class="btn coral">Order on Amazon</a>
           <a href="#excerpts" class="btn ghost">Read an excerpt</a>
         </div>
       </article>
@@ -367,7 +396,7 @@
         </div>
         <div class="book-facts">27 chapters <span>&middot;</span> 29 activities <span>&middot;</span> 27 green flags <span>&middot;</span> Paperback &amp; Kindle</div>
         <div class="book-bottom">
-          <a href="https://a.co/d/0b4c8N7Y" target="_blank" rel="noopener" class="btn leaf">Order on Amazon</a>
+          <a href="https://a.co/d/06A67f2d" target="_blank" rel="noopener" class="btn leaf">Order on Amazon</a>
           <a href="#excerpts" class="btn ghost">Read an excerpt</a>
         </div>
       </article>
@@ -451,12 +480,11 @@
         <p>The interactive companion to both books &mdash; the same three stages, taught through short lessons, real activities, and exercises built to be done, not just read. Where the practices in the manual become a program.</p>
         <span class="go">relationships101.co</span>
       </a>
-      <!-- TODO: replace href="#" with the Red Flag Detector app URL -->
-      <a class="tool" href="#" target="_blank" rel="noopener">
+      <a class="tool" href="https://www.redflagdetector.pro/" target="_blank" rel="noopener">
         <p class="tk">The App</p>
         <h4>Red Flag Detector</h4>
         <p>The record-keeping system from the final part of the manual. You don&rsquo;t ask the heart &mdash; you ask the bow. Track patterns, promises, and what actually happened the last three times a standard was calmly held.</p>
-        <span class="go">Open the app</span>
+        <span class="go">redflagdetector.pro</span>
       </a>
       <a class="tool" href="https://www.alttherapy.co/" target="_blank" rel="noopener">
         <p class="tk">In Person</p>
@@ -493,8 +521,8 @@
     <h2 class="h2">Both books are new. Be the first to say what they did.</h2>
     <p class="rv-text">Books like these live or die by word of mouth. If one chapter named something you could never name, or one practice changed a Tuesday, a short honest review on Amazon takes two minutes and helps the next reader find it.</p>
     <div class="rv-btns">
-      <a href="https://a.co/d/06A67f2d" target="_blank" rel="noopener" class="btn">Review What Happened to Us</a>
-      <a href="https://a.co/d/0b4c8N7Y" target="_blank" rel="noopener" class="btn">Review A Million Green Flags</a>
+      <a href="https://a.co/d/0b4c8N7Y" target="_blank" rel="noopener" class="btn">Review What Happened to Us</a>
+      <a href="https://a.co/d/06A67f2d" target="_blank" rel="noopener" class="btn">Review A Million Green Flags</a>
     </div>
   </div>
 </section>
@@ -536,6 +564,18 @@ document.querySelectorAll('.nav-links a, .nav-brand, .nav-order, .hero-btns a, .
       document.getElementById('navLinks').classList.remove('open');
     }
   });
+});
+var buy = document.getElementById('buyMenu'), buyBtn = document.getElementById('buyBtn');
+buyBtn.addEventListener('click', function (e) {
+  e.stopPropagation();
+  var open = buy.classList.toggle('open');
+  buyBtn.setAttribute('aria-expanded', open);
+});
+document.addEventListener('click', function (e) {
+  if (!buy.contains(e.target)) { buy.classList.remove('open'); buyBtn.setAttribute('aria-expanded', 'false'); }
+});
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') { buy.classList.remove('open'); buyBtn.setAttribute('aria-expanded', 'false'); }
 });
 var obs = new IntersectionObserver(function (entries) {
   entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('visible'); });
