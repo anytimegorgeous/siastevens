@@ -70,7 +70,7 @@
         "bookFormat": "https://schema.org/Paperback",
         "datePublished": "2026",
         "genre": ["Psychology", "Relationships", "Self-Help", "Nonfiction"],
-        "description": "The manual nobody handed you. Twenty-seven chapters, twenty-nine activities, and a three-stage framework for building relationships that last: attraction, reciprocation, co-creation.",
+        "description": "The manual nobody handed you. Twenty-seven chapters, twenty-seven activities, and a three-stage framework for building relationships that last: attraction, reciprocation, co-creation.",
         "image": "https://siastevens.com/images/a-million-green-flags.jpg",
         "offers": { "@type": "Offer", "url": "https://a.co/d/06A67f2d", "availability": "https://schema.org/InStock" }
       }
@@ -143,14 +143,14 @@
     .buy-btn { cursor: pointer; }
     .caret { display: inline-block; width: 6px; height: 6px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-3px) rotate(45deg); margin-left: 8px; transition: transform .25s; }
     .buy.open .caret { transform: translateY(1px) rotate(225deg); }
-    .buy-panel { position: absolute; top: calc(100% + 10px); left: 0; min-width: 300px; background: var(--white); border: 1px solid var(--border); border-radius: 2px; box-shadow: 0 18px 40px rgba(43,42,40,.18); padding: 8px; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: all .22s ease; z-index: 20; }
+    .buy-panel { position: absolute; top: calc(100% + 10px); left: 0; min-width: 340px; background: var(--white); border: 1px solid var(--border); border-radius: 2px; box-shadow: 0 18px 40px rgba(43,42,40,.18); padding: 8px; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: all .22s ease; z-index: 20; }
     .buy.open .buy-panel { opacity: 1; visibility: visible; transform: translateY(0); }
     .buy-panel a { display: flex; align-items: center; gap: 14px; padding: 10px 12px; border-radius: 2px; color: var(--charcoal); transition: background .2s; }
     .buy-panel a:hover { background: var(--off-white); }
     .buy-panel img { width: 42px; height: 63px; object-fit: cover; border-radius: 1px; box-shadow: 0 3px 8px rgba(0,0,0,.2); flex-shrink: 0; }
     .buy-panel span { display: flex; flex-direction: column; gap: 3px; }
     .buy-panel strong { font-family: var(--heading); font-size: 14px; font-weight: 700; letter-spacing: .02em; }
-    .buy-panel em { font-style: normal; font-size: 12px; color: var(--text-mid); letter-spacing: .04em; }
+    .buy-panel em { font-style: normal; white-space: nowrap; font-size: 12px; color: var(--text-mid); letter-spacing: .04em; }
     .buy-panel a:first-child strong { color: var(--crimson); }
     .buy-panel a:last-child strong { color: var(--leaf); }
     .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; animation: fadeUp .6s .6s ease both; }
@@ -311,8 +311,8 @@
 
 <!-- FLOATING CTA -->
 <div class="floating-cta" id="floatingCta">
-  <a class="f1" href="https://a.co/d/0b4c8N7Y" target="_blank" rel="noopener">The Fable</a>
-  <a class="f2" href="https://a.co/d/06A67f2d" target="_blank" rel="noopener">The Manual</a>
+  <a class="f1" href="https://a.co/d/0b4c8N7Y" target="_blank" rel="noopener">What Happened to Us</a>
+  <a class="f2" href="https://a.co/d/06A67f2d" target="_blank" rel="noopener">A Million Green Flags</a>
 </div>
 
 <!-- HERO -->
@@ -331,11 +331,11 @@
           <div class="buy-panel" id="buyPanel" role="menu" aria-label="Choose a book">
             <a role="menuitem" href="https://a.co/d/0b4c8N7Y" target="_blank" rel="noopener">
               <img src="images/what-happened-to-us.jpg" alt="">
-              <span><strong>What Happened to Us</strong><em>The fable &middot; a novel</em></span>
+              <span><strong>What Happened to Us</strong><em>The fable &middot; fiction</em></span>
             </a>
             <a role="menuitem" href="https://a.co/d/06A67f2d" target="_blank" rel="noopener">
               <img src="images/a-million-green-flags.jpg" alt="">
-              <span><strong>A Million Green Flags</strong><em>The manual &middot; a workbook</em></span>
+              <span><strong>A Million Green Flags</strong><em>The framework &middot; self-help</em></span>
             </a>
           </div>
         </div>
@@ -384,7 +384,7 @@
         <div class="book-top">
           <img src="images/a-million-green-flags.jpg" alt="A Million Green Flags book cover">
           <div>
-            <p class="book-kicker">The Manual &middot; Nonfiction</p>
+            <p class="book-kicker">The Framework &middot; Self-Help</p>
             <h3>A Million Green Flags</h3>
             <p class="sub">How to Build Lasting Relationships in the Digital Age</p>
             <div class="desc">
@@ -394,7 +394,7 @@
             </div>
           </div>
         </div>
-        <div class="book-facts">27 chapters <span>&middot;</span> 29 activities <span>&middot;</span> 27 green flags <span>&middot;</span> Paperback &amp; Kindle</div>
+        <div class="book-facts">27 chapters <span>&middot;</span> 27 activities <span>&middot;</span> 27 green flags <span>&middot;</span> Paperback &amp; Kindle</div>
         <div class="book-bottom">
           <a href="https://a.co/d/06A67f2d" target="_blank" rel="noopener" class="btn leaf">Order on Amazon</a>
           <a href="#excerpts" class="btn ghost">Read an excerpt</a>
@@ -435,7 +435,7 @@
         <p>You build. Attention becomes shared focus, and the two of you create value that didn&rsquo;t exist before either of you: rituals, a home, a future tense. Love consumed burns down. Love built compounds.</p>
       </div>
     </div>
-    <p class="fw-foot reveal">&ldquo;Red flags and green flags are two directions the same force can point &mdash; and conditions decide which one grows.&rdquo;<small>The fable walks the three stages as a story. The manual explains each one, and hands you the labors.</small></p>
+    <p class="fw-foot reveal">&ldquo;Red flags and green flags are two directions the same force can point &mdash; and conditions decide which one grows.&rdquo;<small>The novel walks the three stages as a story. The self-help book explains each one, and hands you the labors.</small></p>
   </div>
 </section>
 
@@ -451,7 +451,7 @@
         <h4>What Happened to Us</h4>
         <div class="ex"><blockquote>&ldquo;If a project fails at work, there&rsquo;s a post-mortem: a whiteboard, a team, a list of lessons. If a relationship fails, you&rsquo;re told: shut up, move on, stop overthinking. And you drag your unanswered questions into the next relationship like broken glass in your pockets.&rdquo;</blockquote><cite>The Library</cite></div>
         <div class="ex"><blockquote>&ldquo;Love that is only consumed burns down. Love that is built compounds. We were a beautiful bonfire, Victor. But we never planted a single seed by its light.&rdquo;</blockquote><cite>The Himalayas</cite></div>
-        <div class="ex"><blockquote>&ldquo;You don&rsquo;t ask the heart. You ask the bow. Vows are free; labors cost.&rdquo;</blockquote><cite>The Auditorium</cite></div>
+        <div class="ex"><blockquote>&ldquo;Athena didn&rsquo;t redeem Hercules with a promise. She guided him through twelve labors&mdash;and let the labors do the choosing.&rdquo;</blockquote><cite>The Auditorium</cite></div>
       </div>
       <div class="ex-col manual reveal">
         <h4>A Million Green Flags</h4>
@@ -477,13 +477,13 @@
       <a class="tool" href="https://relationships101.co" target="_blank" rel="noopener">
         <p class="tk">The Course</p>
         <h4>Modern Relationships 101</h4>
-        <p>The interactive companion to both books &mdash; the same three stages, taught through short lessons, real activities, and exercises built to be done, not just read. Where the practices in the manual become a program.</p>
+        <p>The interactive companion to both books &mdash; the same three stages, taught through short lessons, real activities, and exercises built to be done, not just read. Where the practices in the book become a program.</p>
         <span class="go">relationships101.co</span>
       </a>
       <a class="tool" href="https://www.redflagdetector.pro/" target="_blank" rel="noopener">
         <p class="tk">The App</p>
         <h4>Red Flag Detector</h4>
-        <p>The record-keeping system from the final part of the manual. You don&rsquo;t ask the heart &mdash; you ask the bow. Track patterns, promises, and what actually happened the last three times a standard was calmly held.</p>
+        <p>The record-keeping system from the final part of <em>A Million Green Flags</em>. You don&rsquo;t ask the heart &mdash; you ask the bow. Track patterns, promises, and what actually happened the last three times a standard was calmly held.</p>
         <span class="go">redflagdetector.pro</span>
       </a>
       <a class="tool" href="https://www.alttherapy.co/" target="_blank" rel="noopener">
@@ -506,7 +506,7 @@
         <h3 class="au-name">Sia Stevens</h3>
         <div class="au-bio">
           <p>Sia Stevens is a writer and relationship educator. Before either of those, she was a software engineer &mdash; a decade building systems at scale &mdash; and then an MBA, studying how incentives shape what people do. Somewhere along the way, the question changed: from how systems fail to why the most important system of all &mdash; the way we love &mdash; quietly fails the people running it.</p>
-          <p>A breakup she couldn&rsquo;t explain sent her looking for the root cause of love itself. The year-long search became <em>What Happened to Us</em>, a fable; the framework it arrives at &mdash; attraction, reciprocation, co-creation &mdash; became <em>A Million Green Flags</em>, and the course Modern Relationships 101. She publishes under her own imprint, Vessel &amp; Ink Press, and founded Alt Therapy.</p>
+          <p>A breakup she couldn&rsquo;t explain sent her looking for the root cause of love itself. The year-long search became <em>What Happened to Us</em>, a novel; the framework it arrives at &mdash; attraction, reciprocation, co-creation &mdash; became <em>A Million Green Flags</em>, and the course Modern Relationships 101. She publishes under her own imprint, Vessel &amp; Ink Press, and founded Alt Therapy.</p>
           <p>She lives in Seattle, in sight of Mount Rainier.</p>
         </div>
       </div>
