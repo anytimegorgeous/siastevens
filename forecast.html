@@ -162,7 +162,7 @@ h1{font:400 var(--s4)/1 var(--display);color:var(--cream);text-shadow:0 0 22px v
 .aside{color:var(--muted)}
 .secondary{background:none;color:var(--cream);border:2px solid var(--gold);border-radius:99px;padding:14px 24px;font:400 1.25rem/1 var(--display);cursor:pointer}
 .take{display:flex;align-items:center;gap:18px;padding:18px;border:1.5px solid var(--gold-deep);border-radius:14px;background:var(--night-2)}
-.take-qr{flex:none;width:104px;height:104px;padding:8px;background:#fff;border-radius:8px}
+.take-qr{flex:none;width:140px;height:140px;padding:10px;background:#fff;border-radius:8px}
 .take-qr svg{display:block;width:100%;height:100%}
 .take-txt{display:flex;flex-direction:column;gap:4px;min-width:0}
 .take-k{font:700 .75rem/1 var(--caps);letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
@@ -608,10 +608,129 @@ const ORDER = {
   est: ["building", "spark", "evenings", "exchange", "needing", "repair"]
 };
 const LABEL = {single: "Chances of finding someone", seeing: "Chances this goes long term", est: "Chances it lasts"};
-const STALL = /[?&]stall\b/.test(location.search); /* siastevens.com/forecast?stall=1 at the stall: Print, Save as image and the quick switch */
+const STALL = /[?&]stall\b/.test(location.search); /* siastevens.com/forecast?stall=1 at the stall: Print, the QR code and the quick switch */
+/* The question tree's version. It is written into every reading link and into the hot-reload snapshot,
+   so answers given to an older tree are never replayed on a newer one. Bump it when questions change. */
+const TREE_V = 9;
 const SITE = "https://siastevens.com", SITE_TEXT = "siastevens.com";
 const LINKS = [["A Million Green Flags", "https://a.co/d/06A67f2d"], ["The course", "https://relationships101.co"], ["Coaching", "https://www.alttherapy.co/"]];
-const QR_SVG = `<svg viewBox="0 0 25 25" shape-rendering="crispEdges" role="img" aria-label="QR code for siastevens.com"><path d="M0 0h7v1h-7zM8 0h2v1h-2zM12 0h2v1h-2zM15 0h2v1h-2zM18 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM10 1h1v1h-1zM14 1h1v1h-1zM18 1h1v1h-1zM24 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM10 2h3v1h-3zM14 2h1v1h-1zM18 2h1v1h-1zM20 2h3v1h-3zM24 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h2v1h-2zM11 3h1v1h-1zM13 3h1v1h-1zM16 3h1v1h-1zM18 3h1v1h-1zM20 3h3v1h-3zM24 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h1v1h-1zM14 4h3v1h-3zM18 4h1v1h-1zM20 4h3v1h-3zM24 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM12 5h1v1h-1zM16 5h1v1h-1zM18 5h1v1h-1zM24 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h7v1h-7zM8 7h1v1h-1zM10 7h1v1h-1zM15 7h1v1h-1zM0 8h1v1h-1zM4 8h1v1h-1zM6 8h4v1h-4zM11 8h2v1h-2zM17 8h5v1h-5zM24 8h1v1h-1zM1 9h1v1h-1zM3 9h2v1h-2zM7 9h5v1h-5zM13 9h4v1h-4zM20 9h2v1h-2zM23 9h1v1h-1zM0 10h4v1h-4zM5 10h3v1h-3zM9 10h3v1h-3zM13 10h1v1h-1zM15 10h8v1h-8zM1 11h5v1h-5zM10 11h1v1h-1zM14 11h1v1h-1zM22 11h2v1h-2zM2 12h8v1h-8zM16 12h3v1h-3zM21 12h4v1h-4zM0 13h5v1h-5zM9 13h1v1h-1zM12 13h1v1h-1zM14 13h3v1h-3zM20 13h1v1h-1zM23 13h1v1h-1zM3 14h2v1h-2zM6 14h1v1h-1zM9 14h7v1h-7zM17 14h1v1h-1zM19 14h4v1h-4zM3 15h1v1h-1zM5 15h1v1h-1zM7 15h3v1h-3zM11 15h1v1h-1zM14 15h2v1h-2zM19 15h2v1h-2zM22 15h2v1h-2zM0 16h2v1h-2zM3 16h4v1h-4zM8 16h3v1h-3zM12 16h1v1h-1zM16 16h7v1h-7zM8 17h1v1h-1zM10 17h1v1h-1zM14 17h1v1h-1zM16 17h1v1h-1zM20 17h1v1h-1zM0 18h7v1h-7zM8 18h1v1h-1zM10 18h1v1h-1zM14 18h1v1h-1zM16 18h1v1h-1zM18 18h1v1h-1zM20 18h1v1h-1zM0 19h1v1h-1zM6 19h1v1h-1zM9 19h1v1h-1zM12 19h1v1h-1zM14 19h1v1h-1zM16 19h1v1h-1zM20 19h5v1h-5zM0 20h1v1h-1zM2 20h3v1h-3zM6 20h1v1h-1zM8 20h2v1h-2zM11 20h1v1h-1zM13 20h2v1h-2zM16 20h9v1h-9zM0 21h1v1h-1zM2 21h3v1h-3zM6 21h1v1h-1zM10 21h1v1h-1zM12 21h1v1h-1zM14 21h1v1h-1zM17 21h3v1h-3zM22 21h3v1h-3zM0 22h1v1h-1zM2 22h3v1h-3zM6 22h1v1h-1zM9 22h1v1h-1zM11 22h4v1h-4zM16 22h1v1h-1zM18 22h1v1h-1zM21 22h1v1h-1zM23 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM9 23h1v1h-1zM11 23h1v1h-1zM13 23h1v1h-1zM17 23h1v1h-1zM19 23h5v1h-5zM0 24h7v1h-7zM8 24h1v1h-1zM12 24h2v1h-2zM15 24h1v1h-1zM17 24h1v1h-1zM22 24h3v1h-3z"/></svg>`;
+/* A small QR code maker: byte mode, medium error correction, versions 1 to 10 (up to 213 characters).
+   qrMatrix(text) returns rows of 0/1. Follows ISO 18004 the plain way: data bits, Reed-Solomon blocks,
+   function patterns, zigzag placement, the mask with the lowest penalty. */
+const QR_ECC = [10, 16, 26, 18, 24, 16, 18, 22, 22, 26];   /* error-correction codewords per block, level M */
+const QR_BLOCKS = [1, 1, 1, 2, 2, 4, 4, 4, 5, 5];           /* blocks per version, level M */
+function qrMatrix(text){
+  const bytes = [...new TextEncoder().encode(text)];
+  let ver = 1;
+  const rawWords = v => { let r = (16 * v + 128) * v + 64; if (v >= 2){ const a = Math.floor(v / 7) + 2; r -= (25 * a - 10) * a - 55; if (v >= 7) r -= 36; } return r >> 3; };
+  const dataWords = v => rawWords(v) - QR_ECC[v - 1] * QR_BLOCKS[v - 1];
+  while (ver <= 10 && 4 + (ver < 10 ? 8 : 16) + bytes.length * 8 > dataWords(ver) * 8) ver++;
+  if (ver > 10) throw new Error("too long for a QR code here");
+  const size = ver * 4 + 17, cap = dataWords(ver);
+  /* data bits */
+  const bits = [];
+  const put = (val, n) => { for (let i = n - 1; i >= 0; i--) bits.push((val >>> i) & 1); };
+  put(4, 4); put(bytes.length, ver < 10 ? 8 : 16); bytes.forEach(b => put(b, 8));
+  put(0, Math.min(4, cap * 8 - bits.length));
+  while (bits.length % 8) bits.push(0);
+  for (let pad = 0xEC; bits.length < cap * 8; pad ^= 0xEC ^ 0x11) put(pad, 8);
+  const data = []; for (let i = 0; i < bits.length; i += 8) data.push(parseInt(bits.slice(i, i + 8).join(""), 2));
+  /* Reed-Solomon over GF(256) */
+  const mul = (a, b) => { let z = 0; for (let i = 7; i >= 0; i--){ z = (z << 1) ^ ((z >>> 7) * 0x11D); z ^= ((b >>> i) & 1) * a; } return z; };
+  const ecLen = QR_ECC[ver - 1], nBlocks = QR_BLOCKS[ver - 1], raw = rawWords(ver);
+  let gen = [1];
+  for (let i = 0, root = 1; i < ecLen; i++, root = mul(root, 2)){
+    const g = new Array(gen.length + 1).fill(0);
+    gen.forEach((c, j) => { g[j] ^= c; g[j + 1] ^= mul(c, root); });
+    gen = g;
+  }
+  const ecc = block => { const r = new Array(ecLen).fill(0); for (const b of block){ const f = b ^ r.shift(); r.push(0); gen.slice(1).forEach((c, j) => { r[j] ^= mul(c, f); }); } return r; };
+  const shortBlocks = nBlocks - raw % nBlocks, shortLen = Math.floor(raw / nBlocks) - ecLen;
+  const blocks = []; let k = 0;
+  for (let i = 0; i < nBlocks; i++){ const len = shortLen + (i < shortBlocks ? 0 : 1); const d = data.slice(k, k + len); k += len; blocks.push([...d, ...(i < shortBlocks ? [-1] : []), ...ecc(d)]); }
+  const words = [];
+  for (let i = 0; i < blocks[0].length; i++) blocks.forEach(b => { if (b[i] >= 0) words.push(b[i]); });
+  /* function patterns */
+  const m = Array.from({length: size}, () => new Array(size).fill(0)), fn = Array.from({length: size}, () => new Array(size).fill(false));
+  const set = (x, y, v) => { if (x >= 0 && y >= 0 && x < size && y < size){ m[y][x] = v ? 1 : 0; fn[y][x] = true; } };
+  const finder = (cx, cy) => { for (let dy = -4; dy <= 4; dy++) for (let dx = -4; dx <= 4; dx++){ const d = Math.max(Math.abs(dx), Math.abs(dy)); set(cx + dx, cy + dy, d !== 2 && d !== 4); } };
+  finder(3, 3); finder(size - 4, 3); finder(3, size - 4);
+  for (let i = 8; i < size - 8; i++){ set(6, i, i % 2 === 0); set(i, 6, i % 2 === 0); }
+  const nAlign = Math.floor(ver / 7) + 2, step = Math.ceil((ver * 4 + 4) / (nAlign * 2 - 2)) * 2, pos = [6];
+  for (let p = size - 7; pos.length < nAlign; p -= step) pos.splice(1, 0, p);
+  if (ver >= 2) pos.forEach((px, i) => pos.forEach((py, j) => {
+    if ((i === 0 && j === 0) || (i === 0 && j === nAlign - 1) || (i === nAlign - 1 && j === 0)) return;
+    for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) set(px + dx, py + dy, Math.max(Math.abs(dx), Math.abs(dy)) !== 1);
+  }));
+  const format = mask => {
+    const d = (0 << 3) | mask; let rem = d;                 /* level M is 00 */
+    for (let i = 0; i < 10; i++) rem = (rem << 1) ^ ((rem >>> 9) * 0x537);
+    const f = ((d << 10) | rem) ^ 0x5412, bit = i => (f >>> i) & 1;
+    for (let i = 0; i <= 5; i++) set(8, i, bit(i));
+    set(8, 7, bit(6)); set(8, 8, bit(7)); set(7, 8, bit(8));
+    for (let i = 9; i < 15; i++) set(14 - i, 8, bit(i));
+    for (let i = 0; i < 8; i++) set(size - 1 - i, 8, bit(i));
+    for (let i = 8; i < 15; i++) set(8, size - 15 + i, bit(i));
+    set(8, size - 8, 1);
+  };
+  format(0);
+  if (ver >= 7){
+    let rem = ver; for (let i = 0; i < 12; i++) rem = (rem << 1) ^ ((rem >>> 11) * 0x1F25);
+    const v = (ver << 12) | rem;
+    for (let i = 0; i < 18; i++){ const b = (v >>> i) & 1, a = size - 11 + i % 3, c = Math.floor(i / 3); set(a, c, b); set(c, a, b); }
+  }
+  /* data, zigzag */
+  let i = 0;
+  for (let right = size - 1; right >= 1; right -= 2){
+    if (right === 6) right = 5;
+    for (let vert = 0; vert < size; vert++) for (let j = 0; j < 2; j++){
+      const x = right - j, y = ((right + 1) & 2) === 0 ? size - 1 - vert : vert;
+      if (!fn[y][x] && i < words.length * 8){ m[y][x] = (words[i >> 3] >>> (7 - (i & 7))) & 1; i++; }
+    }
+  }
+  /* masks */
+  const MASKS = [(x, y) => (x + y) % 2, (x, y) => y % 2, (x, y) => x % 3, (x, y) => (x + y) % 3, (x, y) => (Math.floor(x / 3) + Math.floor(y / 2)) % 2,
+    (x, y) => (x * y) % 2 + (x * y) % 3, (x, y) => ((x * y) % 2 + (x * y) % 3) % 2, (x, y) => ((x + y) % 2 + (x * y) % 3) % 2];
+  const apply = mask => { for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) if (!fn[y][x] && MASKS[mask](x, y) === 0) m[y][x] ^= 1; };
+  const penalty = () => {
+    /* the four penalty rules of the standard: long runs, 2 by 2 blocks, finder look-alikes, dark balance */
+    let p = 0;
+    const addHist = (h, len) => { if (h[0] === 0) len += size; h.pop(); h.unshift(len); };
+    const look = h => { const n = h[1], core = n > 0 && h[2] === n && h[3] === n * 3 && h[4] === n && h[5] === n; return (core && h[0] >= n * 4 && h[6] >= n ? 1 : 0) + (core && h[6] >= n * 4 && h[0] >= n ? 1 : 0); };
+    const line = get => {
+      let color = 0, run = 0; const h = new Array(7).fill(0);
+      for (let i = 0; i < size; i++){
+        const v = get(i);
+        if (v === color){ run++; if (run === 5) p += 3; else if (run > 5) p++; }
+        else { addHist(h, run); if (!color) p += look(h) * 40; color = v; run = 1; }
+      }
+      if (color){ addHist(h, run); run = 0; }
+      addHist(h, run + size); p += look(h) * 40;
+    };
+    for (let i = 0; i < size; i++){ line(x => m[i][x]); line(y => m[y][i]); }
+    let dark = 0;
+    for (let y = 0; y < size; y++) for (let x = 0; x < size; x++){
+      dark += m[y][x];
+      if (y < size - 1 && x < size - 1 && m[y][x] === m[y][x + 1] && m[y][x] === m[y + 1][x] && m[y][x] === m[y + 1][x + 1]) p += 3;
+    }
+    const k = Math.ceil(Math.abs(dark * 20 - size * size * 10) / (size * size)) - 1;
+    return p + Math.max(0, k) * 10;
+  };
+  let best = 0, bestP = Infinity;
+  for (let mask = 0; mask < 8; mask++){ format(mask); apply(mask); const p = penalty(); if (p < bestP){ bestP = p; best = mask; } apply(mask); }
+  format(best); apply(best);
+  return m;
+}
+
+/* A reading is its answers. The link replays them, so a scan of the QR code on the ending screen opens this
+   same reading on the visitor's own phone: siastevens.com/forecast?r=<tree version><f for full, q for quick><answers>. */
+const PAGE = SITE + "/forecast";
+const linkFor = (answers, quick) => `${PAGE}?r=${TREE_V}${quick ? "q" : "f"}${answers.join("")}`;
+const SHARED = location.search.match(/[?&]r=(\d+)([fq])([0-2]+)/);
+function qrSvg(m, label){
+  const d = m.map((row, y) => { let s = ""; for (let x = 0; x < row.length;){ if (!row[x]){ x++; continue; } let e = x; while (e < row.length && row[e]) e++; s += `M${x} ${y}h${e - x}v1h-${e - x}z`; x = e; } return s; }).join("");
+  return `<svg viewBox="0 0 ${m.length} ${m.length}" shape-rendering="crispEdges" role="img" aria-label="${label}"><path d="${d}"/></svg>`;
+}
 const DLINES = ["The ball is clouding over…", "Weighing what it heard…", "No stars were consulted."];
 const STAR = `<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0 L10 6 L16 8 L10 10 L8 16 L6 10 L0 8 L6 6Z"/></svg>`;
 
@@ -769,10 +888,10 @@ function result(c){
       <p class="rd-point">${esc(point)}</p>
     </article>
     ${STALL ? `<div class="take up" style="--n:3">
-      <div class="take-qr">${QR_SVG}</div>
+      <div class="take-qr">${qrSvg(qrMatrix(linkFor(state.answers, c.quick)), "QR code that opens this reading")}</div>
       <div class="take-txt">
         <p class="take-k">Take it with you</p>
-        <p class="take-t">Scan for the book, the course and coaching.</p>
+        <p class="take-t">Scan to keep your reading on your phone.</p>
         <p class="aside">${SITE_TEXT}</p>
       </div>
     </div>` : `<div class="take up" style="--n:3">
@@ -783,14 +902,13 @@ function result(c){
       </div>
     </div>`}
     <div class="actions up" style="--n:4">
-      ${STALL ? `<button id="print" class="primary" data-act="print">Print my reading</button><button id="new-reading" class="secondary" data-act="restart">Start a new reading</button><button id="share" class="link" data-act="share">Save as image</button>` : `<button id="new-reading" class="primary" data-act="restart">Start a new reading</button>`}
+      ${STALL ? `<button id="print" class="primary" data-act="print">Print my reading</button><button id="new-reading" class="secondary" data-act="restart">Start a new reading</button>` : `<button id="new-reading" class="primary" data-act="restart">Start a new reading</button>`}
     </div>
   </section>`;
 }
 
 /* The printed slip, drawn as one picture: 62 mm wide at 300 dots per inch, black on white, as long as
    the reading needs. The printer is thermal, so everything is pure black or white. */
-const QR = ["1111111011001101101111111","1000001000100010001000001","1011101000111010001011101","1011101011010100101011101","1011101010000011101011101","1000001010001000101000001","1111111010101010101111111","0000000010100001000000000","1000101111011000011111001","0101100111110111100011010","1111011101110101111111100","0111110000100010000000110","0011111111000000111001111","1111100001001011100010010","0001101001111111010111100","0001010111010011000110110","1101111011101000111111100","0000000010100010100010000","1111111010100010101010000","1000001001001010100011111","1011101011010110111111111","1011101000101010011100111","1011101001011110101001010","1000001001010100010111110","1111111010001101010000111"];
 const SLIP_W = Math.round(62 / 25.4 * 300);
 const F_DISPLAY = '"Limelight", "Copperplate", Georgia, serif', F_CAPS = '"Cinzel", "Copperplate", Georgia, serif', F_BODY = '"Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif';
 let slipJob = 0, slipUrl = "", slipWaiters = [];
@@ -845,8 +963,9 @@ async function drawSlip(c){
   heading("WHAT TO DO");
   para(act, `400 29px ${F_BODY}`); y += 16;
   para(point, `700 29px ${F_BODY}`); y += 22;
-  const mod = 8, qs = QR.length * mod, qx = (W - qs) / 2;
-  QR.forEach((row, j) => [...row].forEach((v, i) => { if (v === "1") x.fillRect(qx + i * mod, y + j * mod, mod, mod); }));
+  /* The slip already holds the reading, so its code goes to the site. The screen's code opens the reading. */
+  const QR = qrMatrix(SITE), mod = 8, qs = QR.length * mod, qx = Math.round((W - qs) / 2);
+  QR.forEach((row, j) => row.forEach((v, i) => { if (v) x.fillRect(qx + i * mod, y + j * mod, mod, mod); }));
   y += qs + 40; x.textAlign = "center";
   x.font = `400 28px ${F_BODY}`; x.fillText("Scan for the book, the course and coaching", W / 2, y); y += 36;
   x.font = `700 30px ${F_BODY}`; x.fillText(SITE_TEXT, W / 2, y); y += M;
@@ -859,16 +978,6 @@ async function drawSlip(c){
   slipWaiters.splice(0).forEach(fn => fn());
 }
 function whenSlipReady(){ return slipUrl ? Promise.resolve() : new Promise(res => slipWaiters.push(res)); }
-
-async function shareSlip(){
-  await whenSlipReady();
-  try {
-    const blob = await (await fetch(slipUrl)).blob();
-    const file = new File([blob], "green-flag-forecast.png", {type: "image/png"});
-    if (navigator.canShare && navigator.canShare({files: [file]})){ await navigator.share({files: [file], title: "Green Flag Forecast"}); return; }
-  } catch (err) {}
-  const a = document.createElement("a"); a.href = slipUrl; a.download = "green-flag-forecast.png"; document.body.appendChild(a); a.click(); a.remove();
-}
 
 function render(move){
   const c = replay(state.answers, state.quick);
@@ -885,6 +994,7 @@ function render(move){
   tg.setAttribute("aria-checked", String(state.quick));
   document.getElementById("quick-state").textContent = state.quick ? "On" : "Off";
   if (state.screen === "result") drawSlip(c); else { slipJob++; slipUrl = ""; document.getElementById("slip").innerHTML = ""; }
+  if (!STALL) try { history.replaceState(null, "", state.screen === "result" ? `?r=${TREE_V}${c.quick ? "q" : "f"}${state.answers.join("")}` : location.pathname); } catch (err) {}
   if (move && booted){
     const f = app.querySelector("[data-focus]");
     if (f) f.focus({preventScroll: true});
@@ -969,8 +1079,6 @@ document.addEventListener("click", e => {
     reset();
   } else if (act === "print"){
     whenSlipReady().then(() => { try { window.print(); } catch (err) {} });
-  } else if (act === "share"){
-    shareSlip();
   } else if (act === "quick"){
     state.quick = !state.quick;
     b.setAttribute("aria-checked", String(state.quick));
@@ -1037,13 +1145,16 @@ document.addEventListener("visibilitychange", () => document.hidden ? pause() : 
 sizeCanvas(); play();
 
 /* Keep a reading in progress if the page is updated while someone is mid-way, but only when the
-   questions haven't changed: old answers replayed on a new tree would land on the wrong screen. */
-const TREE_V = 9;
+   questions haven't changed: old answers replayed on a new tree would land on the wrong screen.
+   Otherwise a reading link (?r=) opens straight onto its reading. */
 function start(d){
   if (d && d.s && typeof d.s === "object" && d.s.v === TREE_V){
     state.answers = Array.isArray(d.s.answers) ? d.s.answers.filter(Number.isInteger) : [];
     state.screen = d.s.screen === "divine" ? "result" : (d.s.screen || "intro");
     state.quick = !!d.s.quick;
+  } else if (SHARED && +SHARED[1] === TREE_V){
+    const answers = [...SHARED[3]].map(Number), quick = SHARED[2] === "q";
+    if (replay(answers, quick).done){ state.answers = answers; state.quick = quick; state.screen = "result"; }
   }
   render(false);
 }
