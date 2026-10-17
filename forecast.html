@@ -74,10 +74,10 @@ button{touch-action:manipulation;font-family:inherit;color:inherit}
   box-shadow:inset 0 0 0 2px var(--glass-edge),inset 0 -18px 40px var(--ball-in),0 0 36px 4px var(--mist-glow),0 0 90px 18px var(--orchid-glow);
   animation:glow 4.5s ease-in-out infinite}
 @keyframes glow{50%{box-shadow:inset 0 0 0 2px var(--glass-edge),inset 0 -18px 40px var(--ball-in),0 0 54px 10px var(--mist-glow),0 0 120px 30px var(--orchid-glow)}}
-.mist{position:absolute;inset:-18%;border-radius:50%;filter:blur(calc(var(--d)*.09));opacity:.75;mix-blend-mode:screen;
+.mist{position:absolute;inset:-18%;border-radius:50%;clip-path:circle(36.76%);filter:blur(calc(var(--d)*.09));opacity:.75;mix-blend-mode:screen;
   background:conic-gradient(from 0deg,transparent 0 18%,var(--mist) 30%,transparent 46%,var(--orchid) 62%,transparent 76%,var(--mist) 90%,transparent);
   animation:swirl 10s linear infinite}
-.mist.b{inset:0;opacity:.5;animation-duration:15s;animation-direction:reverse}
+.mist.b{inset:0;clip-path:circle(50%);opacity:.5;animation-duration:15s;animation-direction:reverse}
 @keyframes swirl{to{transform:rotate(1turn)}}
 .orb.fast .mist{animation-duration:1.4s}
 .orb.fast .mist.b{animation-duration:2.1s}
@@ -162,14 +162,25 @@ h1{font:400 var(--s4)/1 var(--display);color:var(--cream);text-shadow:0 0 22px v
 .aside{color:var(--muted)}
 .secondary{background:none;color:var(--cream);border:2px solid var(--gold);border-radius:99px;padding:14px 24px;font:400 1.25rem/1 var(--display);cursor:pointer}
 .take{display:flex;align-items:center;gap:18px;padding:18px;border:1.5px solid var(--gold-deep);border-radius:14px;background:var(--night-2)}
-.take-qr{flex:none;width:140px;height:140px;padding:10px;background:#fff;border-radius:8px}
+.take-qr{display:block;flex:none;width:140px;height:140px;padding:10px;background:#fff;border-radius:8px}
 .take-qr svg{display:block;width:100%;height:100%}
 .take-txt{display:flex;flex-direction:column;gap:4px;min-width:0}
 .take-k{font:700 .75rem/1 var(--caps);letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
 .take-t{font:600 var(--s1)/1.3 var(--body)}
-.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
-.chip{display:inline-block;padding:10px 16px;border:1.5px solid var(--gold);border-radius:99px;color:var(--cream);font:600 .9375rem/1 var(--body);text-decoration:none}
-.chip:hover{background:var(--gold);color:var(--card-ink)}
+.aside-link{color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--gold-deep)}
+/* the print sheet: the slip as one picture over the page, with Share, Print and Close */
+.sheet{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;gap:14px;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom));background:rgba(12,7,24,.86);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.sheet[hidden]{display:none}
+.sheet-top{width:100%;max-width:560px;display:flex;align-items:center;justify-content:space-between}
+.sheet-k{font:700 .75rem/1 var(--caps);letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.sheet-scroll{flex:1;min-height:0;width:100%;max-width:560px;overflow:auto;border-radius:10px;-webkit-overflow-scrolling:touch}
+.sheet-scroll img{display:block;width:min(100%,380px);height:auto;margin:0 auto;background:#fff;border-radius:6px;box-shadow:0 18px 40px var(--shadow)}
+.sheet-bar{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 16px}
+.sheet-scroll.mid{display:flex;align-items:center;justify-content:center}
+.scan{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;width:min(100%,380px);margin:0 auto;padding:26px 22px;border:1.5px solid var(--gold-deep);border-radius:14px;background:var(--night-2)}
+.scan-qr{width:236px;height:236px;padding:14px;background:#fff;border-radius:10px}
+.scan-qr svg{display:block;width:100%;height:100%}
+.scan .take-txt{align-items:center}
 /* the quick-reading switch */
 .toggle{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;margin-top:8px;background:none;border:0;padding:6px 0;cursor:pointer;color:var(--muted);font:600 .8125rem/1 var(--body)}
 .toggle[hidden]{display:none}
@@ -184,7 +195,7 @@ h1{font:400 var(--s4)/1 var(--display);color:var(--cream);text-shadow:0 0 22px v
 @media print{
   @page{size:62mm auto;margin:0}
   html,body{background:#fff!important;color:#000!important;margin:0;padding:0}
-  #sky,#fx,.awning-wrap,.wrap{display:none!important}
+  #sky,#fx,.awning-wrap,.wrap,.sheet{display:none!important}
   #slip{display:block!important}
 }
 
@@ -195,7 +206,6 @@ h1{font:400 var(--s4)/1 var(--display);color:var(--cream);text-shadow:0 0 22px v
 @media (max-width:560px){
   .take{flex-direction:column;text-align:center;align-items:center}
   .take-txt{align-items:center}
-  .chips{justify-content:center}
   .answers.n2,.answers.n3{grid-template-columns:minmax(0,1fr)}
   .ans{min-height:58px}
   .tarot{padding:24px 22px;min-height:9.5rem}
@@ -214,7 +224,7 @@ h1{font:400 var(--s4)/1 var(--display);color:var(--cream);text-shadow:0 0 22px v
 <div class="wrap">
   <header id="bar-top" class="bar-top" hidden>
     <span class="wordmark" id="wordmark">Green Flag Forecast</span>
-    <span class="bar-links"><a id="site-link" class="link" href="https://siastevens.com/">siastevens.com</a><button id="restart-top" class="link" data-act="restart">Start over</button></span>
+    <span class="bar-links"><button id="restart-top" class="link" data-act="restart">Start over</button></span>
   </header>
 
   <main id="app"></main>
@@ -226,6 +236,11 @@ h1{font:400 var(--s4)/1 var(--display);color:var(--cream);text-shadow:0 0 22px v
   </footer>
 </div>
 <div id="slip" aria-hidden="true"></div>
+<div id="sheet" class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-k" data-act="sheet-bg" hidden>
+  <div class="sheet-top"><span class="sheet-k" id="sheet-k">Your reading</span><button id="sheet-close" class="link" data-act="close-sheet">Close</button></div>
+  <div class="sheet-scroll" id="sheet-scroll"></div>
+  <div class="sheet-bar"><button id="print-now" class="primary" data-act="print-now">Print</button><button id="share" class="secondary" data-act="share" hidden>Share</button><button id="scan" class="secondary" data-act="scan">Scan</button></div>
+</div>
 <canvas id="fx" aria-hidden="true"></canvas>
 
 <script>
@@ -494,7 +509,7 @@ const FIND = {
     private: ["Appetite spent in private", "drive", 2, "Hunger that is fed every night stops pushing you out the door.", "Take 30 days off and notice what comes back.", [21, "Shrink the Noise"], "An appetite fed in private."],
     work: ["Work takes the evenings", "drive", 1, "You can't meet anyone in hours you don't have.", "Protect one weeknight and one weekend day.", [2, "The Attention Crisis"], "Work has the evenings."],
     ex: ["Still watching an ex", "guard", 2, "Part of you is still in the last one.", "Mute or block for 30 days.", [21, "Shrink the Noise"], "One foot still in an old door."],
-    guard: ["Your guard is up", "guard", 1, "A closed door keeps out the good ones too.", "Say yes to one coffee you would normally turn down.", [9, "The Two Pulls"], "A door kept shut, just in case."],
+    guard: ["Your guard is up", "guard", 1, "A closed door keeps out the good ones too.", "Say yes to one coffee you would normally turn down.", [9, "The Two Pulls"], "Your guard up, so no one gets close."],
     noline: ["Standards you don't hold", "standards", 2, "Letting it slide tells them it's fine.", "Set one standard, say it once, and hold it the next time it's tested.", [25, "Hold the Line"], "A line crossed twice, and let go."],
     nosay: ["Standards you keep to yourself", "standards", 1, "Nobody can meet a standard they haven't heard.", "Say what you want early, in peace, before it's tested.", [25, "Hold the Line"], "A line nobody has heard."],
     type: ["A type that keeps failing", "taste", 1, "The same choice keeps giving the same ending.", "Say yes to one person who is not your type.", [6, "Attraction Is a Measurement"], "A type that keeps ending the same way."],
@@ -608,12 +623,10 @@ const ORDER = {
   est: ["building", "spark", "evenings", "exchange", "needing", "repair"]
 };
 const LABEL = {single: "Chances of finding someone", seeing: "Chances this goes long term", est: "Chances it lasts"};
-const STALL = /[?&]stall\b/.test(location.search); /* siastevens.com/forecast?stall=1 at the stall: Print, the QR code and the quick switch */
 /* The question tree's version. It is written into every reading link and into the hot-reload snapshot,
    so answers given to an older tree are never replayed on a newer one. Bump it when questions change. */
 const TREE_V = 9;
 const SITE = "https://siastevens.com", SITE_TEXT = "siastevens.com";
-const LINKS = [["A Million Green Flags", "https://a.co/d/06A67f2d"], ["The course", "https://relationships101.co"], ["Coaching", "https://www.alttherapy.co/"]];
 /* A small QR code maker: byte mode, medium error correction, versions 1 to 10 (up to 213 characters).
    qrMatrix(text) returns rows of 0/1. Follows ISO 18004 the plain way: data bits, Reed-Solomon blocks,
    function patterns, zigzag placement, the mask with the lowest penalty. */
@@ -727,12 +740,15 @@ function qrMatrix(text){
 const PAGE = SITE + "/forecast";
 const linkFor = (answers, quick) => `${PAGE}?r=${TREE_V}${quick ? "q" : "f"}${answers.join("")}`;
 const SHARED = location.search.match(/[?&]r=(\d+)([fq])([0-2]+)/);
+let SITE_QR = "";
 function qrSvg(m, label){
   const d = m.map((row, y) => { let s = ""; for (let x = 0; x < row.length;){ if (!row[x]){ x++; continue; } let e = x; while (e < row.length && row[e]) e++; s += `M${x} ${y}h${e - x}v1h-${e - x}z`; x = e; } return s; }).join("");
   return `<svg viewBox="0 0 ${m.length} ${m.length}" shape-rendering="crispEdges" role="img" aria-label="${label}"><path d="${d}"/></svg>`;
 }
 const DLINES = ["The ball is clouding over…", "Weighing what it heard…", "No stars were consulted."];
 const STAR = `<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0 L10 6 L16 8 L10 10 L8 16 L6 10 L0 8 L6 6Z"/></svg>`;
+
+SITE_QR = qrSvg(qrMatrix(SITE), "QR code for siastevens.com");
 
 /* ---------- Engine ---------- */
 const state = {screen: "intro", answers: [], quick: false};
@@ -887,22 +903,16 @@ function result(c){
       <p class="rd-p">${esc(act)}</p>
       <p class="rd-point">${esc(point)}</p>
     </article>
-    ${STALL ? `<div class="take up" style="--n:3">
-      <div class="take-qr">${qrSvg(qrMatrix(linkFor(state.answers, c.quick)), "QR code that opens this reading")}</div>
+    <div class="take up" style="--n:3">
+      <a class="take-qr" href="${SITE}/" target="_blank" rel="noopener" aria-label="siastevens.com">${SITE_QR}</a>
       <div class="take-txt">
-        <p class="take-k">Take it with you</p>
-        <p class="take-t">Scan to keep your reading on your phone.</p>
-        <p class="aside">${SITE_TEXT}</p>
+        <p class="take-k">Created by Sia Stevens</p>
+        <p class="take-t">Scan to learn the three stages behind every reading.</p>
+        <p class="aside"><a class="aside-link" href="${SITE}/" target="_blank" rel="noopener">${SITE_TEXT}</a></p>
       </div>
-    </div>` : `<div class="take up" style="--n:3">
-      <div class="take-txt">
-        <p class="take-k">Go further</p>
-        <p class="take-t">The book, the course and coaching, all built on the same three stages.</p>
-        <div class="chips">${LINKS.map(([t, u]) => `<a class="chip" href="${u}" target="_blank" rel="noopener">${esc(t)}</a>`).join("")}</div>
-      </div>
-    </div>`}
+    </div>
     <div class="actions up" style="--n:4">
-      ${STALL ? `<button id="print" class="primary" data-act="print">Print my reading</button><button id="new-reading" class="secondary" data-act="restart">Start a new reading</button>` : `<button id="new-reading" class="primary" data-act="restart">Start a new reading</button>`}
+      <button id="print" class="primary" data-act="print">Print my reading</button><button id="new-reading" class="secondary" data-act="restart">Start a new reading</button>
     </div>
   </section>`;
 }
@@ -979,22 +989,63 @@ async function drawSlip(c){
 }
 function whenSlipReady(){ return slipUrl ? Promise.resolve() : new Promise(res => slipWaiters.push(res)); }
 
+/* Print my reading opens the sheet: the slip as a picture, Share (where the device has a share sheet),
+   Print, Close. Printing sends only the slip to the printer. */
+let sheetOpener = null, sheetView = "slip";
+/* The sheet shows the slip, or, after Scan, a QR code that opens this reading on the visitor's phone. */
+function renderSheet(){
+  const box = document.getElementById("sheet-scroll");
+  if (sheetView === "scan"){
+    box.innerHTML = `<div class="scan"><div class="scan-qr">${qrSvg(qrMatrix(linkFor(state.answers, state.quick)), "QR code that opens this reading")}</div><div class="take-txt"><p class="take-k">Take it with you</p><p class="take-t">Scan to keep your reading on your phone.</p></div></div>`;
+  } else box.innerHTML = `<img src="${slipUrl}" alt="Your reading, as it prints">`;
+  box.classList.toggle("mid", sheetView === "scan");
+  document.getElementById("scan").textContent = sheetView === "scan" ? "Slip" : "Scan";
+}
+async function openSheet(btn){
+  sheetOpener = btn || null;
+  await whenSlipReady();
+  if (state.screen !== "result") return;
+  const sheet = document.getElementById("sheet");
+  sheetView = "slip"; renderSheet();
+  let canShare = false;
+  try { canShare = !!(navigator.share && navigator.canShare && navigator.canShare({files: [new File([""], "x.png", {type: "image/png"})]})); } catch (err) {}
+  document.getElementById("share").hidden = !canShare;
+  sheet.hidden = false; document.body.style.overflow = "hidden";
+  document.getElementById("sheet-close").focus({preventScroll: true});
+}
+function closeSheet(){
+  const sheet = document.getElementById("sheet");
+  if (sheet.hidden) return;
+  sheet.hidden = true; document.body.style.overflow = "";
+  if (sheetOpener && sheetOpener.isConnected) sheetOpener.focus({preventScroll: true});
+  sheetOpener = null;
+}
+async function shareSlip(){
+  await whenSlipReady();
+  try {
+    const blob = await (await fetch(slipUrl)).blob();
+    const file = new File([blob], "green-flag-forecast.png", {type: "image/png"});
+    if (navigator.canShare && navigator.canShare({files: [file]})) await navigator.share({files: [file], title: "Green Flag Forecast"});
+  } catch (err) {} /* cancelling the share sheet is fine; the button only shows where sharing a file works */
+}
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheet(); });
+
 function render(move){
   const c = replay(state.answers, state.quick);
   if (state.screen === "quiz" && c.done) state.screen = "result";
   if ((state.screen === "result" || state.screen === "divine") && !c.done) state.screen = state.answers.length ? "quiz" : "intro";
   const app = document.getElementById("app");
   app.innerHTML = state.screen === "quiz" ? quiz(c) : state.screen === "divine" ? divine() : state.screen === "result" ? result(c) : intro();
-  document.getElementById("bar-top").hidden = state.screen === "intro" && STALL;
+  document.getElementById("bar-top").hidden = state.screen === "intro";
   document.getElementById("wordmark").hidden = state.screen === "intro";
   document.getElementById("restart-top").hidden = state.screen === "intro";
-  document.getElementById("site-link").hidden = STALL;
   const tg = document.getElementById("quick");
-  tg.hidden = state.screen !== "intro" || !STALL;
+  tg.hidden = state.screen !== "intro";
   tg.setAttribute("aria-checked", String(state.quick));
   document.getElementById("quick-state").textContent = state.quick ? "On" : "Off";
   if (state.screen === "result") drawSlip(c); else { slipJob++; slipUrl = ""; document.getElementById("slip").innerHTML = ""; }
-  if (!STALL) try { history.replaceState(null, "", state.screen === "result" ? `?r=${TREE_V}${c.quick ? "q" : "f"}${state.answers.join("")}` : location.pathname); } catch (err) {}
+  if (state.screen !== "result") closeSheet();
+  try { history.replaceState(null, "", state.screen === "result" ? `?r=${TREE_V}${c.quick ? "q" : "f"}${state.answers.join("")}` : location.pathname); } catch (err) {}
   if (move && booted){
     const f = app.querySelector("[data-focus]");
     if (f) f.focus({preventScroll: true});
@@ -1078,7 +1129,18 @@ document.addEventListener("click", e => {
   } else if (act === "restart"){
     reset();
   } else if (act === "print"){
+    openSheet(b);
+  } else if (act === "print-now"){
     whenSlipReady().then(() => { try { window.print(); } catch (err) {} });
+  } else if (act === "share"){
+    shareSlip();
+  } else if (act === "scan"){
+    sheetView = sheetView === "scan" ? "slip" : "scan"; renderSheet();
+    document.getElementById("sheet-scroll").scrollTop = 0;
+  } else if (act === "close-sheet"){
+    closeSheet();
+  } else if (act === "sheet-bg"){
+    if (e.target === b) closeSheet();
   } else if (act === "quick"){
     state.quick = !state.quick;
     b.setAttribute("aria-checked", String(state.quick));
