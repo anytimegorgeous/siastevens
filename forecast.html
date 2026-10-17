@@ -1,0 +1,1057 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="A crystal ball that reads your answers, not the stars. A dozen quick questions, then your chances out of 10, what's in the way, and what to do about it. From Sia Stevens, author of A Million Green Flags.">
+<meta property="og:title" content="Green Flag Forecast">
+<meta property="og:description" content="Ask the ball. A dozen quick questions, then your chances out of 10 and what's in the way.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://siastevens.com/forecast">
+<meta name="theme-color" content="#140C26">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Green Flag Forecast | Sia Stevens</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Limelight&family=Cinzel:wght@600;700&family=Bricolage+Grotesque:opsz,wght@12..96,400..700&display=swap">
+<style>
+/* Layout: a fortune-teller's booth in one centred column. A striped awning on top, the crystal ball
+   as the one loud element with its reply beneath it, one question card, and two or three answers.
+   One committed night-time look, so there is a single palette. */
+:root{
+  color-scheme:dark;
+  --night:#140C26; --night-2:#21143A; --night-glow:#2B1754; --line:#3B2A5E;
+  --cream:#FFF3DC; --muted:#B9ABD2;
+  --gold:#F6C453; --gold-deep:#B9862B; --gold-glow:rgba(246,196,83,.6);
+  --velvet:#B3234A; --velvet-deep:#7C1634;
+  --mist:#7CE8D8; --mist-glow:rgba(124,232,216,.35); --orchid:#C77DFF; --orchid-glow:rgba(199,125,255,.22);
+  --ball-1:#3A2380; --ball-2:#1E1150; --ball-3:#0D0722; --ball-in:rgba(0,0,0,.45);
+  --glass-edge:rgba(255,255,255,.14); --shine:rgba(255,255,255,.8); --shine-soft:rgba(255,255,255,.16);
+  --card-face:#FFF4DD; --card-face-2:#F3DFB6; --card-ink:#2A1740; --card-muted:#6A5A80;
+  --card-line:#B9862B; --card-gold-ink:#8A5F12; --flag:#57E08B;
+  --shadow:rgba(0,0,0,.5);
+  --display:"Limelight","Copperplate","Didot",Georgia,serif;
+  --caps:"Cinzel","Trajan Pro","Copperplate",Georgia,serif;
+  --body:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --s1:1.125rem; --s2:1.3125rem;
+  --s3:clamp(1.5rem,4.6vw,2.125rem);
+  --s3d:clamp(1.75rem,5.4vw,2.5rem);
+  --s4:clamp(2.25rem,8.4vw,4rem);
+}
+
+*{box-sizing:border-box}
+body{background:radial-gradient(120% 70% at 50% 0%,var(--night-glow) 0%,var(--night) 62%) var(--night);color:var(--cream);font:400 1rem/1.5 var(--body);-webkit-font-smoothing:antialiased}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{text-wrap:balance}
+button{touch-action:manipulation;font-family:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--mist);outline-offset:3px}
+[data-focus]:focus{outline:none}
+
+#sky,#fx{position:fixed;inset:0;pointer-events:none}
+#sky{z-index:0}
+#fx{z-index:5}
+.awning-wrap,.wrap{position:relative;z-index:1}
+
+.awning-wrap{filter:drop-shadow(0 6px 10px var(--shadow))}
+.awning{height:46px;background:repeating-linear-gradient(90deg,var(--velvet) 0 36px,var(--cream) 36px 72px);
+  -webkit-mask:radial-gradient(circle at 50% 0,#000 17.5px,transparent 18.5px) 0 100%/36px 18px repeat-x,linear-gradient(#000 0 0) 0 0/100% calc(100% - 18px) no-repeat;
+          mask:radial-gradient(circle at 50% 0,#000 17.5px,transparent 18.5px) 0 100%/36px 18px repeat-x,linear-gradient(#000 0 0) 0 0/100% calc(100% - 18px) no-repeat}
+
+.wrap{max-width:44rem;margin-inline:auto;padding-inline:20px;padding-block:14px 36px;display:flex;flex-direction:column;gap:20px}
+.bar-top{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:40px}
+.bar-links{display:flex;gap:18px;margin-left:auto}
+.bar-links [hidden],.bar-top [hidden]{display:none}
+.wordmark{font:400 1rem/1 var(--display);color:var(--gold);white-space:nowrap}
+.link{background:none;border:0;padding:10px 4px;font:600 .9375rem/1 var(--body);color:var(--cream);text-decoration:underline;text-underline-offset:3px;cursor:pointer;white-space:nowrap}
+
+.up{animation:up .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--n,0)*90ms)}
+@keyframes up{from{opacity:0;transform:translateY(14px)}}
+
+/* crystal ball */
+.orb{--d:clamp(150px,38vw,210px);width:var(--d);margin-inline:auto}
+.orb.big{--d:clamp(190px,50vw,270px)}
+.orb.small{--d:clamp(96px,22vw,128px)}
+.ball{position:relative;z-index:1;width:var(--d);height:var(--d);border-radius:50%;overflow:hidden;isolation:isolate;transform:translateZ(0);
+  background:radial-gradient(circle at 50% 60%,var(--ball-1) 0%,var(--ball-2) 60%,var(--ball-3) 100%);
+  box-shadow:inset 0 0 0 2px var(--glass-edge),inset 0 -18px 40px var(--ball-in),0 0 36px 4px var(--mist-glow),0 0 90px 18px var(--orchid-glow);
+  animation:glow 4.5s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:inset 0 0 0 2px var(--glass-edge),inset 0 -18px 40px var(--ball-in),0 0 54px 10px var(--mist-glow),0 0 120px 30px var(--orchid-glow)}}
+.mist{position:absolute;inset:-18%;border-radius:50%;filter:blur(calc(var(--d)*.09));opacity:.75;mix-blend-mode:screen;
+  background:conic-gradient(from 0deg,transparent 0 18%,var(--mist) 30%,transparent 46%,var(--orchid) 62%,transparent 76%,var(--mist) 90%,transparent);
+  animation:swirl 10s linear infinite}
+.mist.b{inset:0;opacity:.5;animation-duration:15s;animation-direction:reverse}
+@keyframes swirl{to{transform:rotate(1turn)}}
+.orb.fast .mist{animation-duration:1.4s}
+.orb.fast .mist.b{animation-duration:2.1s}
+.orb.fast .ball{animation:glow 1s ease-in-out infinite,quake .3s linear infinite}
+.orb.speak .mist{animation-duration:2.4s}
+.orb.speak .ball{animation:glow .7s ease-in-out infinite}
+@keyframes quake{25%{transform:translate(1px,-1px)}75%{transform:translate(-1px,1px)}}
+.shine{position:absolute;inset:0;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle at 30% 24%,var(--shine) 0 3%,var(--shine-soft) 10%,transparent 24%),radial-gradient(circle at 60% 105%,var(--mist-glow),transparent 45%)}
+.num{position:absolute;inset:0;z-index:1;display:grid;place-items:center;font:400 calc(var(--d)*.5)/1 var(--display);color:var(--cream);text-shadow:0 0 18px var(--mist),0 0 4px var(--night);font-variant-numeric:tabular-nums}
+.stand{width:calc(var(--d)*.6);height:calc(var(--d)*.15);margin:calc(var(--d)*-.045) auto 0;background:linear-gradient(180deg,var(--gold-deep),var(--gold) 45%,var(--gold-deep));clip-path:polygon(16% 0,84% 0,100% 100%,0 100%)}
+.plate{width:calc(var(--d)*.72);height:calc(var(--d)*.045);margin:0 auto;border-radius:99px;background:var(--gold-deep)}
+
+/* intro */
+.intro{display:flex;flex-direction:column;gap:20px;text-align:center;align-items:center}
+.marquee{width:100%;border:2px solid var(--gold);border-radius:16px;background:var(--night-2);padding:12px 14px 14px;display:flex;flex-direction:column;gap:10px}
+.bulbs{display:flex;justify-content:space-between}
+.bulbs i{width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px 2px var(--gold-glow);animation:blink 1.2s steps(1) infinite}
+.bulbs i:nth-child(even){animation-delay:.6s}
+@keyframes blink{50%{opacity:.25;box-shadow:none}}
+.kicker{font:700 .8125rem/1 var(--caps);letter-spacing:.3em;text-transform:uppercase;color:var(--mist)}
+h1{font:400 var(--s4)/1 var(--display);color:var(--cream);text-shadow:0 0 22px var(--gold-glow)}
+.lede{font:600 var(--s2)/1.3 var(--body);max-width:30ch}
+.blurb{color:var(--muted);font-size:var(--s1);max-width:50ch}
+.ticket{position:relative;display:flex;flex-direction:column;gap:5px;align-items:center;text-align:center;min-width:min(18rem,100%);padding:16px 34px 18px;background:linear-gradient(180deg,var(--gold),var(--gold-deep) 170%);color:var(--card-ink);border:0;border-radius:10px;cursor:pointer;transition:transform .15s}
+.ticket::before,.ticket::after{content:"";position:absolute;top:50%;width:22px;height:22px;margin-top:-11px;border-radius:50%;background:var(--night)}
+.ticket::before{left:-11px}
+.ticket::after{right:-11px}
+.tk-k{font:700 .75rem/1 var(--caps);letter-spacing:.24em;text-transform:uppercase;opacity:.75}
+.tk-t{font:400 1.625rem/1.1 var(--display)}
+
+/* a question */
+.quiz{display:flex;flex-direction:column;gap:18px}
+.oracle{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.says{display:flex;align-items:center;justify-content:center;min-height:2.5em;max-width:24ch;font:400 clamp(1.1875rem,3.8vw,1.5rem)/1.2 var(--display);color:var(--gold);text-shadow:0 0 18px var(--gold-glow)}
+.says.swap{animation:up .35s ease-out both}
+.tarot{position:relative;width:min(100%,30rem);min-height:11rem;margin-inline:auto;padding:26px 28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;
+  background:linear-gradient(165deg,var(--card-face),var(--card-face-2));color:var(--card-ink);border-radius:18px;box-shadow:0 20px 44px var(--shadow),0 0 0 1px var(--gold-deep)}
+.tarot::before{content:"";position:absolute;inset:10px;border:1.5px solid var(--card-line);border-radius:10px;pointer-events:none}
+.deal{animation:deal .45s cubic-bezier(.2,.8,.2,1) both}
+@keyframes deal{from{opacity:0;transform:perspective(900px) translateY(-26px) rotateY(-70deg) rotate(-6deg)}}
+.t-top{display:flex;align-items:center;gap:10px;font:700 1rem/1 var(--caps);letter-spacing:.12em;color:var(--card-gold-ink)}
+.t-top svg{width:11px;height:11px;fill:currentColor}
+.stmt{font:600 var(--s3)/1.2 var(--body)}
+.answers{display:grid;gap:12px}
+.answers.n2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.answers.n3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ans{display:flex;align-items:center;justify-content:center;text-align:center;min-height:76px;padding:14px 12px;background:var(--night-2);color:var(--cream);border:2px solid var(--gold);border-radius:18px;font:600 1.125rem/1.25 var(--body);cursor:pointer;transition:background .12s,color .12s,box-shadow .12s}
+.ans[aria-pressed="true"]{background:var(--gold);color:var(--card-ink);box-shadow:0 0 26px var(--gold-glow)}
+.ans:active{transform:scale(.97)}
+@media (hover:hover){
+  .ans:hover{background:var(--line);box-shadow:0 0 18px var(--gold-glow)}
+  .ans[aria-pressed="true"]:hover{background:var(--gold)}
+  .ticket:hover{transform:translateY(-3px) rotate(-1deg)}
+}
+.pips{display:flex;justify-content:center;gap:14px;min-height:14px;padding-top:4px}
+.pip{width:10px;height:10px;transform:rotate(45deg);border:1.5px solid var(--line)}
+.pip.done{background:var(--gold-deep);border-color:var(--gold-deep)}
+.pip.now{border-color:var(--gold);box-shadow:0 0 10px var(--gold-glow)}
+
+/* the ball clouds over */
+.divine{display:flex;flex-direction:column;align-items:center;gap:30px;padding-block:28px 40px;text-align:center}
+.d-line{font:400 var(--s3d)/1.15 var(--display);color:var(--gold);min-height:2.4em}
+.d-line.swap{animation:up .4s ease-out both}
+
+/* the ending */
+.result{display:flex;flex-direction:column;gap:24px}
+.reveal-top{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.reveal-top .orb{margin-bottom:14px}
+.label{font:600 var(--s2)/1.2 var(--body)}
+.asof{font:700 .75rem/1 var(--caps);letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.outof{font:600 var(--s1)/1.2 var(--body);font-variant-numeric:tabular-nums;margin-top:6px}
+.verdict{font:400 var(--s3d)/1.1 var(--display);color:var(--gold);text-shadow:0 0 22px var(--gold-glow);margin-top:6px;max-width:20ch}
+.reading{position:relative;display:flex;flex-direction:column;gap:10px;padding:26px 26px 24px;background:linear-gradient(165deg,var(--card-face),var(--card-face-2));color:var(--card-ink);border-radius:18px;box-shadow:0 20px 44px var(--shadow),0 0 0 1px var(--gold-deep)}
+.reading::before{content:"";position:absolute;inset:10px;border:1.5px solid var(--card-line);border-radius:10px;pointer-events:none}
+.rd-k{font:700 .75rem/1 var(--caps);letter-spacing:.22em;text-transform:uppercase;color:var(--card-gold-ink);margin-top:6px}
+.rd-k:first-child{margin-top:0}
+.rd-p{font-size:var(--s1);line-height:1.45}
+.rd-point{font-weight:600;line-height:1.45;color:var(--velvet-deep);margin-top:4px}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px}
+.primary{background:linear-gradient(180deg,var(--gold),var(--gold-deep) 170%);color:var(--card-ink);border:0;border-radius:99px;padding:16px 26px;font:400 1.25rem/1 var(--display);cursor:pointer}
+.aside{color:var(--muted)}
+.secondary{background:none;color:var(--cream);border:2px solid var(--gold);border-radius:99px;padding:14px 24px;font:400 1.25rem/1 var(--display);cursor:pointer}
+.take{display:flex;align-items:center;gap:18px;padding:18px;border:1.5px solid var(--gold-deep);border-radius:14px;background:var(--night-2)}
+.take-qr{flex:none;width:104px;height:104px;padding:8px;background:#fff;border-radius:8px}
+.take-qr svg{display:block;width:100%;height:100%}
+.take-txt{display:flex;flex-direction:column;gap:4px;min-width:0}
+.take-k{font:700 .75rem/1 var(--caps);letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.take-t{font:600 var(--s1)/1.3 var(--body)}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.chip{display:inline-block;padding:10px 16px;border:1.5px solid var(--gold);border-radius:99px;color:var(--cream);font:600 .9375rem/1 var(--body);text-decoration:none}
+.chip:hover{background:var(--gold);color:var(--card-ink)}
+/* the quick-reading switch */
+.toggle{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;margin-top:8px;background:none;border:0;padding:6px 0;cursor:pointer;color:var(--muted);font:600 .8125rem/1 var(--body)}
+.toggle[hidden]{display:none}
+.tg-track{position:relative;flex:none;width:34px;height:20px;border-radius:99px;border:1.5px solid var(--line);background:var(--night-2);transition:background .15s,border-color .15s}
+.tg-knob{position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:var(--muted);transition:transform .15s,background .15s}
+.toggle[aria-checked="true"] .tg-track{background:var(--gold-deep);border-color:var(--gold-deep)}
+.toggle[aria-checked="true"] .tg-knob{transform:translateX(14px);background:var(--cream)}
+.toggle[aria-checked="true"]{color:var(--cream)}
+.tg-state{font-weight:400}
+#slip{display:none}
+#slip img{display:block;width:62mm;height:auto}
+@media print{
+  @page{size:62mm auto;margin:0}
+  html,body{background:#fff!important;color:#000!important;margin:0;padding:0}
+  #sky,#fx,.awning-wrap,.wrap{display:none!important}
+  #slip{display:block!important}
+}
+
+
+.fine{display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:14px;font-size:.8125rem;color:var(--muted)}
+.fine p{max-width:72ch}
+
+@media (max-width:560px){
+  .take{flex-direction:column;text-align:center;align-items:center}
+  .take-txt{align-items:center}
+  .chips{justify-content:center}
+  .answers.n2,.answers.n3{grid-template-columns:minmax(0,1fr)}
+  .ans{min-height:58px}
+  .tarot{padding:24px 22px;min-height:9.5rem}
+  .actions{justify-content:center;text-align:center}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="awning-wrap" aria-hidden="true"><div class="awning"></div></div>
+
+<div class="wrap">
+  <header id="bar-top" class="bar-top" hidden>
+    <span class="wordmark" id="wordmark">Green Flag Forecast</span>
+    <span class="bar-links"><a id="site-link" class="link" href="https://siastevens.com/">siastevens.com</a><button id="restart-top" class="link" data-act="restart">Start over</button></span>
+  </header>
+
+  <main id="app"></main>
+
+  <footer class="fine">
+    <p>For fun and for conversation. The number is the ball's reading of your answers, not a scientific prediction. Nothing you answer here is saved.</p>
+    <p>If you ever feel afraid of a partner, the National Domestic Violence Hotline answers 24 hours a day: 1-800-799-7233 or thehotline.org.</p>
+    <button id="quick" class="toggle" data-act="quick" role="switch" aria-checked="false" hidden><span class="tg-track" aria-hidden="true"><span class="tg-knob"></span></span><span class="tg-txt">Quick reading</span><span class="tg-state" id="quick-state">Off</span></button>
+  </footer>
+</div>
+<div id="slip" aria-hidden="true"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<script>
+/* ---------- The question tree ----------
+   N(id, group, question, options). An option is [answer, ball's reply, next, found, set, quickFound].
+   The reply and the finding can be functions of the reading so far. END finishes. Every branch reaches a reading.
+   Every area has an opening question; a bad answer usually gets one more question, and that answer
+   decides what the ball found and how big it is. In a quick reading only the OPENERS are asked, and an
+   option's quickFound is what the ball concludes when its follow-up is skipped.
+   Every question has to make sense on its own, without the card before it. */
+const NODES = {};
+function N(id, g, q, opts){ NODES[id] = {id, g, q, opts}; }
+const OPENERS = new Set(["I1", "S1", "S2", "G1", "L1", "T2", "P1", "V1", "C1", "A0", "A1", "F1", "J1", "H1", "D1", "L1s", "Q1", "W1", "B1", "N1", "K1", "X1", "M1", "R1"]);
+
+N("I1", null, "Your love life right now?", [
+  ["Single", "Let's see what's in the way.", "S1", null, {track:"single"}],
+  ["Seeing someone", "Let's see what it's made of.", "A0", null, {track:"seeing"}],
+  ["Committed", "Let's see what you've built.", "B1", null, {track:"est"}]]);
+
+/* ----- Single ----- */
+N("S1", "drive", "When was your last first date?", [
+  ["This month", "So the engine runs.", "G1", null, {dated:true}],
+  ["This year", "Not long ago. Let's look closer.", "S2"],
+  ["Longer ago", "A while, then.", "S2", null, {gap:true}]]);
+N("S2", "drive", "On a typical night in, what gets most of your time?", [
+  ["Games or shows", "A full evening. Let's see how often.", "S5", null, null, "screen_some"],
+  ["My phone", "The thumb never rests.", "S3", null, null, "phone"],
+  ["Something else", c => c.gap ? "Then it isn't the screen. It's the calendar." : "Then it isn't the screen.", "S4", c => c.gap ? "gap" : null]]);
+N("S3", "drive", "Late at night, what is the phone mostly for?", [
+  ["Scrolling", "Hard to see one face in a crowd.", "G1", "feed"],
+  ["Dating apps", "Many matches. No chairs filled.", "G1", "swiping"],
+  ["Something private", "The ball keeps secrets. It also keeps count.", "G1", "private"]]);
+N("S4", "drive", "Is it work that takes your evenings?", [
+  ["Yes", "Long days.", "G1", "work"],
+  ["No", "Then the evenings are yours. Use them.", "G1"]]);
+N("S5", "drive", "Is that most nights?", [
+  ["Yes", "A full evening and an empty chair.", "G1", "screen"],
+  ["No", "A treat, then. Not a habit.", "G1"]]);
+
+N("G1", "guard", "Someone decent shows interest in you. First thought?", [
+  ["Why not", "An open door. Good.", "L1"],
+  ["What's the catch", "Burned before, the ball suspects.", "G2", null, null, "guard"],
+  ["Not right now", "The door stays shut, then.", "G2", null, null, "guard"]]);
+N("G2", "guard", "Is there an ex you still check up on?", [
+  ["Yes", "One foot still in that door.", "L1", "ex"],
+  ["No", "Then it's caution, not history.", "L1", "guard"]]);
+
+N("L1", "standards", "They cancel on you twice. The third time?", [
+  ["I say something", "A line, said out loud.", "T1"],
+  ["I stop making plans with them", "A line, held quietly.", "T1"],
+  ["I let it go", "People treat you as you've shown you'll accept.", "L2", null, null, "noline"]]);
+N("L2", "standards", "Do you tell people what you want early, or wait and see?", [
+  ["Early", "Then you know the line. You just don't hold it.", "T1", "noline"],
+  ["Wait and see", "A line nobody's heard isn't a line.", "T1", "nosay"]]);
+
+N("T1", "taste", "What do you notice first in someone?", [
+  ["Their looks", "Honest. Most won't say it.", "T2", null, {taste:"looks"}],
+  ["Their sense of humor", "A good ear.", "T2", null, {taste:"humor"}],
+  ["How they treat people", "You watch them with the waiter.", "T2", null, {taste:"treat"}]]);
+N("T2", "taste", "Has your usual type worked out for you?", [
+  ["Yes", "Then trust it.", "P1"],
+  ["No", "Same door, same wall.", "T3", "type"],
+  ["I don't have a type", "An open mind. Useful.", "P1"]]);
+N("T3", "taste", "How do your relationships usually end?", [
+  ["They end it", "Then the type isn't the whole story.", "P1"],
+  ["I lose interest", "The spark dips in every pair. You leave at the dip.", "P1", "chase"],
+  ["It fades on both sides", "Nothing was built to hold it.", "P1", "underspark"]]);
+
+N("P1", "place", "Where did you last meet someone you could date?", [
+  ["On an app", c => c.dated ? "Thumbs first. And it's working." : "Thumbs first.", "P3", null, null, c => c.dated ? null : "app_any"],
+  ["In person", "In the wild. Good.", "P2"],
+  ["Can't remember", "Neither can the ball.", "P4", null, null, "nofaces"]]);
+N("P2", "place", "Is there a place you go every week and see the same faces?", [
+  ["Yes", "A regular. People notice regulars.", "V1"],
+  ["No", "A lucky night, then.", "V1", "noregular"]]);
+N("P3", "place", "From an app, do you usually meet within two weeks, or keep texting?", [
+  ["We meet", "Then it leaves the screen.", "V1", c => c.dated ? null : (c.taste ? "app_" + c.taste : "app_any")],
+  ["It usually fizzles first", "A pen pal, then.", "V1", "penpal"]]);
+N("P4", "place", "In a normal week, where are you around people you don't live with?", [
+  ["Nowhere much", "Then nobody can find you.", "V1", "nofaces"],
+  ["Only work", "The one room where nobody's looking.", "V1", "onlywork"],
+  ["A class, team or group", "Then you're in the room. Look up.", "V1", "inroom"]]);
+
+N("V1", "value", "Picked up anything new this year? A skill, a sport, a class.", [
+  ["Yes", "Go on.", "V2"],
+  ["No", "Hm.", "V3", null, null, "notbuilding"]]);
+N("V2", "value", "Do you do your hobbies around other people, or alone?", [
+  ["Around people", "Then it's on show. That's the draw.", "C1"],
+  ["Mostly alone", "A light under a bucket.", "C1", "hidden"]]);
+N("V3", "value", "What takes your free time instead?", [
+  ["Work", "A career, then. Not a life someone can join.", "C1", "onlywork_build"],
+  ["Rest", "Fair. The shelf's been still a while.", "C1", "notbuilding"],
+  ["Screens", "The shelf's been still a while.", "C1", "notbuilding"]]);
+
+N("C1", "circle", "Who would set you up with someone?", [
+  ["A friend", "Good friends make good scouts.", "END"],
+  ["Family", "Family never stops looking.", "END"],
+  ["Nobody", "A small circle is a small pond.", "C2", null, null, "nointro"]]);
+N("C2", "circle", "When did you last tell a friend you're looking?", [
+  ["Recently", "Then they know. Give them a month.", "END", "nointro"],
+  ["Can't recall", "Then nobody's scouting.", "END", "notold"]]);
+
+/* ----- Seeing someone ----- */
+N("A0", "attraction", "How long have you two been seeing each other?", [
+  ["Under a month", "Early days.", "A1", null, {len:"new"}],
+  ["A few months", "Long enough to know a few things.", "A1", null, {len:"mid"}],
+  ["Six months or more", "Long enough to know.", "A1", null, {len:"long"}]]);
+N("A1", "attraction", "How do your dates usually start?", [
+  ["Planned ahead", "Somebody made an effort.", "A3"],
+  ["Same-day plans", "Spontaneous. Or convenient.", "A3"],
+  ["A late text", "The ball knows that text.", "A2", null, null, "latetext"]]);
+N("A2", "attraction", "Do you two see each other in daylight much?", [
+  ["Yes", "Then it's more than a spark.", "A3"],
+  ["No", "Late texts and no daylight. A short calendar.", "A3", "latenights"]]);
+N("A3", "attraction", "Have you seen them tired, wrong, or in a bad mood yet?", [
+  ["Yes", "Then you've met the real one.", "F1"],
+  ["Once", "One look behind the curtain.", "F1"],
+  ["Not yet", "So far, only the showroom.", "F1", c => c.len === "long" ? "showroom_long" : "showroom"]]);
+
+N("F1", "effort", "Do they go quiet for days at a time?", [
+  ["Never", "Steady. Good.", "J1"],
+  ["Sometimes", "Life gets busy. Let's see who reaches.", "F2"],
+  ["Often", "Then a flood, the ball bets.", "J1", "hotcold"]]);
+N("F2", "effort", "Who usually texts first?", [
+  ["Me", "One oar in the water.", "J1", "reaching"],
+  ["Them", "They're thinking of you.", "J1"],
+  ["It's even", "Two oars in the water.", "J1"]]);
+
+N("J1", "doors", "Are the dating apps still on either phone?", [
+  ["No", "Doors closed. Good.", "H1"],
+  ["Mine", "Just the icon, surely.", "J2", null, null, "mydoors"],
+  ["Theirs, or both", "Then the room has a draft.", "J3", null, null, "theirdoors"]]);
+N("J2", "doors", "Opened one this week?", [
+  ["Yes", "One eye on the exit.", "H1", "mydoors_open"],
+  ["No", "An icon, then. Delete it.", "H1", "mydoors"]]);
+N("J3", "doors", "Have you two said you're exclusive?", [
+  ["Yes", "Then the app is a question to ask them.", "H1", "theirdoors"],
+  ["No", "Nobody's asked, so nobody's chosen.", "H1", "notexclusive"]]);
+
+N("H1", "shared", "Do you like the same kind of things? Shows, music, food.", [
+  ["Mostly", "Easy evenings ahead.", "D1"],
+  ["Not really", "Two remotes. Let's see what else there is.", "H2", null, {common:"diff"}, "notincommon"],
+  ["Not sure yet", "The ball doesn't know either.", "H2", null, {common:"unknown"}, "tastes"]]);
+N("H2", "shared", "Do you two have a joke nobody else would get?", [
+  ["Yes", c => c.common === "diff" ? "A private language counts for a lot." : "A private language. That counts.", "D1", c => c.common === "diff" ? "diffjoke" : null],
+  ["No", "It'll come, or it won't.", "D1", c => c.common === "diff" ? "notincommon" : "tastes"]]);
+
+N("D1", "doing", "What are most of your dates?", [
+  ["Food and drinks", "Delicious. And forgettable.", "D2", null, {dates:"food"}, "dinners"],
+  ["An activity", "Hands busy, guard down.", "D3", null, {dates:"do"}],
+  ["Staying in", "Cozy. Let's see.", "D2", null, {dates:"in"}, "stayin_q"]]);
+N("D2", "doing", "Have you two done something neither of you had tried before?", [
+  ["Yes", "That's the stuff that sticks.", "D3"],
+  ["No", c => c.dates === "in" ? "Cozy. Also a rut." : "Menus, but no memories.", "D3", c => c.dates === "in" ? "stayin" : "eatonly"]]);
+N("D3", "doing", "On a date, where is their phone?", [
+  ["Away", "You get the whole person.", "L1s"],
+  ["Face down on the table", "Half an eye on it.", "L1s"],
+  ["In their hand", "Half there.", "L1s", "halfthere"]]);
+
+N("L1s", "leaning", "Has either of you asked the other for a favor?", [
+  ["Both of us", "Someone to lean on, both ways.", "L2s"],
+  ["One of us", "A bridge with one lane.", "L2s", "oneway"],
+  ["Neither", "Hm.", "L3s", null, null, "nolean"]]);
+N("L2s", "leaning", "The last favor between you: did it get done without a sigh?", [
+  ["Yes", "Someone to lean on.", "Q1"],
+  ["With a sigh", "Help with a sigh costs something.", "Q1", "sigh"],
+  ["It didn't get done", "Noted.", "Q1", "noshow"]]);
+N("L3s", "leaning", "Would you ask them for one?", [
+  ["Yes", "Then ask a small one this week.", "Q1", "nolean_would"],
+  ["No", "Two islands. Nice view.", "Q1", "nolean"]]);
+
+N("Q1", "fight", "Have you two disagreed about anything yet?", [
+  ["Yes, and it got sorted", "Closed. Good.", "W1"],
+  ["Yes, and it got dropped", "Hm.", "Q2", null, null, "dropped"],
+  ["Not yet", c => c.len === "long" ? "Never? Really?" : "Nothing's been tested, then.", "W1", c => c.len === "long" ? "untested_long" : "untested"]]);
+N("Q2", "fight", "Does the same one keep coming back?", [
+  ["Yes", "Then it was never finished.", "W1", "dropped_back"],
+  ["No", "It's waiting for you somewhere.", "W1", "dropped"]]);
+
+N("W1", "worlds", "Have you met their friends?", [
+  ["Yes", "You exist in their world.", "END"],
+  ["No", "Still a secret.", "W2", null, null, "secret"]]);
+N("W2", "worlds", "Have they met your friends?", [
+  ["Yes", "Half a bridge.", "END", "halfbridge"],
+  ["No", c => c.len === "new" ? "Early days. Build the bridge anyway." : "Two separate maps.", "END", c => c.len === "new" ? "worlds_new" : "worlds"]]);
+
+/* ----- Committed ----- */
+N("B1", "building", "Have you two built something together? A home, a trip, a business.", [
+  ["Yes", "Proof that you can.", "B2"],
+  ["No", "Hm.", "B5", null, null, "nothingbuilt"]]);
+N("B2", "building", "Is there a next thing you two are working on?", [
+  ["Yes, it's underway", "Builders. Good.", "B4"],
+  ["We've talked about it", "Talk is the first brick.", "B4"],
+  ["Not right now", "Finished things gather dust.", "B3", "builtstopped"]]);
+N("B3", "building", "Anything coming up that you're both looking forward to?", [
+  ["Yes", "Something on the horizon.", "B4"],
+  ["No", "A road with no signs.", "B4", "noplan"]]);
+N("B4", "building", "Is there something you two do every week, no matter what?", [
+  ["Yes", "Every pair needs one.", "N1"],
+  ["We used to", "Postponed things rarely return alone.", "B6"],
+  ["No", "Time to invent one.", "N1", "norituals"]]);
+N("B5", "building", "Is there something you've both said you'd like to do someday?", [
+  ["Yes", "Then it's waiting for a date.", "B4", "nothingbuilt_wait"],
+  ["No", "Then a first is waiting.", "B4", "nothingbuilt"]]);
+N("B6", "building", "Would you both want it back?", [
+  ["Yes", "Then bring it back this week.", "N1", "ritualslipped"],
+  ["Not sure", "A ritual nobody fought for.", "N1", "ritualgone"]]);
+
+N("N1", "evenings", "A free evening together. What usually happens?", [
+  ["Something together", "One story, two people.", "K1"],
+  ["Side by side on our phones", "Close enough to touch.", "N2", null, null, "couch"],
+  ["We do our own thing", "Two evenings in one night.", "N3", null, null, "apart"]]);
+N("N2", "evenings", "Is that most nights?", [
+  ["Yes", "Close enough to touch. Miles apart.", "K1", "couch_most"],
+  ["No", "Some nights, then.", "K1", "couch"]]);
+N("N3", "evenings", "By choice, or just how it's gone?", [
+  ["By choice", "Two lives, well lived. Share one night.", "K1", "apart"],
+  ["Just how it's gone", "That's how roommates are made.", "K1", "apart_drift"]]);
+
+N("K1", "spark", "Do you two still flirt?", [
+  ["Yes", "Good. Keep that.", "X1"],
+  ["Sometimes", "Sometimes counts.", "X1"],
+  ["Not really", "Hm.", "K2", null, null, "spark"]]);
+N("K2", "spark", "When did you two last try something new together?", [
+  ["Lately", "Then it's only resting.", "X1", "spark"],
+  ["Can't recall", "The same weeks, on repeat.", "X1", "nonew"]]);
+
+N("X1", "exchange", "Who usually makes the plans for you two?", [
+  ["Me", "One of you runs the calendar.", "X2", null, null, "planning"],
+  ["Them", "Lucky you.", "M1"],
+  ["We take turns", "A fair trade.", "M1"]]);
+N("X2", "exchange", "When were you last thanked for something?", [
+  ["This week", "At least somebody notices.", "M1", "planning"],
+  ["Can't recall", "Nobody's counting the good things.", "M1", "unseen"]]);
+
+N("M1", "needing", "Something goes wrong in your week. First call?", [
+  ["Them", "First call. Good.", "R1"],
+  ["A friend or family", "A village. Also good.", "R1"],
+  ["I handle it alone", "Capable. And alone in it.", "M2", null, null, "noneed"]]);
+N("M2", "needing", "Would they want to be called?", [
+  ["Yes", "Then let them.", "R1", "noneed_let"],
+  ["Probably not", "Hm.", "R1", "noneed"],
+  ["Don't know", "Then nobody's asked.", "R1", "noneed"]]);
+
+N("R1", "repair", "Your last argument: did it finish, or just stop?", [
+  ["It finished", "Closed. Good.", "END"],
+  ["It just stopped", "Hm.", "R3", null, null, "fights_once"],
+  ["We don't argue", "Never? Really?", "R2", null, null, "noargue"]]);
+N("R2", "repair", "Is there something you've stopped bringing up?", [
+  ["Yes", "Silence isn't peace.", "END", "unsaid"],
+  ["No", "One of the rare ones, then.", "END"]]);
+N("R3", "repair", "Does the same one keep coming back?", [
+  ["Yes", "Then it was never finished.", "END", "fights"],
+  ["No", "It's waiting for you somewhere.", "END", "fights_once"]]);
+
+/* ---------- What the ball can find ----------
+   [name, area, points (1 small, 2 big), why it matters, what to do, [chapter, title], how the ball reads it] */
+const FIND = {
+  single: {
+    gap: ["Out of practice", "drive", 1, "The longer the gap, the bigger a first date feels.", "Put one low-stakes coffee on the calendar this month.", [10, "Becoming Worth Choosing"], "A long gap since the last first date."],
+    screen: ["Evenings go to a screen", "drive", 2, "Nobody new can find you on your couch.", "Give two evenings a week to a place with people in it.", [21, "Shrink the Noise"], "Most evenings, a screen and an empty chair."],
+    screen_some: ["Some evenings go to a screen", "drive", 1, "Nobody new can find you on your couch.", "Give one evening a week to a place with people in it.", [21, "Shrink the Noise"], "A screen taking more evenings than it should."],
+    phone: ["Nights go to the phone", "drive", 1, "Whatever the phone is for at night, it isn't the room you're in.", "Leave the phone outside the bedroom for 30 days.", [21, "Shrink the Noise"], "Nights that end on a phone."],
+    feed: ["Nights go to the feed", "drive", 2, "Every perfect stranger makes real people look ordinary.", "Unfollow the people you will never meet.", [21, "Shrink the Noise"], "Nights spent scrolling strangers."],
+    swiping: ["Swiping more than dating", "drive", 1, "The app gives the feeling of dating without a date.", "Book one real date this week, or delete it for 30 days.", [24, "Resist the Shortcut"], "More swiping than dating."],
+    private: ["Appetite spent in private", "drive", 2, "Hunger that is fed every night stops pushing you out the door.", "Take 30 days off and notice what comes back.", [21, "Shrink the Noise"], "An appetite fed in private."],
+    work: ["Work takes the evenings", "drive", 1, "You can't meet anyone in hours you don't have.", "Protect one weeknight and one weekend day.", [2, "The Attention Crisis"], "Work has the evenings."],
+    ex: ["Still watching an ex", "guard", 2, "Part of you is still in the last one.", "Mute or block for 30 days.", [21, "Shrink the Noise"], "One foot still in an old door."],
+    guard: ["Your guard is up", "guard", 1, "A closed door keeps out the good ones too.", "Say yes to one coffee you would normally turn down.", [9, "The Two Pulls"], "A door kept shut, just in case."],
+    noline: ["Standards you don't hold", "standards", 2, "Letting it slide tells them it's fine.", "Set one standard, say it once, and hold it the next time it's tested.", [25, "Hold the Line"], "A line crossed twice, and let go."],
+    nosay: ["Standards you keep to yourself", "standards", 1, "Nobody can meet a standard they haven't heard.", "Say what you want early, in peace, before it's tested.", [25, "Hold the Line"], "A line nobody has heard."],
+    type: ["A type that keeps failing", "taste", 1, "The same choice keeps giving the same ending.", "Say yes to one person who is not your type.", [6, "Attraction Is a Measurement"], "A type that keeps ending the same way."],
+    chase: ["Chasing the spark", "taste", 2, "Intensity fades in every pair. Leaving at the fade restarts the clock.", "Next time the spark dips, stay sixty days and build one thing together.", [8, "Your Brain on Love"], "Gone at the first dip of the spark."],
+    underspark: ["Nothing under the spark", "taste", 1, "A spark with nothing built under it goes out on its own.", "Start something together by the second month: a plan, a project, a habit.", [16, "The Orchard Theory"], "Sparks with nothing built under them."],
+    nofaces: ["No new faces lately", "place", 2, "No new faces means no new chances.", "Say yes to the next two invitations, whatever they are.", [7, "The Display Economy"], "No room where new faces can find you."],
+    onlywork: ["Only at work", "place", 1, "Work is the one room where nobody's looking.", "Add one weekly thing outside work with the same people in it.", [7, "The Display Economy"], "New faces only at work, where nobody's looking."],
+    inroom: ["In the room, not looking up", "place", 1, "You're already where people are. They don't know you're available.", "Tell someone there you're single. Then look up.", [7, "The Display Economy"], "In the room every week, and never looking up."],
+    app_looks: ["Judging from photos", "place", 1, "Photos show the best angle, not the person.", "Decide after you have met, not before.", [7, "The Display Economy"], "Photos doing the choosing."],
+    app_humor: ["Looking for humor on a screen", "place", 1, "Humor needs a conversation to show up.", "Go where people talk: a class, a small dinner, a team.", [7, "The Display Economy"], "A laugh being looked for on a screen."],
+    app_treat: ["Looking for character in a profile", "place", 1, "Character shows the second and third time you see someone.", "Join something that meets every week.", [7, "The Display Economy"], "Character being looked for in a profile."],
+    app_any: ["Looking at profiles instead of people", "place", 1, "A profile shows the best angle, not the person.", "Ask to meet within a week, or move on.", [7, "The Display Economy"], "Profiles instead of people."],
+    penpal: ["It stays on the screen", "place", 2, "You can't know someone you haven't stood next to.", "Ask to meet within a week, or move on.", [7, "The Display Economy"], "Matches that never leave the screen."],
+    noregular: ["Nowhere you're a regular", "place", 1, "One meeting shows the wrapping. The second and third show the person.", "Pick one weekly thing with the same people in it.", [7, "The Display Economy"], "Nowhere you're a regular."],
+    hidden: ["Your hobbies happen alone", "value", 1, "What you're building can't draw anyone while it stays hidden.", "Take one hobby into a room: a class, a club, a team.", [10, "Becoming Worth Choosing"], "Something being built where nobody can see it."],
+    notbuilding: ["Not building right now", "value", 2, "People are drawn to someone who is going somewhere.", "Start one thing this month and tell someone.", [10, "Becoming Worth Choosing"], "Nothing being built right now."],
+    onlywork_build: ["Work is all you're building", "value", 1, "Work builds a career, not a life people can join.", "Start one thing this month that isn't your job.", [10, "Becoming Worth Choosing"], "A career being built, and nothing a person could join."],
+    nointro: ["Nobody to introduce you", "circle", 1, "Most good matches come through people who know you.", "Tell two friends you're looking.", [18, "The Village"], "Nobody who'd think to set you up."],
+    notold: ["Nobody knows you're looking", "circle", 2, "Friends can't scout for someone who hasn't said they're looking.", "Tell two friends you're looking. This week.", [18, "The Village"], "Nobody who knows you're looking."]
+  },
+  seeing: {
+    latetext: ["It starts with late texts", "attraction", 1, "Late texts show desire, not interest in your life.", "Suggest a daytime plan and see what comes back.", [6, "Attraction Is a Measurement"], "Dates that start with a late text."],
+    latenights: ["It runs on late nights", "attraction", 2, "Late nights show desire, not interest in your life.", "Suggest a daytime plan and see what comes back.", [6, "Attraction Is a Measurement"], "Late texts, and no daylight."],
+    showroom: ["You've only seen their good days", "attraction", 1, "Everyone is easy on a good day.", "Do something tiring together: a long drive, a move, a hike.", [7, "The Display Economy"], "A showroom, not a person yet."],
+    showroom_long: ["Months in, only their good days", "attraction", 2, "After months, a good day every time is a performance.", "Do something tiring together: a long drive, a move, a hike.", [7, "The Display Economy"], "Months in, and still only the showroom."],
+    hotcold: ["Hot and cold", "effort", 2, "Steady interest doesn't vanish for days.", "Say once, calmly, that you like hearing from them most days.", [15, "The Tuesday Test"], "Hot, then cold, then quiet for days."],
+    reaching: ["You do the reaching", "effort", 1, "If only one person reaches, only one is choosing.", "Let them start the next two conversations.", [11, "The Exchange"], "One person doing the reaching."],
+    mydoors: ["Your doors are still open", "doors", 1, "An icon is a door you haven't closed.", "Delete it, or admit you're still looking.", [4, "The Marketplace Shift"], "An app you haven't deleted."],
+    mydoors_open: ["You're still looking", "doors", 2, "You can't go deep with one eye on the exit.", "Decide: delete the apps, or tell them you're not done looking.", [4, "The Marketplace Shift"], "An app you opened this week."],
+    theirdoors: ["Their doors are still open", "doors", 2, "Someone still browsing hasn't chosen yet.", "Ask, plainly, whether you're both done looking.", [4, "The Marketplace Shift"], "An app still open on their phone."],
+    notexclusive: ["Nobody has said it's exclusive", "doors", 2, "Until someone says it, you're both still options.", "Ask, plainly, whether you're both done looking.", [4, "The Marketplace Shift"], "Apps still around, and the word exclusive unsaid."],
+    diffjoke: ["Different tastes, a private language", "shared", 1, "A shared joke is common ground you built yourselves.", "Try one of theirs this week, all the way through.", [13, "The Common Ground"], "Different tastes, but a private language."],
+    notincommon: ["Not much in common yet", "shared", 2, "Shared taste is where easy evenings come from.", "Try one of theirs this week, all the way through.", [13, "The Common Ground"], "Different tastes, and no private language."],
+    tastes: ["You don't know their tastes yet", "shared", 1, "You can't share what you haven't asked about.", "Ask what they'd pick tonight, then do it.", [13, "The Common Ground"], "Their tastes still unknown to you."],
+    dinners: ["Mostly dinners", "doing", 1, "Dinner shows manners. Doing shows the person.", "Swap one dinner for something neither of you has tried.", [13, "The Common Ground"], "Mostly dinners."],
+    eatonly: ["You eat together but don't do together", "doing", 2, "Dinner shows manners. Doing shows the person.", "Swap one dinner for something neither of you has tried.", [13, "The Common Ground"], "Dinners, and nothing new tried together."],
+    stayin_q: ["Mostly staying in", "doing", 1, "Staying in is comfortable and teaches you little.", "Take one date out of the house this week.", [13, "The Common Ground"], "Mostly staying in."],
+    stayin: ["Staying in has become a rut", "doing", 2, "Staying in is comfortable and teaches you little.", "Take one date out of the house this week, somewhere neither of you has been.", [13, "The Common Ground"], "Staying in, and nothing new tried together."],
+    halfthere: ["Their phone comes on dates", "doing", 1, "Attention worn is not attention paid.", "Ask for one phone-free dinner and see how it goes.", [22, "Sharpen the Presence"], "A phone on the table between you."],
+    oneway: ["The leaning runs one way", "leaning", 1, "When only one of you asks, only one of you is trusting.", "Even it out: ask for one small thing, or offer one.", [12, "Needing and Being Needed"], "Only one of you ever asks for anything."],
+    nolean_would: ["Nobody has leaned yet", "leaning", 1, "Trust starts with a small ask.", "Ask for one small favor this week.", [12, "Needing and Being Needed"], "Nobody has asked for anything yet."],
+    nolean: ["Nobody leans on anybody", "leaning", 2, "People who don't need each other drift apart easily.", "Ask for one small favor this week.", [12, "Needing and Being Needed"], "No one leans on anyone here."],
+    sigh: ["Help with a sigh", "leaning", 1, "Help given grudgingly teaches you not to ask.", "Ask once more, for something small, and watch the mood.", [26, "The Labors Sort"], "Help that came with a sigh."],
+    noshow: ["You asked, they didn't show", "leaning", 2, "Someone who skips the small things will skip the big ones.", "Ask once more, for something small. Twice is a pattern.", [26, "The Labors Sort"], "A small favor that never got done."],
+    dropped: ["Dropped rather than sorted", "fight", 1, "An unfinished disagreement comes back bigger.", "Reopen the last one and agree what it was about.", [19, "The Container"], "A disagreement dropped, not sorted."],
+    dropped_back: ["The same disagreement keeps coming back", "fight", 2, "A fight that keeps returning was never finished.", "Reopen it once, on a calm day, and agree what it was about.", [19, "The Container"], "A disagreement that keeps coming back."],
+    untested: ["You haven't disagreed yet", "fight", 1, "You don't know a pair until something has been disagreed on.", "Say one small no this week and watch what happens.", [19, "The Container"], "No storm yet, so no shelter tested."],
+    untested_long: ["Months in, never a disagreement", "fight", 2, "Never fighting after months is avoidance, not harmony.", "Say one small no this week and watch what happens.", [19, "The Container"], "Months in, and never a single disagreement."],
+    secret: ["Their friends haven't met you", "worlds", 1, "A relationship nobody else has seen is easy to end.", "Ask to meet one friend of theirs.", [18, "The Village"], "Their friends haven't met you."],
+    halfbridge: ["You've opened your world, they haven't", "worlds", 1, "You're in the open and they're still private.", "Ask to meet one friend of theirs.", [18, "The Village"], "Your friends have met them. Theirs haven't met you."],
+    worlds_new: ["Your worlds haven't touched yet", "worlds", 1, "Early, but a bridge has to start somewhere.", "Bring them to one thing with your people.", [18, "The Village"], "Two worlds that haven't met, though it's early."],
+    worlds: ["Your worlds haven't touched", "worlds", 2, "A relationship nobody else has seen is easy to end.", "Bring them to one thing with your people.", [18, "The Village"], "Two worlds that haven't met."]
+  },
+  est: {
+    nothingbuilt: ["Nothing built together yet", "building", 2, "What you make together is what holds when feelings dip.", "Start one small project with an end you can see.", [16, "The Orchard Theory"], "Nothing built together yet."],
+    nothingbuilt_wait: ["Something you've both talked about, never started", "building", 1, "A plan with no date is a wish.", "Pick the thing you've both mentioned and give it a first step this month.", [17, "Creation: Rituals, Projects, Future"], "A plan you've both mentioned, still waiting for a date."],
+    builtstopped: ["You built, then stopped", "building", 2, "A finished project stops giving you anything to share.", "Pick the next thing, however small, and set a date.", [16, "The Orchard Theory"], "Something built once, and nothing since."],
+    noplan: ["No shared plan ahead", "building", 2, "Couples with nothing ahead start looking back.", "Put one thing on the calendar that you both want.", [17, "Creation: Rituals, Projects, Future"], "Nothing ahead that you're both looking forward to."],
+    ritualslipped: ["Your ritual slipped", "building", 1, "Rituals are the first thing to go and the hardest to restart.", "Bring it back this week, even a short version.", [17, "Creation: Rituals, Projects, Future"], "A weekly ritual that slipped, and is missed."],
+    ritualgone: ["A ritual nobody fought for", "building", 2, "A ritual that went without a fight was already hollow.", "Invent a new one this week, small enough to keep.", [17, "Creation: Rituals, Projects, Future"], "A ritual that went, and nobody fought for it."],
+    norituals: ["No rituals of your own", "building", 1, "A couple without rituals has nothing that is only theirs.", "Pick one small thing and repeat it every week.", [17, "Creation: Rituals, Projects, Future"], "Nothing that's only yours, week to week."],
+    couch: ["Side by side on separate screens", "evenings", 1, "Two screens leave nothing to talk about later.", "Phones away, one night a week.", [22, "Sharpen the Presence"], "Some evenings side by side on separate screens."],
+    couch_most: ["Most evenings go to separate screens", "evenings", 2, "Two screens leave nothing to talk about later.", "Phones away, two nights a week.", [22, "Sharpen the Presence"], "Most evenings side by side on separate screens."],
+    apart: ["Evenings spent apart", "evenings", 1, "Time apart adds up quietly.", "Share one evening a week, start to finish.", [22, "Sharpen the Presence"], "Evenings spent apart, by choice."],
+    apart_drift: ["Evenings have drifted apart", "evenings", 2, "Nobody chose this, and that's how roommates are made.", "Share one evening a week, start to finish, and put it on the calendar.", [22, "Sharpen the Presence"], "Evenings that drifted apart, with nobody choosing it."],
+    spark: ["The spark is on standby", "spark", 1, "Attraction fades when nobody is trying to be seen.", "Flirt once this week, on purpose.", [8, "Your Brain on Love"], "Flirting on standby."],
+    nonew: ["Nothing new in a long while", "spark", 2, "The same weeks on repeat make anyone feel like a roommate.", "Do one thing this month that neither of you has done.", [16, "The Orchard Theory"], "No flirting, and nothing new in a long while."],
+    planning: ["You carry the planning", "exchange", 1, "One person holding it up gets tired, then resentful.", "Ask them to plan the next one, start to finish.", [11, "The Exchange"], "One person running the calendar."],
+    unseen: ["Your effort goes unseen", "exchange", 2, "Effort that nobody notices eventually stops.", "Tell them one thing you'd like noticed.", [23, "Reward the Effort"], "One person running the calendar, and no thanks for it."],
+    noneed_let: ["You don't call, and they'd want you to", "needing", 1, "Being needed is part of being chosen.", "Next time something goes wrong, call them first.", [12, "Needing and Being Needed"], "Trouble handled alone, when they'd want the call."],
+    noneed: ["You've stopped needing each other", "needing", 2, "Needing each other is part of what holds you together.", "Hand them one thing you normally handle alone.", [12, "Needing and Being Needed"], "Trouble handled alone, and nobody asked."],
+    fights_once: ["An argument left hanging", "repair", 1, "An unfinished fight waits for you.", "Reopen it once and agree what it was about.", [19, "The Container"], "An argument left hanging."],
+    fights: ["The same fight keeps coming back", "repair", 2, "A fight that keeps returning was never closed.", "Reopen it once, on a calm day, and agree what it was about.", [19, "The Container"], "The same fight, back again."],
+    noargue: ["You don't argue", "repair", 1, "Never fighting is usually avoidance, not harmony.", "Say one small thing you've been holding back.", [19, "The Container"], "No arguments at all. Never a good sign."],
+    unsaid: ["Things go unsaid", "repair", 2, "What you stop saying doesn't go away.", "Say one small thing you've been holding back.", [19, "The Container"], "Things that stopped being said."]
+  }
+};
+
+/* Areas per track, in the order the questions come: [key, name as a phrase, line when nothing was found] */
+const AREAS = {
+  single: [
+    ["drive", "your drive", "your drive is intact"],
+    ["guard", "your guard", "your door is open"],
+    ["standards", "your standards", "you hold your standards"],
+    ["taste", "your type", "your taste isn't in the way"],
+    ["place", "where you look", "you're looking where it leads to dates"],
+    ["value", "what you're building", "you're building where people can see it"],
+    ["circle", "your circle", "you have people who'd vouch for you"]],
+  seeing: [
+    ["attraction", "the attraction", "it's more than a spark and you've seen the real one"],
+    ["effort", "the effort", "the effort runs both ways"],
+    ["doors", "other doors", "you've both closed the other doors"],
+    ["shared", "common ground", "you have common ground"],
+    ["doing", "doing things together", "you do more than dinner together"],
+    ["leaning", "leaning on each other", "you lean on each other and it holds"],
+    ["fight", "the first fight", "you can disagree without breaking"],
+    ["worlds", "your two worlds", "your worlds overlap"]],
+  est: [
+    ["building", "building together", "you're still building and you have rituals of your own"],
+    ["evenings", "your evenings", "your evenings are shared"],
+    ["spark", "the spark", "the spark is alive"],
+    ["exchange", "the exchange", "the effort runs both ways"],
+    ["needing", "needing each other", "you still need each other"],
+    ["repair", "repair", "nothing is left hanging between you"]]
+};
+
+/* The order the reading talks about the areas: what matters most first. */
+const ORDER = {
+  single: ["place", "drive", "value", "guard", "standards", "taste", "circle"],
+  seeing: ["attraction", "shared", "doing", "leaning", "effort", "doors", "fight", "worlds"],
+  est: ["building", "spark", "evenings", "exchange", "needing", "repair"]
+};
+const LABEL = {single: "Chances of finding someone", seeing: "Chances this goes long term", est: "Chances it lasts"};
+const STALL = /[?&]stall\b/.test(location.search); /* siastevens.com/forecast?stall=1 at the stall: Print, Save as image and the quick switch */
+const SITE = "https://siastevens.com", SITE_TEXT = "siastevens.com";
+const LINKS = [["A Million Green Flags", "https://a.co/d/06A67f2d"], ["The course", "https://relationships101.co"], ["Coaching", "https://www.alttherapy.co/"]];
+const QR_SVG = `<svg viewBox="0 0 25 25" shape-rendering="crispEdges" role="img" aria-label="QR code for siastevens.com"><path d="M0 0h7v1h-7zM8 0h2v1h-2zM12 0h2v1h-2zM15 0h2v1h-2zM18 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM10 1h1v1h-1zM14 1h1v1h-1zM18 1h1v1h-1zM24 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM10 2h3v1h-3zM14 2h1v1h-1zM18 2h1v1h-1zM20 2h3v1h-3zM24 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h2v1h-2zM11 3h1v1h-1zM13 3h1v1h-1zM16 3h1v1h-1zM18 3h1v1h-1zM20 3h3v1h-3zM24 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h1v1h-1zM14 4h3v1h-3zM18 4h1v1h-1zM20 4h3v1h-3zM24 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM12 5h1v1h-1zM16 5h1v1h-1zM18 5h1v1h-1zM24 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h7v1h-7zM8 7h1v1h-1zM10 7h1v1h-1zM15 7h1v1h-1zM0 8h1v1h-1zM4 8h1v1h-1zM6 8h4v1h-4zM11 8h2v1h-2zM17 8h5v1h-5zM24 8h1v1h-1zM1 9h1v1h-1zM3 9h2v1h-2zM7 9h5v1h-5zM13 9h4v1h-4zM20 9h2v1h-2zM23 9h1v1h-1zM0 10h4v1h-4zM5 10h3v1h-3zM9 10h3v1h-3zM13 10h1v1h-1zM15 10h8v1h-8zM1 11h5v1h-5zM10 11h1v1h-1zM14 11h1v1h-1zM22 11h2v1h-2zM2 12h8v1h-8zM16 12h3v1h-3zM21 12h4v1h-4zM0 13h5v1h-5zM9 13h1v1h-1zM12 13h1v1h-1zM14 13h3v1h-3zM20 13h1v1h-1zM23 13h1v1h-1zM3 14h2v1h-2zM6 14h1v1h-1zM9 14h7v1h-7zM17 14h1v1h-1zM19 14h4v1h-4zM3 15h1v1h-1zM5 15h1v1h-1zM7 15h3v1h-3zM11 15h1v1h-1zM14 15h2v1h-2zM19 15h2v1h-2zM22 15h2v1h-2zM0 16h2v1h-2zM3 16h4v1h-4zM8 16h3v1h-3zM12 16h1v1h-1zM16 16h7v1h-7zM8 17h1v1h-1zM10 17h1v1h-1zM14 17h1v1h-1zM16 17h1v1h-1zM20 17h1v1h-1zM0 18h7v1h-7zM8 18h1v1h-1zM10 18h1v1h-1zM14 18h1v1h-1zM16 18h1v1h-1zM18 18h1v1h-1zM20 18h1v1h-1zM0 19h1v1h-1zM6 19h1v1h-1zM9 19h1v1h-1zM12 19h1v1h-1zM14 19h1v1h-1zM16 19h1v1h-1zM20 19h5v1h-5zM0 20h1v1h-1zM2 20h3v1h-3zM6 20h1v1h-1zM8 20h2v1h-2zM11 20h1v1h-1zM13 20h2v1h-2zM16 20h9v1h-9zM0 21h1v1h-1zM2 21h3v1h-3zM6 21h1v1h-1zM10 21h1v1h-1zM12 21h1v1h-1zM14 21h1v1h-1zM17 21h3v1h-3zM22 21h3v1h-3zM0 22h1v1h-1zM2 22h3v1h-3zM6 22h1v1h-1zM9 22h1v1h-1zM11 22h4v1h-4zM16 22h1v1h-1zM18 22h1v1h-1zM21 22h1v1h-1zM23 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM9 23h1v1h-1zM11 23h1v1h-1zM13 23h1v1h-1zM17 23h1v1h-1zM19 23h5v1h-5zM0 24h7v1h-7zM8 24h1v1h-1zM12 24h2v1h-2zM15 24h1v1h-1zM17 24h1v1h-1zM22 24h3v1h-3z"/></svg>`;
+const DLINES = ["The ball is clouding over…", "Weighing what it heard…", "No stars were consulted."];
+const STAR = `<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0 L10 6 L16 8 L10 10 L8 16 L6 10 L0 8 L6 6Z"/></svg>`;
+
+/* ---------- Engine ---------- */
+const state = {screen: "intro", answers: [], quick: false};
+let lock = false, timers = [], booted = false, lastScreen = "";
+const reduceMotion = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const fmt = n => Number.isInteger(n) ? String(n) : n.toFixed(1);
+const lc = s => s.charAt(0).toLowerCase() + s.slice(1);
+const list = xs => xs.length < 2 ? xs.join("") : xs.length === 2 ? xs.join(" and ") : xs.slice(0, -1).join(", ") + ", and " + xs[xs.length - 1];
+
+/* In a quick reading the follow-ups are skipped: jump ahead to the next opening question. */
+function skipTo(id){
+  let guard = 0;
+  while (id !== "END" && !OPENERS.has(id) && guard++ < 20) id = NODES[id].opts[0][2];
+  return id;
+}
+
+/* Replays the taps from the start, so Back is just dropping the last one. */
+function replay(answers, quick){
+  const c = {quick: !!quick, track: null, taste: null, dated: false, gap: false, len: null, dates: null, common: null, found: [], steps: 0, last: "", id: "I1", done: false};
+  for (const a of answers){
+    const node = NODES[c.id];
+    if (!node) break;
+    const o = node.opts[a];
+    if (!o) break;
+    const [, sayv, next, fnd, set, qf] = o;
+    if (set) Object.assign(c, set);
+    const say = typeof sayv === "function" ? sayv(c) : sayv;
+    const src = (c.quick && qf !== undefined) ? qf : fnd;
+    const found = typeof src === "function" ? src(c) : src;
+    if (found && !c.found.includes(found)) c.found.push(found);
+    c.last = say; c.steps++;
+    let nx = typeof next === "function" ? next(c) : next;
+    if (c.quick) nx = skipTo(nx);
+    if (nx === "END"){ c.done = true; c.id = null; break; }
+    c.id = nx;
+  }
+  return c;
+}
+
+/* The number: every area is worth the same. A clean area scores full, a small finding half, a big one
+   nothing. Average across the areas, times ten, to the nearest half, never below 1. */
+function reading(c){
+  const F = FIND[c.track] || {};
+  const areas = (AREAS[c.track] || []).map(([key, name, ok]) => {
+    const items = c.found.filter(k => F[k] && F[k][1] === key).map(k => F[k]).sort((a, b) => b[2] - a[2]);
+    const pts = items.reduce((t, x) => t + x[2], 0);
+    return {key, name, ok, items, score: pts >= 2 ? 0 : pts === 1 ? .5 : 1};
+  });
+  const avg = areas.length ? areas.reduce((t, a) => t + a.score, 0) / areas.length : 1;
+  const n = Math.max(1, Math.round(avg * 20) / 2);
+  const verdict = n >= 8 ? "Very little in the way. Keep going." : n >= 5 ? "A few things in the way. All fixable." : "A lot in the way. Start with one.";
+  const rank = ORDER[c.track] || [];
+  const byRank = (a, b) => rank.indexOf(a.key) - rank.indexOf(b.key);
+  const hit = areas.filter(a => a.items.length).sort(byRank);
+  const found = hit.flatMap(a => a.items);
+  return {n, verdict, areas, found, hit, clean: areas.filter(a => !a.items.length).sort(byRank)};
+}
+
+/* The reading in words: the ball reads the person, finding by finding in the order that matters,
+   then what to do, then where the book covers it. */
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+function forecast(c){
+  const r = reading(c);
+  if (!r.found.length){
+    return {r,
+      see: `The ball likes what it sees: ${list(r.clean.map(a => a.ok))}. Nothing is in the way but time.`,
+      act: `Keep doing what you're doing, and build something new before the routine sets in. That is where most good pairs quietly go wrong.`,
+      point: `A Million Green Flags shows how to keep the three stages turning. The course and coaching go further.`};
+  }
+  const likes = r.clean.length ? `What the ball likes: ${list(r.clean.map(a => a.ok))}. ` : `The ball reads you plainly. `;
+  const reads = r.found.map(f => f[6]);
+  const sees = `What it sees: ${lc(reads[0])}${reads.length > 1 ? " " + reads.slice(1).join(" ") : ""}`;
+  const top = r.hit.slice(0, 2).map(a => a.name);
+  const fix = `What it would fix first: ${top[0]}${top[1] ? `, then ${top[1]}` : ""}.`;
+  const dos = [...new Set(r.found.map(f => f[4]))].slice(0, 3);
+  const chs = [...new Map(r.found.map(f => [f[5][0], f[5]])).values()].slice(0, 2);
+  const point = (r.found.length === 1 ? `This is chapter ${chs[0][0]} of A Million Green Flags, ${chs[0][1]}.`
+    : chs.length === 1 ? `Most of this is chapter ${chs[0][0]} of A Million Green Flags, ${chs[0][1]}.`
+    : `Most of this is chapter ${chs[0][0]} of A Million Green Flags, ${chs[0][1]}, and chapter ${chs[1][0]}, ${chs[1][1]}.`) + " The course and coaching go further.";
+  return {r,
+    see: `${likes}${sees} ${fix}`,
+    act: `Start here: ${dos[0]}` + (dos[1] ? ` Then: ${dos[1]}` : "") + (dos[2] ? ` And: ${dos[2]}` : ""),
+    point};
+}
+
+function roman(n){
+  const m = [[10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"]];
+  let s = "";
+  for (const [v, r] of m) while (n >= v){ s += r; n -= v; }
+  return s;
+}
+
+function orb(cls, inner){
+  return `<div class="orb ${cls}"><div class="ball"><span class="mist"></span><span class="mist b"></span>${inner || ""}<span class="shine"></span></div><div class="stand"></div><div class="plate"></div></div>`;
+}
+
+function intro(){
+  const bulbs = `<div class="bulbs" aria-hidden="true">${"<i></i>".repeat(16)}</div>`;
+  return `
+  <section class="intro">
+    <div class="marquee up" style="--n:0">${bulbs}<p class="kicker">Step right up</p><h1 data-focus tabindex="-1">Green Flag Forecast</h1>${bulbs}</div>
+    <div class="up" style="--n:1">${orb("idle")}</div>
+    <p class="lede up" style="--n:2">The ball doesn't read the stars. It reads your answers.</p>
+    <p class="blurb up" style="--n:3">Tap through a dozen quick questions. The ball answers back after every one, then tells you your chances and what's in the way.</p>
+    <div class="up" style="--n:4"><button id="begin" class="ticket" data-act="begin"><span class="tk-k">Admit one</span><span class="tk-t">Ask the ball</span></button></div>
+  </section>`;
+}
+
+function quiz(c){
+  const node = NODES[c.id], opts = node.opts;
+  const btns = opts.map((o, i) => `<button id="ans-${i}" class="ans" data-act="answer" data-i="${i}" aria-pressed="false">${esc(o[0])}</button>`).join("");
+  const areas = AREAS[c.track] || [];
+  const at = areas.findIndex(a => a[0] === node.g);
+  const pips = areas.map((_, i) => `<span class="pip${i < at ? " done" : i === at ? " now" : ""}"></span>`).join("");
+  return `
+  <section class="quiz">
+    <div class="oracle">
+      ${orb("small")}
+      <p class="says" id="says" role="status">${esc(c.last || "The ball is listening.")}</p>
+    </div>
+    <article class="tarot deal">
+      <div class="t-top">${STAR}<span>${roman(c.steps + 1)}</span>${STAR}</div>
+      <h2 class="stmt" data-focus tabindex="-1">${esc(node.q)}</h2>
+    </article>
+    <div class="answers n${opts.length}">${btns}</div>
+    <div class="pips"${areas.length ? ` role="img" aria-label="Part ${at + 1} of ${areas.length}"` : ` aria-hidden="true"`}>${pips}</div>
+    <div><button id="back" class="link" data-act="back">${c.steps === 0 ? "Close" : "Back"}</button></div>
+  </section>`;
+}
+
+function divine(){
+  return `<section class="divine">${orb("fast big")}<p class="d-line" id="d-line" role="status">${DLINES[0]}</p></section>`;
+}
+
+function result(c){
+  const {r, see, act, point} = forecast(c);
+  return `
+  <section class="result">
+    <div class="reveal-top">
+      ${orb("show", `<span class="num" id="count" aria-hidden="true">${fmt(r.n)}</span>`)}
+      <p class="label">${LABEL[c.track]}</p>
+      <p class="asof">As things stand</p>
+      <p class="outof">${fmt(r.n)} out of 10</p>
+      <h2 class="verdict" data-focus tabindex="-1">${esc(r.verdict)}</h2>
+    </div>
+    <article class="reading up" style="--n:2">
+      <p class="rd-k">The forecast</p>
+      <p class="rd-p">${esc(see)}</p>
+      <p class="rd-k">What to do</p>
+      <p class="rd-p">${esc(act)}</p>
+      <p class="rd-point">${esc(point)}</p>
+    </article>
+    ${STALL ? `<div class="take up" style="--n:3">
+      <div class="take-qr">${QR_SVG}</div>
+      <div class="take-txt">
+        <p class="take-k">Take it with you</p>
+        <p class="take-t">Scan for the book, the course and coaching.</p>
+        <p class="aside">${SITE_TEXT}</p>
+      </div>
+    </div>` : `<div class="take up" style="--n:3">
+      <div class="take-txt">
+        <p class="take-k">Go further</p>
+        <p class="take-t">The book, the course and coaching, all built on the same three stages.</p>
+        <div class="chips">${LINKS.map(([t, u]) => `<a class="chip" href="${u}" target="_blank" rel="noopener">${esc(t)}</a>`).join("")}</div>
+      </div>
+    </div>`}
+    <div class="actions up" style="--n:4">
+      ${STALL ? `<button id="print" class="primary" data-act="print">Print my reading</button><button id="new-reading" class="secondary" data-act="restart">Start a new reading</button><button id="share" class="link" data-act="share">Save as image</button>` : `<button id="new-reading" class="primary" data-act="restart">Start a new reading</button>`}
+    </div>
+  </section>`;
+}
+
+/* The printed slip, drawn as one picture: 62 mm wide at 300 dots per inch, black on white, as long as
+   the reading needs. The printer is thermal, so everything is pure black or white. */
+const QR = ["1111111011001101101111111","1000001000100010001000001","1011101000111010001011101","1011101011010100101011101","1011101010000011101011101","1000001010001000101000001","1111111010101010101111111","0000000010100001000000000","1000101111011000011111001","0101100111110111100011010","1111011101110101111111100","0111110000100010000000110","0011111111000000111001111","1111100001001011100010010","0001101001111111010111100","0001010111010011000110110","1101111011101000111111100","0000000010100010100010000","1111111010100010101010000","1000001001001010100011111","1011101011010110111111111","1011101000101010011100111","1011101001011110101001010","1000001001010100010111110","1111111010001101010000111"];
+const SLIP_W = Math.round(62 / 25.4 * 300);
+const F_DISPLAY = '"Limelight", "Copperplate", Georgia, serif', F_CAPS = '"Cinzel", "Copperplate", Georgia, serif', F_BODY = '"Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif';
+let slipJob = 0, slipUrl = "", slipWaiters = [];
+
+function wrapLines(x, text, maxW){
+  const lines = []; let line = "";
+  for (const w of text.split(" ")){
+    const t = line ? line + " " + w : w;
+    if (x.measureText(t).width > maxW && line){ lines.push(line); line = w; } else line = t;
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+function spaced(x, text, cx, y, gap){
+  const widths = [...text].map(ch => x.measureText(ch).width);
+  const total = widths.reduce((t, w) => t + w, 0) + gap * (text.length - 1);
+  let px = cx - total / 2;
+  [...text].forEach((ch, i) => { x.fillText(ch, px, y); px += widths[i] + gap; });
+}
+function hrule(x, y, W, M, h){ x.fillRect(M, y, W - 2 * M, h); }
+
+async function drawSlip(c){
+  const job = ++slipJob; slipUrl = "";
+  const {r, see, act, point} = forecast(c);
+  try {
+    await Promise.race([Promise.all([`400 42px ${F_DISPLAY}`, `400 29px ${F_BODY}`, `700 29px ${F_BODY}`].map(f => document.fonts.load(f))), new Promise(res => setTimeout(res, 2500))]);
+  } catch (err) {}
+  if (job !== slipJob) return;
+  /* The same layout as the text slip: 3 mm margins, 7 point body, rules above and below each heading. */
+  const W = SLIP_W, M = 35, CW = W - 2 * M;
+  const cv = document.createElement("canvas"); cv.width = W; cv.height = 6000;
+  const x = cv.getContext("2d");
+  x.fillStyle = "#fff"; x.fillRect(0, 0, cv.width, cv.height);
+  x.fillStyle = "#000"; x.textBaseline = "alphabetic";
+  const heading = (t) => { hrule(x, y, W, M, 4); y += 38; x.textAlign = "center"; x.font = `700 27px ${F_BODY}`; spaced(x, t, W / 2, y, 7); y += 16; hrule(x, y, W, M, 4); y += 40; };
+  const para = (t, font) => { x.textAlign = "left"; x.font = font; for (const l of wrapLines(x, t, CW)){ x.fillText(l, M, y); y += 36; } };
+  let y = M + 38;
+  x.textAlign = "center";
+  x.font = `400 42px ${F_DISPLAY}`; x.fillText("Green Flag Forecast", W / 2, y); y += 84;
+  x.font = `400 92px ${F_DISPLAY}`;
+  const numW = x.measureText(fmt(r.n)).width;
+  x.font = `400 42px ${F_DISPLAY}`;
+  const outW = x.measureText(" / 10").width, nx = W / 2 - (numW + outW) / 2;
+  x.textAlign = "left";
+  x.font = `400 92px ${F_DISPLAY}`; x.fillText(fmt(r.n), nx, y);
+  x.font = `400 42px ${F_DISPLAY}`; x.fillText(" / 10", nx + numW, y);
+  x.textAlign = "center"; y += 40;
+  x.font = `400 29px ${F_BODY}`; x.fillText(LABEL[c.track], W / 2, y); y += 42;
+  x.font = `700 35px ${F_BODY}`; x.fillText(r.verdict, W / 2, y); y += 30;
+  heading("THE FORECAST");
+  para(see, `400 29px ${F_BODY}`); y += 14;
+  heading("WHAT TO DO");
+  para(act, `400 29px ${F_BODY}`); y += 16;
+  para(point, `700 29px ${F_BODY}`); y += 22;
+  const mod = 8, qs = QR.length * mod, qx = (W - qs) / 2;
+  QR.forEach((row, j) => [...row].forEach((v, i) => { if (v === "1") x.fillRect(qx + i * mod, y + j * mod, mod, mod); }));
+  y += qs + 40; x.textAlign = "center";
+  x.font = `400 28px ${F_BODY}`; x.fillText("Scan for the book, the course and coaching", W / 2, y); y += 36;
+  x.font = `700 30px ${F_BODY}`; x.fillText(SITE_TEXT, W / 2, y); y += M;
+  const out = document.createElement("canvas"); out.width = W; out.height = Math.ceil(y);
+  const o = out.getContext("2d"); o.fillStyle = "#fff"; o.fillRect(0, 0, W, out.height); o.drawImage(cv, 0, 0);
+  if (job !== slipJob) return;
+  slipUrl = out.toDataURL("image/png");
+  const holder = document.getElementById("slip");
+  if (holder) holder.innerHTML = `<img src="${slipUrl}" alt="">`;
+  slipWaiters.splice(0).forEach(fn => fn());
+}
+function whenSlipReady(){ return slipUrl ? Promise.resolve() : new Promise(res => slipWaiters.push(res)); }
+
+async function shareSlip(){
+  await whenSlipReady();
+  try {
+    const blob = await (await fetch(slipUrl)).blob();
+    const file = new File([blob], "green-flag-forecast.png", {type: "image/png"});
+    if (navigator.canShare && navigator.canShare({files: [file]})){ await navigator.share({files: [file], title: "Green Flag Forecast"}); return; }
+  } catch (err) {}
+  const a = document.createElement("a"); a.href = slipUrl; a.download = "green-flag-forecast.png"; document.body.appendChild(a); a.click(); a.remove();
+}
+
+function render(move){
+  const c = replay(state.answers, state.quick);
+  if (state.screen === "quiz" && c.done) state.screen = "result";
+  if ((state.screen === "result" || state.screen === "divine") && !c.done) state.screen = state.answers.length ? "quiz" : "intro";
+  const app = document.getElementById("app");
+  app.innerHTML = state.screen === "quiz" ? quiz(c) : state.screen === "divine" ? divine() : state.screen === "result" ? result(c) : intro();
+  document.getElementById("bar-top").hidden = state.screen === "intro" && STALL;
+  document.getElementById("wordmark").hidden = state.screen === "intro";
+  document.getElementById("restart-top").hidden = state.screen === "intro";
+  document.getElementById("site-link").hidden = STALL;
+  const tg = document.getElementById("quick");
+  tg.hidden = state.screen !== "intro" || !STALL;
+  tg.setAttribute("aria-checked", String(state.quick));
+  document.getElementById("quick-state").textContent = state.quick ? "On" : "Off";
+  if (state.screen === "result") drawSlip(c); else { slipJob++; slipUrl = ""; document.getElementById("slip").innerHTML = ""; }
+  if (move && booted){
+    const f = app.querySelector("[data-focus]");
+    if (f) f.focus({preventScroll: true});
+    if (state.screen !== lastScreen) window.scrollTo(0, 0);
+  }
+  lastScreen = state.screen;
+  booted = true;
+}
+
+function clearTimers(){ timers.forEach(clearTimeout); timers = []; }
+
+function reset(){
+  clearTimers(); lock = false;
+  state.screen = "intro"; state.answers = [];
+  render(true);
+}
+
+function answer(i, btn){
+  if (lock) return;
+  const before = replay(state.answers, state.quick), node = NODES[before.id];
+  if (!node || !node.opts[i]) return;
+  state.answers.push(i);
+  const c = replay(state.answers, state.quick);
+  lock = true;
+  document.querySelectorAll(".ans").forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+  const says = document.getElementById("says"), ball = document.querySelector(".quiz .orb");
+  if (c.last && says){
+    says.textContent = c.last; says.classList.remove("swap"); void says.offsetWidth; says.classList.add("swap");
+    if (ball) ball.classList.add("speak");
+    const b = says.getBoundingClientRect();
+    burst(b.left + b.width / 2, b.top - 20, 7);
+  }
+  timers.push(setTimeout(() => {
+    lock = false;
+    if (c.done) goDivine();
+    else render(true);
+  }, reduceMotion ? 0 : 750));
+}
+
+function goDivine(){
+  if (reduceMotion){ state.screen = "result"; render(true); return; }
+  state.screen = "divine"; render(true);
+  DLINES.forEach((t, k) => {
+    if (!k) return;
+    timers.push(setTimeout(() => {
+      const el = document.getElementById("d-line");
+      if (!el) return;
+      el.textContent = t; el.classList.remove("swap"); void el.offsetWidth; el.classList.add("swap");
+    }, k * 900));
+  });
+  timers.push(setTimeout(() => { state.screen = "result"; render(true); arrive(); }, DLINES.length * 900 + 150));
+}
+
+/* The number in the ball counts up to the real total, then throws a few sparks. */
+function arrive(){
+  const el = document.getElementById("count");
+  if (!el || reduceMotion) return;
+  const n = parseFloat(el.textContent), t0 = performance.now(), dur = 900;
+  el.textContent = "0";
+  const tick = now => {
+    if (!el.isConnected) return;
+    const k = Math.min(1, (now - t0) / dur);
+    el.textContent = k < 1 ? String(Math.round(n * (1 - Math.pow(1 - k, 3)))) : fmt(n);
+    if (k < 1) requestAnimationFrame(tick);
+    else { const b = el.getBoundingClientRect(); burst(b.left + b.width / 2, b.top + b.height / 2, 30); }
+  };
+  requestAnimationFrame(tick);
+}
+
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]");
+  if (!b) return;
+  const act = b.dataset.act;
+  if (act === "begin"){
+    clearTimers(); lock = false; state.answers = []; state.screen = "quiz"; render(true);
+  } else if (act === "answer"){
+    answer(+b.dataset.i, b);
+  } else if (act === "back"){
+    if (lock) return;
+    if (!state.answers.length) reset(); else { state.answers.pop(); render(true); }
+  } else if (act === "restart"){
+    reset();
+  } else if (act === "print"){
+    whenSlipReady().then(() => { try { window.print(); } catch (err) {} });
+  } else if (act === "share"){
+    shareSlip();
+  } else if (act === "quick"){
+    state.quick = !state.quick;
+    b.setAttribute("aria-checked", String(state.quick));
+    document.getElementById("quick-state").textContent = state.quick ? "On" : "Off";
+  }
+});
+
+/* Night sky behind the booth, and sparks in front of it. */
+const sky = document.getElementById("sky"), fx = document.getElementById("fx");
+const sctx = sky.getContext("2d"), fctx = fx.getContext("2d");
+const css = getComputedStyle(document.documentElement);
+const tone = n => css.getPropertyValue(n).trim() || "#FFF3DC";
+const SPARK = [tone("--gold"), tone("--cream"), tone("--mist"), tone("--orchid")];
+let W = 0, H = 0, stars = [], parts = [], raf = 0, fxDirty = false;
+
+function sizeCanvas(){
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  W = window.innerWidth; H = window.innerHeight;
+  [sky, fx].forEach(c => { c.width = Math.round(W * dpr); c.height = Math.round(H * dpr); });
+  sctx.setTransform(dpr, 0, 0, dpr, 0, 0); fctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const n = Math.min(110, Math.round(W * H / 14000));
+  stars = Array.from({length: n}, () => ({x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.2 + .3, p: Math.random() * 6.28, s: Math.random() * .9 + .3}));
+  drawSky(0);
+}
+function drawSky(t){
+  sctx.clearRect(0, 0, W, H);
+  sctx.fillStyle = SPARK[1];
+  for (const st of stars){
+    sctx.globalAlpha = .3 + .4 * (.5 + .5 * Math.sin(t * st.s + st.p));
+    sctx.beginPath(); sctx.arc(st.x, st.y, st.r, 0, 6.2832); sctx.fill();
+  }
+  sctx.globalAlpha = 1;
+}
+function burst(x, y, n){
+  if (reduceMotion) return;
+  for (let k = 0; k < n; k++){
+    const a = Math.random() * 6.2832, sp = Math.random() * 4.2 + 1.2;
+    parts.push({x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 1.4, life: 1, d: Math.random() * .012 + .012, r: Math.random() * 5 + 3, c: SPARK[k % SPARK.length]});
+  }
+}
+function drawFx(){
+  if (!parts.length){ if (fxDirty){ fctx.clearRect(0, 0, W, H); fxDirty = false; } return; }
+  fctx.clearRect(0, 0, W, H); fxDirty = true;
+  parts = parts.filter(p => p.life > 0);
+  for (const p of parts){
+    p.x += p.vx; p.y += p.vy; p.vy += .07; p.vx *= .99; p.life -= p.d;
+    const r = p.r * Math.max(p.life, 0);
+    fctx.globalAlpha = Math.max(p.life, 0); fctx.fillStyle = p.c;
+    fctx.beginPath();
+    fctx.moveTo(p.x, p.y - r);
+    fctx.quadraticCurveTo(p.x, p.y, p.x + r, p.y);
+    fctx.quadraticCurveTo(p.x, p.y, p.x, p.y + r);
+    fctx.quadraticCurveTo(p.x, p.y, p.x - r, p.y);
+    fctx.quadraticCurveTo(p.x, p.y, p.x, p.y - r);
+    fctx.fill();
+  }
+  fctx.globalAlpha = 1;
+}
+function frame(ts){ drawSky(ts / 1000); drawFx(); raf = requestAnimationFrame(frame); }
+function play(){ if (!reduceMotion && !raf && !document.hidden) raf = requestAnimationFrame(frame); }
+function pause(){ cancelAnimationFrame(raf); raf = 0; }
+window.addEventListener("resize", sizeCanvas);
+document.addEventListener("visibilitychange", () => document.hidden ? pause() : play());
+sizeCanvas(); play();
+
+/* Keep a reading in progress if the page is updated while someone is mid-way, but only when the
+   questions haven't changed: old answers replayed on a new tree would land on the wrong screen. */
+const TREE_V = 9;
+function start(d){
+  if (d && d.s && typeof d.s === "object" && d.s.v === TREE_V){
+    state.answers = Array.isArray(d.s.answers) ? d.s.answers.filter(Number.isInteger) : [];
+    state.screen = d.s.screen === "divine" ? "result" : (d.s.screen || "intro");
+    state.quick = !!d.s.quick;
+  }
+  render(false);
+}
+try {
+  window.claude?.hot?.snapshot?.(() => ({s: {v: TREE_V, screen: state.screen, quick: state.quick, answers: state.answers.slice()}}));
+} catch (err) {}
+if (window.claude?.hot?.ready) window.claude.hot.ready(start); else start(window.claude?.hot?.data ?? {});
+</script>
+
+</body>
+</html>
