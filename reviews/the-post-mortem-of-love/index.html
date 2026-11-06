@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Post-Mortem of Love | Review by Claude (AI) | Sia Stevens</title>
+<meta name="description" content="A long-form review of What Happened to Us by Sia Stevens, written by Claude (AI) after reading the complete manuscript.">
+<link rel="canonical" href="https://siastevens.com/reviews/the-post-mortem-of-love/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Post-Mortem of Love | Review by Claude (AI)">
+<meta property="og:description" content="A long-form review of What Happened to Us by Sia Stevens, written by Claude (AI) after reading the complete manuscript.">
+<meta property="og:image" content="https://siastevens.com/whtu/media/og-what-happened-to-us.jpg">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;1,8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBFAF7; --ink:#161513; --ink-soft:#4A453F; --ink-faint:#8B8479;
+    --accent:#B5451B; --line:#161513; --rule:rgba(22,21,19,.14); --rule-firm:rgba(22,21,19,.3);
+    --serif:"Fraunces","Source Serif 4",Georgia,serif; --body:"Source Serif 4",Georgia,serif;
+    --mono:"Space Mono",ui-monospace,monospace; --measure:35.5rem;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+    font-size:clamp(1.03rem,.45vw + .94rem,1.14rem);line-height:1.74;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:48rem;margin:0 auto;padding-inline:clamp(1.15rem,4.5vw,2.25rem)}
+  p{margin:0 0 1.15em} p:last-child{margin-bottom:0} em{font-style:italic}
+
+  .masthead{border-bottom:3px double var(--line);padding:1.4rem 0 1rem}
+  .masthead__row{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap}
+  .brand{font-family:var(--serif);font-weight:600;font-size:1.4rem;letter-spacing:-.01em}
+  .brand span{color:var(--accent)}
+  .section{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+  .dateline{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;color:var(--ink-faint);
+    margin-top:.5rem;border-top:1px solid var(--rule);padding-top:.6rem}
+
+  .headblock{padding:2.75rem 0 2rem;border-bottom:1px solid var(--rule-firm)}
+  .kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin:0 0 1rem}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(2rem,3.6vw + 1rem,3rem);
+    line-height:1.12;letter-spacing:-.012em;margin:0 0 1.1rem;max-width:34rem}
+  .deck{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--ink-soft);
+    font-size:clamp(1.08rem,.6vw + .95rem,1.3rem);line-height:1.46;max-width:33rem;margin:0 0 1.6rem}
+  .byline{font-family:var(--mono);font-size:.76rem;letter-spacing:.04em;color:var(--ink-faint);
+    border-top:1px solid var(--rule);padding-top:.95rem}
+  .byline b{color:var(--ink);font-weight:700}
+
+  .body-col{max-width:var(--measure);padding-top:2.4rem}
+  .dropcap::first-letter{font-family:var(--serif);font-weight:600;float:left;font-size:3.6em;line-height:.82;
+    padding:.05em .09em 0 0;color:var(--accent)}
+
+  .sectionbreak{
+    text-align:center;font-family:var(--serif);color:var(--accent);
+    letter-spacing:.6em;margin:2.6rem 0;font-size:1rem;
+  }
+
+  .pull{font-family:var(--serif);font-style:italic;font-weight:500;
+    font-size:clamp(1.15rem,.7vw + 1rem,1.4rem);line-height:1.42;color:var(--ink);
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:1.4rem 0;margin:2.4rem 0;max-width:33rem}
+
+  .closing{margin-top:2.8rem;padding-top:1.5rem;border-top:1px solid var(--rule-firm);
+    font-family:var(--mono);font-size:.75rem;color:var(--ink-faint);line-height:1.8}
+
+  footer{margin-top:3rem;border-top:3px double var(--line);padding:1.4rem 0 2.5rem;
+    font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;color:var(--ink-faint);
+    display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+  @media print{ body{font-size:10.5pt} .pull{break-inside:avoid} }
+
+.fr-bar,.fr-ai,.fr-foot{font-family:"Poppins","Helvetica Neue",Arial,sans-serif;box-sizing:border-box}
+.fr-bar{background:#2F2E2E;color:#fff;padding:12px max(16px,env(safe-area-inset-right,0px)) 12px max(16px,env(safe-area-inset-left,0px))}
+.fr-bar .in{max-width:1080px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;font-size:13px}
+.fr-bar a{color:#fff;text-decoration:none}
+.fr-bar .home{font-weight:600;letter-spacing:.18em;text-transform:uppercase;font-size:11.5px}
+.fr-bar nav{margin-left:auto;display:flex;gap:18px;opacity:.85}
+.fr-ai{background:#FBF1E6;border-bottom:1px solid #E7D9C6;color:#3a3530;padding:14px max(16px,env(safe-area-inset-right,0px)) 14px max(16px,env(safe-area-inset-left,0px))}
+.fr-ai .in{max-width:1080px;margin:0 auto;display:flex;gap:14px;align-items:flex-start;font-size:14.5px;line-height:1.55}
+.fr-ai b{font-weight:600}
+.fr-ai .tag{flex:none;font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;background:#2F2E2E;color:#fff;padding:5px 9px;border-radius:2px;margin-top:2px}
+.fr-foot{margin-top:56px;background:#2F2E2E;color:#e9e4da;padding:34px max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
+.fr-foot .in{max-width:1080px;margin:0 auto;display:grid;gap:16px}
+.fr-foot p{margin:0;font-size:14px;line-height:1.6;max-width:52em}
+.fr-foot .row{display:flex;flex-wrap:wrap;gap:10px}
+.fr-foot a.b{display:inline-block;padding:10px 18px;border:1.5px solid #e9e4da;color:#fff;text-decoration:none;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;border-radius:1px}
+.fr-foot a.b.fill{background:#fff;color:#2F2E2E;border-color:#fff}
+</style>
+</head>
+<body>
+<div class="fr-bar"><div class="in"><a class="home" href="/" style="display:flex;align-items:center;gap:8px"><img src="/images/logo-mark-color.png" width="140" height="139" alt="" style="width:24px;height:24px;background:#fff;border-radius:50%">Sia Stevens</a><nav aria-label="Reviews"><a href="/reviews/">All reviews</a><a href="/whtu/">What Happened to Us</a></nav></div></div>
+<div class="fr-ai"><div class="in"><span class="tag">AI review</span><p style="margin:0">This review was written by <b>Claude, an AI model made by Anthropic</b>, after reading the complete manuscript. Sia asked it for an honest, unsparing review before publication, and it is published here in full, criticism included. It is not the work of any publication or human critic.</p></div></div>
+
+<div class="wrap">
+
+  
+
+  <section class="headblock">
+    <p class="kicker">Review</p>
+    <h1>The Post-Mortem of Love</h1>
+    <p class="deck">Every generation gets the breakup book it deserves. Ours, it turns out, is written by an engineer — and the most radical thing in it is a woman who refuses to accept that heartbreak should be the one failure nobody investigates.</p>
+    <div class="byline">On <b>What Happened to Us: A Fable of Modern Love</b>, by Sia Stevens</div>
+  </section>
+
+  <div class="body-col">
+    <p class="dropcap">There is a moment early in Sia Stevens's debut that tells you what kind of book you are holding, and it has nothing to do with the breakup that opens it. The narrator — recently left, four weeks out, done crying — is standing in the self-help aisle of her old university library, running her fingers along the spines. <em>Moving On Gracefully. How to Get Over Anyone in 30 Days.</em> Shelf after shelf on surviving heartbreak, and she notices what nobody else seems to have noticed: there is not one book on preventing it. An entire civilization's literature on love, and all of it written for the ambulance, none of it for the road.</p>
+
+    <p>That observation is the engine of the whole novel, and it is a genuinely new one for this genre. The breakup books we have — and there is an industry of them — are recovery books. They begin from the assumption that love's failure is weather: unforecastable, unpreventable, something you dry off from. Stevens's narrator, an engineer by trade, simply declines the assumption. At work, she points out, a failed project gets a post-mortem — a whiteboard, a team, a list of lessons. A failed love gets <em>stop overthinking it</em>. The entire novel is her refusing that difference, and the refusal turns out to be a far more interesting spine for a book than grief ever is.</p>
+
+    <p>The setup is deceptively small. A man leaves on a Tuesday, over takeout they don't finish. No fight, no affair, no villain — he doesn't feel it anymore and he doesn't know why, and on his way out, almost kindly, he says: <em>if you ever figure it out, do tell me.</em> He's being polite. She takes it as a dare. What follows is a year-long investigation conducted across eleven places — a library, a millionaire's launch party, a mountain, a hometown Thanksgiving, the streets of Seattle, the Hollywood Hills, a Himalayan monastery, a rain-soaked sleepover, Greece — with the findings accumulating in the drafts folder of an email she cannot yet send, addressed to the man who asked.</p>
+
+    <div class="pull">An entire civilization's literature on love, and all of it written for the ambulance — none of it for the road.</div>
+
+    <p>What makes the investigation work as fiction rather than as thesis is that Stevens keeps losing her arguments on purpose. This is worth dwelling on, because it is the book's most sophisticated move and the easiest to miss. In the library, her oldest classmate — six years deep into a PhD on making detergent foam better — listens to her whole case for connection as humanity's superpower and is not persuaded. He crosses his arms between the stacks and tells her his work will outlive him, and asks how many friendships can say that, and the scene ends there, with her having no answer. She wins nothing in the room. Only later, scrolling that night, does she see it: his first post in years, a photo of him and a long-lost roommate, captioned <em>let's catch up this week.</em> The argument she lost worked anyway — off the page, in his own time, where she couldn't watch. Stevens does this again and again. A coworker out-argues her on love as brain chemistry and she simply concedes, because he's right and it costs her something to admit it. A man she is half in love with tells her, through a tent wall in the Himalayas, that love isn't really his thing — and she has no rebuttal at all, just a fake illness the next morning and a jeep down the mountain. Her best friend asks her the book's hardest question — <em>what would it take for men to want to try again?</em> — and the fire crackles, and neither of them speaks, and the chapter ends.</p>
+
+    <p>A lesser book would have let its heroine win those rooms. This one understands that a woman conducting a genuine investigation has to be capable of being wrong, stumped, and outmatched, or the investigation is theater. The losses are what make the eventual findings feel earned rather than announced.</p>
+
+    <p class="sectionbreak">&#10022;&ensp;&#10022;&ensp;&#10022;</p>
+
+    <p>The prose runs on images, and the images are the best in the category by a distance. Stevens thinks in objects the way some novelists think in dialogue. Attraction becomes a party where the most beautiful woman present is the only person nobody is looking at. Curated online personas become plastic flowers — perfect color, zero fragrance, and you'll never catch a bee lingering near one. Devaluation becomes a paper cup: used, crushed, discarded without a second thought, because <em>why would you apologize to a paper cup?</em> The withering of a long relationship becomes two screens on one couch. And at the book's center stands its governing image, encountered on a Himalayan trail: a waterfall frozen mid-fall, thirty feet of current turned to blue-white glass — a thing built entirely of motion, holding perfectly still. She says the word <em>forever</em> in front of it, half-joking, and watches the word hang in the cold air, unanswered. It is the kind of image that does the work of a chapter, and Stevens has a dozen of them.</p>
+
+    <p>She also has a habit of not quite trusting them. The plastic-flower passage, having landed perfectly, is followed by paragraphs explaining what it means; so are several of the book's other best moments. This is the debut author's tic — the fear that the reader didn't catch it — and it is the main thing standing between this book and the tighter one inside it. The same instinct swells the finale: five chapters of the narrator delivering her accumulated findings from a stage, to an auditorium of a thousand women, while the two men of her year listen from the back walls. The speech is good — genuinely good, the paper cup gets its full airing — but it restates what the journey already proved, and it crowds the true climax, which is quieter and better: two men in a lobby afterward, each asking for another chance, and a woman who has learned enough to give neither of them an answer.</p>
+
+    <p class="sectionbreak">&#10022;&ensp;&#10022;&ensp;&#10022;</p>
+
+    <p>Because that is where the book finally goes, and it is the place that will divide its readers most productively. Three hundred pages of romantic architecture train you to want a choice — Victor, the city one who left and learned, or Adam, the mountain one who stayed and wouldn't promise. Stevens declines to make it. Her narrator, standing at the edge of the Pacific in the final chapter, chooses something else entirely: not a man but a metric. Not the love that says forever — <em>the love that shows up Tuesday.</em> She hands each man a condition, borrowed from the myth of Hercules that a Greek grandmother pressed on her along with a clay pot: not forgiveness, but labors. Named, witnessed, and rewarded only if performed. Then the book ends, deliberately, before either man has had the chance to perform them.</p>
+
+    <p>Readers who came for the wedding will feel the withholding, and they won't be wrong to. But the ending is the argument. A novel that spent a year discovering that love is built rather than felt, earned rather than declared, could not honestly close on a declaration — and Stevens, to her considerable credit, doesn't blink. The last line hands the verdict to time and effort, which is exactly where the whole book has been insisting it belongs: <em>now we'd see who kept showing up.</em></p>
+
+    <div class="pull">Not the love that says forever — the love that shows up Tuesday.</div>
+
+    <p>Is it a fable? The subtitle claims so, and the machinery is fabular — teachers appear when needed, a flat tire delivers a matriarch, coincidence runs on rails. But fables are usually thin on purpose, and this one keeps breaking its own form in the direction of the novel: a best friend whose fifteen-year education in being "the chill girl" is rendered with more specificity than fables allow; a Himalayan chapter of real, uninstructive heartbreak; that closing refusal, which no fable would permit because fables exist to deliver verdicts. The tension between the parable it announces itself as and the novel it keeps becoming is, I suspect, the thing readers will still be arguing about after the framework fades — and the reason to think Stevens's second book, whichever form it commits to, will be worth waiting for.</p>
+
+    <p><em>What Happened to Us</em> arrives into a culture that has produced ten thousand books for the ambulance. It is the rare one written for the road — and written by someone who understands that the road's most important lesson could never have been delivered as advice. It had to be lost to, argument by argument, place by place, until a woman standing on a cliff could finally stop asking what happened to us and start deciding what happens next.</p>
+  </div>
+
+  
+
+  
+
+</div>
+<footer class="fr-foot"><div class="in">
+<p>Review by Claude (AI), Anthropic&rsquo;s AI model, written from the complete manuscript at the author&rsquo;s request and published on siastevens.com with her permission. Read it? Real reader reviews on Amazon help the next reader find the book.</p>
+<div class="row"><a class="b fill" href="https://a.co/d/0b4c8N7Y" target="_blank" rel="noopener">Buy What Happened to Us</a><a class="b" href="https://a.co/d/0b4c8N7Y" target="_blank" rel="noopener">Leave a review on Amazon</a><a class="b" href="/reviews/">All reviews</a><a class="b" href="/whtu/">About the book</a></div>
+<p style="opacity:.7;font-size:12.5px">&copy; 2026 Sia Stevens &middot; Vessel &amp; Ink Press, Seattle</p>
+</div></footer>
+</body>
+</html>
