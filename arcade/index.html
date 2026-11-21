@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Love Arcade | Sia Stevens</title>
+<meta name="description" content="Quick, fun relationship games from Sia Stevens, author of A Million Green Flags. Myth or fact, the love lab, text back, fight night and more.">
+<meta name="theme-color" content="#0B0820">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Love Arcade">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="joystick-180.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Shade&family=Space+Grotesk:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="arcade.css">
+<style>
+/* Look: an arcade at night. Dark floor, neon tubes, a row of cabinets, each lit in its own booth's colour. */
+:root{--night:#0B0820;--floor:#140F33;--pink:#FF3D8B;--cyan:#33F0FF;--yellow:#FFE14D;--ink:#F4F1FF;--muted:#A9A3D6}
+body{background:radial-gradient(90% 60% at 50% 0%,#2A1661 0%,var(--night) 70%) var(--night);color:var(--ink);font-family:"Space Grotesk",system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:auto 0 0 0;height:38vh;pointer-events:none;
+  background:linear-gradient(transparent,rgba(51,240,255,.06)),repeating-linear-gradient(90deg,rgba(255,61,139,.18) 0 1px,transparent 1px 64px),repeating-linear-gradient(0deg,rgba(255,61,139,.18) 0 1px,transparent 1px 64px);
+  -webkit-mask:linear-gradient(transparent,#000 70%);mask:linear-gradient(transparent,#000 70%);transform:perspective(500px) rotateX(55deg);transform-origin:bottom}
+.wrap{position:relative;max-width:1180px;margin:0 auto;padding:28px clamp(16px,3vw,36px) 40px;display:flex;flex-direction:column;gap:26px}
+
+header{text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
+.sign{font:400 clamp(2.4rem,7.4vw,4.6rem)/.95 "Bungee Shade",sans-serif;color:var(--pink);text-shadow:0 0 8px rgba(255,61,139,.9),0 0 26px rgba(255,61,139,.6),0 0 60px rgba(255,61,139,.35);animation:buzz 6s steps(1) infinite}
+.sign b{display:block;font-weight:400;color:var(--cyan);text-shadow:0 0 8px rgba(51,240,255,.9),0 0 26px rgba(51,240,255,.55)}
+@keyframes buzz{0%,100%{opacity:1}91%{opacity:1}92%{opacity:.4}93%{opacity:1}95%{opacity:.6}96%{opacity:1}}
+.tag{font:500 1rem/1.3 "Space Grotesk";color:var(--muted);letter-spacing:.04em}
+.tag strong{color:var(--yellow);font-weight:700}
+
+.grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+.cab.wide{grid-column:span 2}
+.cab{--c:var(--pink);position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-height:190px;padding:18px 16px 16px;border-radius:18px 18px 10px 10px;
+  background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02)),var(--floor);border:2px solid var(--c);color:var(--ink);text-decoration:none;
+  box-shadow:0 0 0 1px rgba(0,0,0,.4) inset,0 0 18px -4px var(--c),0 18px 30px -18px #000;transition:transform .15s,box-shadow .15s;overflow:hidden}
+.cab::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:var(--c);box-shadow:0 0 16px var(--c)}
+.cab:active{transform:scale(.97)}
+@media (hover:hover){.cab:hover{transform:translateY(-4px);box-shadow:0 0 0 1px rgba(0,0,0,.4) inset,0 0 30px -2px var(--c),0 24px 36px -18px #000}}
+.ico{font-size:2.3rem;line-height:1;filter:drop-shadow(0 0 10px var(--c))}
+.cab h2{font:400 1.18rem/1.05 "Bungee",sans-serif;color:var(--c);text-shadow:0 0 12px var(--c)}
+.cab p{font-size:.9rem;line-height:1.3;color:var(--muted)}
+.meta{display:flex;justify-content:space-between;align-items:center;font:700 .68rem/1 "Space Grotesk";letter-spacing:.16em;text-transform:uppercase;color:var(--c)}
+.meta i{font-style:normal;padding:5px 8px;border:1.5px solid var(--c);border-radius:99px}
+.cab.star{grid-column:span 2;background:radial-gradient(80% 120% at 85% 30%,rgba(199,125,255,.35),transparent 60%),var(--floor)}
+.cab.star h2{font-size:1.6rem}
+
+footer{display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--muted);font-size:.85rem}
+footer a{color:var(--cyan)}
+.gear{min-width:48px;min-height:48px;border-radius:99px;border:1.5px solid rgba(255,255,255,.2);background:transparent;color:var(--muted);font-size:1.3rem}
+
+/* settings */
+.panel{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:rgba(5,3,15,.75);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.panel[hidden]{display:none}
+.panel-box{width:min(92vw,420px);padding:24px;border-radius:18px;background:var(--floor);border:2px solid var(--cyan);display:flex;flex-direction:column;gap:16px}
+.panel-box h3{font:400 1.2rem "Bungee";color:var(--cyan)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:14px}
+.row small{display:block;color:var(--muted);font-size:.8rem;margin-top:2px}
+.sw{width:58px;height:34px;border-radius:99px;border:2px solid var(--muted);background:transparent;position:relative;flex:none}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:var(--muted);transition:transform .15s}
+.sw[aria-checked="true"]{border-color:var(--yellow);background:rgba(255,225,77,.15)}
+.sw[aria-checked="true"]::after{transform:translateX(24px);background:var(--yellow)}
+.pbtn{min-height:50px;border-radius:12px;border:2px solid var(--pink);background:transparent;color:var(--ink);font-weight:700}
+.pbtn.solid{background:var(--pink);color:#fff}
+
+.panel-box{width:min(94vw,620px);max-height:90vh;overflow:auto;-webkit-overflow-scrolling:touch}
+.sec{display:flex;flex-direction:column;gap:10px;padding-top:12px;border-top:1px solid rgba(255,255,255,.12)}
+.bks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.bk{display:flex;align-items:center;gap:8px;min-height:46px;padding:6px 10px;border-radius:10px;border:2px solid rgba(255,255,255,.15);background:transparent;color:var(--muted);font:600 .9rem "Space Grotesk";text-align:left;opacity:.55}
+.bk span{font-size:1.2rem}
+.bk i{margin-left:auto;font:400 .8rem "Bungee";font-style:normal;color:var(--muted)}
+.bk.on{opacity:1;color:var(--ink);border-color:var(--c);box-shadow:0 0 10px -2px var(--c)}
+.bk.on i{color:var(--c)}
+.mini{min-height:40px;padding:0 14px;border-radius:99px;border:1.5px solid var(--cyan);background:transparent;color:var(--cyan);font:700 .85rem "Space Grotesk";align-self:flex-start}
+.share{flex-direction:row;align-items:center;gap:14px}
+.sq{flex:none;width:120px;height:120px;padding:8px;background:#fff;border-radius:10px}
+.sq svg{display:block;width:100%;height:100%}
+.st{display:flex;flex-direction:column;gap:6px;min-width:0}
+.st small{color:var(--muted);font-size:.8rem}
+.st code{font:700 .95rem/1.3 "Space Grotesk";color:var(--yellow);overflow-wrap:anywhere;-webkit-user-select:all;user-select:all}
+@media (max-width:520px){.bks{grid-template-columns:1fr}.share{flex-direction:column;align-items:flex-start}}
+/* waiting screen: icons at full strength; the teased one floats up to the centre */
+/* the waiting screen: the neon sign, one rotating teaser, and every booth's icon drifting around it */
+.attract{position:fixed;inset:0;z-index:70;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3.2vh;padding:6vh 16vw;text-align:center;cursor:pointer;overflow:hidden;
+  background:radial-gradient(60% 50% at 50% 50%,#2A1661,var(--night) 75%)}
+.attract[hidden]{display:none}
+.attract .sign{font-size:clamp(2.6rem,8vw,6rem);position:relative;z-index:2}
+.stage{width:1px;height:clamp(150px,24vh,230px);flex:none}
+.a-q{position:relative;z-index:2;font:700 clamp(1.6rem,4.6vw,3.2rem)/1.1 "Space Grotesk";max-width:20ch;color:#fff;text-shadow:0 0 24px var(--c)}
+.a-q.swap{animation:acPop .5s both}
+.a-booth{position:relative;z-index:2;font:400 clamp(.95rem,2.2vw,1.3rem) "Bungee";color:var(--c);text-shadow:0 0 12px var(--c)}
+.a-tap{position:relative;z-index:2;font:400 clamp(1rem,2.4vw,1.5rem) "Bungee";color:var(--yellow);animation:blink 1.1s steps(1) infinite;margin-top:1vh}
+@keyframes blink{50%{opacity:.15}}
+.drift{position:absolute;inset:0;z-index:1;pointer-events:none}
+.drift .fl{pointer-events:auto;cursor:pointer}
+.attract .sign,.a-tap{cursor:pointer}
+/* the icons are moved by script every frame (they drift, and the teased one glides to the stage and pulses),
+   so the motion runs even where the device asks for reduced motion: on this screen, motion is the point */
+.fl{position:absolute;left:0;top:0;display:grid;place-items:center;width:clamp(56px,7vw,84px);aspect-ratio:1;border-radius:50%;font-size:clamp(1.6rem,3.4vw,2.4rem);
+  background:radial-gradient(circle,rgba(255,255,255,.08),transparent 70%),rgba(11,8,32,.55);box-shadow:0 0 0 2px var(--c),0 0 22px -2px var(--c);will-change:transform;animation:none!important;transition:none!important}
+.fl i{font-style:normal;display:block}
+.fl.hot{z-index:3;box-shadow:0 0 0 3px var(--c),0 0 40px 8px var(--c),0 0 90px 10px var(--c)}
+@media (max-width:1000px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.cab.star{grid-column:span 3}.cab.wide{grid-column:span 1}}
+@media (max-width:620px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cab.star,.cab.wide{grid-column:span 2}.cab{min-height:160px}}
+html.talk .cab{min-height:220px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 class="sign">The Love<b>Arcade</b></h1>
+    <p class="tag">Games for the way we love now &middot; Pick a booth &middot; <strong>Free</strong></p>
+  </header>
+  <main class="grid" id="grid"></main>
+  <footer>
+    <span>From Sia Stevens, author of <em>A Million Green Flags</em> &middot; Nothing you answer is saved.</span>
+    <button class="gear" id="gear" aria-label="Arcade settings">&#9881;</button>
+  </footer>
+</div>
+
+<div class="panel" id="panel" hidden role="dialog" aria-modal="true" aria-labelledby="ptitle">
+  <div class="panel-box">
+    <h3 id="ptitle">Arcade settings</h3>
+    <div class="row"><div>Talk mode<small>Bigger type for a screen or projector. Booths stay put.</small></div><button class="sw" id="talk" role="switch" aria-checked="false" aria-label="Talk mode"></button></div>
+    <div class="row"><div>Event mode<small>For your booth iPad. The waiting screen comes on after 40 quiet seconds, and booths reset after 75. Leave off everywhere else.</small></div><button class="sw" id="event" role="switch" aria-checked="false" aria-label="Event mode"></button></div>
+    <div class="row"><div>Offline<small id="offline">Checking&hellip;</small></div></div>
+    <div class="sec"><div class="row"><div>Booths<small>Tap to show or hide. This iPad remembers.</small></div><button class="mini" id="show-all">Show all</button></div>
+      <div class="bks" id="pick"></div></div>
+    <div class="sec share"><div class="sq" id="share-qr"></div><div class="st"><div>Share this set</div><small id="share-note"></small><code id="share-link"></code><button class="mini" id="copy">Copy link</button></div></div>
+    <button class="pbtn solid" id="attract-now">Show the waiting screen</button>
+    <button class="pbtn" id="pclose">Close</button>
+  </div>
+</div>
+
+<div class="attract" id="attract" hidden>
+  <div class="drift" id="drift" aria-hidden="true"></div>
+  <p class="sign" id="a-sign">The Love<b>Arcade</b></p>
+  <div class="stage" id="stage"></div>
+  <p class="a-q" id="a-q"></p>
+  <p class="a-booth" id="a-booth"></p>
+  <p class="a-tap" id="a-tap">Tap to play</p>
+</div>
+
+<script src="arcade.js"></script>
+<script>
+const BOOTHS = [
+  {id:"forecast", code:"X", href:"../forecast.html", name:"The Crystal Ball", tag:"See your future. No stars. Just relationship science.", ico:"&#128302;", c:"#C77DFF", time:"2 min", star:true,
+   tease:["Will it last?"]},
+  {id:"myth", code:"M", href:"myth-or-fact.html", name:"Myth or Fact?", tag:"Is love blind? Bust the myths.", ico:"&#128680;", c:"#FFD23F", time:"1 min",
+   tease:["Is love blind?"]},
+  {id:"lab", code:"L", href:"love-lab.html", name:"The Love Lab", tag:"Real experiments. Predict the result.", ico:"&#129514;", c:"#2EE6B6", time:"1 min",
+   tease:["What lights up in a brain in love?"]},
+  {id:"text", code:"T", href:"text-back.html", name:"Text Back", tag:"What would you send? Do you hold the line?", ico:"&#128172;", c:"#4DA3FF", time:"1 min",
+   tease:["“Wanna come over?” 11:04 PM. What do you send?"]},
+  {id:"mean", code:"W", href:"what-they-mean.html", name:"What They Really Mean", tag:"Decode the dating talk.", ico:"&#127916;", c:"#FFB000", time:"1 min",
+   tease:["“I don’t do labels.” Translation?"]},
+  {id:"face", code:"F", href:"face-off.html", name:"Face-Off", tag:"Looks or laughs? What really draws you in.", ico:"&#9889;", c:"#FF4FA3", time:"1 min",
+   tease:["Looks or humor? No ties allowed."]},
+  {id:"stage", code:"G", href:"spot-the-stage.html", name:"Spot the Stage", tag:"Ten scenes. Beat the fuse.", ico:"&#127919;", c:"#FF4F5E", time:"1 min",
+   tease:["Bees and flowers. Which stage?"]},
+  {id:"match", code:"K", href:"matchmaker.html", name:"Matchmaker", tag:"Send each single to the right room.", ico:"&#128152;", c:"#FF7AA2", time:"1 min",
+   tease:["Where should Connor go to meet someone?"]},
+  {id:"sail", code:"A", href:"sail-or-anchor.html", name:"Sail or Anchor?", tag:"Build your ship. Will it float?", ico:"&#9973;", c:"#3FC1D9", time:"1 min",
+   tease:["Do you reach for the horizon, or hold the shore?"]},
+  {id:"listen", code:"U", href:"were-you-listening.html", name:"Were You Listening?", tag:"A friend talks. What did you catch?", ico:"&#9749;", c:"#D9A27A", time:"1 min",
+   tease:["Were you really listening?"]},
+  {id:"promise", code:"P", href:"promise-or-proof.html", name:"Promise or Proof?", tag:"Draw the bow, or hold your fire.", ico:"&#127993;", c:"#E8A93B", time:"1 min",
+   tease:["“I’m ready for something serious.” Trust it?"]},
+  {id:"power", code:"H", href:"love-superpower.html", name:"Love Superpower", tag:"What’s your power, and your kryptonite?", ico:"&#129464;", c:"#FF4D4D", time:"1 min",
+   tease:["Memory, language, empathy, or creativity?"]},
+  {id:"call", code:"R", href:"who-gets-the-call.html", name:"Who Gets the Call?", tag:"Your village, or your apps?", ico:"&#9742;&#65039;", c:"#FF7A59", time:"1 min",
+   tease:["Sick. Who brings the soup?"]},
+  {id:"fight", code:"B", href:"fight-night.html", name:"Fight Night", tag:"Six rounds. What’s your fight style?", ico:"&#129354;", c:"#FF3B3B", time:"1 min",
+   tease:["Mid-fight, they bring up 2019. Your move?"]},
+  {id:"skip", code:"Q", href:"skip-the-shortcut.html", name:"Skip the Shortcut", tag:"An 8-bit quest. Three doors. One heart.", ico:"&#127984;", c:"#4CC27A", time:"1 min",
+   tease:["Just got dumped. Which door do you take?"]},
+  {id:"sync", code:"S", href:"in-sync.html", name:"In Sync", tag:"For two. How in sync are you really?", ico:"&#128145;", c:"#5CF2C6", time:"2 players",
+   tease:["Here together? Find out how in sync you are."]},
+  {id:"orchard", code:"O", href:"consume-or-create.html", name:"Consume or Create?", tag:"For couples. Grow an orchard, or pick it bare.", ico:"&#127795;", c:"#7CC36E", time:"1 min",
+   tease:["Your usual takeout, or a recipe neither of you has tried?"]},
+  {id:"cookie", code:"C", href:"fortune-cookie.html", name:"Fortune Cookie", tag:"Crack one open. Take a green flag.", ico:"&#129376;", c:"#F7C873", time:"5 sec",
+   tease:["Crack a cookie. Get a green flag."]}
+];
+
+/* Which booths show. A link like /arcade/?b=XMFTSC shows only those booths, and this device remembers it.
+   Otherwise the choice saved in Settings, otherwise all of them. One letter per booth (the code above). */
+const ALL = BOOTHS.slice();
+function chosen(){
+  const m = location.search.match(/[?&]b=([A-Za-z]+)/);
+  if (m){ Arcade.store("loveArcade.show", m[1].toUpperCase()); }
+  const saved = Arcade.store("loveArcade.show");
+  if (!saved) return ALL;
+  const list = ALL.filter(x => saved.includes(x.code));
+  return list.length ? list : ALL;
+}
+let SHOWN = chosen();
+const grid = document.getElementById("grid");
+function drawGrid(){
+grid.innerHTML = SHOWN.map(b => `<a class="cab${b.star ? " star" : ""}${b.wide ? " wide" : ""}" href="${b.href}" style="--c:${b.c}">
+  <span class="ico" aria-hidden="true">${b.ico}</span>
+  <div><h2>${b.name}</h2><p>${b.tag}</p></div>
+  <span class="meta"><span>Play</span><i>${b.time}</i></span></a>`).join("");
+}
+drawGrid();
+
+Arcade.init({hub: true});
+
+/* waiting screen: comes on after 40 quiet seconds. The sign in the middle, one teaser under it, and the
+   shown booths' icons drifting down both sides. The teased booth's icon floats up to the centre.
+   Taps: an icon opens its booth, "Tap to play" (or the teaser) opens the teased booth, anywhere else opens the main page. */
+const attract = document.getElementById("attract"), aq = document.getElementById("a-q"), ab = document.getElementById("a-booth");
+let TEASE = [], tIdx = 0, tTimer = 0, idle = 0, cur = null;
+function drawDrift(){
+  /* teasers go round the booths in turn, so each change brings a different booth to the middle */
+  TEASE = [];
+  const most = Math.max(...SHOWN.map(x => x.tease.length));
+  for (let r = 0; r < most; r++) SHOWN.forEach(x => { if (x.tease[r]) TEASE.push({t: x.tease[r], b: x}); });
+  document.getElementById("drift").innerHTML = SHOWN.map(b => `<span class="fl" data-b="${b.id}" style="--c:${b.c}"><i>${b.ico}</i></span>`).join("");
+  /* each icon gets a home on the left or right edge, staggered in two columns, and its own slow wandering path */
+  const rows = Math.max(2, Math.ceil(SHOWN.length / 2));
+  ICONS = [...document.querySelectorAll(".fl")].map((el, k) => {
+    const left = k % 2 === 0, row = Math.floor(k / 2);
+    return {el, id: el.dataset.b, hx: left ? (row % 2 ? .13 : .06) : (row % 2 ? .87 : .94), hy: .08 + row * (.84 / (rows - 1)),
+      p1: Math.random() * 6.3, p2: Math.random() * 6.3, s1: .7 + Math.random() * .5, s2: .5 + Math.random() * .4, blend: 0, hot: false};
+  });
+}
+let ICONS = [], raf = 0, last = 0;
+const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+function frame(now){
+  const dt = Math.min(.05, (now - (last || now)) / 1000); last = now;
+  const box = attract.getBoundingClientRect(), W = box.width, H = box.height;
+  const st = document.getElementById("stage").getBoundingClientRect();
+  const cx = st.left - box.left + st.width / 2, cy = st.top - box.top + st.height / 2;
+  const size = ICONS.length ? ICONS[0].el.offsetWidth : 80;
+  const rows = Math.max(2, Math.ceil(ICONS.length / 2)), gap = H * .84 / (rows - 1);
+  const ax = Math.min(34, W * .03), ay = Math.min(30, gap * .22);
+  const t = now / 1000;
+  ICONS.forEach(o => {
+    o.blend += ((o.hot ? 1 : 0) - o.blend) * Math.min(1, dt * 2.4);
+    const e = ease(Math.max(0, Math.min(1, o.blend)));
+    /* wandering around home: two slow sine waves, a gentle bob and tilt */
+    const hx = o.hx * W + Math.sin(t * o.s1 + o.p1) * ax + Math.sin(t * o.s2 * 1.7 + o.p2) * ax * .35;
+    const hy = o.hy * H + Math.cos(t * o.s2 + o.p2) * ay + Math.sin(t * o.s1 * 1.3 + o.p1) * ay * .3;
+    const x = hx + (cx - hx) * e, y = hy + (cy - hy) * e;
+    const pulse = o.hot ? (Math.pow(Math.sin(t * 3.2), 2) * .14) : 0;   /* a heartbeat */
+    const sc = 1 + e * 1.15 + pulse * e;
+    const rot = Math.sin(t * o.s1 + o.p2) * 7 * (1 - e);
+    o.el.style.transform = `translate(${(x - size / 2).toFixed(1)}px,${(y - size / 2).toFixed(1)}px) rotate(${rot.toFixed(1)}deg) scale(${sc.toFixed(3)})`;
+  });
+  raf = requestAnimationFrame(frame);
+}
+function showTease(){
+  cur = TEASE[tIdx++ % TEASE.length];
+  attract.style.setProperty("--c", cur.b.c);
+  aq.textContent = cur.t; aq.classList.remove("swap"); void aq.offsetWidth; aq.classList.add("swap");
+  ab.textContent = cur.b.name;
+  ICONS.forEach(o => { o.hot = o.id === cur.b.id; o.el.classList.toggle("hot", o.hot); });
+}
+function startAttract(){
+  closePanel(); drawDrift();
+  tIdx = Math.floor(Math.random() * TEASE.length);
+  attract.hidden = false; showTease();
+  clearInterval(tTimer); tTimer = setInterval(showTease, 4200);
+  cancelAnimationFrame(raf); last = 0; raf = requestAnimationFrame(frame);
+}
+function stopAttract(){ attract.hidden = true; clearInterval(tTimer); cancelAnimationFrame(raf); }
+attract.addEventListener("click", e => {
+  const fl = e.target.closest(".fl");
+  if (fl){ const b = ALL.find(x => x.id === fl.dataset.b); stopAttract(); if (b) location.href = b.href; return; }
+  if (e.target.closest("#a-tap, #a-q, .a-booth")){ const go = cur && cur.b.href; stopAttract(); if (go) location.href = go; return; }
+  stopAttract();
+});
+function nudge(){ clearTimeout(idle); if (attract.hidden && Arcade.eventMode()) idle = setTimeout(startAttract, 40000); }
+["pointerdown","keydown","touchstart"].forEach(ev => addEventListener(ev, nudge, {passive:true}));
+nudge();
+
+/* settings */
+const panel = document.getElementById("panel"), talkSw = document.getElementById("talk");
+function closePanel(){ panel.hidden = true; }
+const SITE_LINK = "https://siastevens.com/arcade/?b=";
+function code(){ return SHOWN.map(b => b.code).join(""); }
+function drawChooser(){
+  document.getElementById("pick").innerHTML = ALL.map(b => {
+    const on = SHOWN.includes(b);
+    return `<button class="bk${on ? " on" : ""}" data-c="${b.code}" style="--c:${b.c}" aria-pressed="${on}"><span>${b.ico}</span>${b.name}<i>${b.code}</i></button>`;
+  }).join("");
+  const all = SHOWN.length === ALL.length;
+  const link = all ? "https://siastevens.com/arcade/" : SITE_LINK + code();
+  document.getElementById("share-link").textContent = link.replace("https://", "");
+  document.getElementById("share-qr").innerHTML = Arcade.qrSvg(Arcade.qrMatrix(link), "QR code for this set of booths");
+  document.getElementById("share-note").textContent = all ? "All booths. Turn some off to make a link for just those." : `${SHOWN.length} booths in this link.`;
+}
+function setShown(list){
+  SHOWN = list.length ? list : ALL.slice();
+  Arcade.store("loveArcade.show", SHOWN.length === ALL.length ? "" : code());
+  drawGrid(); drawChooser();
+}
+document.getElementById("pick").addEventListener("click", e => {
+  const b = e.target.closest(".bk"); if (!b) return;
+  const c = b.dataset.c, has = SHOWN.some(x => x.code === c);
+  if (has && SHOWN.length === 1) return;   /* keep at least one */
+  setShown(ALL.filter(x => x.code === c ? !has : SHOWN.includes(x)));
+});
+document.getElementById("show-all").onclick = () => setShown(ALL.slice());
+document.getElementById("copy").onclick = async e => {
+  const t = "https://" + document.getElementById("share-link").textContent;
+  try { await navigator.clipboard.writeText(t); e.target.textContent = "Copied"; } catch (err) { e.target.textContent = "Press and hold the link to copy"; }
+  setTimeout(() => e.target.textContent = "Copy link", 2200);
+};
+const evSw = document.getElementById("event");
+document.getElementById("gear").onclick = () => { talkSw.setAttribute("aria-checked", String(Arcade.talk())); evSw.setAttribute("aria-checked", String(Arcade.eventMode())); drawChooser(); panel.hidden = false; };
+evSw.onclick = () => { const on = !Arcade.eventMode(); Arcade.store("loveArcade.event", on ? "1" : "0"); evSw.setAttribute("aria-checked", String(on)); nudge(); };
+document.getElementById("pclose").onclick = closePanel;
+document.getElementById("attract-now").onclick = startAttract;
+panel.addEventListener("click", e => { if (e.target === panel) closePanel(); });
+talkSw.onclick = () => { const on = !Arcade.talk(); Arcade.store("loveArcade.talk", on ? "1" : "0"); talkSw.setAttribute("aria-checked", String(on)); document.documentElement.classList.toggle("talk", on); };
+const off = document.getElementById("offline");
+if ("serviceWorker" in navigator && location.protocol === "https:"){
+  navigator.serviceWorker.ready.then(() => off.textContent = "Ready. Every booth works without Wi-Fi.").catch(() => {});
+  setTimeout(() => { if (/Checking/.test(off.textContent)) off.textContent = "Saving the booths for offline. Keep this page open a moment."; }, 2500);
+} else off.textContent = "Open the live site once to save the booths for offline.";
+if (/[?&]attract=1/.test(location.search)) startAttract();
+</script>
+</body>
+</html>

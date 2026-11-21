@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Skip the Shortcut | The Love Arcade</title>
+<meta name="theme-color" content="#5C94FC">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@500;600;700;800&display=swap">
+<link rel="stylesheet" href="arcade.css">
+<style>
+/* Look: an 8-bit quest with our own pixel heroes. Pick a hero and the person waiting at the castle.
+   Each level is a real-life problem with three doors. Shortcut doors slide you into a pit.
+   The long road climbs to a chest with a heart in it. Five hearts open the castle. */
+:root{--sky:#5C94FC;--brick:#C84C0C;--brick2:#8C2C00;--ink:#0F0F1E;--paper:#FCFCFC;--gold:#FFD23F;--red:#E40058;--green:#00A800;
+  --ac-ink:var(--paper);--ac-btn:var(--gold);--ac-btn-ink:var(--ink);--ac-line:var(--paper)}
+body{background:var(--sky);color:var(--paper);font-family:"Outfit",system-ui,sans-serif;font-size:1.1rem}
+.ac-home{background:var(--ink);border-radius:0;font-family:"Press Start 2P",monospace;font-size:.6rem}
+.wrap{max-width:900px;margin:0 auto;min-height:100vh;min-height:100dvh;padding:60px 16px 22px;display:flex;flex-direction:column;justify-content:center}
+.scr{display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center}
+.px{font-family:"Press Start 2P",monospace;line-height:1.5}
+svg.spr{shape-rendering:crispEdges;display:block;width:100%;height:auto}
+
+h1.px{font-size:clamp(1.6rem,5.4vw,2.8rem);color:var(--paper);text-shadow:4px 4px 0 var(--ink)}
+.sub{font-size:1.25rem;font-weight:700;max-width:34ch;line-height:1.35;color:var(--paper);text-shadow:2px 2px 0 var(--ink)}
+.btn{min-height:60px;padding:0 28px;border:4px solid var(--ink);background:var(--gold);color:var(--ink);font:400 .95rem "Press Start 2P";box-shadow:6px 6px 0 var(--ink)}
+.btn:active{transform:translate(4px,4px);box-shadow:2px 2px 0 var(--ink)}
+
+/* pick your hero */
+.heroes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;width:100%;max-width:680px}
+.hc{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 8px 10px;border:4px solid var(--ink);background:#7FB0FF;box-shadow:5px 5px 0 var(--ink);color:var(--ink);font:800 1.05rem "Outfit"}
+.hc .spr{width:56%}
+.hc.on{background:var(--gold)}
+#pick2{grid-template-columns:repeat(5,minmax(0,1fr));max-width:820px}
+.hc.any{justify-content:center;font-size:1rem;line-height:1.3}
+
+/* the screen */
+.scene{position:relative;width:100%;max-width:860px;aspect-ratio:16/9;overflow:hidden;border:4px solid var(--ink);background:var(--sky);box-shadow:8px 8px 0 rgba(15,15,30,.35)}
+.ground{position:absolute;bottom:0;height:16%;background:linear-gradient(var(--ink) 0 2px,transparent 2px) 0 0/100% 50%,linear-gradient(90deg,var(--ink) 0 2px,transparent 2px) 0 0/8% 50%,var(--brick)}
+.cloud{position:absolute;width:12%;height:7%;background:var(--paper);box-shadow:0 0 0 0 var(--paper);border-radius:2px}
+.cloud::before,.cloud::after{content:"";position:absolute;background:var(--paper);width:45%;height:110%;bottom:40%;left:15%}
+.cloud::after{left:48%;height:80%}
+.hud{position:absolute;top:3%;left:3%;right:3%;display:flex;justify-content:space-between;font:400 clamp(.5rem,1.5vw,.8rem) "Press Start 2P";color:var(--paper);text-shadow:2px 2px 0 var(--ink);z-index:5}
+.lvl{position:absolute;top:12%;left:50%;transform:translateX(-50%);max-width:88%;text-align:center;font:800 clamp(1rem,2.8vw,1.5rem)/1.25 "Outfit";color:var(--paper);background:var(--ink);border:3px solid var(--paper);padding:8px 14px;z-index:5}
+.ob{position:absolute}
+.hero{position:absolute;width:6.2%;z-index:4}
+.hero.walk .spr{animation:step .18s steps(2) infinite}
+@keyframes step{50%{transform:translateY(-6%)}}
+.door{width:8.4%}
+.door .n{position:absolute;left:0;right:0;top:-34%;font:400 clamp(.6rem,1.8vw,1rem) "Press Start 2P";color:var(--gold);text-shadow:2px 2px 0 var(--ink)}
+.blk{position:absolute;background:linear-gradient(var(--ink) 0 2px,transparent 2px) 0 0/100% 50%,linear-gradient(90deg,var(--ink) 0 2px,transparent 2px) 0 0/50% 100%,#E09050;border:2px solid var(--ink)}
+.pit{position:absolute;bottom:0;height:16%;background:var(--ink)}
+.coin{width:2.2%;animation:spin .6s steps(2) infinite}
+@keyframes spin{50%{transform:scaleX(.4)}}
+.big-msg{position:absolute;inset:0;display:grid;place-items:center;font:400 clamp(1.1rem,4vw,2.2rem) "Press Start 2P";color:var(--paper);text-shadow:4px 4px 0 var(--ink);z-index:6;animation:acPop .35s both}
+.heart-up{width:6%;animation:heartUp 1.2s ease-out forwards;z-index:6}
+@keyframes heartUp{from{transform:translateY(0) scale(.4);opacity:0}30%{opacity:1}to{transform:translateY(-120%) scale(1.3);opacity:1}}
+
+.choices{display:grid;gap:10px;width:100%;max-width:860px}
+.cb{display:flex;align-items:center;gap:14px;min-height:62px;padding:8px 16px;text-align:left;border:4px solid var(--ink);background:var(--paper);color:var(--ink);font:700 1.2rem/1.25 "Outfit";box-shadow:5px 5px 0 var(--ink)}
+.cb b{flex:none;display:grid;place-items:center;width:38px;height:38px;background:var(--gold);border:3px solid var(--ink);font:400 .85rem "Press Start 2P"}
+.cb:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+.choices.done .cb{opacity:.45;pointer-events:none}
+.choices.done .cb.on{opacity:1}
+
+.box{width:100%;max-width:860px;padding:14px 18px;border:4px solid var(--paper);outline:4px solid var(--ink);background:var(--ink);color:var(--paper);text-align:left;animation:acPop .3s both}
+.box .t{font:800 1.15rem "Outfit";margin-bottom:6px}
+.box .t.ok{color:var(--gold)} .box .t.no{color:#FF6B8B}
+.box p{font-size:1.2rem;font-weight:600;line-height:1.4}
+.box .btn{margin-top:12px}
+
+.res-t{font:400 clamp(1rem,3.4vw,1.6rem)/1.5 "Press Start 2P";color:var(--gold);text-shadow:3px 3px 0 var(--ink)}
+.res-p{font-size:1.25rem;font-weight:700;line-height:1.4;max-width:38ch;text-shadow:2px 2px 0 var(--ink)}
+.ac-foot{background:var(--ink);border-radius:0;width:100%;max-width:640px;border:4px solid var(--paper)}
+.ac-btn{border-radius:0;font-family:"Press Start 2P",monospace;font-size:.7rem}
+@media (max-width:620px){.heroes,#pick2{grid-template-columns:repeat(2,minmax(0,1fr))}.cb{font-size:1.05rem}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="scr pop" id="s-intro">
+    <h1 class="px">Skip the<br>Shortcut</h1>
+    <p class="sub">Six levels. Three doors each. Shortcuts look shiny and end in a pit. Only the long road has a heart at the end. Collect five and the castle opens.</p>
+    <p style="font:800 1.2rem Outfit;color:var(--ink)">Pick your hero</p>
+    <div class="heroes" id="pick1"></div>
+  </section>
+
+  <section class="scr" id="s-who" hidden>
+    <p style="font:800 clamp(1.3rem,3.6vw,1.8rem) Outfit;text-shadow:3px 3px 0 var(--ink)">Who&rsquo;s waiting at the castle?</p>
+    <div class="heroes" id="pick2"></div>
+  </section>
+
+  <section class="scr" id="s-play" hidden>
+    <div class="scene" id="scene"></div>
+    <div class="choices" id="choices"></div>
+    <div id="msg"></div>
+  </section>
+
+  <section class="scr" id="s-end" hidden></section>
+</main>
+
+<script src="arcade.js"></script>
+<script>
+/* ---------- pixel art: each sprite is rows of letters, each letter a colour ---------- */
+function pix(rows, pal){
+  const w = rows[0].length, h = rows.length; let r = "";
+  rows.forEach((row, y) => [...row].forEach((ch, x) => { if (pal[ch]) r += `<rect x="${x}" y="${y}" width="1.02" height="1.02" fill="${pal[ch]}"/>`; }));
+  return `<svg class="spr" viewBox="0 0 ${w} ${h}" aria-hidden="true">${r}</svg>`;
+}
+const SHORT = ["...HHHH...","..HHHHHH..","..HSSSSH..","..SESSES..","..SSSSSS..","...SSSS...","..CCCCCC..",".SCCCCCCS.",".SCCCCCCS.","..CCCCCC..","..PP..PP..","..PP..PP..",".BBB..BBB."];
+const LONG_DRESS = ["...HHHH...","..HHHHHH..",".HHSSSSHH.",".HSESSESH.",".HSSSSSSH.",".HHSSSSHH.",".HCCCCCCH.",".SCCCCCCS.",".SCCCCCCS.","..CCCCCC..",".CCCCCCCC.","...S..S...","..BB..BB.."];
+const LONG_PANTS = ["...HHHH...","..HHHHHH..",".HHSSSSHH.",".HSESSESH.",".HSSSSSSH.",".HHSSSSHH.",".HCCCCCCH.",".SCCCCCCS.",".SCCCCCCS.","..CCCCCC..","..PP..PP..","..PP..PP..",".BBB..BBB."];
+const CHARS = [
+  {name:"Rosa", rows:LONG_DRESS, pal:{H:"#2A1A12",S:"#B9764F",E:"#111",C:"#E40058",P:"#333",B:"#4A2A14"}},
+  {name:"Ade",  rows:SHORT,      pal:{H:"#141014",S:"#6B3F26",E:"#111",C:"#F8B800",P:"#2038A8",B:"#3A2414"}},
+  {name:"Max",  rows:SHORT,      pal:{H:"#F0C850",S:"#F6C9A6",E:"#111",C:"#00A844",P:"#5A3A1A",B:"#3A2414"}},
+  {name:"Mei",  rows:LONG_PANTS, pal:{H:"#141018",S:"#EBC39A",E:"#111",C:"#3CBCFC",P:"#6844FC",B:"#3A2414"}}
+];
+const sprite = c => pix(c.rows, c.pal);
+const DOOR = pix(["..BBBB..",".BWWWWB.","BWWWWWWB","BWWWWWWB","BWWWWWWB","BWWWWYWB","BWWWWWWB","BWWWWWWB","BWWWWWWB","BWWWWWWB","BBBBBBBB"], {B:"#5A2E0E",W:"#A8642B",Y:"#FFD23F"});
+const CHEST = pix(["BBBBBBBB","BYYYYYYB","BBBBBBBB","BYYGGYYB","BYYYYYYB","BBBBBBBB"], {B:"#5A2E0E",Y:"#C8752B",G:"#FFD23F"});
+const CHEST_OPEN = pix(["BBBBBBBB","B......B","BBBBBBBB","BYYGGYYB","BYYYYYYB","BBBBBBBB"], {B:"#5A2E0E",Y:"#C8752B",G:"#FFD23F"});
+const HEART = pix([".RR.RR.","RRRRRRR","RRRRRRR",".RRRRR.","..RRR..","...R..."], {R:"#E40058"});
+const COIN = pix([".YY.","YGGY","YGGY",".YY."], {Y:"#FFD23F",G:"#F8B800"});
+const CASTLE = `<svg class="spr" viewBox="0 0 60 52" aria-hidden="true">
+  <rect x="0" y="10" width="14" height="42" fill="#B9B4C6"/><rect x="46" y="10" width="14" height="42" fill="#B9B4C6"/>
+  ${[0,5,10,46,51,56].map(x => `<rect x="${x}" y="5" width="4" height="5" fill="#B9B4C6"/>`).join("")}
+  <rect x="12" y="22" width="36" height="30" fill="#CFCADB"/>${[12,18,24,30,36,42].map(x => `<rect x="${x}" y="18" width="4" height="4" fill="#CFCADB"/>`).join("")}
+  ${[16,26,36,46].map(y => `<rect x="0" y="${y}" width="60" height=".8" fill="#8A8499"/>`).join("")}
+  <rect x="4" y="18" width="6" height="7" fill="#3A1F0A"/><rect x="50" y="18" width="6" height="7" fill="#3A1F0A"/>
+  <rect id="cdoor" x="23" y="34" width="14" height="18" fill="#5A2E0E"/><rect x="25" y="31" width="10" height="3" fill="#5A2E0E"/>
+  <rect x="53" y="-4" width="1.4" height="10" fill="#333"/><path d="M54.4-4h7l-7 4z" fill="#E40058"/></svg>`;
+
+/* ---------- the levels: Chapter 24, Resist the Shortcut ---------- */
+const LEVELS = [
+  ["Feeling lonely", ["Call someone you haven’t talked to in a while", "Hop on the apps", "Slide into some DMs"],
+    "Still lonely. Just more notifications.", "Swiping gets you attention. A real voice gets you connection."],
+  ["The relationship has gone stale", ["Build something new together", "Find excitement somewhere else", "Download an app, just to look"],
+    "Still stale, with one foot out the door.", "Excitement found elsewhere is taken from the relationship. Build something new with the person."],
+  ["You said something hurtful", ["Say sorry to their face, and name what you did", "Buy them something nice", "Be extra sweet and act like it never happened"],
+    "Still hurt. Nobody named what happened.", "Gifts and sweetness skip the hard part. A real apology is face to face and names what you did."],
+  ["They want The Talk. You’re not ready", ["Tell them honestly you’re not ready yet", "Dodge it", "Change the subject. Plan something fun"],
+    "Dodged. The question is still there tomorrow.", "Honesty isn’t comfortable. That’s how you know it isn’t a shortcut."],
+  ["You just got dumped", ["Let it hurt for a while", "Find a rebound", "Text them at 2am, just to talk"],
+    "Relief for one night. Back to square one tomorrow.", "There’s no fast version. Going through it is what heals."],
+  ["Huge fight. They’re in the other room", ["Knock on the door and talk it through", "Let them cool off till morning", "Apologize just to keep the peace"],
+    "Peace bought. The problem is still in the next room.", "The real talk might be harder tonight. It’s the only one that fixes it."]
+];
+
+const $ = id => document.getElementById(id);
+let hero = null, partner = null, order = [], lv = 0, hearts = 0, locked = false, timers = [];
+const later = (fn, ms) => timers.push(setTimeout(fn, ms));
+function show(id){ ["s-intro","s-who","s-play","s-end"].forEach(s => $(s).hidden = s !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
+const ob = (html, cls, l, b, w) => `<div class="ob ${cls || ""}" style="left:${l}%;bottom:${b}%;${w ? "width:" + w + "%" : ""}">${html}</div>`;
+const sky = () => `<div class="cloud" style="left:6%;top:34%"></div><div class="cloud" style="left:70%;top:30%"></div>`;
+const hud = () => `<div class="hud"><span>${Arcade.esc(hero.name.toUpperCase())}</span><span>${lv < order.length ? "WORLD 1-" + (lv + 1) : "THE CASTLE"}</span><span>&#10084; x ${hearts}</span></div>`;
+
+function pickers(){
+  $("pick1").innerHTML = CHARS.map((c, k) => `<button class="hc" data-h="${k}">${sprite(c)}${c.name}</button>`).join("");
+}
+function pickPartner(){
+  $("pick2").innerHTML = CHARS.map((c, k) => `<button class="hc" data-w="${k}">${sprite(c)}${c.name}</button>`).join("") +
+    `<button class="hc any" data-w="-1">?<br>Surprise<br>me</button>`;
+  show("s-who");
+}
+function begin(){ order = Arcade.shuffle(LEVELS); lv = 0; hearts = 0; show("s-play"); level(); }
+
+/* a level: the hero on the left, three doors on the right */
+function level(){
+  locked = false; $("msg").innerHTML = "";
+  const L = order[lv];
+  const doors = Arcade.shuffle(L[1].map((t, k) => ({t, k})));
+  $("scene").innerHTML = sky() + hud() + `<div class="lvl">${Arcade.esc(L[0])}</div><div class="ground" style="left:0;right:0"></div>` +
+    doors.map((d, n) => `<div class="ob door" style="left:${36 + n * 21}%;bottom:16%"><span class="n">${n + 1}</span>${DOOR}</div>`).join("") +
+    `<div class="hero" id="hero" style="left:6%;bottom:16%">${sprite(hero)}</div>`;
+  $("choices").classList.remove("done");
+  $("choices").innerHTML = doors.map((d, n) => `<button class="cb" data-k="${d.k}" data-n="${n}"><b>${n + 1}</b>${Arcade.esc(d.t)}</button>`).join("");
+}
+function go(btn){
+  if (locked) return; locked = true;
+  btn.classList.add("on"); $("choices").classList.add("done");
+  const n = +btn.dataset.n, long = btn.dataset.k === "0", h = $("hero");
+  h.classList.add("walk");
+  h.animate([{left:"6%"}, {left:(37.5 + n * 21) + "%"}], {duration: 650 + n * 180, fill:"forwards", easing:"linear"}).onfinish = () => {
+    h.animate([{opacity:1, transform:"scale(1)"}, {opacity:0, transform:"scale(.6)"}], {duration:260, fill:"forwards"}).onfinish = () => later(() => long ? longRoad() : shortcut(), 200);
+  };
+}
+/* shortcut: a shiny slide with coins, then a pit */
+function shortcut(){
+  const L = order[lv];
+  $("scene").innerHTML = sky() + hud() + `<div class="ground" style="left:0;width:52%"></div><div class="pit" style="left:52%;width:16%"></div><div class="ground" style="left:68%;right:0"></div>` +
+    [14, 24, 34, 44].map(x => ob(COIN, "coin", x, 30)).join("") +
+    `<div class="hero walk" id="hero" style="left:4%;bottom:16%">${sprite(hero)}</div>`;
+  const h = $("hero");
+  h.animate([{left:"4%", bottom:"16%"}, {left:"54%", bottom:"16%", offset:.6}, {left:"57%", bottom:"-20%"}], {duration:1300, fill:"forwards", easing:"ease-in"});
+  [...$("scene").querySelectorAll(".coin")].forEach((c, k) => later(() => c.style.visibility = "hidden", 180 + k * 150));
+  later(() => {
+    h.classList.remove("walk");
+    $("scene").insertAdjacentHTML("beforeend", `<div class="big-msg">DEAD END</div>`);
+    box(false, L[2], L[3]);
+  }, 1400);
+}
+/* long road: a climb up the blocks to a chest */
+function longRoad(){
+  const L = order[lv];
+  const steps = [[18, 1], [28, 2], [38, 3], [48, 4], [58, 5]];
+  const B = 8;   /* one block, in % of the scene's height */
+  $("scene").innerHTML = sky() + hud() + `<div class="ground" style="left:0;right:0"></div>` +
+    steps.map(([x, hgt]) => Array.from({length: hgt}, (_, y) => `<div class="blk" style="left:${x}%;width:10%;bottom:${16 + y * B}%;height:${B}%"></div>`).join("")).join("") +
+    Array.from({length: 5}, (_, y) => `<div class="blk" style="left:68%;width:32%;bottom:${16 + y * B}%;height:${B}%"></div>`).join("") +
+    `<div class="ob" id="chest" style="left:84%;bottom:${16 + 5 * B}%;width:8%">${CHEST}</div>` +
+    `<div class="hero walk" id="hero" style="left:4%;bottom:16%">${sprite(hero)}</div>`;
+  const h = $("hero"), kf = [{left:"4%", bottom:"16%"}];
+  steps.forEach(([x, hgt]) => { kf.push({left:(x - 3) + "%", bottom:(16 + (hgt - 1) * B) + "%"}); kf.push({left:(x + 2) + "%", bottom:(16 + hgt * B + 6) + "%"}); kf.push({left:(x + 3) + "%", bottom:(16 + hgt * B) + "%"}); });
+  kf.push({left:"76%", bottom:(16 + 5 * B) + "%"});
+  h.animate(kf, {duration:2600, fill:"forwards"});
+  later(() => {
+    h.classList.remove("walk");
+    $("chest").innerHTML = CHEST_OPEN;
+    $("scene").insertAdjacentHTML("beforeend", `<div class="ob heart-up" style="left:85%;bottom:${16 + 6 * B}%">${HEART}</div>`);
+    hearts++;
+    $("scene").querySelector(".hud").outerHTML = hud();
+    box(true, "+1 heart. The long road.", L[3]);
+  }, 2750);
+}
+function box(ok, head, line){
+  const last = lv === order.length - 1;
+  $("msg").innerHTML = `<div class="box"><p class="t ${ok ? "ok" : "no"}">${Arcade.esc(ok ? head : "Shortcut! " + head)}</p><p>${Arcade.esc(line)}</p>
+    <button class="btn" id="nextlv">${last ? "To the castle &#9654;" : "Next level &#9654;"}</button></div>`;
+  $("nextlv").onclick = () => { timers.forEach(clearTimeout); timers = []; lv++; if (lv < order.length) level(); else castle(); };
+}
+
+/* the castle: five hearts open the door */
+function castle(){
+  $("choices").innerHTML = ""; $("msg").innerHTML = "";
+  const open = hearts >= 5;
+  const who = partner;
+  $("scene").innerHTML = sky() + hud() + `<div class="ground" style="left:0;right:0"></div>` +
+    `<div class="ob" id="castle" style="left:58%;bottom:16%;width:36%">${CASTLE}</div>` +
+    `<div class="hero walk" id="hero" style="left:4%;bottom:16%">${sprite(hero)}</div>` +
+    `<div class="hero" id="mate" style="left:72.5%;bottom:${open ? 16 : 54}%;opacity:0">${sprite(who)}</div>`;
+  const h = $("hero");
+  h.animate([{left:"4%"}, {left:"62%"}], {duration:1800, fill:"forwards"});
+  later(() => {
+    h.classList.remove("walk");
+    const m = $("mate");
+    if (open){
+      const d = $("scene").querySelector("#cdoor"); if (d) d.setAttribute("fill", "#1A0E04");
+      m.animate([{opacity:0}, {opacity:1}], {duration:400, fill:"forwards"});
+      later(() => {
+        m.animate([{left:"72.5%"}, {left:"68%"}], {duration:600, fill:"forwards"});
+        [0, 1, 2].forEach(k => later(() => $("scene").insertAdjacentHTML("beforeend", `<div class="ob heart-up" style="left:${63 + k * 2.5}%;bottom:42%">${HEART}</div>`), 500 + k * 350));
+      }, 500);
+      later(() => end(true), 2600);
+    } else {
+      m.animate([{opacity:0}, {opacity:1}], {duration:400, fill:"forwards"});
+      $("scene").insertAdjacentHTML("beforeend", `<div class="big-msg" style="place-items:start center;padding-top:22%">LOCKED</div>`);
+      later(() => end(false), 2200);
+    }
+  }, 1900);
+}
+function end(open){
+  const t = hearts === 6 ? "Hero of the Long Road" : open ? "The Castle Opened" : "Shortcut Runner";
+  const p = open
+    ? `${hearts} of 6 hearts. You took the long road when it counted, and someone was waiting at the end of it.`
+    : `${hearts} of 6 hearts. The castle opens at five. Every shortcut felt like progress and cost you a heart. ${partner.name} is still waiting.`;
+  $("s-end").innerHTML = `<div class="scene" style="max-width:560px">${sky()}<div class="ground" style="left:0;right:0"></div>
+      <div class="ob" style="left:30%;bottom:16%;width:12%">${sprite(hero)}</div>
+      <div class="ob" style="left:${open ? 50 : 72}%;bottom:16%;width:12%">${sprite(partner)}</div>
+      ${open ? `<div class="ob" style="left:42%;bottom:52%;width:9%">${HEART}</div>` : ""}</div>
+    <h2 class="res-t">${t}</h2><p class="res-p">${Arcade.esc(p)}</p>
+    ${Arcade.footer({chapter: 24, line: "Resist the Shortcut: why the easy move feels like winning, and isn’t."})}`;
+  show("s-end");
+}
+
+document.addEventListener("click", e => {
+  const a = e.target.closest("[data-h]"); if (a){ hero = CHARS[+a.dataset.h]; pickPartner(); return; }
+  const w = e.target.closest("[data-w]");
+  if (w){ const k = +w.dataset.w; partner = k >= 0 ? CHARS[k] : CHARS[Math.floor(Math.random() * CHARS.length)]; begin(); return; }
+  const c = e.target.closest(".cb"); if (c) go(c);
+});
+function again(){ timers.forEach(clearTimeout); timers = []; show("s-intro"); }
+pickers();
+Arcade.init({again});
+</script>
+</body>
+</html>

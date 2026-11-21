@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Fight Night | The Love Arcade</title>
+<meta name="theme-color" content="#0E0B0A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Oswald:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="arcade.css">
+<style>
+/* Look: an old boxing poster. Black arena, a cream poster with red slab type, ring ropes, a bell
+   between rounds. Six rounds, four moves each. The scorecard names your fight style. */
+:root{--arena:#0E0B0A;--poster:#F1E4CC;--red:#D7261E;--red2:#8F140F;--ink:#1B1210;--gold:#E8B23A;--muted:#7B6A5C;
+  --ac-ink:var(--ink);--ac-btn:var(--red);--ac-btn-ink:#fff;--ac-line:var(--ink)}
+body{background:radial-gradient(80% 60% at 50% 0%,#3A1512,var(--arena) 70%);color:var(--ink);font-family:"Oswald",system-ui,sans-serif}
+.wrap{max-width:860px;margin:0 auto;min-height:100vh;min-height:100dvh;padding:66px 18px 24px;display:flex;flex-direction:column;justify-content:center}
+.poster{position:relative;background:var(--poster);border:6px solid var(--ink);box-shadow:0 0 0 4px var(--poster),0 24px 50px rgba(0,0,0,.6);padding:28px 26px 26px}
+.poster::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background:radial-gradient(circle at 20% 20%,rgba(139,90,40,.12),transparent 40%),radial-gradient(circle at 80% 70%,rgba(139,90,40,.14),transparent 45%)}
+.scr{position:relative;display:flex;flex-direction:column;gap:18px;align-items:center;text-align:center}
+.slab{font-family:"Alfa Slab One",Georgia,serif;font-weight:400}
+.ropes{width:100%;display:grid;gap:5px}
+.ropes i{height:5px;border-radius:3px;background:var(--red)}
+.ropes i:nth-child(2){background:var(--ink)}
+
+.intro .tonight{font-weight:700;letter-spacing:.4em;text-transform:uppercase;font-size:.95rem}
+.intro h1{font-size:clamp(3.6rem,13vw,7.4rem);line-height:.86;color:var(--red);text-shadow:4px 4px 0 var(--ink)}
+.intro .vs{font-size:clamp(1.3rem,3.4vw,1.8rem);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.intro p.d{font-size:1.15rem;font-weight:500;max-width:30ch;line-height:1.35}
+.bell{min-height:68px;padding:0 42px;border:4px solid var(--ink);background:var(--red);color:var(--poster);font:400 1.6rem "Alfa Slab One";text-transform:uppercase;box-shadow:5px 5px 0 var(--ink)}
+.bell:active{transform:translate(4px,4px);box-shadow:1px 1px 0 var(--ink)}
+
+.rd{font-size:clamp(2.6rem,8vw,4rem);line-height:1;color:var(--red)}
+.rd.ding{animation:ding .5s cubic-bezier(.3,1.8,.5,1)}
+@keyframes ding{from{transform:scale(1.8);opacity:0}}
+.cards{display:flex;gap:8px}
+.cards i{width:30px;height:8px;background:#D8C6A6}
+.cards i.d{background:var(--ink)} .cards i.n{background:var(--red)}
+.sit{font-size:clamp(1.5rem,4.2vw,2.2rem);font-weight:600;line-height:1.2;max-width:24ch;text-transform:uppercase}
+.moves{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%}
+.mv{display:flex;align-items:center;gap:12px;min-height:84px;padding:12px 16px;text-align:left;border:3px solid var(--ink);background:#FFF8EA;color:var(--ink);font:500 1.15rem/1.25 "Oswald";box-shadow:4px 4px 0 var(--ink)}
+.mv::before{content:"";flex:none;width:30px;height:30px;border-radius:50% 50% 45% 45%;background:var(--red);box-shadow:inset -4px -4px 0 var(--red2)}
+.mv:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.moves.done .mv:not(.on){opacity:.3}
+.mv.on{background:var(--ink);color:var(--poster)}
+.hitlbl{font-size:clamp(1.8rem,5vw,2.6rem);color:var(--red);transform:rotate(-4deg);animation:acPop .3s both}
+.shake{animation:shake .3s linear}
+@keyframes shake{20%{transform:translate(-6px,2px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-4px,3px)}80%{transform:translate(3px,-1px)}}
+
+.res .k{font-weight:700;letter-spacing:.34em;text-transform:uppercase}
+.belt{font-size:clamp(3rem,10vw,5.4rem);line-height:.9;color:var(--red);text-shadow:3px 3px 0 var(--ink)}
+.res .line{font-size:1.25rem;font-weight:500;line-height:1.4;max-width:34ch}
+.score{width:100%;max-width:520px;display:grid;gap:6px}
+.score div{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border:2px solid var(--ink);font-weight:600;font-size:1.1rem;text-transform:uppercase;letter-spacing:.04em}
+.score div.top{background:var(--ink);color:var(--poster)}
+.fact{padding:12px 16px;background:var(--red);color:var(--poster);font-weight:600;font-size:1.1rem;line-height:1.35;max-width:520px}
+.ac-foot{background:#FFF8EA;width:100%;max-width:560px}
+@media (max-width:560px){.moves{grid-template-columns:1fr}}
+/* clean games: no mid-game counters; scores come at the end */
+.cards{display:none!important}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="poster" id="poster">
+    <section class="scr intro pop" id="s-intro">
+      <div class="ropes"><i></i><i></i></div>
+      <p class="tonight">Tonight only</p>
+      <h1 class="slab">Fight<br>Night</h1>
+      <p class="vs">You &middot; vs &middot; Someone you love</p>
+      <p class="d">Six rounds. Every couple fights. Pick your move and find out your fight style.</p>
+      <button class="bell" id="start">Ring the bell</button>
+      <div class="ropes"><i></i><i></i></div>
+    </section>
+
+    <section class="scr" id="s-q" hidden>
+      <div class="cards" id="cards"></div>
+      <p class="rd slab" id="rd"></p>
+      <h2 class="sit" id="sit"></h2>
+      <div class="moves" id="moves"></div>
+      <p class="hitlbl slab" id="hit" hidden></p>
+    </section>
+
+    <section class="scr res" id="s-end" hidden></section>
+  </div>
+</main>
+
+<script src="arcade.js"></script>
+<script>
+/* Four styles, from Chapter 19's container: fight the problem not the person, no threats, take a pause
+   and come back, and agree when a fight is over. Couples who never fight are usually avoiding. */
+const STYLE = {
+  fix:   {name:"The Fixer",  line:"You fight the problem, not the person. You pause and come back. That&rsquo;s a container, and it holds heat without burning the house down."},
+  ghost: {name:"The Ghost",  line:"You go silent. Silence isn&rsquo;t peace. Say &ldquo;I need twenty minutes,&rdquo; then come back and finish it."},
+  nuke:  {name:"The Nuke",   line:"You win rounds and wound the relationship. Keep contempt and threats out of the ring. This fight is about this fight."},
+  dodge: {name:"The Dodger", line:"You keep the peace by swallowing it. Grievances filed, not resolved, compound in the dark. Say the small thing now."}
+};
+const ROUNDS = [
+  ["They forgot dinner with your friends. Again.", {ghost:"Say nothing. Cold all night.", nuke:"“You ALWAYS do this. So selfish.”", dodge:"“It’s fine. Whatever.”", fix:"“That’s twice. It matters to me. What happened?”"}],
+  ["Voices are rising. It’s getting hot.", {ghost:"Walk out. Stay gone.", nuke:"“Maybe we should just break up.”", dodge:"Agree, just to make it stop.", fix:"“I need twenty minutes. Then let’s finish this.”"}],
+  ["Mid-fight, they bring up something from 2019.", {ghost:"Shut down completely.", nuke:"Bring up something from 2018.", dodge:"Apologize for both.", fix:"“Let’s keep this fight about this fight.”"}],
+  ["They say something that really stings.", {ghost:"Freeze them out for days.", nuke:"Hit back where it hurts.", dodge:"Pretend it didn’t land.", fix:"“That one hurt. Can we slow down?”"}],
+  ["Same fight about chores. Third time this month.", {ghost:"Do it yourself and seethe.", nuke:"“You’re lazy. Just like your dad.”", dodge:"Let it slide. Again.", fix:"“This keeps coming back. Let’s fix the system on a calm day.”"}],
+  ["The fight is over. Or is it?", {ghost:"Silence until it fades.", nuke:"Plan to win it next time.", dodge:"Act like it never happened.", fix:"“Are we good? What do we do next time?”"}]
+];
+const $ = id => document.getElementById(id);
+let i = 0, tally = {}, locked = false;
+function show(id){ ["s-intro","s-q","s-end"].forEach(s => $(s).hidden = s !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
+function start(){ i = 0; tally = {fix:0, ghost:0, nuke:0, dodge:0}; show("s-q"); ask(); }
+function ask(){
+  locked = false;
+  const r = ROUNDS[i];
+  $("cards").innerHTML = ROUNDS.map((_, k) => `<i class="${k < i ? "d" : k === i ? "n" : ""}"></i>`).join("");
+  const rd = $("rd"); rd.textContent = `Round ${i + 1}`; rd.classList.remove("ding"); void rd.offsetWidth; rd.classList.add("ding");
+  $("sit").textContent = r[0];
+  $("moves").classList.remove("done"); $("hit").hidden = true;
+  $("moves").innerHTML = Arcade.shuffle(Object.keys(r[1])).map(s => `<button class="mv" data-s="${s}">${Arcade.esc(r[1][s])}</button>`).join("");
+}
+function pick(btn){
+  if (locked) return; locked = true;
+  const s = btn.dataset.s; tally[s]++;
+  btn.classList.add("on"); $("moves").classList.add("done");
+  const p = $("poster"); p.classList.remove("shake"); void p.offsetWidth; p.classList.add("shake");
+  $("hit").innerHTML = STYLE[s].name + "!"; $("hit").hidden = false;
+  setTimeout(() => { i++; if (i < ROUNDS.length) ask(); else end(); }, Arcade.talk() ? 1500 : 950);
+}
+function end(){
+  /* a tie goes to the style that needs the warning most */
+  const top = ["nuke","ghost","dodge","fix"].reduce((a, b) => tally[b] > tally[a] ? b : a);
+  const st = STYLE[top], strength = Math.round(tally.fix / ROUNDS.length * 10);
+  const rows = ["fix","ghost","nuke","dodge"].map(k => `<div class="${k === top ? "top" : ""}"><span>${STYLE[k].name}</span><span>${tally[k]}</span></div>`).join("");
+  $("s-end").innerHTML = `<div class="ropes"><i></i><i></i></div><p class="k">Your fight style</p><h2 class="belt slab">${st.name}</h2>
+    <p class="line">${st.line}</p>
+    <div class="score">${rows}</div>
+    <p class="fact">Couples who last fight just as much. They fight inside a container. Yours: ${strength}/10.</p>
+    ${Arcade.footer({chapter: 19, line: "The Container: how to argue without breaking."})}`;
+  show("s-end");
+}
+$("moves").addEventListener("click", e => { const b = e.target.closest(".mv"); if (b) pick(b); });
+$("start").onclick = start;
+Arcade.init({again: start});
+</script>
+</body>
+</html>

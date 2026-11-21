@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Were You Listening? | The Love Arcade</title>
+<meta name="theme-color" content="#F4E9DD">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;0,700;1,500&family=Karla:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="arcade.css">
+<style>
+/* Look: a café table for two. Warm latte tones, a friend across from you talking about their day,
+   then the cup goes down and the quiz begins. It tests attention instead of asking about it. */
+:root{--latte:#F4E9DD;--foam:#FFFAF3;--bean:#3B2A20;--mocha:#7A4E36;--cream:#E9D3BC;--ok:#2E8B57;--no:#C4553D;--muted:#8A7462;
+  --ac-ink:var(--bean);--ac-btn:var(--bean);--ac-btn-ink:var(--foam);--ac-line:var(--cream)}
+body{background:radial-gradient(90% 60% at 50% 0%,#FFF6EA,var(--latte) 70%);color:var(--bean);font-family:"Karla",system-ui,sans-serif}
+.ac-home{background:rgba(59,42,32,.7)}
+.wrap{max-width:720px;margin:0 auto;min-height:100vh;min-height:100dvh;padding:66px 20px 26px;display:flex;flex-direction:column;justify-content:center}
+.scr{display:flex;flex-direction:column;gap:18px;align-items:center;text-align:center}
+.serif{font-family:"Lora",Georgia,serif}
+.cup{width:120px;height:auto}
+.steam path{animation:steam 2.4s ease-in-out infinite;opacity:.6}
+.steam path:nth-child(2){animation-delay:.6s}
+@keyframes steam{50%{transform:translateY(-6px);opacity:.15}}
+h1{font:700 clamp(2.8rem,8.4vw,4.6rem)/1 "Lora"}
+.lead{font-size:1.25rem;line-height:1.4;color:var(--muted);max-width:30ch;font-weight:600}
+.go{min-height:64px;padding:0 40px;border:0;border-radius:99px;background:var(--bean);color:var(--foam);font:800 1.2rem "Karla";box-shadow:0 10px 20px rgba(59,42,32,.25)}
+
+.table{width:100%;min-height:340px;display:flex;flex-direction:column;gap:10px;padding:22px;border-radius:28px;background:var(--foam);box-shadow:0 18px 40px rgba(59,42,32,.14);text-align:left}
+.who{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.av{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;color:#fff;font:700 1.4rem "Lora"}
+.who b{font:700 1.2rem "Lora"} .who span{display:block;font-size:.95rem;color:var(--muted)}
+.say{max-width:90%;padding:12px 16px;border-radius:20px 20px 20px 6px;background:var(--cream);font:500 1.3rem/1.35 "Karla";animation:acPop .35s both}
+.hint{font:700 .85rem "Karla";letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.dots i{display:inline-block;width:8px;height:8px;margin:0 3px;border-radius:50%;background:var(--mocha);animation:acPop .9s infinite alternate}
+.dots i:nth-child(2){animation-delay:.3s}.dots i:nth-child(3){animation-delay:.6s}
+.hidden-msg{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:300px}
+.hidden-msg p{font:italic 500 1.5rem "Lora"}
+
+.q{font:700 clamp(1.6rem,4.4vw,2.2rem)/1.2 "Lora";max-width:22ch}
+.opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;width:100%}
+.opt{min-height:74px;padding:10px;border-radius:18px;border:2.5px solid var(--cream);background:var(--foam);color:var(--bean);font:700 1.15rem/1.25 "Karla"}
+.opt.ok{border-color:var(--ok);background:#E7F4EC} .opt.no{border-color:var(--no);background:#FBE9E4}
+.opts.done .opt:not(.ok):not(.no){opacity:.4}
+.fb{font-weight:700;font-size:1.1rem}
+.prog{display:flex;gap:8px}.prog i{width:14px;height:14px;border-radius:50%;background:var(--cream)}.prog i.ok{background:var(--ok)}.prog i.no{background:var(--no)}
+
+.score{font:700 clamp(4.4rem,14vw,7rem)/1 "Lora";color:var(--mocha)}
+.rank{font:700 clamp(1.8rem,5vw,2.4rem) "Lora"}
+.note{width:100%;padding:18px 22px;border-radius:22px;background:var(--foam);text-align:left;font-size:1.15rem;line-height:1.45;font-weight:600}
+.note b{display:block;font:700 1.2rem "Lora";margin-bottom:4px}
+.ac-foot{background:var(--foam);width:100%}
+@media (max-width:560px){.opts{grid-template-columns:1fr}}
+/* clean games: no mid-game counters; scores come at the end */
+.prog{display:none!important}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="scr pop" id="s-intro">
+    <svg class="cup" viewBox="0 0 120 110" aria-hidden="true"><g class="steam" fill="none" stroke="#7A4E36" stroke-width="5" stroke-linecap="round"><path d="M46 8c-6 8 6 12 0 22"/><path d="M66 8c-6 8 6 12 0 22"/></g><path d="M16 40h78v24a34 34 0 0 1-34 34h-10a34 34 0 0 1-34-34z" fill="#3B2A20"/><path d="M94 48h6a12 12 0 0 1 0 24h-8" fill="none" stroke="#3B2A20" stroke-width="7"/><ellipse cx="55" cy="40" rx="39" ry="7" fill="#E9D3BC"/></svg>
+    <h1>Were You<br>Listening?</h1>
+    <p class="lead">A friend tells you about their day. No notes, no phone. Then we&rsquo;ll see what you actually caught.</p>
+    <button class="go" id="start">Sit down</button>
+  </section>
+
+  <section class="scr" id="s-tell" hidden>
+    <div class="table" id="table"></div>
+  </section>
+
+  <section class="scr" id="s-q" hidden>
+    <div class="prog" id="prog"></div>
+    <h2 class="q" id="q"></h2>
+    <div class="opts" id="opts"></div>
+    <p class="fb" id="fb"></p>
+  </section>
+
+  <section class="scr" id="s-end" hidden></section>
+</main>
+
+<script src="arcade.js"></script>
+<script>
+/* Chapter 22, Sharpen the Presence: remember what was underneath the words, not just the words.
+   Each story: name, colour, lines, and questions [question, right, wrong, wrong]. The last question is
+   always what was underneath. */
+const STORIES = [
+  {n:"Maya", c:"#C46A4A", lines:[
+    "Ugh, long day. My sister Priya called at 7am about the wedding.",
+    "Then my 9:30 meeting got moved to Friday, so I had nothing to present.",
+    "Lunch was a sad desk salad. Again.",
+    "I’m fine, honestly. Just tired of being the one who fixes everything."],
+   qs:[["What’s her sister’s name?", "Priya", "Pooja", "Nina"],
+       ["The meeting moved to…", "Friday", "Thursday", "Monday"],
+       ["What was lunch?", "A desk salad", "A sandwich", "Nothing"],
+       ["What’s really bothering her?", "Always being the one who fixes everything", "The meeting", "The salad"]]},
+  {n:"Dev", c:"#4A7BC4", lines:[
+    "Finally finished the bookshelf I’ve been building since March.",
+    "My dad came over to help sand it. First time in like two years.",
+    "It’s oak. Took way longer than the YouTube video said.",
+    "Anyway. Want to see it Saturday?"],
+   qs:[["Since when has he been building it?", "March", "May", "January"],
+       ["Who helped him?", "His dad", "His brother", "A friend"],
+       ["What wood is it?", "Oak", "Pine", "Walnut"],
+       ["What was the real news?", "His dad came over, first time in years", "The shelf is finished", "YouTube was wrong"]]},
+  {n:"Sam", c:"#5E9C6B", lines:[
+    "My landlord finally fixed the heater. Took three weeks.",
+    "I’ve been sleeping in my winter coat like a raccoon.",
+    "My coworker Jen lent me a space heater, which was sweet.",
+    "Anyway, my mom’s surgery got moved to Tuesday, so… yeah."],
+   qs:[["How long did the heater take?", "Three weeks", "Three days", "A month"],
+       ["Who lent the space heater?", "Jen", "Jess", "Her mom"],
+       ["She’s been sleeping like a…", "Raccoon", "Burrito", "Bear"],
+       ["What’s really on her mind?", "Her mom’s surgery", "The heater", "Her coworker"]]}
+];
+const $ = id => document.getElementById(id);
+let st = null, i = 0, marks = [], timers = [], locked = false, lastStory = -1;
+function later(fn, ms){ timers.push(setTimeout(fn, ms)); }
+function show(id){ ["s-intro","s-tell","s-q","s-end"].forEach(s => $(s).hidden = s !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
+function start(){
+  timers.forEach(clearTimeout); timers = [];
+  let k; do { k = Math.floor(Math.random() * STORIES.length); } while (k === lastStory); lastStory = k;
+  st = STORIES[k]; i = 0; marks = [];
+  const per = Arcade.talk() ? 5200 : 3400;
+  $("table").innerHTML = `<div class="who"><div class="av" style="background:${st.c}">${st.n[0]}</div><div><b>${st.n}</b><span>Across the table</span></div></div>`;
+  show("s-tell");
+  st.lines.forEach((l, n) => later(() => $("table").insertAdjacentHTML("beforeend", `<p class="say">${Arcade.esc(l)}</p>`), 500 + n * per));
+  later(() => {
+    $("table").innerHTML = `<div class="hidden-msg"><p class="hint">${st.n} went to get a refill</p><p>So&hellip; what did you catch?</p><div class="dots"><i></i><i></i><i></i></div></div>`;
+  }, 500 + st.lines.length * per + 1200);
+  later(() => { show("s-q"); ask(); }, 500 + st.lines.length * per + 3000);
+}
+function ask(){
+  locked = false;
+  const q = st.qs[i];
+  $("prog").innerHTML = st.qs.map((_, k) => `<i class="${k < i ? (marks[k] ? "ok" : "no") : ""}"></i>`).join("");
+  $("q").textContent = q[0]; $("fb").textContent = "";
+  $("opts").classList.remove("done");
+  $("opts").innerHTML = Arcade.shuffle([1, 2, 3]).map(k => `<button class="opt" data-k="${k}">${Arcade.esc(q[k])}</button>`).join("");
+}
+function pick(btn){
+  if (locked) return; locked = true;
+  const ok = btn.dataset.k === "1"; marks[i] = ok;
+  $("opts").classList.add("done");
+  [...$("opts").children].forEach(b => { if (b.dataset.k === "1") b.classList.add("ok"); });
+  if (!ok) btn.classList.add("no");
+  $("fb").textContent = ok ? "Caught it." : "Missed that one.";
+  later(() => { i++; if (i < st.qs.length) ask(); else end(); }, Arcade.talk() ? 2000 : 1200);
+}
+function end(){
+  const n = st.qs.length, got = marks.filter(Boolean).length, under = marks[n - 1];
+  const rank = got === n ? "Fully Present" : got >= 3 ? "Mostly There" : "Half There";
+  const note = under
+    ? (got === n ? "You caught the details and what was underneath them. That&rsquo;s the part people remember: being noticed." : "You missed a detail or two, but you caught what was underneath. That&rsquo;s the part that matters most.")
+    : "You caught some facts but missed what was underneath. That&rsquo;s the part people remember: whether anyone noticed.";
+  $("s-end").innerHTML = `<p class="hint">Presence score</p><p class="score">${got}/${n}</p><h2 class="rank">${rank}</h2>
+    <div class="note"><b>What ${st.n} would remember</b>${note} Presence is a skill. Phone in another room, a full listen, then one question about what&rsquo;s behind the words.</div>
+    ${Arcade.footer({chapter: 22, line: "Sharpen the Presence: how to make someone feel like the only person in the room."})}`;
+  show("s-end");
+}
+$("opts").addEventListener("click", e => { const b = e.target.closest(".opt"); if (b) pick(b); });
+$("start").onclick = start;
+Arcade.init({again: start});
+</script>
+</body>
+</html>

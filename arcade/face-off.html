@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Face-Off | The Love Arcade</title>
+<meta name="theme-color" content="#160A2E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=DM+Sans:opsz,wght@9..40,500;9..40,700&display=swap">
+<link rel="stylesheet" href="arcade.css">
+<style>
+/* Look: a head-to-head showdown. The screen splits in two, hot pink against electric blue, with a
+   yellow VS badge in the middle. Tap a side; it wins the round. Twelve rounds, no ties. */
+:root{--a:#FF2E88;--b:#2B59FF;--vs:#FFE500;--ink:#fff;--deep:#160A2E;
+  --ac-ink:#fff;--ac-btn:var(--vs);--ac-btn-ink:#160A2E;--ac-line:rgba(255,255,255,.35)}
+body{background:var(--deep);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;overflow-x:hidden}
+.scr{min-height:100vh;min-height:100dvh}
+
+.intro{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:70px 24px 30px;text-align:center;
+  background:linear-gradient(115deg,var(--a) 0 49.6%,var(--vs) 49.6% 50.4%,var(--b) 50.4%)}
+.intro h1{font:400 clamp(3.4rem,12vw,7rem)/.9 "Bowlby One";text-transform:uppercase;text-shadow:0 6px 0 rgba(0,0,0,.25)}
+.intro p{font-size:1.35rem;font-weight:700;max-width:26ch;padding:12px 18px;border-radius:14px;background:rgba(22,10,46,.72)}
+.fight{min-height:70px;padding:0 44px;border:0;border-radius:14px;background:var(--vs);color:var(--deep);font:400 1.6rem "Bowlby One";text-transform:uppercase;box-shadow:0 7px 0 #B39F00,0 16px 30px rgba(0,0,0,.35)}
+.fight:active{transform:translateY(5px);box-shadow:0 2px 0 #B39F00}
+
+.duel{position:relative;display:grid;grid-template-columns:1fr 1fr}
+.side{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:90px 7% 60px;border:0;color:#fff;text-align:center;transition:filter .25s,transform .25s;overflow:hidden}
+.side.l{background:radial-gradient(90% 70% at 30% 40%,#FF6FB0,var(--a) 60%,#B8005A)}
+.side.r{background:radial-gradient(90% 70% at 70% 40%,#7895FF,var(--b) 60%,#0F2BB0)}
+.side span{font:700 clamp(1.6rem,3.8vw,2.6rem)/1.15 "DM Sans";max-width:14ch;text-wrap:balance;text-shadow:0 3px 14px rgba(0,0,0,.25)}
+.side .tap{font:700 .8rem "DM Sans";letter-spacing:.24em;text-transform:uppercase;opacity:.8}
+.side:active{filter:brightness(1.1)}
+.duel.won .side{filter:grayscale(.85) brightness(.5)}
+.duel.won .side.win{filter:none;animation:win .5s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes win{40%{transform:scale(1.04)}}
+.side.win::after{content:"\2713";position:absolute;top:24%;font:400 4rem "Bowlby One";color:var(--vs);text-shadow:0 4px 0 rgba(0,0,0,.3);animation:acPop .35s both}
+.vs{position:absolute;left:50%;top:50%;z-index:3;display:grid;place-items:center;width:110px;height:110px;margin:-55px 0 0 -55px;border-radius:50%;background:var(--vs);color:var(--deep);font:400 2.4rem "Bowlby One";box-shadow:0 0 0 8px var(--deep),0 10px 30px rgba(0,0,0,.5);pointer-events:none}
+.vs.bang{animation:bang .4s cubic-bezier(.3,1.8,.5,1)}
+@keyframes bang{from{transform:scale(.4) rotate(-30deg)}}
+.hud{position:absolute;top:16px;left:0;right:0;z-index:4;display:flex;justify-content:center;pointer-events:none}
+.hud b{padding:8px 16px;border-radius:99px;background:rgba(0,0,0,.4);font:400 1rem "Bowlby One";letter-spacing:.06em}
+
+.res{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:70px 24px 30px;max-width:760px;margin:0 auto;text-align:center}
+.res .k{font:700 .85rem "DM Sans";letter-spacing:.26em;text-transform:uppercase;opacity:.75}
+.winner{font:400 clamp(3.2rem,11vw,6rem)/.95 "Bowlby One";text-transform:uppercase;background:linear-gradient(90deg,var(--a),var(--vs),#6E8BFF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.res .line{font-size:1.3rem;line-height:1.4;font-weight:500;max-width:32ch}
+.bars{width:100%;display:grid;gap:8px}
+.bar{display:grid;grid-template-columns:120px 1fr 26px;align-items:center;gap:12px;font-weight:700;text-align:left}
+.bar i{height:16px;border-radius:8px;background:rgba(255,255,255,.12);overflow:hidden}
+.bar i b{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,var(--a),var(--b));width:0;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.bar.top i b{background:var(--vs)}
+.twist{padding:16px 20px;border-radius:14px;border:1.5px dashed rgba(255,255,255,.35);font-size:1.1rem;line-height:1.4}
+.twist strong{color:var(--vs)}
+@media (orientation:portrait){
+  .duel{grid-template-columns:1fr;grid-template-rows:1fr 1fr}
+  .side{padding:60px 10% 40px}
+  .side.l{background:radial-gradient(90% 90% at 50% 30%,#FF6FB0,var(--a) 60%,#B8005A)}
+  .side.r{background:radial-gradient(90% 90% at 50% 70%,#7895FF,var(--b) 60%,#0F2BB0)}
+}
+/* clean games: no mid-game counters; scores come at the end */
+.hud{display:none!important}
+</style>
+</head>
+<body>
+<section class="scr intro pop" id="s-intro">
+  <h1>Face<br>Off</h1>
+  <p>Twelve rounds. Two qualities each. Tap the one that pulls you in. No ties. No thinking twice.</p>
+  <button class="fight" id="start">Fight!</button>
+</section>
+
+<section class="scr duel" id="s-q" hidden>
+  <div class="hud"><b id="round"></b></div>
+  <button class="side l" data-s="0"><span class="tap">This one</span><span id="lt"></span></button>
+  <button class="side r" data-s="1"><span class="tap">Or this one</span><span id="rt"></span></button>
+  <div class="vs" id="vs">VS</div>
+</section>
+
+<section class="scr" id="s-end" hidden><div class="res" id="res"></div></section>
+
+<script src="arcade.js"></script>
+<script>
+/* The twelve duels and their letters, exactly as Chapter 6's "What Made Them Magnetic?" scores them. */
+const DUELS = [
+  ["Solves your IKEA furniture in ten minutes", "I", "Cries laughing failing at it with you", "H"],
+  ["Turns heads walking in", "L", "Holds the door for a stranger", "K"],
+  ["Runs a marathon on Sunday", "F", "Reads a book a week", "I"],
+  ["Takes charge when plans collapse", "C", "Notices you’re quiet and checks in", "K"],
+  ["Has the whole table laughing", "H", "You can’t stop staring", "L"],
+  ["In ridiculously good shape", "F", "Walks in like they own the room", "C"],
+  ["Knows your coffee order", "K", "Sends memes that make you snort at work", "H"],
+  ["A smile that stops your sentence", "L", "Arms that feel like safety", "F"],
+  ["Explains something and it finally clicks", "I", "Defends you when someone’s rude", "C"],
+  ["Flirts with you shamelessly in public", "C", "Effortless in a plain white tee", "L"],
+  ["Turns your worst day into comedy", "H", "Drags you to the gym and makes it fun", "F"],
+  ["Writes you a note for no reason", "K", "Challenges you and makes you think", "I"]
+];
+const TRAIT = {
+  L: ["Looks", "Physical attraction leads your instincts. That’s not shallow, it’s biology. Just know it, so it doesn’t override everything else."],
+  H: ["Humor", "You’re drawn to people who make life lighter. Humor signals brains, creativity and resilience, all at once."],
+  F: ["Fitness", "Discipline made visible. Someone who takes care of a body is signaling they can take care of a life."],
+  I: ["Intelligence", "You want someone who makes you think. It has the longest shelf life of all."],
+  K: ["Kindness", "Character over flash. You’re choosing behavior that doesn’t change when nobody’s watching."],
+  C: ["Confidence", "You’re drawn to certainty. Someone sure enough of themselves that you get to relax."]
+};
+/* the chapter's overlay: what shows in a photo, what only shows over time, and the trap */
+const OVERLAY = {
+  L: "Looks show in a single photo. <strong>Check what&rsquo;s underneath</strong> before it decides for you.",
+  F: "Fitness shows in a single photo. <strong>Check what&rsquo;s underneath</strong> before it decides for you.",
+  H: "Humor only shows over time. You read the <strong>cake, not the frosting</strong>. Go where people talk, not where they swipe.",
+  I: "Intelligence only shows over time. You read the <strong>cake, not the frosting</strong>. Go where people talk, not where they swipe.",
+  K: "Kindness only shows over time. You read the <strong>cake, not the frosting</strong>. Watch how they treat the waiter.",
+  C: "The trap: confidence is the <strong>easiest to show and the slowest to verify</strong>. Give it time before you trust it."
+};
+const $ = id => document.getElementById(id);
+let i = 0, picks = [], locked = false;
+function show(id){ ["s-intro","s-q","s-end"].forEach(s => $(s).hidden = s !== id); scrollTo(0,0); }
+function start(){ i = 0; picks = []; show("s-q"); ask(); }
+function ask(){
+  locked = false;
+  const d = DUELS[i];
+  $("round").textContent = `Round ${i + 1} / ${DUELS.length}`;
+  $("lt").textContent = d[0]; $("rt").textContent = d[2];
+  $("s-q").classList.remove("won"); document.querySelectorAll(".side").forEach(s => s.classList.remove("win"));
+  const v = $("vs"); v.classList.remove("bang"); void v.offsetWidth; v.classList.add("bang");
+}
+function pick(side, el){
+  if (locked) return; locked = true;
+  const d = DUELS[i]; picks.push(side ? d[3] : d[1]);
+  el.classList.add("win"); $("s-q").classList.add("won");
+  setTimeout(() => { i++; if (i < DUELS.length) ask(); else end(); }, Arcade.talk() ? 900 : 520);
+}
+function end(){
+  const count = {L:0,H:0,F:0,I:0,K:0,C:0};
+  picks.forEach(p => count[p]++);
+  const ranked = Object.keys(count).sort((a, b) => count[b] - count[a]);
+  const top = ranked[0], second = ranked[1], tie = count[top] === count[second];
+  const name = tie ? `${TRAIT[top][0]} &amp; ${TRAIT[second][0]}` : TRAIT[top][0];
+  $("res").innerHTML = `<p class="k">You fall for</p>
+    <h2 class="winner">${name}</h2>
+    <p class="line">${TRAIT[top][1]}</p>
+    <div class="bars">${ranked.map((k, n) => `<div class="bar${count[k] === count[top] ? " top" : ""}"><span>${TRAIT[k][0]}</span><i><b data-w="${count[k] / 4 * 100}"></b></i><span>${count[k]}</span></div>`).join("")}</div>
+    <p class="twist">${OVERLAY[top]}</p>
+    ${Arcade.footer({chapter: 6, line: "Attraction is a measurement, not magic. It moves, and it can move back."})}`;
+  show("s-end");
+  setTimeout(() => document.querySelectorAll(".bar b").forEach(b => b.style.width = b.dataset.w + "%"), 100);
+}
+document.querySelectorAll(".side").forEach(s => s.addEventListener("click", () => pick(+s.dataset.s, s)));
+$("start").onclick = start;
+Arcade.init({again: start});
+</script>
+</body>
+</html>

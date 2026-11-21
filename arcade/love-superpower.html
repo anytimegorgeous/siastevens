@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Love Superpower | The Love Arcade</title>
+<meta name="theme-color" content="#FFE14D">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@700;800;900&display=swap">
+<link rel="stylesheet" href="arcade.css">
+<style>
+/* Look: a comic book. Halftone yellow, black ink outlines, red and blue panels, a POW burst on every
+   pick. Six this-or-that panels; the result is a hero trading card: your power, and your kryptonite. */
+:root{--sun:#FFE14D;--red:#FF3B3B;--blue:#2A6BFF;--ink:#111;--paper:#FFFDF5;--muted:#4A4A4A;
+  --ac-ink:var(--ink);--ac-btn:var(--red);--ac-btn-ink:#fff;--ac-line:var(--ink)}
+body{background:radial-gradient(circle,rgba(255,90,0,.22) 1.6px,transparent 1.9px) 0 0/14px 14px,var(--sun);color:var(--ink);font-family:"Nunito",system-ui,sans-serif}
+.ac-home{background:var(--ink)}
+.wrap{max-width:820px;margin:0 auto;min-height:100vh;min-height:100dvh;padding:62px 20px 26px;display:flex;flex-direction:column;justify-content:center}
+.scr{display:flex;flex-direction:column;gap:18px;align-items:center;text-align:center}
+.bang{font:400 clamp(3.4rem,12vw,6.4rem)/.9 "Bangers";letter-spacing:.03em;color:var(--red);-webkit-text-stroke:3px var(--ink);text-shadow:6px 6px 0 var(--ink);transform:rotate(-3deg)}
+.bang span{display:block;color:var(--blue)}
+.lead{max-width:30ch;font-size:1.25rem;font-weight:800;padding:14px 18px;background:var(--paper);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink)}
+.go{min-height:68px;padding:0 44px;border:4px solid var(--ink);background:var(--red);color:#fff;font:400 1.9rem "Bangers";letter-spacing:.06em;box-shadow:6px 6px 0 var(--ink);transform:rotate(-1.5deg)}
+.go:active{transform:translate(4px,4px) rotate(-1.5deg);box-shadow:2px 2px 0 var(--ink)}
+
+.caption{display:inline-block;padding:8px 16px;background:var(--paper);border:3px solid var(--ink);font:400 clamp(1.6rem,4.6vw,2.3rem)/1.1 "Bangers";letter-spacing:.03em;box-shadow:4px 4px 0 var(--ink);max-width:22ch}
+.panels{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%}
+.pn{position:relative;min-height:150px;padding:18px;border:4px solid var(--ink);box-shadow:6px 6px 0 var(--ink);font:900 1.3rem/1.25 "Nunito";color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.pn.a{background:var(--blue)} .pn.b{background:var(--red)}
+.pn::before{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(255,255,255,.18) 1.6px,transparent 2px) 0 0/12px 12px;pointer-events:none}
+.pn span{position:relative}
+.pn:active{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+.pow{position:absolute;inset:0;display:grid;place-items:center;font:400 3.4rem "Bangers";color:var(--sun);-webkit-text-stroke:2px var(--ink);text-shadow:4px 4px 0 var(--ink);animation:pow .45s cubic-bezier(.3,1.8,.5,1) both;pointer-events:none}
+@keyframes pow{from{transform:scale(.2) rotate(-20deg);opacity:0}}
+.panels.done .pn:not(.on){filter:grayscale(1) brightness(.75)}
+
+/* the trading card */
+.card{position:relative;width:min(100%,460px);padding:16px;background:var(--c,#2A6BFF);border:5px solid var(--ink);border-radius:18px;box-shadow:8px 8px 0 var(--ink);color:#fff;text-align:left;animation:flip .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes flip{from{transform:perspective(900px) rotateY(90deg)}}
+.card .top{display:flex;justify-content:space-between;align-items:center;font:400 1.1rem "Bangers";letter-spacing:.08em}
+.card .art{display:grid;place-items:center;height:150px;margin:10px 0;background:radial-gradient(circle,rgba(255,255,255,.35),transparent 65%),rgba(0,0,0,.15);border:3px solid var(--ink);border-radius:10px;font-size:5rem}
+.card h2{font:400 2.6rem/1 "Bangers";letter-spacing:.04em;-webkit-text-stroke:1.5px var(--ink);text-shadow:3px 3px 0 var(--ink)}
+.card .pw{font:800 1.1rem/1.4 "Nunito";margin:6px 0 10px}
+.card .row{display:flex;flex-direction:column;gap:2px;padding:10px 12px;background:var(--paper);color:var(--ink);border:3px solid var(--ink);border-radius:8px;margin-top:8px}
+.card .row b{font:400 1.15rem "Bangers";letter-spacing:.06em;color:var(--red)}
+.card .row.up b{color:var(--blue)}
+.card .row span{font-weight:800;line-height:1.35}
+.side{font-weight:800;font-size:1.05rem}
+.ac-foot{background:var(--paper);width:100%;max-width:560px;border:3px solid var(--ink)}
+@media (max-width:560px){.panels{grid-template-columns:1fr}.pn{min-height:100px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="scr pop" id="s-intro">
+    <h1 class="bang">Love<span>Superpower</span></h1>
+    <p class="lead">Every great love runs on four powers. One of them is yours. Six quick choices.</p>
+    <button class="go" id="start">Suit up!</button>
+  </section>
+
+  <section class="scr" id="s-q" hidden>
+    <p class="caption" id="q"></p>
+    <div class="panels" id="panels"></div>
+  </section>
+
+  <section class="scr" id="s-end" hidden></section>
+</main>
+
+<script src="arcade.js"></script>
+<script>
+/* Chapter 3, The Great Unbundling: four tools of connection (memory, language, empathy, creativity),
+   and what starves each one. Each power appears in three of the six choices. */
+const QS = [
+  ["Your partner’s birthday. You…", ["M", "Remember the tiny thing they wanted months ago"], ["C", "Throw a surprise they’d never see coming"]],
+  ["A friend texts “I’m fine.” You…", ["E", "Know they’re not, and drive over"], ["L", "Call and get them talking until it all comes out"]],
+  ["A long drive together. You…", ["C", "Invent a ridiculous game"], ["L", "Talk for three hours straight"]],
+  ["You’re best at…", ["M", "Names, dates, and the stories behind them"], ["E", "Knowing how someone feels before they say it"]],
+  ["Making up after a fight, you…", ["L", "Find exactly the right words"], ["C", "Make them laugh with an inside joke"]],
+  ["The gift you give best…", ["M", "The thing they mentioned once"], ["E", "The thing they needed today"]]
+];
+const POWER = {
+  M: {name:"The Rememberer", ico:"&#129504;", c:"#2A6BFF", power:"Memory. You keep the story: the cilantro, the dog&rsquo;s name, the thing they said once. That&rsquo;s how a bond compounds.",
+      kr:"Watching instead of living. When you spectate more than you share, there&rsquo;s nothing new to remember.", up:"Do one thing together this week that&rsquo;s worth remembering."},
+  L: {name:"The Wordsmith", ico:"&#128172;", c:"#8A3FFC", power:"Language. You share an inner world out loud. People feel known around you.",
+      kr:"Short texts and quick replies. Language needs long, unhurried talk.", up:"One long conversation this week, phones in another room."},
+  E: {name:"The Mind Reader", ico:"&#129782;", c:"#E0337A", power:"Empathy. You feel across the gap. You hear &ldquo;I&rsquo;m fine&rdquo; and know it isn&rsquo;t.",
+      kr:"Separate lives. Empathy feeds on overlap, and separate screens starve it.", up:"Step into their day: ask about it, and listen to the end."},
+  C: {name:"The Creator", ico:"&#127912;", c:"#FF7A1A", power:"Creativity. You keep it alive: the jokes, the surprises, the world only two people share.",
+      kr:"Work gets your best ideas. If the slide deck gets them all, home gets the leftovers.", up:"Save one good idea this week, just for them."}
+};
+const POWS = ["POW!", "ZAP!", "BAM!", "WHAM!", "KAPOW!", "BOOM!"];
+const $ = id => document.getElementById(id);
+let i = 0, tally = {}, locked = false;
+function show(id){ ["s-intro","s-q","s-end"].forEach(s => $(s).hidden = s !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
+function start(){ i = 0; tally = {M:0, L:0, E:0, C:0}; show("s-q"); ask(); }
+function ask(){
+  locked = false;
+  const q = QS[i];
+  $("q").textContent = q[0];
+  $("panels").classList.remove("done");
+  $("panels").innerHTML = Arcade.shuffle([q[1], q[2]]).map((o, k) => `<button class="pn ${k ? "b" : "a"}" data-p="${o[0]}"><span>${Arcade.esc(o[1])}</span></button>`).join("");
+}
+function pick(btn){
+  if (locked) return; locked = true;
+  tally[btn.dataset.p]++;
+  btn.classList.add("on"); $("panels").classList.add("done");
+  btn.insertAdjacentHTML("beforeend", `<span class="pow">${POWS[i % POWS.length]}</span>`);
+  setTimeout(() => { i++; if (i < QS.length) ask(); else end(); }, Arcade.talk() ? 900 : 620);
+}
+function end(){
+  const ranked = Object.keys(tally).sort((a, b) => tally[b] - tally[a]);
+  const top = ranked[0], second = ranked[1], dual = tally[top] === tally[second];
+  const p = POWER[top];
+  $("s-end").innerHTML = `<div class="card" style="--c:${p.c}">
+      <div class="top"><span>Love Arcade</span><span>${dual ? "Dual power" : "Power level " + tally[top] + "/3"}</span></div>
+      <div class="art" aria-hidden="true">${p.ico}</div>
+      <h2>${p.name}</h2>
+      <p class="pw">${p.power}</p>
+      <div class="row"><b>Kryptonite</b><span>${p.kr}</span></div>
+      <div class="row up"><b>Power-up</b><span>${p.up}</span></div>
+    </div>
+    ${dual ? `<p class="side">Dual power: you&rsquo;re also ${POWER[second].name}.</p>` : ""}
+    ${Arcade.footer({chapter: 3, line: "The Great Unbundling: the four powers of connection, and what starves them."})}`;
+  show("s-end");
+}
+$("panels").addEventListener("click", e => { const b = e.target.closest(".pn"); if (b) pick(b); });
+$("start").onclick = start;
+Arcade.init({again: start});
+</script>
+</body>
+</html>

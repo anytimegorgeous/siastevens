@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Myth or Fact? | The Love Arcade</title>
+<meta name="theme-color" content="#071341">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;600;800&display=swap">
+<link rel="stylesheet" href="arcade.css">
+<style>
+/* Look: a TV game show. Navy stage, sweeping spotlights, a gold-framed screen, two big buzzers,
+   and a rubber stamp that slams down when a myth gets busted. */
+:root{--navy:#071341;--navy2:#0E2470;--gold:#FFD23F;--gold2:#E8A400;--red:#FF3B4E;--green:#21D07A;--ink:#FFFFFF;
+  --ac-ink:#fff;--ac-btn:var(--gold);--ac-btn-ink:#071341;--ac-line:rgba(255,210,63,.6)}
+body{background:var(--navy);color:var(--ink);font-family:"Archivo",system-ui,sans-serif;overflow-x:hidden}
+.lights{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.lights i{position:absolute;top:-20vh;width:28vw;height:140vh;background:linear-gradient(rgba(255,240,180,.16),transparent 80%);transform-origin:top center;filter:blur(8px)}
+.lights i:nth-child(1){left:6%;animation:sweep 7s ease-in-out infinite alternate}
+.lights i:nth-child(2){right:6%;animation:sweep 8s ease-in-out infinite alternate-reverse}
+@keyframes sweep{from{transform:rotate(22deg)}to{transform:rotate(-22deg)}}
+.floor{position:fixed;left:0;right:0;bottom:0;height:22vh;background:radial-gradient(60% 100% at 50% 100%,rgba(255,210,63,.18),transparent 70%);pointer-events:none}
+.stage{position:relative;max-width:820px;margin:0 auto;min-height:100vh;min-height:100dvh;padding:70px 22px 30px;display:flex;flex-direction:column;justify-content:center;gap:22px;text-align:center}
+
+.scr{display:flex;flex-direction:column;gap:22px}
+.logo{font:400 clamp(3rem,10vw,5.6rem)/.9 "Anton";letter-spacing:.01em;text-transform:uppercase;color:var(--gold);text-shadow:0 4px 0 var(--gold2),0 8px 0 #7a4c00,0 0 40px rgba(255,210,63,.4)}
+.logo span{display:inline-block;color:#fff;font-size:.5em;vertical-align:middle;margin:0 .2em;text-shadow:none;-webkit-text-stroke:0}
+.sub{font-size:1.25rem;font-weight:600;opacity:.9}
+.big{align-self:center;min-height:68px;padding:0 44px;border:0;border-radius:99px;background:linear-gradient(var(--gold),var(--gold2));color:var(--navy);font:400 1.6rem "Anton";letter-spacing:.06em;text-transform:uppercase;box-shadow:0 6px 0 #8a5a00,0 14px 30px rgba(0,0,0,.4)}
+.big:active{transform:translateY(4px);box-shadow:0 2px 0 #8a5a00}
+
+.bulbs{display:flex;justify-content:center;gap:10px}
+.bulbs b{width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.15)}
+.bulbs b.on{background:var(--gold);box-shadow:0 0 10px var(--gold)}
+.bulbs b.ok{background:var(--green);box-shadow:0 0 10px var(--green)}
+.bulbs b.no{background:var(--red);box-shadow:0 0 10px var(--red)}
+
+.screen{position:relative;padding:12px;border-radius:22px;background:linear-gradient(135deg,var(--gold),var(--gold2));box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.screen-in{position:relative;min-height:220px;border-radius:14px;background:radial-gradient(120% 90% at 50% 0%,var(--navy2),#050d30);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:28px 26px;overflow:hidden}
+.qn{font:600 .85rem/1 "Archivo";letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.stmt{font:400 clamp(2rem,6vw,3.3rem)/1.05 "Anton";text-transform:uppercase;letter-spacing:.01em}
+.stamp{position:absolute;top:14px;right:14px;padding:4px 14px;border:5px solid currentColor;border-radius:10px;font:400 clamp(1.6rem,4.6vw,2.4rem)/1 "Anton";text-transform:uppercase;transform:rotate(10deg);opacity:0;pointer-events:none;background:rgba(5,13,48,.85)}
+.stamp.go{animation:slam .45s cubic-bezier(.3,1.6,.5,1) forwards}
+@keyframes slam{from{opacity:0;transform:rotate(10deg) scale(3)}to{opacity:1;transform:rotate(10deg) scale(1)}}
+.screen-in{padding-top:56px!important}
+.stamp.myth{color:var(--red)} .stamp.fact{color:var(--green)}
+
+.buzzers{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,4vw,40px);padding:0 4%}
+.buzz{display:flex;flex-direction:column;align-items:center;gap:10px;background:none;border:0;color:#fff}
+.buzz i{display:block;width:min(30vw,170px);aspect-ratio:1;border-radius:50%;box-shadow:inset 0 -14px 0 rgba(0,0,0,.28),inset 0 10px 18px rgba(255,255,255,.35),0 12px 0 #111a3c,0 20px 34px rgba(0,0,0,.5);transition:transform .08s,box-shadow .08s}
+.buzz.m i{background:radial-gradient(circle at 40% 30%,#ff8a95,var(--red) 55%,#b0142a)}
+.buzz.f i{background:radial-gradient(circle at 40% 30%,#8ff0bd,var(--green) 55%,#0b8a4c)}
+.buzz:active i,.buzz.hit i{transform:translateY(9px);box-shadow:inset 0 -6px 0 rgba(0,0,0,.28),inset 0 10px 18px rgba(255,255,255,.35),0 3px 0 #111a3c,0 8px 16px rgba(0,0,0,.5)}
+.buzz span{font:400 clamp(1.6rem,4.4vw,2.4rem) "Anton";letter-spacing:.08em;text-transform:uppercase}
+.buzzers.done .buzz:not(.hit){opacity:.35}
+
+.reveal{display:flex;flex-direction:column;gap:12px;align-items:center}
+.verdict{font:400 2rem "Anton";letter-spacing:.06em;text-transform:uppercase}
+.verdict.ok{color:var(--green)} .verdict.no{color:var(--red)}
+.why{font-size:1.3rem;font-weight:600;line-height:1.3;max-width:30ch}
+.ch{font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+
+.score{font:400 clamp(5rem,20vw,9rem)/1 "Anton";color:var(--gold);text-shadow:0 6px 0 #8a5a00,0 0 50px rgba(255,210,63,.5)}
+.score small{font-size:.35em;color:#fff;text-shadow:none}
+.title{font:400 clamp(2rem,6vw,3rem) "Anton";text-transform:uppercase;letter-spacing:.03em}
+.steer{padding:18px 20px;border-radius:16px;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);display:flex;flex-direction:column;gap:6px}
+.steer .k{font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.steer .m{font:400 1.7rem/1.1 "Anton";text-transform:uppercase}
+.steer .w{font-size:1.1rem;line-height:1.35}
+/* clean games: no mid-game counters; scores come at the end */
+.bulbs,.qn{display:none!important}
+</style>
+</head>
+<body>
+<div class="lights" aria-hidden="true"><i></i><i></i></div>
+<div class="floor" aria-hidden="true"></div>
+
+<main class="stage">
+  <section class="scr pop" id="s-intro">
+    <h1 class="logo">Myth <span>or</span> Fact?</h1>
+    <p class="sub" style="margin:18px 0 26px">Ten things everyone says about love.<br>Hit the buzzer.</p>
+    <button class="big" id="start">Let&rsquo;s play</button>
+  </section>
+
+  <section class="scr" id="s-q" hidden>
+    <div class="bulbs" id="bulbs"></div>
+    <div class="screen"><div class="screen-in">
+      <p class="qn" id="qn"></p>
+      <h2 class="stmt" id="stmt"></h2>
+      <div class="stamp" id="stamp"></div>
+    </div></div>
+    <div class="buzzers" id="buzzers">
+      <button class="buzz m" data-a="myth"><i></i><span>Myth</span></button>
+      <button class="buzz f" data-a="fact"><i></i><span>Fact</span></button>
+    </div>
+    <div class="reveal" id="reveal" hidden>
+      <p class="verdict" id="verdict"></p>
+      <p class="why" id="why"></p>
+      <p class="ch" id="ch"></p>
+      <button class="big" id="next">Next</button>
+    </div>
+  </section>
+
+  <section class="scr" id="s-end" hidden></section>
+</main>
+
+<script src="arcade.js"></script>
+<script>
+/* [statement, answer, why (one line), chapter] — from Chapter 1's Myth or Reality and the chapters they point to */
+const ITEMS = [
+  ["Love is blind.", "myth", "Attraction is picky. It reads value, looks included.", 6],
+  ["The spark usually fades.", "fact", "By design. What matters is what you build after.", 8],
+  ["Love finds you when you’re not looking.", "myth", "Love doesn’t find anyone. It gets noticed, and noticing takes attention.", 2],
+  ["Absence makes the heart grow fonder.", "myth", "Absence builds craving, not closeness. Fondness grows from showing up.", 8],
+  ["Out of sight, out of mind.", "fact", "Connection runs on deposits. Stop showing up, start fading.", 15],
+  ["True love is selfless.", "myth", "Love that only gives burns out. Lasting love is an exchange.", 11],
+  ["Long relationships always get boring.", "myth", "Boredom isn’t what time does to love. It’s what couples stop doing.", 16],
+  ["Happy couples don’t fight.", "myth", "Couples who last fight just as much. They fight better.", 19],
+  ["More options make you happier.", "myth", "Six jams outsold twenty-four, about ten to one. More choice, less choosing.", 4],
+  ["Men are from Mars, women are from Venus.", "myth", "Same human wiring. Different details. Nobody’s from another planet.", 9]
+];
+let order = [], i = 0, right = 0, misses = [], locked = false;
+const $ = id => document.getElementById(id);
+function show(id){ ["s-intro","s-q","s-end"].forEach(s => $(s).hidden = s !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
+
+function start(){ order = Arcade.shuffle(ITEMS); i = 0; right = 0; misses = []; show("s-q"); ask(); }
+function ask(){
+  const it = order[i]; locked = false;
+  $("bulbs").innerHTML = order.map((_, k) => `<b class="${k < i ? (misses.includes(order[k]) ? "no" : "ok") : k === i ? "on" : ""}"></b>`).join("");
+  $("qn").textContent = `Question ${i + 1} of ${order.length}`;
+  $("stmt").textContent = it[0];
+  $("stamp").className = "stamp"; $("stamp").textContent = "";
+  $("buzzers").classList.remove("done"); document.querySelectorAll(".buzz").forEach(b => b.classList.remove("hit"));
+  $("buzzers").hidden = false; $("reveal").hidden = true;
+}
+function answer(a, btn){
+  if (locked) return; locked = true;
+  const it = order[i], ok = a === it[1];
+  if (ok) right++; else misses.push(it);
+  btn.classList.add("hit"); $("buzzers").classList.add("done");
+  const st = $("stamp"); st.textContent = it[1] === "myth" ? "Busted!" : "True!"; st.className = "stamp " + it[1];
+  void st.offsetWidth; st.classList.add("go");
+  setTimeout(() => {
+    $("buzzers").hidden = true; $("reveal").hidden = false;
+    $("verdict").textContent = ok ? "You got it" : `Nope. It’s a ${it[1]}`;
+    $("verdict").className = "verdict " + (ok ? "ok" : "no");
+    $("why").textContent = it[2]; $("ch").textContent = `Chapter ${it[3]}`;
+    $("next").textContent = i === order.length - 1 ? "See my score" : "Next";
+  }, 650);
+}
+function next(){ i++; if (i < order.length) ask(); else end(); }
+function end(){
+  const title = right >= 9 ? "Myth Buster" : right >= 6 ? "Sharp Eye" : "Myth Magnet";
+  const m = misses[0];
+  const steer = m
+    ? `<div class="steer"><p class="k">The myth that&rsquo;s been steering you</p><p class="m">&ldquo;${Arcade.esc(m[0].replace(/\.$/, ""))}&rdquo;</p><p class="w">${Arcade.esc(m[2])}</p></div>`
+    : `<div class="steer"><p class="k">No myth is steering you</p><p class="w">Ten for ten. Now see if you live it.</p></div>`;
+  $("s-end").innerHTML = `<p class="ch">Your score</p><p class="score">${right}<small>/${order.length}</small></p><h2 class="title">${title}</h2>${steer}
+    ${Arcade.footer({chapter: m ? m[3] : 1, line: m ? "Every miss is a belief steering your love life. The book hands the steering back." : "Scan for the book these myths come from."})}`;
+  show("s-end");
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest(".buzz"); if (b) answer(b.dataset.a, b);
+});
+$("start").onclick = start; $("next").onclick = next;
+Arcade.init({again: start});
+</script>
+</body>
+</html>

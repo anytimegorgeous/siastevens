@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sail or Anchor? | The Love Arcade</title>
+<meta name="theme-color" content="#0B3A4E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Nunito:wght@600;700;800&display=swap">
+<link rel="stylesheet" href="arcade.css">
+<style>
+/* Look: open sea, and a ship you build as you answer. Sail answers add canvas: sails, a jib, a flag.
+   Anchor answers add weight: an anchor, chain, cargo, barnacles. At the end the ship goes to sea:
+   all sail races off and tips over, all anchor never leaves the dock, a balance sails steady. */
+:root{--sea:#0B3A4E;--sea2:#062635;--wave:#145A72;--foam:#E9F6F7;--sail:#FFF8EA;--brass:#D9A441;--rope:#C7A27A;--wood:#9A6B43;--wood2:#6E4A2C;--ink:#06202C;--flag:#FF5A5F;
+  --ac-ink:var(--foam);--ac-btn:var(--brass);--ac-btn-ink:var(--ink);--ac-line:rgba(233,246,247,.3)}
+body{background:linear-gradient(#123F55,var(--sea) 40%,var(--sea2));color:var(--foam);font-family:"Nunito",system-ui,sans-serif;overflow-x:hidden}
+.wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;min-height:100vh;min-height:100dvh;padding:62px 20px 26px;display:flex;flex-direction:column;justify-content:center}
+.scr{display:flex;flex-direction:column;gap:16px;align-items:center;text-align:center}
+.cin{font-family:"Cinzel",Georgia,serif;font-weight:700}
+h1{font-size:clamp(2.8rem,9vw,5rem);line-height:1;color:var(--sail)}
+h1 em{font-style:normal;color:var(--brass);font-size:.55em;display:block;margin:6px 0}
+.lead{font-size:1.2rem;font-weight:700;line-height:1.4;max-width:32ch;opacity:.92}
+.go{min-height:64px;padding:0 40px;border:3px solid var(--rope);border-radius:99px;background:var(--brass);color:var(--ink);font:700 1.35rem "Cinzel"}
+
+/* the harbour: a fixed-size stage the ship sits in */
+.harbor{position:relative;width:100%;max-width:620px;aspect-ratio:620/300;border-radius:22px;overflow:hidden;background:linear-gradient(#2C6E8A,#1B5670 62%,#0F4A60 62%,#0B3A4E);box-shadow:inset 0 0 0 2px rgba(233,246,247,.15)}
+.harbor .sun{position:absolute;right:9%;top:12%;width:11%;aspect-ratio:1;border-radius:50%;background:#FFE3A1;box-shadow:0 0 40px #FFD27A}
+.harbor .dock{position:absolute;left:0;bottom:27%;width:16%;height:8%;background:var(--wood2);transition:opacity .6s}
+.harbor .dock::after{content:"";position:absolute;left:30%;top:100%;width:10%;height:240%;background:var(--wood2);box-shadow:44px 0 0 var(--wood2)}
+.harbor .water{position:absolute;left:-10%;right:-10%;bottom:0;height:42%;background:repeating-linear-gradient(90deg,rgba(233,246,247,.16) 0 24px,transparent 24px 60px) 0 6px/100% 3px no-repeat,linear-gradient(transparent,rgba(0,0,0,.25));animation:lap 4s ease-in-out infinite}
+@keyframes lap{50%{transform:translateX(18px)}}
+.boat{position:absolute;left:27%;bottom:20%;width:46%;transform-origin:50% 90%;transition:bottom .6s}
+.boat svg{display:block;width:100%;height:auto;overflow:visible}
+.boat.bob{animation:bob 3.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(4px) rotate(-1.5deg)}}
+.part{transform-box:fill-box;transition:opacity .35s,transform .45s cubic-bezier(.3,1.6,.5,1)}
+.part.off{opacity:0;transform:scale(.2)}
+.tally{display:flex;gap:16px;font:800 .85rem "Nunito";letter-spacing:.14em;text-transform:uppercase}
+.tally span{display:flex;align-items:center;gap:6px}
+.tally b{font-size:1.2rem;color:var(--brass)}
+
+.count{font:800 .9rem "Nunito";letter-spacing:.2em;text-transform:uppercase;color:var(--brass)}
+.q{font:700 clamp(1.55rem,4.2vw,2.1rem)/1.2 "Cinzel";max-width:22ch;color:var(--sail)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;max-width:620px}
+.ch{min-height:96px;padding:14px;border-radius:20px;border:3px solid rgba(233,246,247,.35);background:rgba(255,255,255,.06);color:var(--foam);font:800 1.25rem/1.25 "Nunito"}
+.ch:active{transform:scale(.97)}
+.ch.on{background:var(--sail);color:var(--ink);border-color:var(--brass)}
+
+/* the launch */
+.boat.sailaway{animation:sailaway 3.2s cubic-bezier(.5,0,.6,1) forwards}
+@keyframes sailaway{0%{transform:none}40%{transform:translateX(35%) rotate(-8deg)}70%{transform:translateX(70%) rotate(-30deg)}100%{transform:translate(85%,30%) rotate(-95deg)}}
+.boat.steady{animation:steady 3.4s ease-in-out forwards}
+@keyframes steady{0%{transform:none}25%{transform:translateX(12%) rotate(-3deg)}50%{transform:translateX(30%) rotate(2deg)}75%{transform:translateX(48%) rotate(-2deg)}100%{transform:translateX(62%) rotate(0)}}
+.boat.stuck{animation:stuck 3s ease-in-out forwards}
+@keyframes stuck{0%,100%{transform:none}20%{transform:translateX(3%)}30%{transform:translateX(-1%)}50%{transform:translateX(2%)}60%{transform:none}}
+.verdict-pic{font:800 1.05rem "Nunito";color:var(--brass);min-height:1.4em}
+
+.pct{font:700 clamp(2.6rem,9vw,4.4rem)/1 "Cinzel";color:var(--brass)}
+.res-t{font:700 clamp(1.8rem,5vw,2.6rem) "Cinzel";color:var(--sail)}
+.res-p{font-size:1.2rem;font-weight:700;line-height:1.45;max-width:36ch}
+.quote{padding:14px 20px;border-left:4px solid var(--brass);text-align:left;font-size:1.1rem;font-weight:700;max-width:560px;background:rgba(0,0,0,.18);border-radius:0 12px 12px 0}
+.ac-foot{background:rgba(0,0,0,.2);width:100%;max-width:620px}
+@media (max-width:560px){.two{grid-template-columns:1fr}.ch{min-height:70px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="scr pop" id="s-intro">
+    <h1 class="cin">Sail<em>or</em>Anchor?</h1>
+    <p class="lead">Every person carries two pulls: one reaches for the horizon, one holds the shore. Ten quick choices.</p>
+    <div class="harbor" id="h-intro"></div>
+    <button class="go" id="start">Start building</button>
+  </section>
+
+  <section class="scr" id="s-q" hidden>
+    <div class="harbor" id="h-q"></div>
+    <h2 class="q" id="q"></h2>
+    <div class="two" id="two"></div>
+  </section>
+
+  <section class="scr" id="s-launch" hidden>
+    <p class="count">Your ship, launched</p>
+    <div class="harbor" id="h-end"></div>
+    <p class="verdict-pic" id="vpic"></p>
+  </section>
+
+  <section class="scr" id="s-end" hidden></section>
+</main>
+
+<script src="arcade.js"></script>
+<script>
+/* Chapter 9, The Two Pulls. [question, sail answer, anchor answer] */
+const QS = [
+  ["A great job offer in a new city?", "Go. New city, new life.", "Stay. My life is here."],
+  ["Vacation?", "Somewhere I’ve never been", "My favorite place, again"],
+  ["At a restaurant, you order…", "Something I’ve never tried", "My usual. It’s great."],
+  ["After a great first date…", "I text first", "I wait and see"],
+  ["Spare money?", "Spend it on an adventure", "Save it for later"],
+  ["Friends?", "Always meeting new people", "The same close few, for years"],
+  ["A big decision?", "Leap, figure it out after", "Sleep on it for a week"],
+  ["A free Saturday?", "Say yes to something new", "Home, recharged, my people"],
+  ["Work?", "Start my own thing", "A steady job I’m great at"],
+  ["Something bothers you in a relationship…", "Say it right now", "Wait for the right moment"]
+];
+/* The ship. Every answer adds one piece: the nth sail answer adds sail piece n (mainsail, jib, topsail,
+   flag, rigging, crow's nest, second mast, pennant, spinnaker, a heart on the sail); the nth anchor answer
+   adds anchor piece n (anchor, second anchor, crates, barrel, rope, a heavier hull, cargo, barnacles, weed). */
+const SHIP = `<svg viewBox="0 0 300 280" aria-hidden="true">
+  <g class="part" data-s="9"><path d="M40 92C6 126 10 172 44 192h46c-4-40-22-76-50-100z" fill="#FF8A5B"/><path d="M40 108c-14 26-12 56 6 80" stroke="#FFF8EA" stroke-width="4" fill="none" opacity=".6"/></g>
+  <g class="part" data-s="5"><path d="M150 12 34 196M150 12l116 184" stroke="#C7A27A" stroke-width="2"/></g>
+  <path d="M150 8v188" stroke="#6E4A2C" stroke-width="7" stroke-linecap="round"/>
+  <g class="part" data-s="7"><path d="M236 92v104" stroke="#6E4A2C" stroke-width="5" stroke-linecap="round"/><path d="M240 108c18 10 26 40 24 82h-24z" fill="#FFF8EA"/></g>
+  <g class="part" data-s="8"><path d="M238 86l26 6-26 6z" fill="#3FC1D9"/><path d="M236 84v10" stroke="#6E4A2C" stroke-width="4"/></g>
+  <g class="part" data-s="1"><path d="M154 70c46 14 68 60 62 120h-62z" fill="#FFF8EA"/></g>
+  <g class="part" data-s="2"><path d="M146 46c-34 30-52 82-48 144h48z" fill="#E9F6F7" opacity=".92"/></g>
+  <g class="part" data-s="3"><path d="M154 22c26 6 38 20 36 42h-36z" fill="#FFF8EA"/></g>
+  <g class="part" data-s="4"><path d="M153 2l32 8-32 8z" fill="#FF5A5F"/></g>
+  <g class="part" data-s="6"><rect x="138" y="62" width="24" height="10" rx="2" fill="#9A6B43" stroke="#6E4A2C" stroke-width="3"/></g>
+  <g class="part" data-s="10"><path d="M186 120c-6-8-18-4-16 6 2 8 16 16 16 16s14-8 16-16c2-10-10-14-16-6z" fill="#FF5A5F"/></g>
+  <g class="part" data-a="3"><rect x="58" y="174" width="24" height="22" rx="2" fill="#9A6B43" stroke="#6E4A2C" stroke-width="3"/><path d="M58 185h24" stroke="#6E4A2C" stroke-width="2"/></g>
+  <g class="part" data-a="4"><rect x="86" y="178" width="20" height="18" rx="2" fill="#B07A4A" stroke="#6E4A2C" stroke-width="3"/></g>
+  <g class="part" data-a="5"><rect x="196" y="172" width="22" height="24" rx="8" fill="#7A5232" stroke="#4E331E" stroke-width="3"/><path d="M196 180h22M196 188h22" stroke="#4E331E" stroke-width="2"/></g>
+  <g class="part" data-a="6"><circle cx="120" cy="188" r="9" fill="none" stroke="#C7A27A" stroke-width="5"/><circle cx="120" cy="188" r="3" fill="#C7A27A"/></g>
+  <g class="part" data-a="8"><path d="M166 196c-4-18 2-26 12-26s16 8 12 26z" fill="#C9A66B" stroke="#8C6A45" stroke-width="3"/><path d="M172 172l6-6 6 6" stroke="#8C6A45" stroke-width="3" fill="none"/></g>
+  <path d="M24 196h252l-34 46H58z" fill="#9A6B43"/><path d="M24 196h252" stroke="#6E4A2C" stroke-width="7" stroke-linecap="round"/>
+  <path d="M46 214h208" stroke="#6E4A2C" stroke-width="3" opacity=".6"/>
+  <g class="part" data-a="7"><path d="M36 222h228l-12 16H50z" fill="#6E4A2C"/></g>
+  <g class="part" data-a="9"><circle cx="82" cy="232" r="5" fill="#C9D6CF"/><circle cx="96" cy="236" r="4" fill="#C9D6CF"/><circle cx="178" cy="230" r="5" fill="#C9D6CF"/><circle cx="160" cy="236" r="3.5" fill="#C9D6CF"/><circle cx="214" cy="228" r="4" fill="#C9D6CF"/></g>
+  <g class="part" data-a="10"><path d="M92 242c-4 8 4 12 0 22M130 242c-4 8 4 12 0 20M190 242c-4 8 4 12 0 22" stroke="#4F9A5A" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+  <g class="part" data-a="1"><path d="M34 200v52" stroke="#B8C2C6" stroke-width="5" stroke-dasharray="7 4"/><g transform="translate(34 268)"><path d="M0-14v28M-13 4c2 11 24 11 26 0" stroke="#3B4A52" stroke-width="6" fill="none" stroke-linecap="round"/><circle cy="-18" r="5" fill="none" stroke="#3B4A52" stroke-width="4"/></g></g>
+  <g class="part" data-a="2"><path d="M266 200v46" stroke="#B8C2C6" stroke-width="5" stroke-dasharray="7 4"/><g transform="translate(266 262)"><path d="M0-14v28M-13 4c2 11 24 11 26 0" stroke="#3B4A52" stroke-width="6" fill="none" stroke-linecap="round"/><circle cy="-18" r="5" fill="none" stroke="#3B4A52" stroke-width="4"/></g></g>
+</svg>`;
+function harbor(el){
+  el.innerHTML = `<div class="sun"></div><div class="dock"></div><div class="water"></div><div class="boat bob">${SHIP}</div>`;
+}
+function setShip(el, s, a){
+  el.querySelectorAll(".part").forEach(p => {
+    const on = p.dataset.s ? s >= +p.dataset.s : a >= +p.dataset.a;
+    p.classList.toggle("off", !on);
+  });
+  /* weight sinks the hull a little lower */
+  el.querySelector(".boat").style.bottom = (22 - a * 1.2) + "%";
+}
+const $ = id => document.getElementById(id);
+let i = 0, s = 0, a = 0, locked = false, tm = 0;
+function show(id){ ["s-intro","s-q","s-launch","s-end"].forEach(x => $(x).hidden = x !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
+function start(){ clearTimeout(tm); i = 0; s = 0; a = 0; harbor($("h-q")); setShip($("h-q"), 0, 0); show("s-q"); ask(); }
+function ask(){
+  locked = false;
+  const q = QS[i];
+  $("q").textContent = q[0];
+  /* sides shuffle, so nobody learns "left is sail" */
+  $("two").innerHTML = Arcade.shuffle([["s", q[1]], ["a", q[2]]]).map(o => `<button class="ch" data-p="${o[0]}">${Arcade.esc(o[1])}</button>`).join("");
+}
+function pick(btn){
+  if (locked) return; locked = true;
+  btn.classList.add("on");
+  if (btn.dataset.p === "s") s++; else a++;
+  setShip($("h-q"), s, a);
+  tm = setTimeout(() => { i++; if (i < QS.length) ask(); else launch(); }, 520);
+}
+function launch(){
+  const h = $("h-end"); harbor(h); setShip(h, s, a);
+  const boat = h.querySelector(".boat"); boat.classList.remove("bob");
+  show("s-launch");
+  const kind = s >= 7 ? "sail" : a >= 7 ? "anchor" : "both";
+  $("vpic").textContent = kind === "sail" ? "All that canvas, nothing holding it down…" : kind === "anchor" ? "Weighing anchor…" : "Full sail, steady keel…";
+  tm = setTimeout(() => {
+    boat.classList.add(kind === "sail" ? "sailaway" : kind === "anchor" ? "stuck" : "steady");
+    if (kind === "anchor") h.querySelector(".dock").style.opacity = "1";
+    tm = setTimeout(() => {
+      $("vpic").textContent = kind === "sail" ? "Capsized." : kind === "anchor" ? "Still at the dock." : "Sailing steady.";
+      tm = setTimeout(() => end(kind), Arcade.talk() ? 2600 : 1600);
+    }, kind === "anchor" ? 3000 : 3300);
+  }, 900);
+}
+function end(kind){
+  const R = {
+    sail: ["Mostly Sail", "You reach: new places, new people, big leaps. That&rsquo;s how lives grow. But all sail is a wreck. Look for someone who brings an anchor."],
+    anchor: ["Mostly Anchor", "You hold: steady, loyal, protective of what&rsquo;s built. That&rsquo;s how lives last. But all anchor is rot. Look for someone who brings a sail."],
+    both: ["Sail and Anchor", "You carry both pulls and feel when each one is needed. That&rsquo;s the balance lasting couples work out between them."]
+  }[kind];
+  $("s-end").innerHTML = `<div class="harbor" id="h-res"></div>
+    <p class="pct">${s} sail &middot; ${a} anchor</p>
+    <h2 class="res-t">${R[0]}</h2><p class="res-p">${R[1]}</p>
+    <p class="quote">Lasting couples aren&rsquo;t one or the other. They work out the balance between the two pulls, together.</p>
+    ${Arcade.footer({chapter: 9, line: "The Two Pulls: why every lasting couple needs both a sail and an anchor."})}`;
+  const h = $("h-res"); harbor(h); setShip(h, s, a);
+  if (kind === "sail") { const b = h.querySelector(".boat"); b.classList.remove("bob"); b.style.transform = "translate(10%,22%) rotate(-80deg)"; }
+  show("s-end");
+}
+/* the intro shows a half-built ship */
+harbor($("h-intro")); setShip($("h-intro"), 3, 1);
+$("two").addEventListener("click", e => { const b = e.target.closest(".ch"); if (b) pick(b); });
+$("start").onclick = start;
+Arcade.init({again: start});
+</script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Love Lab | The Love Arcade</title>
+<meta name="theme-color" content="#F2F6F4">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="arcade.css">
+<style>
+/* Look: a research lab. Graph paper, a clipboard per experiment, a beaker that bubbles while the
+   result comes in, typed labels in a monospace. Clean, white, mint and lab blue. */
+:root{--paper:#F2F6F4;--grid:rgba(30,90,120,.08);--ink:#0E2433;--muted:#5B7282;--mint:#14B88F;--mint2:#0A8C6C;--blue:#1E6BFF;--coral:#FF5A5F;--card:#fff;
+  --ac-ink:var(--ink);--ac-btn:var(--ink);--ac-btn-ink:#fff;--ac-line:#C9D7DE}
+body{background:linear-gradient(var(--grid) 1px,transparent 1px) 0 0/28px 28px,linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/28px 28px,var(--paper);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif}
+.ac-home{background:var(--ink)}
+.wrap{max-width:760px;margin:0 auto;min-height:100vh;min-height:100dvh;padding:70px 22px 30px;display:flex;flex-direction:column;justify-content:center}
+.scr{display:flex;flex-direction:column;gap:20px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase}
+
+.title{display:flex;align-items:center;gap:18px}
+.title h1{font:700 clamp(2.6rem,8vw,4.4rem)/.95 "IBM Plex Sans";letter-spacing:-.03em}
+.title h1 em{font-style:normal;color:var(--mint)}
+.intro p{font-size:1.25rem;line-height:1.4;color:var(--muted);max-width:32ch}
+.badge{font:600 .8rem "IBM Plex Mono";letter-spacing:.14em;text-transform:uppercase;color:var(--mint2);border:1.5px solid var(--mint);border-radius:6px;padding:6px 10px;align-self:flex-start;background:#fff}
+.go{align-self:flex-start;min-height:64px;padding:0 34px;border-radius:12px;border:0;background:var(--ink);color:#fff;font:600 1.25rem "IBM Plex Sans";box-shadow:0 6px 0 #000,0 14px 24px rgba(14,36,51,.25)}
+.go:active{transform:translateY(4px);box-shadow:0 2px 0 #000}
+
+/* the beaker */
+.beaker{width:96px;height:120px;flex:none}
+.beaker .liq{fill:var(--mint);transition:fill .3s}
+.beaker .b{fill:#fff;opacity:.85}
+.beaker.boil .b{animation:rise 1s ease-in infinite}
+.beaker.boil .b:nth-of-type(2){animation-delay:.3s}.beaker.boil .b:nth-of-type(3){animation-delay:.6s}
+@keyframes rise{0%{transform:translateY(0);opacity:0}20%{opacity:.9}100%{transform:translateY(-46px);opacity:0}}
+.beaker.boil{animation:shake .25s linear infinite}
+@keyframes shake{25%{transform:rotate(-2deg)}75%{transform:rotate(2deg)}}
+
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.prog{display:flex;gap:6px}
+.prog i{width:26px;height:8px;border-radius:4px;background:#D5E1E6}
+.prog i.d{background:var(--mint)} .prog i.x{background:var(--coral)} .prog i.n{background:var(--ink)}
+
+.clip{position:relative;background:var(--card);border-radius:16px;padding:34px 26px 24px;box-shadow:0 1px 0 #D5E1E6,0 18px 40px rgba(14,36,51,.12)}
+.clip::before{content:"";position:absolute;top:-14px;left:50%;width:120px;height:28px;margin-left:-60px;border-radius:8px;background:linear-gradient(#C9D2D8,#9AA8B1);box-shadow:inset 0 -3px 0 rgba(0,0,0,.15)}
+.exp{display:flex;justify-content:space-between;gap:10px;font-size:.78rem;color:var(--muted);margin-bottom:12px}
+.exp b{color:var(--blue);font-weight:600}
+.setup{font-size:clamp(1.35rem,3.4vw,1.75rem);line-height:1.3;font-weight:500}
+.setup strong{font-weight:700}
+
+.opts{display:grid;gap:12px}
+.opt{display:flex;align-items:center;gap:14px;min-height:66px;padding:12px 18px;text-align:left;border-radius:12px;border:2px solid #C9D7DE;background:#fff;color:var(--ink);font-size:1.2rem;font-weight:600;transition:border-color .12s,background .12s}
+.opt i{flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:8px;background:var(--paper);font:600 .95rem "IBM Plex Mono";font-style:normal;color:var(--muted)}
+.opt.pick{border-color:var(--ink)}
+.opt.right{border-color:var(--mint);background:#E6F8F2}
+.opt.right i{background:var(--mint);color:#fff}
+.opt.wrong{border-color:var(--coral);background:#FFF0F0}
+.opt.wrong i{background:var(--coral);color:#fff}
+.opts.done .opt:not(.right):not(.wrong){opacity:.45}
+
+.analyze{display:flex;align-items:center;gap:14px;justify-content:center;color:var(--muted)}
+.result{display:flex;gap:18px;align-items:flex-start;padding:20px 22px;border-radius:14px;background:var(--ink);color:#fff}
+.result .k{font:600 .78rem "IBM Plex Mono";letter-spacing:.14em;text-transform:uppercase;color:var(--mint)}
+.result .k.x{color:#FF8E92}
+.result p.r{font-size:1.25rem;line-height:1.35;margin-top:6px;font-weight:500}
+.result .ch{font:500 .75rem "IBM Plex Mono";letter-spacing:.12em;text-transform:uppercase;opacity:.6;margin-top:8px}
+.nbtns{display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap}
+.next.res{background:var(--ink);color:#fff}
+.next{min-height:58px;padding:0 30px;border-radius:12px;border:2px solid var(--ink);background:#fff;color:var(--ink);font:600 1.15rem "IBM Plex Sans"}
+
+/* the report */
+.report{background:#fff;border-radius:16px;padding:26px;box-shadow:0 18px 40px rgba(14,36,51,.12);display:flex;flex-direction:column;gap:16px}
+.rank{font:700 clamp(2.4rem,7vw,3.6rem)/1 "IBM Plex Sans";letter-spacing:-.03em}
+.rank span{color:var(--mint)}
+.meter{height:14px;border-radius:7px;background:#E3ECF0;overflow:hidden}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--mint),var(--blue));border-radius:7px;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.find{border-top:1.5px dashed #C9D7DE;padding-top:14px}
+.find .k{font:600 .78rem "IBM Plex Mono";letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+.find h3{font-size:1.6rem;margin:4px 0 4px}
+.find p{font-size:1.15rem;line-height:1.4;color:var(--muted)}
+@media (max-width:560px){.beaker{width:70px;height:88px}}
+/* clean games: no mid-game counters; scores come at the end */
+.top{display:none!important}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="scr intro pop" id="s-intro">
+    <span class="badge">Real experiments &middot; Real results</span>
+    <div class="title">
+      <svg class="beaker boil" viewBox="0 0 96 120" aria-hidden="true"><path d="M30 6h36v6h-4v28l28 62a10 10 0 0 1-9 14H15a10 10 0 0 1-9-14l28-62V12h-4z" fill="#fff" stroke="#0E2433" stroke-width="4" stroke-linejoin="round"/><path class="liq" d="M22 70h52l14 32a6 6 0 0 1-6 8H14a6 6 0 0 1-6-8z"/><circle class="b" cx="38" cy="92" r="4"/><circle class="b" cx="56" cy="98" r="3"/><circle class="b" cx="48" cy="86" r="5"/></svg>
+      <h1>The Love <em>Lab</em></h1>
+    </div>
+    <p>Scientists have been studying love for decades. Read the setup. Predict what happened.</p>
+    <button class="go" id="start">Enter the lab</button>
+  </section>
+
+  <section class="scr" id="s-q" hidden>
+    <div class="top"><span class="mono" id="count" style="font-size:.85rem;color:var(--muted)"></span><div class="prog" id="prog"></div></div>
+    <article class="clip">
+      <div class="exp mono"><b id="ename"></b><span id="esrc"></span></div>
+      <p class="setup" id="setup"></p>
+    </article>
+    <div class="opts" id="opts"></div>
+    <div class="analyze" id="analyze" hidden>
+      <svg class="beaker boil" viewBox="0 0 96 120" aria-hidden="true" style="width:54px;height:68px"><path d="M30 6h36v6h-4v28l28 62a10 10 0 0 1-9 14H15a10 10 0 0 1-9-14l28-62V12h-4z" fill="#fff" stroke="#0E2433" stroke-width="5" stroke-linejoin="round"/><path class="liq" d="M22 70h52l14 32a6 6 0 0 1-6 8H14a6 6 0 0 1-6-8z"/><circle class="b" cx="38" cy="92" r="5"/><circle class="b" cx="56" cy="98" r="4"/><circle class="b" cx="48" cy="86" r="6"/></svg>
+      <span class="mono">Analyzing results&hellip;</span>
+    </div>
+    <div class="result" id="result" hidden>
+      <div><p class="k" id="rk"></p><p class="r" id="rtext"></p><p class="ch" id="rch"></p></div>
+    </div>
+    <div class="nbtns"><button class="next" id="next" hidden>Next experiment &rarr;</button><button class="next res" id="results" hidden>See my results</button></div>
+  </section>
+
+  <section class="scr" id="s-end" hidden></section>
+</main>
+
+<script src="arcade.js"></script>
+<script>
+/* Each: name, source, setup, [options], index of the real result, result line, chapter. All from the book. */
+const EXP = [
+  ["The brain scan", "Helen Fisher", "New lovers looked at a photo of their partner inside a brain scanner. <strong>What lit up?</strong>",
+    ["The emotion centers", "The reward system, like cocaine", "The memory centers"], 1,
+    "The reward system. The same circuit cocaine hits. New love is a drive, not a mood.", 8],
+  ["The comparison", "Classic comparison study", "Married men rated how attractive their wife was. Then they looked at photos of models. <strong>Then they rated her again.</strong>",
+    ["Higher", "The same", "Lower"], 2,
+    "Lower. Nothing about her changed in ten minutes. Only the comparison did. Your feed does this daily.", 4],
+  ["The jam table", "Iyengar & Lepper", "A grocery store set out 24 jams one day and 6 jams another. <strong>Which table sold more?</strong>",
+    ["24 jams", "6 jams", "About the same"], 1,
+    "Six jams, by about ten to one. More options, more browsing, far less choosing.", 4],
+  ["The velcro couples", "Arthur Aron & colleagues", "Long-married couples. One group had their usual date night. The other got <strong>velcroed together for a silly obstacle course.</strong> Who came out happier?",
+    ["Date night couples", "Velcro couples", "No difference"], 1,
+    "The velcro couples. More satisfied and more attracted. The spark is what two people do together.", 16],
+  ["The heart town", "Roseto, Pennsylvania", "A 1960s town smoked, ate rich food, worked the quarries, and had <strong>half the heart attacks</strong> of the next town over. Why?",
+    ["Their genes", "Their diet", "Their tight community"], 2,
+    "The community. When families moved apart and fenced their yards, the heart attacks caught up.", 18],
+  ["Halloween night", "Read & Loewenstein", "Kids could take two candy bars. Two of their favorite was allowed. <strong>What did they take?</strong>",
+    ["Two of their favorite", "One of each", "It was a mix"], 1,
+    "One of each. Every single kid. Two of the same, even the best one, felt like less.", 8],
+  ["The 85-year study", "Harvard Study of Adult Development", "Harvard followed 724 men for 85 years. <strong>What best predicted a good life?</strong>",
+    ["Money", "Career success", "Close relationships"], 2,
+    "Close relationships. Longer lives, sharper minds, happier at every age.", 1]
+];
+/* the last card is about the player */
+const SPARK = {
+  setup: "Last one. <strong>You&rsquo;re the subject.</strong> When the spark in a relationship dips, you usually&hellip;",
+  opts: [
+    ["Look for a new spark", "The Spark-Chaser", "The flood recedes in every couple. Leaving restarts the clock, not the love."],
+    ["Wait for it to come back", "The Waiter", "The old feeling doesn&rsquo;t return on its own. It gets rebuilt."],
+    ["Try something new together", "The Builder", "Exactly what the velcro couples did. That&rsquo;s how the spark comes back."]
+  ]
+};
+const $ = id => document.getElementById(id);
+let i = 0, right = 0, marks = [], locked = false;
+function show(id){ ["s-intro","s-q","s-end"].forEach(s => $(s).hidden = s !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
+const L = "ABC";
+
+function start(){ i = 0; right = 0; marks = []; show("s-q"); ask(); }
+function ask(){
+  locked = false;
+  const total = EXP.length + 1;
+  $("count").textContent = `Experiment ${String(i + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
+  $("prog").innerHTML = Array.from({length: total}, (_, k) => `<i class="${k < i ? (marks[k] ? "d" : "x") : k === i ? "n" : ""}"></i>`).join("");
+  ["analyze","result","next","results"].forEach(x => $(x).hidden = true);
+  $("opts").classList.remove("done");
+  if (i < EXP.length){
+    const e = EXP[i];
+    $("ename").textContent = e[0]; $("esrc").textContent = e[1];
+    $("setup").innerHTML = e[2];
+    $("opts").innerHTML = e[3].map((o, k) => `<button class="opt" data-k="${k}"><i>${L[k]}</i>${o}</button>`).join("");
+  } else {
+    $("ename").textContent = "The final experiment"; $("esrc").textContent = "Subject: you";
+    $("setup").innerHTML = SPARK.setup;
+    $("opts").innerHTML = SPARK.opts.map((o, k) => `<button class="opt" data-k="${k}"><i>${L[k]}</i>${o[0]}</button>`).join("");
+  }
+}
+function pick(k, btn){
+  if (locked) return; locked = true;
+  btn.classList.add("pick");
+  if (i === EXP.length){ setTimeout(() => end(k), 450); return; }
+  const e = EXP[i], ok = k === e[4];
+  marks[i] = ok; if (ok) right++;
+  $("analyze").hidden = false;
+  setTimeout(() => {
+    $("analyze").hidden = true;
+    $("opts").classList.add("done");
+    $("opts").children[e[4]].classList.add("right");
+    if (!ok) btn.classList.add("wrong");
+    $("rk").textContent = ok ? "Prediction confirmed" : "Prediction rejected"; $("rk").className = "k" + (ok ? "" : " x");
+    $("rtext").textContent = e[5]; $("rch").textContent = `Chapter ${e[6]}`;
+    $("result").hidden = false;
+    /* after five, they choose: see results now, or keep going (up to seven) */
+    const more = i < EXP.length - 1;
+    $("next").hidden = false;
+    $("next").textContent = more ? "Next experiment →" : "Last question →";
+    $("results").hidden = !(more && i >= 4);
+  }, Arcade.talk() ? 1400 : 900);
+}
+function next(){ i++; ask(); }
+function toFinal(){ i = EXP.length; ask(); }
+function end(k){
+  const n = marks.length, title = right >= n - 1 && n >= 5 ? "Love <span>Scientist</span>" : right >= Math.ceil(n / 2) ? "Lab <span>Assistant</span>" : "Lab <span>Rat</span>";
+  const s = SPARK.opts[k];
+  $("s-end").innerHTML = `<div class="report">
+      <p class="mono" style="font-size:.85rem;color:var(--muted)">Lab report &middot; ${right} of ${n} predictions confirmed</p>
+      <h2 class="rank">${title}</h2>
+      <div class="meter"><i id="mfill" style="width:0"></i></div>
+      <div class="find"><p class="k">Finding about you</p><h3>${s[1]}</h3><p>${s[2]}</p></div>
+    </div>
+    ${Arcade.footer({chapter: 8, line: "Your brain on love, and how couples bring the spark back. Scan for the book."})}`;
+  show("s-end");
+  requestAnimationFrame(() => setTimeout(() => $("mfill").style.width = (right / n * 100) + "%", 60));
+}
+$("opts").addEventListener("click", e => { const b = e.target.closest(".opt"); if (b) pick(+b.dataset.k, b); });
+$("start").onclick = start; $("next").onclick = () => (i >= EXP.length - 1 ? toFinal() : next());
+$("results").onclick = toFinal;
+Arcade.init({again: start});
+</script>
+</body>
+</html>

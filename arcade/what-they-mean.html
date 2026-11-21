@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>What They Really Mean | The Love Arcade</title>
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Courier+Prime:wght@400;700&family=Oswald:wght@500;600&display=swap">
+<link rel="stylesheet" href="arcade.css">
+<style>
+/* Look: a movie screen. Black letterbox bars, a little film grain, the line delivered in big italic
+   serif, and the real meaning arriving as a yellow subtitle. Context is a typed scene heading. */
+:root{--black:#000;--screen:#0D0D0F;--sub:#FFE14A;--ink:#F5F1E8;--muted:#8E8A80;--red:#E5484D;
+  --ac-ink:var(--ink);--ac-btn:var(--sub);--ac-btn-ink:#000;--ac-line:rgba(255,225,74,.45)}
+body{background:var(--black);color:var(--ink);font-family:"Oswald",system-ui,sans-serif}
+body::after{content:"";position:fixed;inset:-10%;pointer-events:none;opacity:.07;mix-blend-mode:screen;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain .5s steps(2) infinite}
+@keyframes grain{50%{transform:translate(-3%,2%)}}
+.bar{position:fixed;left:0;right:0;height:7vh;background:#000;z-index:5}
+.bar.t{top:0}.bar.b{bottom:0}
+.ac-home{z-index:60}
+.wrap{position:relative;max-width:900px;margin:0 auto;min-height:100vh;min-height:100dvh;padding:calc(7vh + 34px) 24px calc(7vh + 20px);display:flex;flex-direction:column;justify-content:center}
+.scr{display:flex;flex-direction:column;gap:22px;text-align:center;align-items:center}
+.slate{font:600 .9rem "Oswald";letter-spacing:.4em;text-transform:uppercase;color:var(--muted)}
+.intro h1{font:italic 700 clamp(3rem,9vw,5.6rem)/1 "Playfair Display";letter-spacing:-.01em}
+.intro h1 span{display:block;font:500 .32em/1.6 "Oswald";font-style:normal;letter-spacing:.5em;text-transform:uppercase;color:var(--sub)}
+.intro p{font:400 1.25rem/1.4 "Courier Prime";color:#CFC9BC;max-width:30ch}
+.roll{min-height:64px;padding:0 40px;border:2px solid var(--sub);background:transparent;color:var(--sub);font:600 1.2rem "Oswald";letter-spacing:.3em;text-transform:uppercase;border-radius:4px}
+.roll:active{background:var(--sub);color:#000}
+
+.scene{font:700 .95rem/1.4 "Courier Prime";letter-spacing:.06em;text-transform:uppercase;color:var(--muted);max-width:40ch}
+.quote{font:italic 700 clamp(2.1rem,6.4vw,3.8rem)/1.12 "Playfair Display";max-width:18ch;text-wrap:balance}
+.quote::before{content:"\201C"}.quote::after{content:"\201D"}
+.subt{min-height:3.2em;display:flex;align-items:center;justify-content:center}
+.subt p{display:inline;padding:4px 12px;background:rgba(0,0,0,.75);font:500 clamp(1.3rem,3.4vw,1.8rem)/1.45 "Oswald";color:var(--sub);box-decoration-break:clone;-webkit-box-decoration-break:clone;animation:acPop .35s both}
+.prompt{font:600 .85rem "Oswald";letter-spacing:.32em;text-transform:uppercase;color:var(--muted)}
+.opts{display:grid;gap:12px;width:min(100%,640px)}
+.opt{min-height:62px;padding:12px 18px;border-radius:6px;border:1.5px solid #3A3833;background:#151517;color:var(--ink);font:500 1.25rem/1.3 "Oswald";letter-spacing:.01em}
+.opt:active{border-color:var(--sub)}
+.opt.right{border-color:var(--sub);color:var(--sub);background:#1E1B0E}
+.opt.wrong{border-color:var(--red);color:#FF9A9D;text-decoration:line-through}
+.opts.done .opt:not(.right):not(.wrong){opacity:.3}
+.note{font:400 1.15rem/1.4 "Courier Prime";color:#CFC9BC;max-width:36ch}
+.next{min-height:58px;padding:0 34px;border:0;border-radius:4px;background:var(--sub);color:#000;font:600 1.1rem "Oswald";letter-spacing:.24em;text-transform:uppercase}
+.reel{display:flex;gap:8px}
+.reel i{width:12px;height:12px;border-radius:50%;border:2px solid #4A4740}
+.reel i.d{background:var(--sub);border-color:var(--sub)} .reel i.x{background:var(--red);border-color:var(--red)} .reel i.n{border-color:var(--ink)}
+
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:700px}
+.chip{min-height:56px;padding:10px 18px;border-radius:99px;border:1.5px solid #4A4740;background:#151517;color:var(--ink);font:italic 400 1.15rem "Playfair Display"}
+.chip.none{font:600 1rem "Oswald";letter-spacing:.14em;text-transform:uppercase;color:var(--sub);border-color:var(--sub)}
+
+.credits{display:flex;flex-direction:column;gap:14px;align-items:center}
+.credits .big{font:italic 700 clamp(2.6rem,8vw,4.4rem)/1 "Playfair Display";color:var(--sub)}
+.credits .sc{font:500 1.4rem "Oswald";letter-spacing:.3em;text-transform:uppercase}
+.shield{display:flex;flex-direction:column;gap:6px;padding:20px 22px;border:1.5px solid #3A3833;border-radius:8px;max-width:560px}
+.shield .k{font:600 .8rem "Oswald";letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.shield .q{font:italic 700 1.6rem "Playfair Display"}
+.shield .u{font:400 1.15rem/1.4 "Courier Prime";color:#CFC9BC}
+.ac-foot{max-width:560px;width:100%}
+/* clean games: no mid-game counters; scores come at the end */
+.reel{display:none!important}.scene:empty{display:none}
+</style>
+</head>
+<body>
+<div class="bar t"></div><div class="bar b"></div>
+<main class="wrap">
+  <section class="scr intro pop" id="s-intro">
+    <p class="slate">Now showing</p>
+    <h1><span>What they</span>Really Mean</h1>
+    <p>Dating has its own language. We&rsquo;ll play the line. You pick the subtitle.</p>
+    <button class="roll" id="start">Roll it</button>
+  </section>
+
+  <section class="scr" id="s-q" hidden>
+    <div class="reel" id="reel"></div>
+    <p class="scene" id="scene"></p>
+    <h2 class="quote" id="quote"></h2>
+    <div class="subt" id="subt"></div>
+    <p class="prompt" id="prompt">Pick the real subtitle</p>
+    <div class="opts" id="opts"></div>
+    <p class="note" id="note" hidden></p>
+    <button class="next" id="next" hidden>Next scene</button>
+  </section>
+
+  <section class="scr" id="s-own" hidden>
+    <p class="slate">Final scene &middot; Starring you</p>
+    <h2 class="quote" style="font-size:clamp(1.9rem,5vw,3rem);max-width:22ch">Be honest. Said one of these this year?</h2>
+    <div class="chips" id="chips"></div>
+  </section>
+
+  <section class="scr" id="s-end" hidden></section>
+</main>
+
+<script src="arcade.js"></script>
+<script>
+/* line, scene (or ""), [right, decoy, decoy], one-line note, chapter. From Chapter 5's Shield Translator
+   and Chapter 11's Recharging, Avoiding or Engaged. The shield's "underneath" is for the final scene. */
+const LINES = [
+  ["Planning isn’t my love language.", "", ["Effort is optional for me.", "I show love in other ways.", "I’m just bad with calendars."],
+    "A real idea, used as a permission slip to stop trying.", 5, "I don’t want to put in the effort."],
+  ["I’m avoidant.", "", ["My pulling away has a label now, so stop asking.", "I need more alone time than most.", "I’ve been hurt before."],
+    "A description of a pattern, promoted into a defense of it.", 5, "I’m scared of getting close."],
+  ["I don’t chase.", "", ["I’ve rebranded doing nothing as self-respect.", "I have high standards.", "I let things happen naturally."],
+    "Nobody has to chase. Somebody has to move.", 5, "I’m afraid of making the first move."],
+  ["I’m not really a relationship person.", "", ["I leave when it gets deep.", "I value my freedom.", "I haven’t met the right one."],
+    "Fun until it gets real, then gone. A pattern promoted into a personality.", 5, "Depth scares me, so I leave first."],
+  ["I don’t do labels.", "", ["I want the benefits without the terms.", "Labels ruin a good thing.", "Let’s see where it goes."],
+    "A label was never a cage. It’s a price tag.", 5, "I want you without committing to you."],
+  ["We should hang out soon!", "Says it every time. Never picks a date. A year of “soon.”", ["This is a polite goodbye.", "They’re just really busy.", "They’ll text next week."],
+    "Engaged people pick a date. A year of soon is an answer.", 11, ""],
+  ["I’m focusing on myself right now.", "Three weeks after a bad breakup. Seeing a therapist. Told friends she’ll be back.", ["I’m healing. I’ll be back.", "I’m hiding from people.", "I’m just not into you."],
+    "Same words people hide behind. The return plan makes it real.", 11, ""],
+  ["I’m focusing on myself right now.", "Said two years ago. No dates, no new friends. Most nights, just the phone.", ["I’m hiding, and calling it self-care.", "I’m healing. I’ll be back.", "I’m busy building my career."],
+    "Same sentence as the last scene. Only the pattern tells you which.", 11, "I’m avoiding people and calling it self-care."]
+];
+const $ = id => document.getElementById(id);
+let order = [], i = 0, right = 0, marks = [], locked = false;
+function show(id){ ["s-intro","s-q","s-own","s-end"].forEach(s => $(s).hidden = s !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
+/* the two "focusing on myself" scenes stay together and in order, so the twist lands */
+function start(){
+  const pair = [LINES[6], LINES[7]], rest = Arcade.shuffle(LINES.slice(0, 6));
+  order = rest.slice(0, 4).concat(pair, rest.slice(4));
+  i = 0; right = 0; marks = []; show("s-q"); ask();
+}
+function ask(){
+  const l = order[i]; locked = false;
+  $("reel").innerHTML = order.map((_, k) => `<i class="${k < i ? (marks[k] ? "d" : "x") : k === i ? "n" : ""}"></i>`).join("");
+  $("scene").textContent = l[1] ? "Scene: " + l[1] : "";
+  $("quote").textContent = l[0];
+  $("subt").innerHTML = "";
+  $("prompt").hidden = false; $("note").hidden = true; $("next").hidden = true;
+  $("opts").classList.remove("done");
+  $("opts").innerHTML = Arcade.shuffle(l[2].map((t, k) => ({t, k}))).map(o => `<button class="opt" data-k="${o.k}">${Arcade.esc(o.t)}</button>`).join("");
+}
+function pick(btn){
+  if (locked) return; locked = true;
+  const l = order[i], ok = btn.dataset.k === "0";
+  marks[i] = ok; if (ok) right++;
+  $("opts").classList.add("done");
+  btn.classList.add(ok ? "right" : "wrong");
+  [...$("opts").children].forEach(b => { if (b.dataset.k === "0") b.classList.add("right"); });
+  $("prompt").hidden = true;
+  $("subt").innerHTML = `<p>[ ${Arcade.esc(l[2][0])} ]</p>`;
+  $("note").textContent = (ok ? "Fluent. " : "Lost in translation. ") + l[3]; $("note").hidden = false;
+  $("next").hidden = false; $("next").textContent = i === order.length - 1 ? "Final scene" : "Next scene";
+}
+function own(){
+  const shields = LINES.filter(l => l[5]);
+  $("chips").innerHTML = shields.map((l, k) => `<button class="chip" data-s="${LINES.indexOf(l)}">&ldquo;${Arcade.esc(l[0].replace(/\.$/, ""))}&rdquo;</button>`).join("") + `<button class="chip none" data-s="-1">None of them</button>`;
+  show("s-own");
+}
+function end(s){
+  const n = order.length, rank = right >= 7 ? "Fluent in Excuse" : right >= 4 ? "Conversational" : "Lost in Translation";
+  const l = LINES[s];
+  const shield = s >= 0
+    ? `<div class="shield"><p class="k">Your shield</p><p class="q">&ldquo;${Arcade.esc(l[0])}&rdquo;</p><p class="u">What it might be covering: ${Arcade.esc(l[5])} Next time, say that instead. Once. Watch what it does to the conversation.</p></div>`
+    : `<div class="shield"><p class="k">Your shield</p><p class="q">None. Clean.</p><p class="u">Or you&rsquo;re very good at shields. Catch yourself mid-sentence this week.</p></div>`;
+  $("s-end").innerHTML = `<div class="credits"><p class="slate">The end</p><p class="big">${rank}</p><p class="sc">${right} of ${n} decoded</p></div>${shield}
+    ${Arcade.footer({chapter: 5, line: "Knowing everything, building nothing: why the new vocabulary became a shield."})}`;
+  show("s-end");
+}
+document.addEventListener("click", e => {
+  const o = e.target.closest(".opt"); if (o) return pick(o);
+  const c = e.target.closest(".chip"); if (c) return end(+c.dataset.s);
+});
+$("next").onclick = () => { i++; if (i < order.length) ask(); else own(); };
+$("start").onclick = start;
+Arcade.init({again: start});
+</script>
+</body>
+</html>

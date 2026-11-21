@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Fortune Cookie | The Love Arcade</title>
+<meta name="theme-color" content="#F6E7CF">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;1,9..144,500&family=Caveat:wght@600&display=swap">
+<link rel="stylesheet" href="arcade.css">
+<style>
+/* Look: a warm bakery counter. Golden cookie, a paper slip that slides out, a little green flag
+   printed on it. Five seconds, start to finish. */
+:root{--cream:#F6E7CF;--crumb:#E9CFA4;--gold:#E3A345;--gold2:#B8741E;--ink:#3A2414;--green:#2F8A3E;--slip:#FFFDF6;
+  --ac-ink:var(--ink);--ac-btn:var(--green);--ac-btn-ink:#fff;--ac-line:var(--crumb)}
+body{background:radial-gradient(70% 55% at 50% 40%,#FFF6E6,var(--cream) 60%,var(--crumb));color:var(--ink);font-family:"Fraunces",Georgia,serif}
+.ac-home{background:rgba(58,36,20,.7)}
+.wrap{max-width:760px;margin:0 auto;min-height:100vh;min-height:100dvh;padding:66px 22px 26px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center}
+h1{font-weight:800;font-size:clamp(2.6rem,8vw,4.4rem);line-height:.95;letter-spacing:-.02em}
+.hand{font:600 1.7rem "Caveat",cursive;color:var(--gold2)}
+
+.stagec{position:relative;width:min(84vw,440px);height:min(55vw,286px);cursor:pointer;border:0;background:none;padding:0}
+.half{position:absolute;inset:0;transition:transform .7s cubic-bezier(.3,1.4,.5,1),opacity .7s}
+.half svg{width:100%;height:100%;filter:drop-shadow(0 16px 18px rgba(120,70,20,.35))}
+.half.l{clip-path:inset(0 50% 0 0)} .half.r{clip-path:inset(0 0 0 50%)}
+.stagec.wobble .half{animation:wob 1.6s ease-in-out infinite}
+@keyframes wob{0%,100%{transform:rotate(0)}10%{transform:rotate(-3deg)}20%{transform:rotate(3deg)}30%{transform:rotate(0)}}
+.stagec.open .half.l{transform:translate(-18%,10%) rotate(-22deg)}
+.stagec.open .half.r{transform:translate(18%,10%) rotate(22deg)}
+.tap{font-weight:600;font-size:1.2rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold2);animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.4}}
+
+.slip{position:relative;width:min(92vw,620px);padding:22px 30px 20px;background:var(--slip);box-shadow:0 10px 24px rgba(120,70,20,.2);border-top:1px dashed var(--crumb);border-bottom:1px dashed var(--crumb);transform-origin:center;animation:out .7s .25s cubic-bezier(.2,.9,.3,1.2) both}
+@keyframes out{from{transform:scaleX(.08) translateY(-60px);opacity:0}}
+.slip .k{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.85rem;letter-spacing:.24em;text-transform:uppercase;color:var(--green)}
+.slip .k svg{width:20px;height:20px}
+.slip .f{font:italic 500 clamp(1.6rem,4.6vw,2.3rem)/1.2 "Fraunces";margin:10px 0 10px}
+.slip .be{font:600 1.5rem "Caveat",cursive;color:var(--gold2)}
+.slip .lucky{display:flex;justify-content:center;gap:18px;margin-top:8px;font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;color:#9A7B5C}
+.again{min-height:58px;padding:0 30px;border-radius:99px;border:2.5px solid var(--gold2);background:transparent;color:var(--ink);font:600 1.1rem "Fraunces"}
+.ac-foot{background:var(--slip);width:min(92vw,620px)}
+.out[hidden]{display:none}
+.out{display:flex;flex-direction:column;align-items:center;gap:18px}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div id="top"><p class="hand">Take one for the road</p><h1>Fortune Cookie</h1></div>
+  <button class="stagec wobble" id="cookie" aria-label="Crack the fortune cookie">
+    <span class="half l"><svg viewBox="0 0 400 260" aria-hidden="true"><path d="M30 170C30 70 110 18 200 18s170 52 170 152c-40-22-82-14-112 22-22 26-40 48-58 52-18-4-36-26-58-52-30-36-72-44-112-22z" fill="#E3A345"/><path d="M48 168c38-10 78 0 106 32 20 24 34 40 46 44 12-4 26-20 46-44 28-32 68-42 106-32-30-6-64 4-90 34-26 30-44 52-62 56-18-4-36-26-62-56-26-30-60-40-90-34z" fill="#B8741E" opacity=".55"/><path d="M200 26c-14 70-10 150 0 218" fill="none" stroke="#B8741E" stroke-width="7" stroke-linecap="round"/><path d="M78 92c26-30 64-48 100-52" fill="none" stroke="#F6CF86" stroke-width="12" stroke-linecap="round"/></svg></span>
+    <span class="half r"><svg viewBox="0 0 400 260" aria-hidden="true"><path d="M30 170C30 70 110 18 200 18s170 52 170 152c-40-22-82-14-112 22-22 26-40 48-58 52-18-4-36-26-58-52-30-36-72-44-112-22z" fill="#E3A345"/><path d="M48 168c38-10 78 0 106 32 20 24 34 40 46 44 12-4 26-20 46-44 28-32 68-42 106-32-30-6-64 4-90 34-26 30-44 52-62 56-18-4-36-26-62-56-26-30-60-40-90-34z" fill="#B8741E" opacity=".55"/><path d="M200 26c-14 70-10 150 0 218" fill="none" stroke="#B8741E" stroke-width="7" stroke-linecap="round"/><path d="M78 92c26-30 64-48 100-52" fill="none" stroke="#F6CF86" stroke-width="12" stroke-linecap="round"/></svg></span>
+  </button>
+  <p class="tap" id="tap">Tap to crack it open</p>
+  <div class="out" id="out" hidden></div>
+</main>
+
+<script src="arcade.js"></script>
+<script>
+/* One green flag per chapter, from the book's Twenty-Seven Green Flags, written as a fortune. */
+const FLAGS = [
+  "You will meet someone who believes love is built, not found.",
+  "You will meet someone whose phone goes face-down when you talk. Without being asked.",
+  "You will meet someone who says “let’s watch it together,” and actually waits for you.",
+  "You will meet someone who chooses you, and stops shopping.",
+  "You will meet someone who applies one thing they’ve learned instead of quoting ten.",
+  "You will meet someone whose interest grows as they see the real you. Tired, wrong, ordinary.",
+  "You will meet someone who is the same person with you, their friends, and the waiter.",
+  "You will meet someone with an old friendship that survived being boring.",
+  "You will meet someone who tries to understand you before they judge you.",
+  "You will meet someone who is always building their life.",
+  "You will meet someone who reaches back: starts things, matches your effort, repairs after a fight.",
+  "You will meet someone whose needs run through people, not services.",
+  "You will meet someone who enters your world without being invited.",
+  "You will meet someone who lets you help. No shame, no scorekeeping.",
+  "You will meet someone whose affection shows up on ordinary Tuesdays.",
+  "You will meet someone who has tended something for years.",
+  "You will meet someone who defends your small rituals, and keeps proposing new ones.",
+  "You will meet someone with a village, and a chair in it waiting for you.",
+  "You will meet someone who can argue without breaking.",
+  "You will meet someone around whom you become more yourself.",
+  "You will meet someone who keeps life simple, on purpose.",
+  "You will meet someone who makes you feel like the only person in the room.",
+  "You will meet someone who notices your effort, and names it.",
+  "You will meet someone who works for things instead of taking shortcuts.",
+  "You will meet someone who states their standards early and warmly, then lives by them.",
+  "You will meet someone who rises to your standards.",
+  "You will become all of these, starting with one today."
+];
+const FLAG_SVG = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 2v20" stroke="#3A2414" stroke-width="2"/><path d="M6 3h12l-3 4 3 4H6z" fill="#2F8A3E"/></svg>`;
+const $ = id => document.getElementById(id);
+let last = -1, opened = false;
+function crack(){
+  if (opened) return; opened = true;
+  let k; do { k = Math.floor(Math.random() * FLAGS.length); } while (k === last); last = k;
+  const c = $("cookie"); c.classList.remove("wobble"); c.classList.add("open");
+  $("tap").hidden = true;
+  setTimeout(() => {
+    $("top").hidden = true;
+    $("out").innerHTML = `<div class="slip"><p class="k">${FLAG_SVG} Your green flag</p><p class="f">${Arcade.esc(FLAGS[k])}</p><p class="be">Look for it. Then be it.</p>
+      <p class="lucky"><span>Green flag no. ${k + 1} of 27</span></p></div>
+      ${Arcade.footer({chapter: k + 1, againLabel: "Crack another", line: "Twenty-seven green flags, one per chapter. Scan for the book."})}`;
+    $("out").hidden = false;
+  }, 450);
+}
+function reset(){
+  opened = false; $("top").hidden = false; $("out").hidden = true; $("tap").hidden = false;
+  const c = $("cookie"); c.classList.remove("open"); c.classList.add("wobble"); scrollTo(0,0);
+}
+$("cookie").onclick = crack;
+Arcade.init({again: reset});
+</script>
+</body>
+</html>

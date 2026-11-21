@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>In Sync | The Love Arcade</title>
+<meta name="theme-color" content="#FFF4EC">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="arcade.css">
+<style>
+/* Look: a duet. Soft and round, two colours that stand for two people, coral and teal. One answers,
+   hands the iPad over, the other answers. Then the matches light up one by one. */
+:root{--bg:#FFF4EC;--one:#FF6B5C;--one2:#FFD9D3;--two:#16B8A6;--two2:#C9F2EC;--ink:#2B2340;--muted:#7D7491;--heart:#FF3E7F;
+  --ac-ink:var(--ink);--ac-btn:var(--ink);--ac-btn-ink:#fff;--ac-line:#E4D7CF}
+body{background:var(--bg);color:var(--ink);font-family:"Fredoka",system-ui,sans-serif;transition:background .4s}
+body.p1{background:linear-gradient(180deg,var(--one2),var(--bg) 60%)}
+body.p2{background:linear-gradient(180deg,var(--two2),var(--bg) 60%)}
+.ac-home{background:var(--ink)}
+.wrap{max-width:780px;margin:0 auto;min-height:100vh;min-height:100dvh;padding:70px 22px 28px;display:flex;flex-direction:column;justify-content:center}
+.scr{display:flex;flex-direction:column;gap:20px;align-items:center;text-align:center}
+
+.duo{position:relative;width:200px;height:120px}
+.duo i{position:absolute;top:10px;width:110px;height:110px;border-radius:50%;mix-blend-mode:multiply}
+.duo i:first-child{left:10px;background:var(--one)} .duo i:last-child{right:10px;background:var(--two)}
+.duo.beat i:first-child{animation:inL 2.4s ease-in-out infinite} .duo.beat i:last-child{animation:inR 2.4s ease-in-out infinite}
+@keyframes inL{50%{transform:translateX(18px)}} @keyframes inR{50%{transform:translateX(-18px)}}
+.intro h1{font-size:clamp(3.2rem,10vw,5.6rem);font-weight:700;line-height:.95;letter-spacing:-.02em}
+.intro h1 span{color:var(--one)} .intro h1 b{color:var(--two);font-weight:700}
+.intro p{font-size:1.3rem;line-height:1.4;color:var(--muted);max-width:28ch}
+.btn{min-height:64px;padding:0 38px;border-radius:99px;border:0;background:var(--ink);color:#fff;font:600 1.3rem "Fredoka";box-shadow:0 8px 20px rgba(43,35,64,.25)}
+.btn.one{background:var(--one)} .btn.two{background:var(--two)}
+
+.who{display:inline-flex;align-items:center;gap:10px;padding:8px 18px;border-radius:99px;color:#fff;font-weight:600;font-size:1.05rem}
+.who.one{background:var(--one)} .who.two{background:var(--two)}
+.dots{display:flex;gap:6px}
+.dots i{width:12px;height:12px;border-radius:50%;background:#E4D7CF}
+.dots i.d{background:var(--c)} .dots i.n{background:var(--ink)}
+.q{font-size:clamp(2rem,6vw,3rem);font-weight:600;line-height:1.1;max-width:18ch}
+.q small{display:block;font-size:.45em;font-weight:500;color:var(--muted);margin-top:8px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%}
+.opt{min-height:84px;padding:12px;border-radius:22px;border:3px solid var(--c);background:#fff;color:var(--ink);font:500 1.35rem "Fredoka";transition:transform .1s}
+.opt:active{transform:scale(.96)}
+.opt.on{background:var(--c);color:#fff}
+
+.pass{gap:24px}
+.pass .eyes{font-size:5rem;line-height:1}
+.pass h2{font-size:clamp(2.2rem,7vw,3.4rem);font-weight:700;line-height:1.05}
+.pass p{font-size:1.25rem;color:var(--muted)}
+
+.big{font-size:clamp(5rem,18vw,9rem);font-weight:700;line-height:.9;background:linear-gradient(90deg,var(--one),var(--heart),var(--two));-webkit-background-clip:text;background-clip:text;color:transparent}
+.verdict{font-size:clamp(1.8rem,5vw,2.4rem);font-weight:600}
+.line{font-size:1.2rem;line-height:1.4;color:var(--muted);max-width:34ch}
+.table{width:100%;display:grid;gap:6px}
+.r{display:grid;grid-template-columns:1.3fr 1fr 34px 1fr;gap:10px;align-items:center;padding:8px 12px;border-radius:14px;background:#fff;text-align:left;font-size:1rem;opacity:0;animation:rowIn .35s forwards}
+@keyframes rowIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.r .qq{color:var(--muted);font-size:.92rem}
+.r .a1{color:var(--one);font-weight:600} .r .a2{color:var(--two);font-weight:600;text-align:right}
+.r .m{text-align:center;font-size:1.3rem}
+.r.hit{box-shadow:inset 0 0 0 2px var(--heart)}
+.ac-foot{background:#fff;width:100%}
+@media (max-width:560px){.opts{grid-template-columns:1fr}.r{grid-template-columns:1fr 1fr 28px 1fr;font-size:.9rem}}
+/* clean games: no mid-game counters; scores come at the end */
+.dots{display:none!important}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="scr intro pop" id="s-intro">
+    <div class="duo beat" aria-hidden="true"><i></i><i></i></div>
+    <h1><span>In</span> <b>Sync</b></h1>
+    <p>For two people who came together. Answer on your own, pass the iPad, then see how much you share.</p>
+    <button class="btn one" id="start">Player 1, you&rsquo;re up</button>
+  </section>
+
+  <section class="scr" id="s-q" hidden>
+    <span class="who" id="who"></span>
+    <div class="dots" id="dots"></div>
+    <h2 class="q" id="q"></h2>
+    <div class="opts" id="opts"></div>
+  </section>
+
+  <section class="scr pass" id="s-pass" hidden>
+    <div class="eyes" aria-hidden="true">&#128584;</div>
+    <h2>Hand the iPad to Player 2</h2>
+    <p>Player 1, no peeking. Your answers are hidden.</p>
+    <button class="btn two" id="go2">I&rsquo;m Player 2</button>
+  </section>
+
+  <section class="scr" id="s-end" hidden></section>
+</main>
+
+<script src="arcade.js"></script>
+<script>
+/* Chapter 13, The Common Ground: shared taste, shared inputs, and how well you know each other.
+   "who" questions are answered from each player's own side, so "Me" from one matches "Them" from the other. */
+const QS = [
+  {q:"Perfect Saturday?", o:["An adventure", "The couch", "Friends over", "A project"]},
+  {q:"Dream trip?", o:["Beach", "Big city", "Mountains", "Road trip"]},
+  {q:"On a trip, you&hellip;", o:["Plan every hour", "Wing it"]},
+  {q:"Night owl or early bird?", o:["Night owl", "Early bird"]},
+  {q:"Movie night pick?", o:["Comedy", "Thriller", "Romance", "Documentary"]},
+  {q:"Who&rsquo;s the better cook?", o:["Me", "Them"], who:true},
+  {q:"Who says sorry first?", o:["Me", "Them"], who:true},
+  {q:"Who survives the zombie apocalypse?", o:["Me", "Them"], who:true},
+  {q:"Last time you two tried something new together?", o:["This week", "This month", "Can&rsquo;t remember"]},
+  {q:"Shows you&rsquo;re watching together right now?", o:["None", "One", "Two or more"]}
+];
+const $ = id => document.getElementById(id);
+let p = 1, i = 0, A = {1:[], 2:[]}, locked = false;
+function show(id){ ["s-intro","s-q","s-pass","s-end"].forEach(s => $(s).hidden = s !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
+function start(){ p = 1; i = 0; A = {1:[], 2:[]}; document.body.className = "p1"; show("s-q"); ask(); }
+function ask(){
+  locked = false;
+  const c = p === 1 ? "var(--one)" : "var(--two)";
+  $("s-q").style.setProperty("--c", c);
+  $("who").className = "who " + (p === 1 ? "one" : "two"); $("who").textContent = `Player ${p}`;
+  $("dots").innerHTML = QS.map((_, k) => `<i class="${k < i ? "d" : k === i ? "n" : ""}"></i>`).join("");
+  const q = QS[i];
+  $("q").innerHTML = q.q + (q.who ? "<small>You or your partner?</small>" : "");
+  $("opts").innerHTML = q.o.map((o, k) => `<button class="opt" data-k="${k}">${o}</button>`).join("");
+}
+function pick(btn){
+  if (locked) return; locked = true;
+  btn.classList.add("on"); A[p][i] = +btn.dataset.k;
+  setTimeout(() => {
+    i++;
+    if (i < QS.length) return ask();
+    if (p === 1){ document.body.className = ""; show("s-pass"); }
+    else end();
+  }, 260);
+}
+function match(k){ const q = QS[k], a = A[1][k], b = A[2][k]; return q.who ? a !== b : a === b; }
+function end(){
+  document.body.className = "";
+  const hits = QS.filter((_, k) => match(k)).length, pct = hits * 10;
+  const v = pct >= 80 ? ["Two minds, one remote.", "You share a lot already. Keep feeding it: the middle of the Venn diagram needs new things in it, or it shrinks."]
+    : pct >= 50 ? ["Plenty in common.", "Enough overlap to be easy, enough difference to be interesting. Grow the middle: do one new thing together this month."]
+    : ["Two different worlds.", "That&rsquo;s fine. Common ground isn&rsquo;t found, it&rsquo;s built. Do something together worth talking about, then do it again."];
+  const label = (k, pl) => { const q = QS[k], a = A[pl][k]; if (!q.who) return q.o[a]; return (a === 0) === (pl === 1) ? "P1" : "P2"; };
+  const rows = QS.map((q, k) => `<div class="r${match(k) ? " hit" : ""}" style="animation-delay:${k * 90}ms"><span class="qq">${q.q}</span><span class="a1">${label(k, 1)}</span><span class="m">${match(k) ? "&#10084;&#65039;" : "&middot;"}</span><span class="a2">${label(k, 2)}</span></div>`).join("");
+  $("s-end").innerHTML = `<p class="who" style="background:var(--ink)">Player 1 &amp; Player 2</p>
+    <p class="big">${pct}%</p><p class="verdict">${v[0]}</p><p class="line">${v[1]}</p>
+    <div class="table">${rows}</div>
+    ${Arcade.footer({chapter: 13, line: "The Common Ground: where shared ground comes from, and how to build more of it."})}`;
+  show("s-end");
+}
+$("opts").addEventListener("click", e => { const b = e.target.closest(".opt"); if (b) pick(b); });
+$("start").onclick = start;
+$("go2").onclick = () => { p = 2; i = 0; document.body.className = "p2"; show("s-q"); ask(); };
+Arcade.init({again: start});
+</script>
+</body>
+</html>

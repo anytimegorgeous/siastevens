@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Consume or Create? | The Love Arcade</title>
+<meta name="theme-color" content="#CFEAF7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Outfit:wght@500;600;700;800&display=swap">
+<link rel="stylesheet" href="arcade.css">
+<style>
+/* Look: an orchard, from Chapter 16. You start with one tree full of apples. Every consume pick eats
+   an apple off it. Every create pick plants a seed that grows into a new tree. At the end you see
+   what this month did: a picked-over tree, or an orchard. */
+:root{--sky:#CFEAF7;--sky2:#F3F8EC;--grass:#7CC36E;--grass2:#4E9A4A;--soil:#8A5A3C;--bark:#6B4429;--leaf:#3E9B4F;--leaf2:#2E7D3E;--apple:#E2342D;--ink:#22301F;--muted:#5D6E58;--cream:#FFFBF2;
+  --ac-ink:var(--ink);--ac-btn:var(--leaf2);--ac-btn-ink:#fff;--ac-line:#CFE3C6}
+body{background:linear-gradient(var(--sky),var(--sky2) 60%);color:var(--ink);font-family:"Outfit",system-ui,sans-serif}
+.ac-home{background:rgba(34,48,31,.65)}
+.wrap{max-width:900px;margin:0 auto;min-height:100vh;min-height:100dvh;padding:62px 20px 26px;display:flex;flex-direction:column;justify-content:center}
+.scr{display:flex;flex-direction:column;gap:16px;align-items:center;text-align:center}
+h1{font:400 clamp(2.6rem,8vw,4.4rem)/1 "Young Serif";color:var(--ink)}
+h1 span{color:var(--apple)} h1 b{font-weight:400;color:var(--leaf2)}
+.lead{font-size:1.2rem;font-weight:600;line-height:1.45;max-width:34ch;color:var(--muted)}
+.go{min-height:64px;padding:0 40px;border:0;border-radius:99px;background:var(--leaf2);color:#fff;font:700 1.25rem "Outfit";box-shadow:0 8px 18px rgba(46,125,62,.3)}
+
+/* the orchard strip */
+.field{position:relative;width:100%;max-width:760px;aspect-ratio:760/250;border-radius:24px;overflow:hidden;background:linear-gradient(#E9F6FC,#F7FBEF 70%)}
+.field .hill{position:absolute;left:-5%;right:-5%;bottom:0;height:26%;background:var(--grass);border-radius:50% 50% 0 0/30% 30% 0 0}
+.field .hill::after{content:"";position:absolute;inset:auto 0 0 0;height:40%;background:var(--grass2);opacity:.35}
+.tree{position:absolute;bottom:16%;transform-origin:50% 100%}
+.tree svg{display:block;width:100%;height:auto;overflow:visible}
+.big{left:4%;width:24%}
+.plot{width:11%;transition:transform .9s cubic-bezier(.3,1.5,.5,1)}
+.plot.seed{transform:scale(.18)}
+.plot.grow{transform:scale(1)}
+.apple{transition:transform .7s cubic-bezier(.5,0,.9,.6),opacity .7s}
+.apple.gone{transform:translateY(140px);opacity:0}
+.basket{position:absolute;left:28%;bottom:6%;font-size:1.6rem}
+.counts{display:flex;gap:22px;font:800 .9rem "Outfit";letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.counts b{font-size:1.25rem;color:var(--ink)}
+
+.ask{font:700 .9rem "Outfit";letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;max-width:760px}
+.pk{position:relative;min-height:120px;padding:34px 18px 16px;border-radius:22px;border:3px solid transparent;text-align:center;font:600 clamp(1.15rem,2.8vw,1.4rem)/1.3 "Outfit";color:var(--ink)}
+.pk i{position:absolute;top:10px;left:50%;transform:translateX(-50%);font:800 .75rem "Outfit";font-style:normal;letter-spacing:.16em;text-transform:uppercase;padding:3px 10px;border-radius:99px;white-space:nowrap}
+.pk{background:var(--cream);box-shadow:0 6px 16px rgba(34,48,31,.08)}
+.pk i{opacity:0;transition:opacity .25s}
+.pk.on i{opacity:1;animation:acPop .35s both}
+.pk.cons i{background:var(--apple);color:#fff}
+.pk.crea i{background:var(--leaf2);color:#fff}
+.pk.on.cons{background:#FFEDE8}.pk.on.crea{background:#E5F4DF}
+.pk:active{transform:scale(.97)}
+.pk.on{border-color:var(--ink)}
+.row.done .pk:not(.on){opacity:.35}
+
+.res-n{font:400 clamp(2.4rem,8vw,3.8rem)/1 "Young Serif"}
+.res-t{font:400 clamp(1.6rem,4.6vw,2.3rem)/1.1 "Young Serif";color:var(--leaf2)}
+.res-p{font-size:1.2rem;font-weight:600;line-height:1.45;max-width:36ch;color:var(--muted)}
+.quote{font:400 1.35rem/1.35 "Young Serif";max-width:28ch}
+.ac-foot{background:var(--cream);width:100%;max-width:620px}
+@media (max-width:560px){.row{grid-template-columns:1fr}.pk{min-height:90px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="scr pop" id="s-intro">
+    <h1><span>Consume</span> or <b>Create?</b></h1>
+    <div class="field" id="f-intro"></div>
+    <p class="lead">Pick what&rsquo;s true for your relationship.</p>
+    <button class="go" id="start">Tend the orchard</button>
+  </section>
+
+  <section class="scr" id="s-q" hidden>
+    <div class="field" id="f-q"></div>
+    <p class="ask" id="ask"></p>
+    <div class="row" id="row"></div>
+  </section>
+
+  <section class="scr" id="s-end" hidden></section>
+</main>
+
+<script src="arcade.js"></script>
+<script>
+/* Chapter 16, The Orchard Theory, and its activity "The Two Columns": [consume, create] */
+const PAIRS = [
+  ["Ordering from your usual takeout spot", "Cooking a recipe neither of you has tried"],
+  ["Your favorite restaurant, again", "A farmers-market haul, a meal invented from what you find"],
+  ["Rewatching a show you both love", "Learning a dance together from YouTube"],
+  ["A playlist on the drive", "Making the road-trip playlist together"],
+  ["Sunday on the couch, both scrolling", "Rearranging a room together, no plan"],
+  ["Chores split silently, same way every week", "Building a garden bed together"],
+  ["Catching up on each other’s day", "“What’s something you’ve never told me?”"],
+  ["Scrolling in bed, trading memes", "Talking in the dark until someone falls asleep"]
+];
+const N = PAIRS.length;
+/* the big tree with eight apples; and a young tree for each plot */
+const APPLES = [[60,52],[96,34],[132,50],[46,92],[86,80],[124,86],[156,74],[104,112]];
+const BIG = `<svg viewBox="0 0 200 230" aria-hidden="true"><path d="M92 228c4-40 2-74-6-100h28c-8 26-10 60-6 100z" fill="#6B4429"/>
+  <circle cx="100" cy="82" r="66" fill="#3E9B4F"/><circle cx="56" cy="96" r="42" fill="#2E7D3E"/><circle cx="146" cy="98" r="40" fill="#2E7D3E"/><circle cx="100" cy="56" r="44" fill="#4FB062"/>
+  ${APPLES.map((p, k) => `<circle class="apple" data-k="${k}" cx="${p[0]}" cy="${p[1]}" r="9" fill="#E2342D" style="transform-box:fill-box"/>`).join("")}</svg>`;
+const YOUNG = `<svg viewBox="0 0 100 150" aria-hidden="true"><path d="M46 148c2-26 2-46-2-64h14c-4 18-4 38-2 64z" fill="#6B4429"/><circle cx="50" cy="56" r="38" fill="#4FB062"/><circle cx="30" cy="70" r="22" fill="#3E9B4F"/><circle cx="70" cy="70" r="22" fill="#3E9B4F"/><circle cx="40" cy="44" r="6" fill="#E2342D"/><circle cx="64" cy="58" r="6" fill="#E2342D"/></svg>`;
+const SPOTS = [33, 44, 55, 66, 77, 88, 39, 72];   /* left edge of each plot, in % */
+function field(el){
+  el.innerHTML = `<div class="hill"></div><div class="tree big">${BIG}</div>` +
+    SPOTS.map((x, k) => `<div class="tree plot seed" data-p="${k}" style="left:${x - 5.5}%;bottom:${k >= 6 ? 13 : 16}%;opacity:0">${YOUNG}</div>`).join("");
+}
+function setField(el, eaten, planted){
+  el.querySelectorAll(".apple").forEach(ap => ap.classList.toggle("gone", +ap.dataset.k < eaten));
+  el.querySelectorAll(".plot").forEach(p => {
+    const k = +p.dataset.p, on = k < planted;
+    p.style.opacity = on ? 1 : 0;
+    p.classList.toggle("grow", on); p.classList.toggle("seed", !on);
+  });
+}
+const $ = id => document.getElementById(id);
+let i = 0, eaten = 0, planted = 0, locked = false, tm = 0;
+function show(id){ ["s-intro","s-q","s-end"].forEach(x => $(x).hidden = x !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
+function start(){ clearTimeout(tm); i = 0; eaten = 0; planted = 0; field($("f-q")); setField($("f-q"), 0, 0); show("s-q"); ask(); }
+function ask(){
+  locked = false;
+  const p = PAIRS[i];
+  $("ask").textContent = "This past month, more like…";
+  $("row").classList.remove("done");
+  /* the two cards look the same; which side each sits on changes, and the label only shows once picked */
+  $("row").innerHTML = Arcade.shuffle([0, 1]).map(c => `<button class="pk ${c ? "crea" : "cons"}" data-c="${c}"><i>${c ? "&#127793; Create" : "&#127822; Consume"}</i>${Arcade.esc(p[c])}</button>`).join("");
+}
+function pick(btn){
+  if (locked) return; locked = true;
+  btn.classList.add("on"); $("row").classList.add("done");
+  if (btn.dataset.c === "1") planted++; else eaten++;
+  setField($("f-q"), eaten, planted);
+  tm = setTimeout(() => { i++; if (i < N) ask(); else end(); }, 900);
+}
+function end(){
+  const r = planted <= 2 ? ["A picked-over tree", "Comfort isn&rsquo;t the enemy. But a love that only consumes slowly burns down. Plant one thing this week."]
+    : planted <= 5 ? ["A young orchard", "You still make new things together. Make it a habit, not an accident, and the orchard fills in."]
+    : ["A growing orchard", "You keep creating together. That&rsquo;s how love compounds instead of fading."];
+  $("s-end").innerHTML = `<div class="field" id="f-end"></div>
+    <p class="res-n">${planted} planted &middot; ${eaten} eaten</p>
+    <h2 class="res-t">${r[0]}</h2><p class="res-p">${r[1]}</p>
+    <p class="quote">&ldquo;Love consumed burns down. Love built compounds.&rdquo;</p>
+    ${Arcade.footer({chapter: 16, line: "The Orchard Theory: when novelty fades, create something new with the person."})}`;
+  field($("f-end")); setField($("f-end"), eaten, planted);
+  show("s-end");
+}
+field($("f-intro")); setField($("f-intro"), 0, 2);
+$("row").addEventListener("click", e => { const b = e.target.closest(".pk"); if (b) pick(b); });
+$("start").onclick = start;
+Arcade.init({again: start});
+</script>
+</body>
+</html>

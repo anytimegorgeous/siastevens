@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Matchmaker | The Love Arcade</title>
+<meta name="theme-color" content="#FFE6EC">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@500;700;800;900&display=swap">
+<link rel="stylesheet" href="arcade.css">
+<style>
+/* Look: a dating app, but you're the matchmaker. Blush gradient, a profile card for each person,
+   and three places to send them, drawn as location tickets. Right room: it's a match. */
+:root{--blush:#FFE6EC;--peach:#FFD3B8;--rose:#FF4D7E;--rose2:#E0335F;--ink:#2A1B2E;--muted:#7C6A80;--ok:#1FB57A;--no:#9A8C9E;
+  --ac-ink:var(--ink);--ac-btn:var(--rose);--ac-btn-ink:#fff;--ac-line:#F2C6D2}
+body{background:linear-gradient(160deg,var(--blush),var(--peach));color:var(--ink);font-family:"Nunito",system-ui,sans-serif}
+.ac-home{background:rgba(42,27,46,.6)}
+.wrap{max-width:680px;margin:0 auto;min-height:100vh;min-height:100dvh;padding:66px 20px 26px;display:flex;flex-direction:column;justify-content:center}
+.scr{display:flex;flex-direction:column;gap:18px;align-items:center;text-align:center}
+.logo{font:400 clamp(3rem,10vw,5rem)/1.1 "Pacifico";color:var(--rose)}
+.lead{font-size:1.25rem;font-weight:700;max-width:28ch}
+.cupid{font-size:4rem;line-height:1}
+.go{min-height:64px;padding:0 40px;border:0;border-radius:99px;background:var(--rose);color:#fff;font:900 1.25rem "Nunito";box-shadow:0 10px 22px rgba(255,77,126,.35)}
+
+.top{display:flex;justify-content:space-between;width:100%;font-weight:800;color:var(--muted)}
+.prof{position:relative;width:100%;background:#fff;border-radius:28px;box-shadow:0 20px 40px rgba(42,27,46,.15);overflow:hidden;text-align:left}
+.ph{position:relative;height:130px;display:flex;align-items:flex-end;gap:16px;padding:0 22px 16px;color:#fff}
+.av{width:76px;height:76px;flex:none;border-radius:50%;border:4px solid #fff;display:grid;place-items:center;font:900 2rem "Nunito";background:rgba(255,255,255,.25);margin-bottom:-34px}
+.ph h2{font:900 1.9rem/1 "Nunito"}
+.ph h2 small{font-weight:700;opacity:.85;font-size:.7em}
+.body{padding:46px 22px 20px;display:flex;flex-direction:column;gap:12px}
+.bio{font-size:1.2rem;font-weight:700;line-height:1.35}
+.prob{font-size:1.05rem;line-height:1.4;color:var(--muted)}
+.prob b{color:var(--rose2)}
+.ask{font:900 .85rem "Nunito";letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.tix{display:grid;gap:10px;width:100%}
+.tk{display:flex;align-items:center;gap:14px;min-height:64px;padding:12px 18px;border-radius:18px;border:2.5px dashed #E8B9C7;background:#fff;color:var(--ink);font:800 1.15rem "Nunito";text-align:left}
+.tk svg{flex:none;width:26px;height:26px;fill:var(--rose)}
+.tk.ok{border:2.5px solid var(--ok);background:#E8FAF2}
+.tk.ok svg{fill:var(--ok)}
+.tk.bad{border-style:solid;border-color:var(--no);background:#F4F0F5;color:var(--muted);text-decoration:line-through}
+.tix.done .tk:not(.ok):not(.bad){opacity:.4}
+.match{position:absolute;top:18px;right:18px;padding:8px 16px;border-radius:99px;font:900 1.1rem "Nunito";color:#fff;animation:acPop .4s both}
+.match.yes{background:var(--ok)} .match.no{background:var(--no)}
+.fb{font-size:1.15rem;font-weight:700;line-height:1.4;max-width:34ch}
+.next{min-height:58px;padding:0 34px;border:0;border-radius:99px;background:var(--ink);color:#fff;font:900 1.1rem "Nunito"}
+
+.opts{display:grid;gap:10px;width:100%}
+.big{font:400 clamp(2.4rem,8vw,3.8rem)/1.2 "Pacifico";color:var(--rose)}
+.score{font:900 1.3rem "Nunito"}
+.you{width:100%;padding:18px 22px;border-radius:22px;background:#fff;text-align:left;font-size:1.15rem;line-height:1.4;font-weight:700}
+.you small{display:block;font:900 .8rem "Nunito";letter-spacing:.18em;text-transform:uppercase;color:var(--rose);margin-bottom:6px}
+.ac-foot{background:#fff;width:100%}
+/* clean games: no mid-game counters; scores come at the end */
+.top{display:none!important}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="scr pop" id="s-intro">
+    <div class="cupid" aria-hidden="true">&#128152;</div>
+    <h1 class="logo">Matchmaker</h1>
+    <p class="lead">Six singles. Each has one great quality the apps keep missing. Send them where it actually shows.</p>
+    <button class="go" id="start">Start matching</button>
+  </section>
+
+  <section class="scr" id="s-q" hidden>
+    <div class="top"><span id="cnt"></span><span id="hearts"></span></div>
+    <article class="prof" id="prof"></article>
+    <p class="ask" id="ask">Send them to&hellip;</p>
+    <div class="tix" id="tix"></div>
+    <p class="fb" id="fb" hidden></p>
+    <button class="next" id="next" hidden>Next single</button>
+  </section>
+
+  <section class="scr" id="s-own" hidden>
+    <div class="cupid" aria-hidden="true">&#129694;</div>
+    <h2 style="font:900 clamp(1.8rem,5vw,2.4rem)/1.15 Nunito;max-width:20ch">Your turn. Where does the real you show up?</h2>
+    <div class="opts" id="opts"></div>
+  </section>
+
+  <section class="scr" id="s-end" hidden></section>
+</main>
+
+<script src="arcade.js"></script>
+<script>
+/* From Chapter 7's "The Matchmaker" (and the course's "Where Should They Go?"):
+   name, age, colour, bio, the problem, [right room, wrong, wrong], why it works. */
+const PEOPLE = [
+  ["Sara", 26, "#FF7AA2", "“There’s a lot more going on under the surface. I genuinely care about the world.”", "Gorgeous, and she knows it. Every match wants to take her out. Nobody asks about her social work.",
+    ["A volunteering event", "A rooftop bar on Friday", "A long, heartfelt app bio"], "The room does the filtering. Her warmth shows before her looks even register."],
+  ["Connor", 25, "#5B8DEF", "“Dry humor, terrible at small talk, great at everything else.”", "Average-looking, and first to admit it. Friends think he’s the funniest guy alive. Strangers scroll past.",
+    ["A coffee shop or quiet dinner", "A loud bar on the weekend", "A movie night"], "His humor lands in back-and-forth, and back-and-forth needs quiet."],
+  ["Brett", 26, "#9B6BEF", "“I make music. Always building something.”", "Genuinely talented, terrible at selling himself. On dates he seems quiet and forgettable.",
+    ["Playing an open mic", "An app bio listing his projects", "A house party"], "Up there, in his element. She sees who he is before he says a word."],
+  ["Brooke", 27, "#F2994A", "“I cook everything from scratch. It’s how I show love.”", "Her cooking is special. She wants someone who sees it as a value, not a bonus.",
+    ["A potluck, with her own dish", "A cooking class together", "A gourmet restaurant"], "She made it, he tasted it. The value is on the table before she says a word."],
+  ["Ashley", 28, "#E05C8A", "“Big on family. Sunday dinners are non-negotiable.”", "Done with guys who talk family values on dates but barely call their own mom.",
+    ["A friend’s birthday, family around", "A work colleague’s party", "Apps filtered for ‘family-oriented’"], "Watch how he talks to his mom. That tells her more than any profile."],
+  ["Dylan", 29, "#2BB3A3", "“I work out, I dress well, I put in the effort.”", "Keeps matching with people who look great in photos and nothing like them in person.",
+    ["A rooftop bar or a night out", "Apps filtered by looks", "Sliding into DMs"], "No filters, no angles, no old photos. What he sees is what he gets."]
+];
+const PIN = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg>`;
+const YOU = [
+  ["On a dating app", "A profile shows the frosting. The layers that make you worth choosing need a room to show in."],
+  ["At bars and parties", "Loud rooms reward looks and smooth talk. If that’s not your best side, change the room."],
+  ["Somewhere I go every week", "Good. The second and third meeting show the person. Keep showing up."],
+  ["Honestly, nowhere right now", "Then nobody can see what you’ve got. Pick one weekly thing with the same people in it."]
+];
+const $ = id => document.getElementById(id);
+let order = [], i = 0, right = 0, locked = false;
+function show(id){ ["s-intro","s-q","s-own","s-end"].forEach(s => $(s).hidden = s !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
+function start(){ order = Arcade.shuffle(PEOPLE); i = 0; right = 0; show("s-q"); ask(); }
+function ask(){
+  locked = false;
+  const p = order[i];
+  $("cnt").textContent = `Single ${i + 1} of ${order.length}`;
+  $("hearts").textContent = "❤️".repeat(right) || " ";
+  $("prof").innerHTML = `<div class="ph" style="background:linear-gradient(135deg,${p[2]},${p[2]}cc)"><div class="av">${p[0][0]}</div><h2>${p[0]} <small>${p[1]}</small></h2></div>
+    <div class="body"><p class="bio">${Arcade.esc(p[3])}</p><p class="prob"><b>The problem:</b> ${Arcade.esc(p[4])}</p></div>`;
+  $("tix").classList.remove("done");
+  $("tix").innerHTML = Arcade.shuffle(p[5].map((t, k) => ({t, k}))).map(o => `<button class="tk" data-k="${o.k}">${PIN}${Arcade.esc(o.t)}</button>`).join("");
+  $("ask").hidden = false; $("fb").hidden = true; $("next").hidden = true;
+}
+function pick(btn){
+  if (locked) return; locked = true;
+  const p = order[i], ok = btn.dataset.k === "0";
+  if (ok) right++;
+  $("tix").classList.add("done");
+  [...$("tix").children].forEach(b => { if (b.dataset.k === "0") b.classList.add("ok"); });
+  if (!ok) btn.classList.add("bad");
+  $("prof").insertAdjacentHTML("beforeend", `<span class="match ${ok ? "yes" : "no"}">${ok ? "It’s a match! 💘" : "No spark"}</span>`);
+  $("fb").textContent = p[6]; $("fb").hidden = false;
+  $("next").hidden = false; $("next").textContent = i === order.length - 1 ? "One more: you" : "Next single";
+}
+function own(){
+  $("opts").innerHTML = YOU.map((y, k) => `<button class="tk" data-y="${k}">${PIN}${y[0]}</button>`).join("");
+  show("s-own");
+}
+function end(k){
+  const n = order.length, title = right === n ? "Master Matchmaker" : right >= 4 ? "Cupid in Training" : "Cupid Needs Glasses";
+  $("s-end").innerHTML = `<p class="big">${title}</p><p class="score">${"❤️".repeat(right)}${"🤍".repeat(n - right)} &nbsp;${right} of ${n} matched</p>
+    <div class="you"><small>And you</small>${Arcade.esc(YOU[k][1])}</div>
+    ${Arcade.footer({chapter: 7, line: "The Display Economy: why the right room matters more than the right bio."})}`;
+  show("s-end");
+}
+$("tix").addEventListener("click", e => { const b = e.target.closest(".tk"); if (b) pick(b); });
+$("opts").addEventListener("click", e => { const b = e.target.closest(".tk"); if (b) end(+b.dataset.y); });
+$("next").onclick = () => { i++; if (i < order.length) ask(); else own(); };
+$("start").onclick = start;
+Arcade.init({again: start});
+</script>
+</body>
+</html>
