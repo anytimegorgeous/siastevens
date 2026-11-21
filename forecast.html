@@ -793,7 +793,9 @@ const STAR = `<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0 L10 6 L1
 SITE_QR = qrSvg(qrMatrix(SITE), "QR code for siastevens.com");
 
 /* ---------- Engine ---------- */
-const state = {screen: "intro", answers: [], quick: false};
+/* On the event iPad (the Arcade's Event mode), readings start in Quick mode; the switch can still turn it off. */
+const EVENT_QUICK = (() => { try { return localStorage.getItem("loveArcade.event") === "1"; } catch (e) { return false; } })();
+const state = {screen: "intro", answers: [], quick: EVENT_QUICK};
 let lock = false, timers = [], booted = false, lastScreen = "";
 const reduceMotion = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
