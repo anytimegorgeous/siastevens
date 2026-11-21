@@ -89,7 +89,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Josefin+Sans:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Limelight&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Josefin+Sans:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Limelight&family=Bungee&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -317,6 +317,7 @@
       .au-inner { flex-direction: column; text-align: center; }
       .au-photo { flex-basis: auto; width: 260px; }
       .footer { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
       .floating-cta { bottom: 14px; right: 14px; }
       .floating-cta a { padding: 10px 12px; font-size: 8px; }
     }
@@ -374,7 +375,9 @@
     .club .go { margin-top: auto; padding-top: 10px; font-family: var(--heading); font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: #F6B49A; }
     .ct-text { max-width: 36em; margin: 12px 0 0; color: var(--text-mid); }
     .footer-links { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 12px; }
-    .footer-links a { color: inherit; opacity: .8; }
+    .footer-links { color: rgba(255,255,255,.8); font-size: 13px; gap: 10px 22px; }
+    .footer-links a { color: inherit; opacity: 1; }
+    .footer-links a:hover { color: #fff; }
     .footer-links a:hover { opacity: 1; text-decoration: underline; }
     @media (max-width: 960px) { .routine-grid { grid-template-columns: 1fr; } }
 
@@ -398,6 +401,59 @@
     @media (min-width: 961px) { .nav-ball { display: none; } }
     @media (max-width: 960px) { .nav-fc { display: none; } }
     @media (prefers-reduced-motion: reduce) { .nav-fc::before, .nav-fc::after { animation: none; } }
+
+    /* The Love Arcade: heart joystick icon (replaces the crystal ball) */
+    .joy { position: relative; flex: none; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: radial-gradient(circle at 50% 40%, #2A1661, #140C26); box-shadow: inset 0 0 0 1px rgba(255,255,255,.2), 0 0 8px 1px rgba(255,61,139,.45), 0 0 16px 3px rgba(51,240,255,.25); }
+    .joy-svg { width: 84%; height: 84%; overflow: visible; }
+    .joy-stick { transform-origin: 32px 44px; animation: joyTilt 2.6s ease-in-out infinite; }
+    @keyframes joyTilt { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
+    @media (prefers-reduced-motion: reduce) { .joy-stick { animation: none; } }
+    .nav-ball:hover .joy { transform: translateY(-1px) scale(1.06); }
+    .fc-strip .joy, .nav-fc .joy { width: 32px; height: 32px; }
+    .fc-strip { border-bottom-color: #FF3D8B; }
+    .fc-txt strong { color: #FF6FAE; text-shadow: 0 0 10px rgba(255,61,139,.5); }
+    .fc-go { color: #FF6FAE; }
+    /* the Arcade sign in the top bar: neon pink and cyan, like the Arcade itself */
+    .nav-fc { border-color: #FF3D8B; background: radial-gradient(120% 140% at 50% 0%, #2A1661, #0B0820 70%); box-shadow: 0 0 0 1px rgba(255,61,139,.3), 0 0 16px rgba(255,61,139,.45), 0 0 34px rgba(51,240,255,.2); }
+    .nav-fc::before, .nav-fc::after { background-image: radial-gradient(circle, #FF3D8B 0 1.6px, transparent 2.2px); filter: drop-shadow(0 0 3px rgba(255,61,139,.9)); }
+    .fc-words small { color: #33F0FF; letter-spacing: .14em; }
+    .fc-words b { font-family: "Bungee", "Josefin Sans", sans-serif; font-size: 15px; letter-spacing: .03em; color: #FF6FAE; text-shadow: 0 0 10px rgba(255,61,139,.7); }
+    .nav-fc:hover { box-shadow: 0 0 0 1px rgba(255,61,139,.5), 0 0 24px rgba(255,61,139,.7), 0 0 48px rgba(51,240,255,.3); }
+    /* Beyond the Books: four equal cards, each in its own colour */
+    .tools { grid-template-columns: repeat(4, 1fr); }
+    .tool { border: 0; color: #fff; box-shadow: 0 14px 30px rgba(0,0,0,.25); }
+    .tool .tk { color: rgba(255,255,255,.75); }
+    .tool h4 { color: #fff; display: flex; align-items: center; gap: 10px; }
+    .tool p:not(.tk) { color: rgba(255,255,255,.9); }
+    .tool.t-course { background: linear-gradient(160deg, #F47A57, #E0502C); }
+    .tool.t-app { background: linear-gradient(160deg, #E25480, #B92A55); }
+    .tool.t-alt { background: linear-gradient(160deg, #529C40, #2F6E22); }
+    .tool.t-arcade { background: radial-gradient(120% 90% at 80% 0%, #5B2FB0, #2A1661 55%, #140C26); box-shadow: 0 14px 30px rgba(0,0,0,.25), 0 0 0 1px rgba(255,61,139,.5), 0 0 26px rgba(255,61,139,.35); }
+    .tool.t-arcade h4 { font-family: "Bungee", var(--heading); font-size: 19px; color: #FF6FAE; text-shadow: 0 0 10px rgba(255,61,139,.6); }
+    .tool.t-arcade .joy { width: 34px; height: 34px; }
+    .tool:hover { background-blend-mode: normal; filter: brightness(1.06); transform: translateY(-3px); }
+    @media (max-width: 1100px) and (min-width: 961px) { .tools { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 960px) and (min-width: 600px) { .tools { grid-template-columns: repeat(2, 1fr); } }
+    /* social icons: real logos */
+    .nav-icons a svg { width: 13px; height: 13px; fill: currentColor; }
+    .ct-social { display: flex; gap: 12px; margin-top: 26px; }
+    .ct-social a { width: 40px; height: 40px; border-radius: 50%; background: var(--charcoal); color: #fff; display: grid; place-items: center; transition: transform .2s, background .2s; }
+    .ct-social a:hover { transform: translateY(-2px); background: #000; }
+    .ct-social svg { width: 18px; height: 18px; fill: currentColor; }
+    .ct-copy { margin-top: 14px; font-size: 12px; color: var(--text-muted); }
+    @media (max-width: 960px) { .ct-social { justify-content: center; } }
+
+    /* social logos in their own colours */
+    .nav-icons a.s-x, .ct-social a.s-x { background: #000; }
+    .nav-icons a.s-fb, .ct-social a.s-fb { background: #1877F2; }
+    .nav-icons a.s-fb svg, .ct-social a.s-fb svg { width: 100%; height: 100%; transform: translate(4%, 6%); }
+    .nav-icons a.s-ig, .ct-social a.s-ig { border-radius: 30%; background: radial-gradient(circle at 30% 107%, #FDF497 0%, #FDF497 5%, #FD5949 45%, #D6249F 60%, #285AEB 90%); }
+    .nav-icons a.s-ig svg, .ct-social a.s-ig svg { width: 92%; height: 92%; }
+    .nav-icons a svg { width: 13px; height: 13px; }
+    .nav-icons a.s-fb { overflow: hidden; }
+    .ct-social a { overflow: hidden; }
+    .ct-social a:hover { background-color: inherit; filter: brightness(1.08); }
+    .floating-cta.away { opacity: 0; transform: translateY(20px); pointer-events: none; }
   </style>
 </head>
 <body>
@@ -412,21 +468,21 @@
     <li><a href="#contact">Contact</a></li>
   </ul>
   <div class="nav-right">
-    <a href="/forecast" class="nav-ball" aria-label="The Forecast: ask the crystal ball"><span class="orb-mini" aria-hidden="true"><i></i></span><span class="nav-ball-txt">Forecast</span></a>
-    <a href="/forecast" class="nav-fc" aria-label="Green Flag Forecast: a free two-minute reading"><span class="orb-mini" aria-hidden="true"><i></i></span><span class="fc-words"><small>Free &middot; 2-min reading</small><b>Green Flag Forecast</b></span></a>
+    <a href="/arcade/" class="nav-ball" aria-label="The Love Arcade: quick games, real insight"><span class="joy"><svg class="joy-svg" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="55" rx="23" ry="6" fill="#140C26"/><rect x="12" y="43" width="40" height="12" rx="6" fill="#3A2380" stroke="#33F0FF" stroke-width="2"/><circle cx="20" cy="49" r="2.6" fill="#FFE14D"/><circle cx="44" cy="49" r="2.6" fill="#33F0FF"/><g class="joy-stick"><path d="M32 44V26" stroke="#E6E1FA" stroke-width="4.5" stroke-linecap="round"/><path d="M32 30C20 22 17.5 12.5 24.5 9.2c3.6-1.7 6 .3 7.5 2.8 1.5-2.5 3.9-4.5 7.5-2.8C46.5 12.5 44 22 32 30z" fill="#FF3D8B" stroke="#FFD1E3" stroke-width="1.5"/><ellipse cx="26.5" cy="13.5" rx="2.6" ry="1.8" fill="#fff" opacity=".85"/></g></svg></span><span class="nav-ball-txt">Arcade</span></a>
+    <a href="/arcade/" class="nav-fc" aria-label="The Love Arcade: quick games, real insight"><span class="joy"><svg class="joy-svg" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="55" rx="23" ry="6" fill="#140C26"/><rect x="12" y="43" width="40" height="12" rx="6" fill="#3A2380" stroke="#33F0FF" stroke-width="2"/><circle cx="20" cy="49" r="2.6" fill="#FFE14D"/><circle cx="44" cy="49" r="2.6" fill="#33F0FF"/><g class="joy-stick"><path d="M32 44V26" stroke="#E6E1FA" stroke-width="4.5" stroke-linecap="round"/><path d="M32 30C20 22 17.5 12.5 24.5 9.2c3.6-1.7 6 .3 7.5 2.8 1.5-2.5 3.9-4.5 7.5-2.8C46.5 12.5 44 22 32 30z" fill="#FF3D8B" stroke="#FFD1E3" stroke-width="1.5"/><ellipse cx="26.5" cy="13.5" rx="2.6" ry="1.8" fill="#fff" opacity=".85"/></g></svg></span><span class="fc-words"><small>Quick games. Real insight.</small><b>The Love Arcade</b></span></a>
     <div class="nav-icons">
-      <a href="https://x.com/sia_author" target="_blank" rel="noopener" aria-label="Sia Stevens on X">&#120143;</a>
-      <a href="https://www.facebook.com/profile.php?id=61594846093837" target="_blank" rel="noopener" aria-label="Sia Stevens on Facebook">f</a>
-      <a href="https://www.instagram.com/sia.relationships/" target="_blank" rel="noopener" aria-label="Sia Stevens on Instagram">&#9678;</a>
+      <a href="https://x.com/sia_author" target="_blank" rel="noopener" class="s-x" aria-label="Sia Stevens on X"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23zm-1.16 17.52h1.83L7.08 4.13H5.12z"/></svg></a>
+      <a href="https://www.facebook.com/profile.php?id=61594846093837" target="_blank" rel="noopener" class="s-fb" aria-label="Sia Stevens on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M15.1 24v-9.3h3.1l.5-3.6h-3.6V8.8c0-1 .3-1.8 1.8-1.8h1.9V3.8c-.3 0-1.5-.1-2.8-.1-2.8 0-4.7 1.7-4.7 4.8v2.6H8.2v3.6h3.1V24z"/></svg></a>
+      <a href="https://www.instagram.com/sia.relationships/" target="_blank" rel="noopener" class="s-ig" aria-label="Sia Stevens on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="4.5" width="15" height="15" rx="4.5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="3.6" fill="none" stroke="#fff" stroke-width="2"/><circle cx="16.6" cy="7.4" r="1.15" fill="#fff"/></svg></a>
     </div>
   </div>
   <div class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')"><span></span><span></span><span></span></div>
 </nav>
 
-<!-- FORECAST STRIP (phones) -->
-<a class="fc-strip" id="fcStrip" href="/forecast">
-  <span class="orb-mini" aria-hidden="true"><i></i></span>
-  <span class="fc-txt"><strong>Free 2-min reading</strong><em>Based on the book&rsquo;s framework</em></span>
+<!-- LOVE ARCADE STRIP (phones) -->
+<a class="fc-strip" id="fcStrip" href="/arcade/">
+  <span class="joy"><svg class="joy-svg" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="55" rx="23" ry="6" fill="#140C26"/><rect x="12" y="43" width="40" height="12" rx="6" fill="#3A2380" stroke="#33F0FF" stroke-width="2"/><circle cx="20" cy="49" r="2.6" fill="#FFE14D"/><circle cx="44" cy="49" r="2.6" fill="#33F0FF"/><g class="joy-stick"><path d="M32 44V26" stroke="#E6E1FA" stroke-width="4.5" stroke-linecap="round"/><path d="M32 30C20 22 17.5 12.5 24.5 9.2c3.6-1.7 6 .3 7.5 2.8 1.5-2.5 3.9-4.5 7.5-2.8C46.5 12.5 44 22 32 30z" fill="#FF3D8B" stroke="#FFD1E3" stroke-width="1.5"/><ellipse cx="26.5" cy="13.5" rx="2.6" ry="1.8" fill="#fff" opacity=".85"/></g></svg></span>
+  <span class="fc-txt"><strong>The Love Arcade</strong><em>Based on the book&rsquo;s framework</em></span>
   <span class="fc-go" aria-hidden="true">&#8250;</span>
 </a>
 
@@ -616,33 +672,32 @@
       <p class="beyond-lead">A book can hand you a model. Only practice can hand you a skill. Everything below runs on the same three stages.</p>
     </div>
     <div class="tools reveal">
-      <a class="tool" href="https://relationships101.co" target="_blank" rel="noopener">
+      <a class="tool t-course" href="https://relationships101.co" target="_blank" rel="noopener">
         <p class="tk">The Course</p>
         <h4>Modern Relationships 101</h4>
         <p>The interactive companion to both books &mdash; the same three stages, taught through short lessons, real activities, and exercises built to be done, not just read. Where the practices in the book become a program.</p>
         <span class="go">relationships101.co</span>
       </a>
-      <a class="tool" href="https://www.redflagdetector.pro/" target="_blank" rel="noopener">
+      <a class="tool t-app" href="https://www.redflagdetector.pro/" target="_blank" rel="noopener">
         <p class="tk">The App</p>
         <h4>Red Flag Detector</h4>
         <p>The record-keeping system from the final part of <em>A Million Green Flags</em>. You don&rsquo;t ask the heart &mdash; you ask the bow. Track patterns, promises, and what actually happened the last three times a standard was calmly held.</p>
         <span class="go">redflagdetector.pro</span>
       </a>
-      <a class="tool" href="https://www.alttherapy.co/" target="_blank" rel="noopener">
+      <a class="tool t-alt" href="https://www.alttherapy.co/" target="_blank" rel="noopener">
         <p class="tk">In Person</p>
         <h4>Alt Therapy</h4>
         <p>Therapy that lives where you live. Walk-and-talk sessions, couples companionship, activity-based support and life navigation &mdash; in real places, not an office. Seattle and the Pacific Northwest.</p>
         <span class="go">alttherapy.co</span>
       </a>
-    </div>
-      <a class="forecast-strip reveal" href="/forecast">
-        <div class="fs-text">
-          <p class="tk">The Game &middot; Free</p>
-          <h4>Green Flag Forecast</h4>
-          <p>A crystal ball that reads your answers, not the stars. A dozen quick questions, and the ball tells you your chances out of 10, what&rsquo;s in the way, and what to do about it. Single, seeing someone, or committed &mdash; built on the same three stages.</p>
-        </div>
-        <span class="btn fs-btn">Ask the ball</span>
+      <a class="tool t-arcade" href="/arcade/">
+        <p class="tk">The Games</p>
+        <h4><span class="joy"><svg class="joy-svg" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="55" rx="23" ry="6" fill="#140C26"/><rect x="12" y="43" width="40" height="12" rx="6" fill="#3A2380" stroke="#33F0FF" stroke-width="2"/><circle cx="20" cy="49" r="2.6" fill="#FFE14D"/><circle cx="44" cy="49" r="2.6" fill="#33F0FF"/><g class="joy-stick"><path d="M32 44V26" stroke="#E6E1FA" stroke-width="4.5" stroke-linecap="round"/><path d="M32 30C20 22 17.5 12.5 24.5 9.2c3.6-1.7 6 .3 7.5 2.8 1.5-2.5 3.9-4.5 7.5-2.8C46.5 12.5 44 22 32 30z" fill="#FF3D8B" stroke="#FFD1E3" stroke-width="1.5"/><ellipse cx="26.5" cy="13.5" rx="2.6" ry="1.8" fill="#fff" opacity=".85"/></g></svg></span>The Love Arcade</h4>
+        <p>Games for modern love, built on the book&rsquo;s framework. Quick games, real insight. Find out where you stand.</p>
+        <span class="go">Step inside</span>
       </a>
+    </div>
+
   </div>
 </section>
 
@@ -696,6 +751,12 @@
           <p>She lives in Seattle, in sight of Mount Rainier.</p>
         </div>
         </div>
+        <div class="ct-social">
+          <a href="https://x.com/sia_author" target="_blank" rel="noopener" class="s-x" aria-label="Sia Stevens on X"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23zm-1.16 17.52h1.83L7.08 4.13H5.12z"/></svg></a>
+          <a href="https://www.facebook.com/profile.php?id=61594846093837" target="_blank" rel="noopener" class="s-fb" aria-label="Sia Stevens on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M15.1 24v-9.3h3.1l.5-3.6h-3.6V8.8c0-1 .3-1.8 1.8-1.8h1.9V3.8c-.3 0-1.5-.1-2.8-.1-2.8 0-4.7 1.7-4.7 4.8v2.6H8.2v3.6h3.1V24z"/></svg></a>
+          <a href="https://www.instagram.com/sia.relationships/" target="_blank" rel="noopener" class="s-ig" aria-label="Sia Stevens on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="4.5" width="15" height="15" rx="4.5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="3.6" fill="none" stroke="#fff" stroke-width="2"/><circle cx="16.6" cy="7.4" r="1.15" fill="#fff"/></svg></a>
+        </div>
+
       </div>
     </div>
   </div>
@@ -703,13 +764,9 @@
 
 <footer class="footer">
   <div class="footer-copy"><img src="/images/logo-white.png" width="640" height="195" alt="Sia Stevens: Modern love, finally explained." class="footer-logo" loading="lazy">&copy; 2026 Sia Stevens &middot; Vessel &amp; Ink Press</div>
-  <nav class="footer-links" aria-label="Footer"><a href="/whtu/">What Happened to Us</a><a href="/amgf/">A Million Green Flags</a><a href="/journal/">Journal</a><a href="/reviews/">Reviews</a><a href="/bookclub/">Book Clubs</a><a href="/forecast">The Forecast</a></nav>
-  <div class="footer-icons">
-    <a href="https://x.com/sia_author" target="_blank" rel="noopener" aria-label="Sia Stevens on X">&#120143;</a>
-    <a href="https://www.facebook.com/profile.php?id=61594846093837" target="_blank" rel="noopener" aria-label="Sia Stevens on Facebook">f</a>
-    <a href="https://www.instagram.com/sia.relationships/" target="_blank" rel="noopener" aria-label="Sia Stevens on Instagram">&#9678;</a>
-  </div>
+  <nav class="footer-links" aria-label="Footer"><a href="/whtu/">What Happened to Us</a><a href="/amgf/">A Million Green Flags</a><a href="/journal/">Journal</a><a href="/reviews/">Reviews</a><a href="/bookclub/">Book Clubs</a><a href="/arcade/">The Love Arcade</a></nav>
 </footer>
+
 
 <script>
 window.addEventListener('scroll', function () {
@@ -728,6 +785,12 @@ document.querySelectorAll('.nav-links a, .nav-brand, .nav-order, .hero-btns a, .
     }
   });
 });
+/* the two floating book buttons fade out while the footer is on screen, so it can be read */
+(function () {
+  var foot = document.querySelector('.footer'), cta = document.getElementById('floatingCta');
+  if (!foot || !cta || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver(function (es) { cta.classList.toggle('away', es[0].isIntersecting); }).observe(foot);
+})();
 (function () {
   var strip = document.getElementById('fcStrip');
   if (!strip || !('IntersectionObserver' in window)) return;

@@ -179,6 +179,10 @@ h1{font:400 var(--s4)/1 var(--display);color:var(--cream);text-shadow:0 0 22px v
 .sheet-scroll{flex:1;min-height:0;width:100%;max-width:560px;overflow:auto;border-radius:10px;-webkit-overflow-scrolling:touch}
 .sheet-scroll img{display:block;width:min(100%,380px);height:auto;margin:0 auto;background:#fff;border-radius:6px;box-shadow:0 18px 40px var(--shadow)}
 .sheet-bar{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 16px}
+.sheet-bar [hidden]{display:none}
+.sheet-note{max-width:30ch;text-align:center;font:600 1rem/1.4 var(--body);color:var(--cream)}
+.sheet-note[hidden]{display:none}
+.sheet-note a{color:var(--gold)}
 .sheet-scroll img.card{width:min(100%,420px);border-radius:14px}
 .sheet-scroll.mid{display:flex;align-items:center;justify-content:center}
 .scan{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;width:min(100%,380px);margin:0 auto;padding:26px 22px;border:1.5px solid var(--gold-deep);border-radius:14px;background:var(--night-2)}
@@ -275,7 +279,8 @@ h1{font:400 var(--s4)/1 var(--display);color:var(--cream);text-shadow:0 0 22px v
 <div id="sheet" class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-k" data-act="sheet-bg" hidden>
   <div class="sheet-top"><span class="sheet-k" id="sheet-k">Your reading</span><button id="sheet-close" class="link" data-act="close-sheet">Close</button></div>
   <div class="sheet-scroll" id="sheet-scroll"></div>
-  <div class="sheet-bar" id="sheet-bar"><button id="print-now" class="primary" data-act="print-now">Print</button><button id="scan" class="secondary" data-act="scan">Link</button></div>
+  <p class="sheet-note" id="sheet-note" hidden></p>
+  <div class="sheet-bar" id="sheet-bar"><button id="print-now" class="primary" data-act="print-now">Print</button><button id="scan" class="secondary" data-act="scan">Digital copy</button><button id="share-now" class="primary" data-act="share-now" hidden>Share</button></div>
 </div>
 <canvas id="fx" aria-hidden="true"></canvas>
 
@@ -776,6 +781,7 @@ function qrMatrix(text){
 const PAGE = SITE + "/forecast";
 const linkFor = (answers, quick) => `${PAGE}?r=${TREE_V}${quick ? "q" : "f"}${answers.join("")}`;
 const SHARED = location.search.match(/[?&]r=(\d+)([fq])([0-2]+)/);
+const DIGITAL = /[?&]d=1/.test(location.search);   /* a scanned digital copy: show the receipt as a picture */
 let SITE_QR = "";
 function qrSvg(m, label){
   const d = m.map((row, y) => { let s = ""; for (let x = 0; x < row.length;){ if (!row[x]){ x++; continue; } let e = x; while (e < row.length && row[e]) e++; s += `M${x} ${y}h${e - x}v1h-${e - x}z`; x = e; } return s; }).join("");
@@ -891,7 +897,7 @@ function intro(){
   <section class="intro">
     <div class="marquee up" style="--n:0">${bulbs}<p class="kicker">Step right up</p><h1 data-focus tabindex="-1">Green Flag Forecast</h1>${bulbs}</div>
     <div class="up" style="--n:1">${orb("idle")}</div>
-    <p class="lede up" style="--n:2">The ball doesn't read the stars. It reads your answers.</p>
+    <p class="lede up" style="--n:2">See your future. No stars. Just relationship science.</p>
     <div class="up" style="--n:3"><button id="begin" class="ticket" data-act="begin"><span class="tk-k">Admit one</span><span class="tk-t">Ask the ball</span></button></div>
   </section>`;
 }
@@ -949,7 +955,7 @@ function result(c){
       </div>
     </div>
     <div class="actions up" style="--n:4">
-      <button id="print" class="primary" data-act="print">Print my reading</button><button id="new-reading" class="secondary" data-act="restart">Start a new reading</button><button id="share-card" class="link" data-act="share-card">Share my number</button>
+      <button id="print" class="primary" data-act="print">Print my reading</button><button id="new-reading" class="secondary" data-act="restart">Start a new reading</button><button id="share-card" class="link" data-act="share-card">Share my score</button>
     </div>
   </section>`;
 }
@@ -1093,12 +1099,19 @@ async function drawCard(c){
 function shareCard(btn){
   const c = replay(state.answers, state.quick);
   if (!c.done) return;
-  const key = state.answers.join("") + (c.quick ? "q" : "f");
-  if (cardFile && cardFor === key && canShareFile(cardFile)){
-    navigator.share({files: [cardFile], title: "Green Flag Forecast", text: `${LABEL[c.track]}: ${fmt(reading(c).n)} out of 10. Ask the ball at ${PAGE}`}).catch(() => {});
+  openSheet(btn, "card");   /* show the card first, so people see what they are about to share */
+}
+/* the share window, for the score card or (on a visitor's phone) the digital copy of the receipt */
+function shareNow(){
+  const c = replay(state.answers, state.quick);
+  const card = sheetMode === "card", f = card ? cardFile : slipFile;
+  if (canShareFile(f)){
+    navigator.share(card ? {files: [f], title: "Green Flag Forecast", text: `${LABEL[c.track]}: ${fmt(reading(c).n)} out of 10. Ask the ball at ${PAGE}`}
+                         : {files: [f], title: "My Green Flag Forecast"}).catch(() => {});
     return;
   }
-  openSheet(btn, "card");   /* no share sheet here (a laptop, an older iPad): show the card to save by hand */
+  const n = document.getElementById("sheet-note");
+  n.hidden = false; n.textContent = "Press and hold the picture to save it.";
 }
 /* Print hands the slip to the share sheet, whose Print sends the picture to the printer, and whose Save Image
    keeps it. Where there is no share sheet for files, it falls back to the browser's own print. */
@@ -1111,15 +1124,26 @@ function printSlip(){
 let sheetOpener = null, sheetView = "slip", sheetMode = "slip";
 /* The sheet shows the slip, or, after Link, a QR code that opens this reading on the visitor's phone. */
 function renderSheet(){
-  const box = document.getElementById("sheet-scroll");
-  const card = sheetMode === "card";
-  document.getElementById("sheet-bar").hidden = card; document.getElementById("sheet-k").textContent = card ? "Your number" : "Your reading";
-  if (card){ box.classList.add("mid"); box.innerHTML = `<img class="card" src="${cardUrl}" alt="Your number, as a card to share">`; return; }
+  const box = document.getElementById("sheet-scroll"), note = document.getElementById("sheet-note");
+  const card = sheetMode === "card", digital = sheetMode === "digital";
+  document.getElementById("sheet-k").textContent = card ? "Your score" : "Your reading";
+  document.getElementById("print-now").hidden = card || digital;
+  document.getElementById("scan").hidden = card || digital;
+  document.getElementById("share-now").hidden = !(card || digital);
+  note.hidden = true;
+  if (card){ box.classList.add("mid"); box.innerHTML = `<img class="card" src="${cardUrl}" alt="Your score, as a card to share">`; return; }
+  if (digital){
+    box.classList.remove("mid");
+    box.innerHTML = `<img src="${slipUrl}" alt="Your reading, as a picture to keep">`;
+    note.hidden = false;
+    note.innerHTML = `Press and hold the picture to save it to Photos.<br><a href="${SITE}/arcade/">Play more at the Love Arcade</a>`;
+    return;
+  }
   if (sheetView === "scan"){
-    box.innerHTML = `<div class="scan"><div class="scan-qr">${qrSvg(qrMatrix(linkFor(state.answers, state.quick)), "QR code that opens this reading")}</div><div class="take-txt"><p class="take-k">Take it with you</p><p class="take-t">Scan to keep your reading on your phone.</p></div></div>`;
+    box.innerHTML = `<div class="scan"><div class="scan-qr">${qrSvg(qrMatrix(linkFor(state.answers, state.quick) + "&d=1"), "QR code for a digital copy of this reading")}</div><div class="take-txt"><p class="take-k">Digital copy</p><p class="take-t">Scan with your phone camera to get your reading.</p></div></div>`;
   } else box.innerHTML = `<img src="${slipUrl}" alt="Your reading, as it prints">`;
   box.classList.toggle("mid", sheetView === "scan");
-  document.getElementById("scan").textContent = sheetView === "scan" ? "Slip" : "Link";
+  document.getElementById("scan").textContent = sheetView === "scan" ? "Show receipt" : "Digital copy";
 }
 async function openSheet(btn, mode){
   sheetOpener = btn || null; sheetMode = mode || "slip";
@@ -1241,6 +1265,8 @@ document.addEventListener("click", e => {
     openSheet(b);
   } else if (act === "print-now"){
     printSlip();
+  } else if (act === "share-now"){
+    shareNow();
   } else if (act === "share-card"){
     shareCard(b);
   } else if (act === "scan"){
@@ -1328,6 +1354,7 @@ function start(d){
     if (replay(answers, quick).done){ state.answers = answers; state.quick = quick; state.screen = "result"; }
   }
   render(false);
+  if (DIGITAL && state.screen === "result") openSheet(null, "digital");
 }
 var hot = (window.claude && window.claude.hot) || null;
 try {
@@ -1341,6 +1368,26 @@ if (!window.__gffStarted){
   var app = document.getElementById("app");
   if (app) app.innerHTML = '<section class="intro"><p class="lede" style="margin-top:24px">The ball needs a newer browser. Please update Safari or Chrome, or open siastevens.com/forecast on your phone.</p></section>';
 }
+</script>
+<script>
+/* The Love Arcade: when the ball is opened from the Arcade, show a way back to the booths. In Event mode
+   (the booth iPad), also return to them after 90 quiet seconds. Visitors who come straight to /forecast see no change. */
+(function(){
+  var fromArcade = false, talk = false, eventMode = false;
+  try { fromArcade = sessionStorage.getItem("loveArcade") === "1"; talk = localStorage.getItem("loveArcade.talk") === "1"; eventMode = localStorage.getItem("loveArcade.event") === "1"; } catch (e) {}
+  if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("arcade-sw.js", {scope: "./"}).catch(function(){});
+  if (!fromArcade) return;
+  var home = "arcade/index.html";
+  var a = document.createElement("a");
+  a.href = home; a.innerHTML = "&#9664; Arcade";
+  a.style.cssText = "position:fixed;top:10px;left:12px;z-index:60;padding:8px 14px;border-radius:99px;background:rgba(20,12,38,.85);color:#F6C453;border:1.5px solid #B9862B;font:600 13px/1 system-ui,-apple-system,sans-serif;letter-spacing:.04em;text-decoration:none";
+  document.body.appendChild(a);
+  if (talk || !eventMode) return;   /* the return to the booths only happens on the event iPad */
+  var t = 0;
+  function poke(){ clearTimeout(t); t = setTimeout(function(){ location.href = home; }, 90000); }
+  ["pointerdown","keydown","touchstart"].forEach(function(ev){ window.addEventListener(ev, poke, {passive: true}); });
+  poke();
+})();
 </script>
 
 </body>
