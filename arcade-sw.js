@@ -1,9 +1,9 @@
 /* The Love Arcade's offline keeper. It sits at the top of the site so it can also keep the Forecast,
    but it only ever touches the Arcade, the Forecast and their fonts. Every other page of the site
    goes to the network exactly as before. Bump VERSION whenever a booth changes. */
-const VERSION = "love-arcade-v2";
+const VERSION = "love-arcade-v4";
 const FILES = [
-  "arcade/", "arcade/index.html", "arcade/arcade.js", "arcade/arcade.css", "arcade/manifest.webmanifest", "arcade/joystick-180.png", "arcade/joystick-512.png",
+  "arcade/", "arcade/index.html", "arcade/arcade.js", "arcade/arcade.css", "arcade/old-safari.js", "arcade/manifest.webmanifest", "arcade/joystick-180.png", "arcade/joystick-512.png",
   "arcade/myth-or-fact.html", "arcade/love-lab.html", "arcade/text-back.html", "arcade/what-they-mean.html",
   "arcade/face-off.html", "arcade/who-gets-the-call.html", "arcade/fight-night.html", "arcade/in-sync.html",
   "arcade/fortune-cookie.html", "arcade/spot-the-stage.html", "arcade/matchmaker.html", "arcade/skip-the-shortcut.html",
@@ -12,7 +12,7 @@ const FILES = [
 const BASE = new URL("./", self.location).pathname;
 
 self.addEventListener("install", e => {
-  e.waitUntil(caches.open(VERSION).then(c => Promise.allSettled(FILES.map(f => c.add(new Request(f, {cache: "reload"}))))).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(VERSION).then(c => Promise.all(FILES.map(f => c.add(new Request(f, {cache: "reload"})).catch(() => {})))).then(() => self.skipWaiting()));
 });
 self.addEventListener("activate", e => {
   e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith("love-arcade-") && k !== VERSION).map(k => caches.delete(k)))).then(() => self.clients.claim()));
