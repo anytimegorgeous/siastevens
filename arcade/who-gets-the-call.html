@@ -15,21 +15,21 @@
 :root{--paper:#F3E6C8;--paper2:#EAD8B0;--ox:#8B1E2B;--ox2:#5E111B;--brass:#B8892E;--ink:#2A1B12;--muted:#6E5A45;--app:#1F7A8C;
   --ac-ink:var(--ink);--ac-btn:var(--ox);--ac-btn-ink:var(--paper);--ac-line:var(--brass)}
 body{background:radial-gradient(120% 80% at 50% 0%,#FBF3DE,var(--paper) 55%,var(--paper2));color:var(--ink);font-family:"Courier Prime",ui-monospace,monospace}
-body::before{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(110,90,69,.05) 0 2px,transparent 2px 6px)}
+body::before{content:"";position:fixed;top:0;right:0;bottom:0;left:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(110,90,69,.05) 0 2px,transparent 2px 6px)}
 .ac-home{background:var(--ox2)}
 .wrap{position:relative;max-width:820px;margin:0 auto;min-height:100vh;min-height:100dvh;padding:70px 22px 28px;display:flex;flex-direction:column;justify-content:center}
 .scr{display:flex;flex-direction:column;gap:20px;align-items:center;text-align:center}
 .disp{font-family:"Abril Fatface",Georgia,serif;font-weight:400}
 
 .phone{width:150px;height:auto}
-.intro h1{font-size:clamp(3rem,9vw,5.4rem);line-height:.95;color:var(--ox)}
+.intro h1{font-size:max(3rem,min(9vw,5.4rem));line-height:.95;color:var(--ox)}
 .intro p{font-size:1.25rem;line-height:1.45;max-width:30ch}
 .dial{min-height:66px;padding:0 40px;border:3px solid var(--ox2);border-radius:99px;background:var(--ox);color:var(--paper);font:400 1.5rem "Abril Fatface";box-shadow:0 6px 0 var(--ox2)}
 .dial:active{transform:translateY(4px);box-shadow:0 2px 0 var(--ox2)}
 
 .ticket{position:relative;width:min(100%,640px);padding:26px 26px 22px;background:#FFF9EA;border:2px solid var(--brass);box-shadow:6px 6px 0 var(--brass)}
 .ticket .no{font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-size:.85rem}
-.ticket h2{font-size:clamp(2.1rem,6vw,3.2rem);line-height:1.05;margin-top:8px;color:var(--ox)}
+.ticket h2{font-size:max(2.1rem,min(6vw,3.2rem));line-height:1.05;margin-top:8px;color:var(--ox)}
 .ticket .ask{margin-top:10px;font-size:1.15rem}
 .lines{display:flex;gap:6px;justify-content:center}
 .lines i{width:22px;height:22px;border-radius:50%;border:2px solid var(--brass);background:#FFF9EA}
@@ -52,9 +52,9 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;background:re
 .next.res{background:var(--ox);color:var(--paper)}
 .next{min-height:56px;padding:0 30px;border-radius:99px;border:2.5px solid var(--ox);background:transparent;color:var(--ox);font:700 1.1rem "Courier Prime";letter-spacing:.06em}
 
-.res .big{font-size:clamp(4.4rem,16vw,8rem);line-height:.9;color:var(--app)}
+.res .big{font-size:max(4.4rem,min(16vw,8rem));line-height:.9;color:var(--app)}
 .res .big.low{color:var(--ox)}
-.res .sub{font:400 clamp(1.5rem,4vw,2.1rem) "Abril Fatface"}
+.res .sub{font:400 max(1.5rem,min(4vw,2.1rem)) "Abril Fatface"}
 .res .line{font-size:1.2rem;line-height:1.45;max-width:34ch}
 .row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:640px}
 .tagp{padding:6px 12px;border-radius:99px;font-size:.92rem;font-weight:700;border:2px solid}
@@ -64,6 +64,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;background:re
 /* clean games: no mid-game counters; scores come at the end */
 .lines,.ticket .no{display:none!important}
 </style>
+<script src="old-safari.js"></script>
 </head>
 <body>
 <main class="wrap">

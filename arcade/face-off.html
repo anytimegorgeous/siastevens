@@ -19,7 +19,7 @@ body{background:var(--deep);color:var(--ink);font-family:"DM Sans",system-ui,san
 
 .intro{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:70px 24px 30px;text-align:center;
   background:linear-gradient(115deg,var(--a) 0 49.6%,var(--vs) 49.6% 50.4%,var(--b) 50.4%)}
-.intro h1{font:400 clamp(3.4rem,12vw,7rem)/.9 "Bowlby One";text-transform:uppercase;text-shadow:0 6px 0 rgba(0,0,0,.25)}
+.intro h1{font:400 max(3.4rem,min(12vw,7rem))/.9 "Bowlby One";text-transform:uppercase;text-shadow:0 6px 0 rgba(0,0,0,.25)}
 .intro p{font-size:1.35rem;font-weight:700;max-width:26ch;padding:12px 18px;border-radius:14px;background:rgba(22,10,46,.72)}
 .fight{min-height:70px;padding:0 44px;border:0;border-radius:14px;background:var(--vs);color:var(--deep);font:400 1.6rem "Bowlby One";text-transform:uppercase;box-shadow:0 7px 0 #B39F00,0 16px 30px rgba(0,0,0,.35)}
 .fight:active{transform:translateY(5px);box-shadow:0 2px 0 #B39F00}
@@ -28,7 +28,7 @@ body{background:var(--deep);color:var(--ink);font-family:"DM Sans",system-ui,san
 .side{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:90px 7% 60px;border:0;color:#fff;text-align:center;transition:filter .25s,transform .25s;overflow:hidden}
 .side.l{background:radial-gradient(90% 70% at 30% 40%,#FF6FB0,var(--a) 60%,#B8005A)}
 .side.r{background:radial-gradient(90% 70% at 70% 40%,#7895FF,var(--b) 60%,#0F2BB0)}
-.side span{font:700 clamp(1.6rem,3.8vw,2.6rem)/1.15 "DM Sans";max-width:14ch;text-wrap:balance;text-shadow:0 3px 14px rgba(0,0,0,.25)}
+.side span{font:700 max(1.6rem,min(3.8vw,2.6rem))/1.15 "DM Sans";max-width:14ch;text-wrap:balance;text-shadow:0 3px 14px rgba(0,0,0,.25)}
 .side .tap{font:700 .8rem "DM Sans";letter-spacing:.24em;text-transform:uppercase;opacity:.8}
 .side:active{filter:brightness(1.1)}
 .duel.won .side{filter:grayscale(.85) brightness(.5)}
@@ -43,7 +43,7 @@ body{background:var(--deep);color:var(--ink);font-family:"DM Sans",system-ui,san
 
 .res{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:70px 24px 30px;max-width:760px;margin:0 auto;text-align:center}
 .res .k{font:700 .85rem "DM Sans";letter-spacing:.26em;text-transform:uppercase;opacity:.75}
-.winner{font:400 clamp(3.2rem,11vw,6rem)/.95 "Bowlby One";text-transform:uppercase;background:linear-gradient(90deg,var(--a),var(--vs),#6E8BFF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.winner{font:400 max(3.2rem,min(11vw,6rem))/.95 "Bowlby One";text-transform:uppercase;background:linear-gradient(90deg,var(--a),var(--vs),#6E8BFF);-webkit-background-clip:text;background-clip:text;color:transparent}
 .res .line{font-size:1.3rem;line-height:1.4;font-weight:500;max-width:32ch}
 .bars{width:100%;display:grid;gap:8px}
 .bar{display:grid;grid-template-columns:120px 1fr 26px;align-items:center;gap:12px;font-weight:700;text-align:left}
@@ -61,6 +61,7 @@ body{background:var(--deep);color:var(--ink);font-family:"DM Sans",system-ui,san
 /* clean games: no mid-game counters; scores come at the end */
 .hud{display:none!important}
 </style>
+<script src="old-safari.js"></script>
 </head>
 <body>
 <section class="scr intro pop" id="s-intro">

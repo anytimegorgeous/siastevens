@@ -17,7 +17,7 @@
 body{background:radial-gradient(80% 60% at 50% 0%,#3A1512,var(--arena) 70%);color:var(--ink);font-family:"Oswald",system-ui,sans-serif}
 .wrap{max-width:860px;margin:0 auto;min-height:100vh;min-height:100dvh;padding:66px 18px 24px;display:flex;flex-direction:column;justify-content:center}
 .poster{position:relative;background:var(--poster);border:6px solid var(--ink);box-shadow:0 0 0 4px var(--poster),0 24px 50px rgba(0,0,0,.6);padding:28px 26px 26px}
-.poster::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+.poster::before{content:"";position:absolute;top:0;right:0;bottom:0;left:0;pointer-events:none;opacity:.5;
   background:radial-gradient(circle at 20% 20%,rgba(139,90,40,.12),transparent 40%),radial-gradient(circle at 80% 70%,rgba(139,90,40,.14),transparent 45%)}
 .scr{position:relative;display:flex;flex-direction:column;gap:18px;align-items:center;text-align:center}
 .slab{font-family:"Alfa Slab One",Georgia,serif;font-weight:400}
@@ -26,31 +26,31 @@ body{background:radial-gradient(80% 60% at 50% 0%,#3A1512,var(--arena) 70%);colo
 .ropes i:nth-child(2){background:var(--ink)}
 
 .intro .tonight{font-weight:700;letter-spacing:.4em;text-transform:uppercase;font-size:.95rem}
-.intro h1{font-size:clamp(3.6rem,13vw,7.4rem);line-height:.86;color:var(--red);text-shadow:4px 4px 0 var(--ink)}
-.intro .vs{font-size:clamp(1.3rem,3.4vw,1.8rem);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.intro h1{font-size:max(3.6rem,min(13vw,7.4rem));line-height:.86;color:var(--red);text-shadow:4px 4px 0 var(--ink)}
+.intro .vs{font-size:max(1.3rem,min(3.4vw,1.8rem));font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 .intro p.d{font-size:1.15rem;font-weight:500;max-width:30ch;line-height:1.35}
 .bell{min-height:68px;padding:0 42px;border:4px solid var(--ink);background:var(--red);color:var(--poster);font:400 1.6rem "Alfa Slab One";text-transform:uppercase;box-shadow:5px 5px 0 var(--ink)}
 .bell:active{transform:translate(4px,4px);box-shadow:1px 1px 0 var(--ink)}
 
-.rd{font-size:clamp(2.6rem,8vw,4rem);line-height:1;color:var(--red)}
+.rd{font-size:max(2.6rem,min(8vw,4rem));line-height:1;color:var(--red)}
 .rd.ding{animation:ding .5s cubic-bezier(.3,1.8,.5,1)}
 @keyframes ding{from{transform:scale(1.8);opacity:0}}
 .cards{display:flex;gap:8px}
 .cards i{width:30px;height:8px;background:#D8C6A6}
 .cards i.d{background:var(--ink)} .cards i.n{background:var(--red)}
-.sit{font-size:clamp(1.5rem,4.2vw,2.2rem);font-weight:600;line-height:1.2;max-width:24ch;text-transform:uppercase}
+.sit{font-size:max(1.5rem,min(4.2vw,2.2rem));font-weight:600;line-height:1.2;max-width:24ch;text-transform:uppercase}
 .moves{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%}
 .mv{display:flex;align-items:center;gap:12px;min-height:84px;padding:12px 16px;text-align:left;border:3px solid var(--ink);background:#FFF8EA;color:var(--ink);font:500 1.15rem/1.25 "Oswald";box-shadow:4px 4px 0 var(--ink)}
 .mv::before{content:"";flex:none;width:30px;height:30px;border-radius:50% 50% 45% 45%;background:var(--red);box-shadow:inset -4px -4px 0 var(--red2)}
 .mv:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
 .moves.done .mv:not(.on){opacity:.3}
 .mv.on{background:var(--ink);color:var(--poster)}
-.hitlbl{font-size:clamp(1.8rem,5vw,2.6rem);color:var(--red);transform:rotate(-4deg);animation:acPop .3s both}
+.hitlbl{font-size:max(1.8rem,min(5vw,2.6rem));color:var(--red);transform:rotate(-4deg);animation:acPop .3s both}
 .shake{animation:shake .3s linear}
 @keyframes shake{20%{transform:translate(-6px,2px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-4px,3px)}80%{transform:translate(3px,-1px)}}
 
 .res .k{font-weight:700;letter-spacing:.34em;text-transform:uppercase}
-.belt{font-size:clamp(3rem,10vw,5.4rem);line-height:.9;color:var(--red);text-shadow:3px 3px 0 var(--ink)}
+.belt{font-size:max(3rem,min(10vw,5.4rem));line-height:.9;color:var(--red);text-shadow:3px 3px 0 var(--ink)}
 .res .line{font-size:1.25rem;font-weight:500;line-height:1.4;max-width:34ch}
 .score{width:100%;max-width:520px;display:grid;gap:6px}
 .score div{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border:2px solid var(--ink);font-weight:600;font-size:1.1rem;text-transform:uppercase;letter-spacing:.04em}
@@ -61,6 +61,7 @@ body{background:radial-gradient(80% 60% at 50% 0%,#3A1512,var(--arena) 70%);colo
 /* clean games: no mid-game counters; scores come at the end */
 .cards{display:none!important}
 </style>
+<script src="old-safari.js"></script>
 </head>
 <body>
 <main class="wrap">

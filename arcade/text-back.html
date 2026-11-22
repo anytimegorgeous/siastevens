@@ -22,7 +22,7 @@ body{background:linear-gradient(160deg,var(--bg1),var(--bg2));color:var(--ink);f
 .intro{padding:46px 32px 34px;gap:18px;justify-content:center;text-align:center;align-items:center}
 .app{width:92px;height:92px;border-radius:24px;background:linear-gradient(160deg,#5B8CFF,#2F6BFF);display:grid;place-items:center;box-shadow:0 10px 24px rgba(47,107,255,.4)}
 .app svg{width:52px;height:52px;fill:#fff}
-.intro h1{font-size:clamp(2.4rem,7vw,3.2rem);font-weight:800;letter-spacing:-.03em}
+.intro h1{font-size:max(2.4rem,min(7vw,3.2rem));font-weight:800;letter-spacing:-.03em}
 .intro p{font-size:1.2rem;line-height:1.4;color:var(--muted);max-width:26ch}
 .pill{min-height:60px;padding:0 34px;border-radius:99px;border:0;background:var(--me);color:#fff;font-size:1.2rem;font-weight:700;box-shadow:0 8px 18px rgba(47,107,255,.35)}
 
@@ -54,7 +54,7 @@ body{background:linear-gradient(160deg,var(--bg1),var(--bg2));color:var(--ink);f
 
 .end{padding:40px 28px 26px;gap:18px;text-align:center;align-items:stretch}
 .end .k{font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.end h2{font-size:clamp(2.3rem,7vw,3.2rem);font-weight:800;letter-spacing:-.03em;line-height:1}
+.end h2{font-size:max(2.3rem,min(7vw,3.2rem));font-weight:800;letter-spacing:-.03em;line-height:1}
 .end .line{font-size:1.2rem;line-height:1.4;color:#374151}
 .gauge{position:relative;width:min(100%,380px);margin:4px auto 0}
 .gauge svg{display:block;width:100%;height:auto}
@@ -69,6 +69,7 @@ html.talk .phone{width:min(100%,680px)}
 /* clean games: no mid-game counters; scores come at the end */
 .step{display:none!important}
 </style>
+<script src="old-safari.js"></script>
 </head>
 <body>
 <main class="wrap">

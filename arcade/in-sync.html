@@ -26,7 +26,7 @@ body.p2{background:linear-gradient(180deg,var(--two2),var(--bg) 60%)}
 .duo i:first-child{left:10px;background:var(--one)} .duo i:last-child{right:10px;background:var(--two)}
 .duo.beat i:first-child{animation:inL 2.4s ease-in-out infinite} .duo.beat i:last-child{animation:inR 2.4s ease-in-out infinite}
 @keyframes inL{50%{transform:translateX(18px)}} @keyframes inR{50%{transform:translateX(-18px)}}
-.intro h1{font-size:clamp(3.2rem,10vw,5.6rem);font-weight:700;line-height:.95;letter-spacing:-.02em}
+.intro h1{font-size:max(3.2rem,min(10vw,5.6rem));font-weight:700;line-height:.95;letter-spacing:-.02em}
 .intro h1 span{color:var(--one)} .intro h1 b{color:var(--two);font-weight:700}
 .intro p{font-size:1.3rem;line-height:1.4;color:var(--muted);max-width:28ch}
 .btn{min-height:64px;padding:0 38px;border-radius:99px;border:0;background:var(--ink);color:#fff;font:600 1.3rem "Fredoka";box-shadow:0 8px 20px rgba(43,35,64,.25)}
@@ -37,7 +37,7 @@ body.p2{background:linear-gradient(180deg,var(--two2),var(--bg) 60%)}
 .dots{display:flex;gap:6px}
 .dots i{width:12px;height:12px;border-radius:50%;background:#E4D7CF}
 .dots i.d{background:var(--c)} .dots i.n{background:var(--ink)}
-.q{font-size:clamp(2rem,6vw,3rem);font-weight:600;line-height:1.1;max-width:18ch}
+.q{font-size:max(2rem,min(6vw,3rem));font-weight:600;line-height:1.1;max-width:18ch}
 .q small{display:block;font-size:.45em;font-weight:500;color:var(--muted);margin-top:8px}
 .opts{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%}
 .opt{min-height:84px;padding:12px;border-radius:22px;border:3px solid var(--c);background:#fff;color:var(--ink);font:500 1.35rem "Fredoka";transition:transform .1s}
@@ -46,11 +46,11 @@ body.p2{background:linear-gradient(180deg,var(--two2),var(--bg) 60%)}
 
 .pass{gap:24px}
 .pass .eyes{font-size:5rem;line-height:1}
-.pass h2{font-size:clamp(2.2rem,7vw,3.4rem);font-weight:700;line-height:1.05}
+.pass h2{font-size:max(2.2rem,min(7vw,3.4rem));font-weight:700;line-height:1.05}
 .pass p{font-size:1.25rem;color:var(--muted)}
 
-.big{font-size:clamp(5rem,18vw,9rem);font-weight:700;line-height:.9;background:linear-gradient(90deg,var(--one),var(--heart),var(--two));-webkit-background-clip:text;background-clip:text;color:transparent}
-.verdict{font-size:clamp(1.8rem,5vw,2.4rem);font-weight:600}
+.big{font-size:max(5rem,min(18vw,9rem));font-weight:700;line-height:.9;background:linear-gradient(90deg,var(--one),var(--heart),var(--two));-webkit-background-clip:text;background-clip:text;color:transparent}
+.verdict{font-size:max(1.8rem,min(5vw,2.4rem));font-weight:600}
 .line{font-size:1.2rem;line-height:1.4;color:var(--muted);max-width:34ch}
 .table{width:100%;display:grid;gap:6px}
 .r{display:grid;grid-template-columns:1.3fr 1fr 34px 1fr;gap:10px;align-items:center;padding:8px 12px;border-radius:14px;background:#fff;text-align:left;font-size:1rem;opacity:0;animation:rowIn .35s forwards}
@@ -64,6 +64,7 @@ body.p2{background:linear-gradient(180deg,var(--two2),var(--bg) 60%)}
 /* clean games: no mid-game counters; scores come at the end */
 .dots{display:none!important}
 </style>
+<script src="old-safari.js"></script>
 </head>
 <body>
 <main class="wrap">

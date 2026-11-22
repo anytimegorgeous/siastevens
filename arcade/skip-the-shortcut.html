@@ -22,7 +22,7 @@ body{background:var(--sky);color:var(--paper);font-family:"Outfit",system-ui,san
 .px{font-family:"Press Start 2P",monospace;line-height:1.5}
 svg.spr{shape-rendering:crispEdges;display:block;width:100%;height:auto}
 
-h1.px{font-size:clamp(1.6rem,5.4vw,2.8rem);color:var(--paper);text-shadow:4px 4px 0 var(--ink)}
+h1.px{font-size:max(1.6rem,min(5.4vw,2.8rem));color:var(--paper);text-shadow:4px 4px 0 var(--ink)}
 .sub{font-size:1.25rem;font-weight:700;max-width:34ch;line-height:1.35;color:var(--paper);text-shadow:2px 2px 0 var(--ink)}
 .btn{min-height:60px;padding:0 28px;border:4px solid var(--ink);background:var(--gold);color:var(--ink);font:400 .95rem "Press Start 2P";box-shadow:6px 6px 0 var(--ink)}
 .btn:active{transform:translate(4px,4px);box-shadow:2px 2px 0 var(--ink)}
@@ -41,19 +41,19 @@ h1.px{font-size:clamp(1.6rem,5.4vw,2.8rem);color:var(--paper);text-shadow:4px 4p
 .cloud{position:absolute;width:12%;height:7%;background:var(--paper);box-shadow:0 0 0 0 var(--paper);border-radius:2px}
 .cloud::before,.cloud::after{content:"";position:absolute;background:var(--paper);width:45%;height:110%;bottom:40%;left:15%}
 .cloud::after{left:48%;height:80%}
-.hud{position:absolute;top:3%;left:3%;right:3%;display:flex;justify-content:space-between;font:400 clamp(.5rem,1.5vw,.8rem) "Press Start 2P";color:var(--paper);text-shadow:2px 2px 0 var(--ink);z-index:5}
-.lvl{position:absolute;top:12%;left:50%;transform:translateX(-50%);max-width:88%;text-align:center;font:800 clamp(1rem,2.8vw,1.5rem)/1.25 "Outfit";color:var(--paper);background:var(--ink);border:3px solid var(--paper);padding:8px 14px;z-index:5}
+.hud{position:absolute;top:3%;left:3%;right:3%;display:flex;justify-content:space-between;font:400 max(.5rem,min(1.5vw,.8rem)) "Press Start 2P";color:var(--paper);text-shadow:2px 2px 0 var(--ink);z-index:5}
+.lvl{position:absolute;top:12%;left:50%;transform:translateX(-50%);max-width:88%;text-align:center;font:800 max(1rem,min(2.8vw,1.5rem))/1.25 "Outfit";color:var(--paper);background:var(--ink);border:3px solid var(--paper);padding:8px 14px;z-index:5}
 .ob{position:absolute}
 .hero{position:absolute;width:6.2%;z-index:4}
 .hero.walk .spr{animation:step .18s steps(2) infinite}
 @keyframes step{50%{transform:translateY(-6%)}}
 .door{width:8.4%}
-.door .n{position:absolute;left:0;right:0;top:-34%;font:400 clamp(.6rem,1.8vw,1rem) "Press Start 2P";color:var(--gold);text-shadow:2px 2px 0 var(--ink)}
+.door .n{position:absolute;left:0;right:0;top:-34%;font:400 max(.6rem,min(1.8vw,1rem)) "Press Start 2P";color:var(--gold);text-shadow:2px 2px 0 var(--ink)}
 .blk{position:absolute;background:linear-gradient(var(--ink) 0 2px,transparent 2px) 0 0/100% 50%,linear-gradient(90deg,var(--ink) 0 2px,transparent 2px) 0 0/50% 100%,#E09050;border:2px solid var(--ink)}
 .pit{position:absolute;bottom:0;height:16%;background:var(--ink)}
 .coin{width:2.2%;animation:spin .6s steps(2) infinite}
 @keyframes spin{50%{transform:scaleX(.4)}}
-.big-msg{position:absolute;inset:0;display:grid;place-items:center;font:400 clamp(1.1rem,4vw,2.2rem) "Press Start 2P";color:var(--paper);text-shadow:4px 4px 0 var(--ink);z-index:6;animation:acPop .35s both}
+.big-msg{position:absolute;top:0;right:0;bottom:0;left:0;display:grid;place-items:center;font:400 max(1.1rem,min(4vw,2.2rem)) "Press Start 2P";color:var(--paper);text-shadow:4px 4px 0 var(--ink);z-index:6;animation:acPop .35s both}
 .heart-up{width:6%;animation:heartUp 1.2s ease-out forwards;z-index:6}
 @keyframes heartUp{from{transform:translateY(0) scale(.4);opacity:0}30%{opacity:1}to{transform:translateY(-120%) scale(1.3);opacity:1}}
 
@@ -70,12 +70,13 @@ h1.px{font-size:clamp(1.6rem,5.4vw,2.8rem);color:var(--paper);text-shadow:4px 4p
 .box p{font-size:1.2rem;font-weight:600;line-height:1.4}
 .box .btn{margin-top:12px}
 
-.res-t{font:400 clamp(1rem,3.4vw,1.6rem)/1.5 "Press Start 2P";color:var(--gold);text-shadow:3px 3px 0 var(--ink)}
+.res-t{font:400 max(1rem,min(3.4vw,1.6rem))/1.5 "Press Start 2P";color:var(--gold);text-shadow:3px 3px 0 var(--ink)}
 .res-p{font-size:1.25rem;font-weight:700;line-height:1.4;max-width:38ch;text-shadow:2px 2px 0 var(--ink)}
 .ac-foot{background:var(--ink);border-radius:0;width:100%;max-width:640px;border:4px solid var(--paper)}
 .ac-btn{border-radius:0;font-family:"Press Start 2P",monospace;font-size:.7rem}
 @media (max-width:620px){.heroes,#pick2{grid-template-columns:repeat(2,minmax(0,1fr))}.cb{font-size:1.05rem}}
 </style>
+<script src="old-safari.js"></script>
 </head>
 <body>
 <main class="wrap">
@@ -87,7 +88,7 @@ h1.px{font-size:clamp(1.6rem,5.4vw,2.8rem);color:var(--paper);text-shadow:4px 4p
   </section>
 
   <section class="scr" id="s-who" hidden>
-    <p style="font:800 clamp(1.3rem,3.6vw,1.8rem) Outfit;text-shadow:3px 3px 0 var(--ink)">Who&rsquo;s waiting at the castle?</p>
+    <p style="font:800 max(1.3rem,min(3.6vw,1.8rem)) Outfit;text-shadow:3px 3px 0 var(--ink)">Who&rsquo;s waiting at the castle?</p>
     <div class="heroes" id="pick2"></div>
   </section>
 

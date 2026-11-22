@@ -18,7 +18,7 @@ body{background:linear-gradient(160deg,var(--blush),var(--peach));color:var(--in
 .ac-home{background:rgba(42,27,46,.6)}
 .wrap{max-width:680px;margin:0 auto;min-height:100vh;min-height:100dvh;padding:66px 20px 26px;display:flex;flex-direction:column;justify-content:center}
 .scr{display:flex;flex-direction:column;gap:18px;align-items:center;text-align:center}
-.logo{font:400 clamp(3rem,10vw,5rem)/1.1 "Pacifico";color:var(--rose)}
+.logo{font:400 max(3rem,min(10vw,5rem))/1.1 "Pacifico";color:var(--rose)}
 .lead{font-size:1.25rem;font-weight:700;max-width:28ch}
 .cupid{font-size:4rem;line-height:1}
 .go{min-height:64px;padding:0 40px;border:0;border-radius:99px;background:var(--rose);color:#fff;font:900 1.25rem "Nunito";box-shadow:0 10px 22px rgba(255,77,126,.35)}
@@ -47,7 +47,7 @@ body{background:linear-gradient(160deg,var(--blush),var(--peach));color:var(--in
 .next{min-height:58px;padding:0 34px;border:0;border-radius:99px;background:var(--ink);color:#fff;font:900 1.1rem "Nunito"}
 
 .opts{display:grid;gap:10px;width:100%}
-.big{font:400 clamp(2.4rem,8vw,3.8rem)/1.2 "Pacifico";color:var(--rose)}
+.big{font:400 max(2.4rem,min(8vw,3.8rem))/1.2 "Pacifico";color:var(--rose)}
 .score{font:900 1.3rem "Nunito"}
 .you{width:100%;padding:18px 22px;border-radius:22px;background:#fff;text-align:left;font-size:1.15rem;line-height:1.4;font-weight:700}
 .you small{display:block;font:900 .8rem "Nunito";letter-spacing:.18em;text-transform:uppercase;color:var(--rose);margin-bottom:6px}
@@ -55,6 +55,7 @@ body{background:linear-gradient(160deg,var(--blush),var(--peach));color:var(--in
 /* clean games: no mid-game counters; scores come at the end */
 .top{display:none!important}
 </style>
+<script src="old-safari.js"></script>
 </head>
 <body>
 <main class="wrap">
@@ -76,7 +77,7 @@ body{background:linear-gradient(160deg,var(--blush),var(--peach));color:var(--in
 
   <section class="scr" id="s-own" hidden>
     <div class="cupid" aria-hidden="true">&#129694;</div>
-    <h2 style="font:900 clamp(1.8rem,5vw,2.4rem)/1.15 Nunito;max-width:20ch">Your turn. Where does the real you show up?</h2>
+    <h2 style="font:900 max(1.8rem,min(5vw,2.4rem))/1.15 Nunito;max-width:20ch">Your turn. Where does the real you show up?</h2>
     <div class="opts" id="opts"></div>
   </section>
 
