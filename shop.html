@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Love Shop | Sia Stevens: Experience Kits &amp; Games for Modern Love</title>
+<meta name="description" content="The Love Shop by relationship educator Sia Stevens: The Love Arcade Date Night and Quality Time experience kits, The Love Oracle conversation card game and Did You Know Love? relationship trivia. Free shipping, packed by hand in Seattle.">
+<link rel="icon" href="shop-img/ss-logo-navy.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Kalam:wght@400;700&family=Caveat+Brush&family=Lora:ital,wght@0,400;0,600;1,400&family=Bungee&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1d1b3a;--coral:#ef5a2e;--red:#e2304e;--mag:#b51d5a;--peach:#fbc39a;--cream:#fff4ea;--kraft:#e9cfae;--mute:#6f5f66;--green:#3f7a2b;--chalk:#2a2b33;--grad:linear-gradient(120deg,#ef5a2e,#e2304e 55%,#b51d5a)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Lora,Georgia,serif;color:var(--ink);background:var(--cream);overflow-x:hidden;background-image:radial-gradient(rgba(239,90,46,.07) 1.2px,transparent 1.4px);background-size:22px 22px}
+body.lock{overflow:hidden}
+a{color:inherit}
+img{display:block;max-width:100%}
+button{font:inherit;cursor:pointer}
+
+/* top */
+.top{display:flex;align-items:center;justify-content:space-between;padding:12px 5vw;background:var(--ink);color:#f7e6d6;position:sticky;top:0;z-index:40}
+.top a.home{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:Oswald;letter-spacing:.2em;font-size:15px}
+.top img{width:34px;height:34px}
+.top nav{display:flex;align-items:center}
+.top nav a{font-size:14px;margin-left:22px;text-decoration:none;opacity:.85}
+.top nav a:hover{opacity:1;color:var(--peach)}
+.cartbtn{margin-left:22px;position:relative;background:none;border:none;color:#fff;display:flex;align-items:center;gap:6px;font-family:Oswald;letter-spacing:.12em;font-size:14px}
+.cartbtn svg{width:24px;height:24px}
+.cartbtn b{position:absolute;top:-8px;left:14px;min-width:19px;height:19px;border-radius:10px;background:var(--red);font-size:11px;display:flex;align-items:center;justify-content:center;padding:0 5px;transform:scale(0);transition:transform .3s cubic-bezier(.3,1.8,.5,1)}
+.cartbtn b.on{transform:scale(1)}
+.cartbtn.bump{animation:bump .5s}
+@keyframes bump{30%{transform:scale(1.25) rotate(-8deg)}60%{transform:scale(.95)}}
+.ticker{background:var(--grad);color:#fff4e3;overflow:hidden;white-space:nowrap;font-family:Oswald;letter-spacing:.18em;font-size:13px;padding:7px 0}
+.ticker div{display:inline-block;animation:tick 34s linear infinite}
+.ticker span{margin:0 26px}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* awning + lights */
+.awning{height:60px;position:relative;z-index:3;background:repeating-linear-gradient(90deg,var(--coral) 0 60px,#fff1e3 60px 120px);-webkit-mask:radial-gradient(30px at 30px 60px,transparent 98%,#000) 0 0/60px 100%;mask:radial-gradient(30px at 30px 60px,transparent 98%,#000) 0 0/60px 100%;filter:drop-shadow(0 6px 6px rgba(0,0,0,.15))}
+.lights{position:relative;height:56px;margin-top:-24px;z-index:4;pointer-events:none}
+.lights svg{position:absolute;inset:0;width:100%;height:100%}
+.bulb{position:absolute;width:14px;height:20px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;transform:translateX(-50%);animation:twinkle 2.6s ease-in-out infinite}
+.bulb::before{content:"";position:absolute;top:-6px;left:4px;width:6px;height:7px;background:#3b3b45;border-radius:2px}
+@keyframes twinkle{0%,100%{opacity:1;filter:brightness(1.1)}45%{opacity:.5;filter:brightness(.8)}55%{opacity:1}}
+
+/* hero */
+.hero{text-align:center;padding:6px 5vw 0;position:relative;z-index:2}
+.board{display:inline-block;background:var(--chalk);border:12px solid #8a5a35;border-radius:10px;padding:22px 40px 20px;color:#f6f1e8;box-shadow:0 14px 34px rgba(0,0,0,.25),inset 0 0 60px rgba(0,0,0,.5);transform:rotate(-1.2deg);background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:6px 6px}
+.board .k{font-family:Kalam;color:var(--peach);font-size:19px}
+.board h1{font-family:"Caveat Brush",Kalam,cursive;font-weight:400;font-size:clamp(52px,7vw,84px);line-height:.95;color:#fff}
+.board h1 em{font-style:normal;color:#ff8f78}
+.board p{font-family:Kalam;font-size:19px;color:#ece4d6}
+.swipehint{font-family:Kalam;color:var(--red);font-size:19px;margin:22px 0 0}
+.swipehint span{display:inline-block;animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateX(10px)}}
+
+/* rope carousel */
+.ropewrap{position:relative;margin-top:8px;z-index:2}
+.rope{overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:none;cursor:grab;padding:40px 0 50px}
+.rope::-webkit-scrollbar{display:none}
+.rope.drag{cursor:grabbing;scroll-snap-type:none}
+.track{position:relative;display:flex;gap:56px;padding:0 max(6vw,calc(50vw - 640px));width:max-content}
+.track svg.cord{position:absolute;left:0;top:-18px;height:60px;pointer-events:none}
+.hang{position:relative;width:min(300px,72vw);flex:none;scroll-snap-align:center;transform-origin:50% -20px;transform:rotate(calc(var(--base,0deg) + var(--tilt,0deg)));transition:transform .9s cubic-bezier(.2,1.6,.4,1)}
+.hang.idle{animation:sway 5.5s ease-in-out infinite}
+.hang:nth-child(odd).idle{animation-delay:-2.4s}
+@keyframes sway{0%,100%{transform:rotate(calc(var(--base,0deg) + 1.4deg))}50%{transform:rotate(calc(var(--base,0deg) - 1.4deg))}}
+.peg{position:absolute;top:-30px;left:50%;width:16px;height:44px;margin-left:-8px;background:linear-gradient(90deg,#c99b6d,#e7c194,#c99b6d);border-radius:3px;box-shadow:0 2px 3px rgba(0,0,0,.25);z-index:3}
+.peg::after{content:"";position:absolute;left:5px;top:18px;width:6px;height:6px;border-radius:50%;background:#8a6342}
+.pola{background:#fff;padding:14px 14px 16px;box-shadow:0 16px 34px rgba(120,30,40,.2);cursor:pointer;transition:box-shadow .3s,transform .3s;user-select:none}
+.pola:hover{box-shadow:0 24px 50px rgba(120,30,40,.3);transform:translateY(-4px)}
+.pola img{width:100%;aspect-ratio:1;object-fit:cover;pointer-events:none}
+.pola .t{font-family:Kalam;font-weight:700;font-size:24px;margin-top:10px;line-height:1.1}
+.pola .c{font-family:Oswald;letter-spacing:.18em;font-size:11px;color:var(--coral);margin-top:8px}
+.pola .d{font-family:Kalam;font-size:17px;color:var(--mute);line-height:1.25;margin-top:2px}
+.pola .p{display:flex;align-items:baseline;justify-content:space-between;margin-top:8px}
+.pola .p span{font-family:Oswald;font-size:26px}.pola .p s{color:#b9a8a6;font-family:Kalam;font-size:16px;margin-right:6px}
+.pola .p em{font-style:normal;font-family:Oswald;letter-spacing:.12em;font-size:12px;color:var(--red)}
+.arrows{display:flex;justify-content:center;gap:14px;margin-top:-26px}
+.arrows button{width:46px;height:46px;border-radius:50%;border:2px solid var(--ink);background:var(--cream);font-size:20px;transition:.2s}
+.arrows button:hover{background:var(--ink);color:#fff}
+
+/* petals */
+.petals{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.petals span{position:absolute;top:-30px;color:#f59aa8;opacity:.7;animation:fall linear infinite}
+@keyframes fall{to{transform:translate(-160px,110vh) rotate(420deg)}}
+
+/* sections */
+section{max-width:1200px;margin:0 auto;padding:70px 5vw 30px;position:relative;z-index:2}
+.hd{text-align:center;margin-bottom:34px}
+.hd .s{font-family:Kalam;color:var(--red);font-size:22px}
+.hd h2{font-family:Oswald;font-weight:700;text-transform:uppercase;font-size:clamp(36px,5vw,54px);line-height:1}
+.hd p{color:var(--mute);margin-top:8px;max-width:620px;margin-left:auto;margin-right:auto}
+.btn{display:inline-block;font-family:Oswald;letter-spacing:.14em;text-transform:uppercase;font-size:14px;text-decoration:none;border:none;color:#fff;background:var(--grad);padding:12px 20px;border-radius:30px;box-shadow:0 6px 16px rgba(226,48,78,.3);transition:transform .15s;white-space:nowrap}
+.btn:hover{transform:scale(1.05) rotate(-1deg)}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);box-shadow:none}
+.btn.ghost:hover{background:var(--ink);color:#fff}
+
+/* ---------- stall corners ---------- */
+.corner{position:relative;z-index:2;padding:70px 0 80px;margin-top:40px}
+.corner .in{max-width:1200px;margin:0 auto;padding:0 5vw;position:relative}
+.corner .lede{text-align:center;max-width:620px;margin:18px auto 34px;color:#4d4450}
+.corner .lede .s{display:block;font-family:Kalam;color:var(--red);font-size:22px}
+/* gift table: linen + wood sign + shelf */
+.linen{background-color:#f6dccb;background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.18) 0 2px,transparent 2px 5px),repeating-linear-gradient(90deg,rgba(150,80,50,.06) 0 2px,transparent 2px 6px);box-shadow:inset 0 14px 20px -14px rgba(0,0,0,.25),inset 0 -14px 20px -14px rgba(0,0,0,.2)}
+.woodsign{position:relative;display:block;width:max-content;max-width:92%;margin:30px auto 0;padding:16px 40px 14px;border-radius:8px;text-align:center;color:#fff4e3;
+ background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(0,0,0,.08)),repeating-linear-gradient(0deg,#9a6238 0 22px,#8c5630 22px 24px),#9a6238;box-shadow:0 10px 22px rgba(80,40,10,.35),inset 0 0 0 3px rgba(60,30,10,.35)}
+.woodsign::before,.woodsign::after{content:"";position:absolute;top:-34px;width:2px;height:40px;background:#c9a57a}
+.woodsign::before{left:22%;transform:rotate(-24deg)}.woodsign::after{right:22%;transform:rotate(24deg)}
+.woodsign small{display:block;font-family:Kalam;font-size:17px;color:#ffd9b8}
+.woodsign span{display:block;font-family:"Caveat Brush",Kalam;font-size:clamp(40px,5.4vw,60px);line-height:1;text-shadow:0 2px 0 rgba(0,0,0,.25)}
+.woodsign .knot{position:absolute;top:-38px;left:50%;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:#7a5a40}
+.plank{height:26px;margin:-6px 3vw 0;border-radius:4px;background:linear-gradient(180deg,#b57a48,#8c5630);box-shadow:0 12px 18px rgba(80,40,10,.3),inset 0 3px 0 rgba(255,255,255,.18);position:relative}
+.plank::before,.plank::after{content:"";position:absolute;top:24px;width:18px;height:34px;background:#6f4426;border-radius:0 0 3px 3px}
+.plank::before{left:12%}.plank::after{right:12%}
+/* game corner: cork + chalk easel */
+.cork{background-color:#c99a66;background-image:radial-gradient(rgba(90,50,20,.35) 1px,transparent 1.6px),radial-gradient(rgba(255,235,200,.35) 1px,transparent 1.6px);background-size:9px 9px,13px 13px;background-position:0 0,4px 6px;border-top:16px solid #8c5630;border-bottom:16px solid #8c5630}
+.easel{position:relative;width:max-content;max-width:92%;margin:4px auto 0;text-align:center}
+.easel .bd{background:var(--chalk);border:10px solid #8a5a35;border-radius:6px;padding:14px 36px 12px;color:#fff;box-shadow:0 12px 24px rgba(0,0,0,.3),inset 0 0 40px rgba(0,0,0,.5);background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:6px 6px;transform:rotate(1deg)}
+.easel .bd small{display:block;font-family:Kalam;color:var(--peach);font-size:17px}
+.easel .bd span{display:block;font-family:"Caveat Brush",Kalam;font-size:clamp(40px,5.4vw,60px);line-height:1}
+.easel i{position:absolute;bottom:-34px;width:8px;height:44px;background:#7a5a40;border-radius:2px}
+.easel i:nth-of-type(1){left:22%;transform:rotate(12deg)}.easel i:nth-of-type(2){right:22%;transform:rotate(-12deg)}
+.cork .lede{background:rgba(255,248,238,.92);padding:14px 20px;border-radius:4px;box-shadow:0 6px 14px rgba(0,0,0,.15);transform:rotate(-.6deg);margin-top:46px;position:relative}
+.cork .lede::before{content:"";position:absolute;top:-8px;left:50%;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff8f78,var(--red) 60%,#8b1a33);box-shadow:0 2px 3px rgba(0,0,0,.35)}
+.pinned{position:absolute;width:96px;box-shadow:0 8px 16px rgba(0,0,0,.28);background:#fff;z-index:1}
+.pinned::before{content:"";position:absolute;top:-7px;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffe08a,#e2a52b 60%,#8a5c10);box-shadow:0 2px 3px rgba(0,0,0,.35);z-index:2}
+/* gift wrap: kraft + twine + bow */
+.kraft{background-color:#dcb98f;background-image:repeating-linear-gradient(17deg,rgba(255,255,255,.07) 0 1px,transparent 1px 4px),repeating-linear-gradient(-23deg,rgba(90,50,20,.06) 0 1px,transparent 1px 5px)}
+.ribbonhd{position:relative;text-align:center;padding:30px 0 0}
+.ribbonhd::before{content:"";position:absolute;left:0;right:0;top:74px;height:5px;background:linear-gradient(180deg,#e2304e,#b51d5a);box-shadow:0 2px 3px rgba(0,0,0,.15)}
+.ribbonhd .tagbox{position:relative;display:inline-block;background:#fff8ef;padding:18px 40px 14px;border-radius:6px;box-shadow:0 10px 22px rgba(80,40,10,.25)}
+.ribbonhd .tagbox small{display:block;font-family:Kalam;color:var(--red);font-size:17px}
+.ribbonhd .tagbox span{display:block;font-family:"Caveat Brush",Kalam;font-size:clamp(40px,5.4vw,60px);line-height:1;color:var(--ink)}
+.bow{position:absolute;top:-30px;left:50%;width:84px;margin-left:-42px}
+.kraft .lede{color:#4a3424}
+
+/* ---------- THE product card (same everywhere) ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:30px;position:relative;z-index:2}
+.cards.two{grid-template-columns:repeat(auto-fit,minmax(260px,340px));justify-content:center;gap:40px}
+.pcard{position:relative;background:#fff;border-radius:6px;padding:14px 14px 18px;box-shadow:0 12px 28px rgba(80,30,20,.18);cursor:pointer;transition:transform .3s,box-shadow .3s;display:flex;flex-direction:column}
+.pcard:hover{transform:translateY(-6px);box-shadow:0 22px 40px rgba(80,30,20,.26)}
+.fairy{position:absolute;top:-14px;left:-14px;right:-14px;height:56px;pointer-events:none;z-index:3}
+.fairy svg{width:100%;height:100%;overflow:visible}
+.fairy circle{animation:twinkle 2.4s ease-in-out infinite}
+.pcard .ph{border-radius:3px;overflow:hidden;background:#fbeee5}
+.pcard .ph img{width:100%;aspect-ratio:1;object-fit:cover;transition:transform .6s}
+.pcard:hover .ph img{transform:scale(1.05)}
+.pcard .k{font-family:Oswald;letter-spacing:.2em;font-size:11.5px;color:var(--coral);margin-top:14px}
+.pcard h3{font-family:Oswald;font-weight:600;text-transform:uppercase;font-size:24px;line-height:1.05;margin:3px 0 6px}
+.pcard p{font-size:15px;color:var(--mute);flex:1}
+.pcard .bot{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-top:14px}
+.ptag{position:relative;background:var(--kraft);padding:8px 12px 7px 22px;border-radius:4px 8px 8px 4px;font-family:Kalam;line-height:1;box-shadow:0 3px 8px rgba(0,0,0,.12);transform:rotate(-3deg);flex:none}
+.ptag::before{content:"";position:absolute;left:7px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1.5px #b98c5f}
+.ptag s{display:block;font-size:14px;color:#8c6b52}
+.ptag b{font-family:Oswald;font-size:24px;color:var(--ink)}
+.pcard .acts{display:flex;flex-direction:column;gap:7px}
+.pcard .btn{padding:9px 16px;font-size:13px;text-align:center}
+.save{position:absolute;top:26px;right:26px;width:70px;height:70px;border-radius:50%;background:var(--red);color:#fff;font-family:Oswald;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;transform:rotate(12deg);box-shadow:0 4px 10px rgba(0,0,0,.2);z-index:2}
+.save small{font-size:11px;letter-spacing:.1em}.save b{font-size:20px}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 18px}
+.chips span{background:#fff;border:1.5px dashed #e7b9a3;border-radius:20px;padding:5px 13px;font-size:14px}
+.chips b{font-family:Oswald;font-weight:500;letter-spacing:.08em;color:var(--coral);margin-right:5px}
+#bundleCards{grid-template-columns:repeat(auto-fit,minmax(240px,300px));justify-content:center}
+/* bundle window list */
+.blist{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.bitem{display:grid;grid-template-columns:74px 1fr auto;gap:14px;align-items:center;background:#fff;border-radius:12px;padding:10px 14px 10px 10px;box-shadow:0 2px 8px rgba(0,0,0,.05);cursor:pointer;transition:.2s;border:2px solid transparent}
+.bitem:hover{border-color:var(--peach);transform:translateX(3px)}
+.bitem img{width:74px;height:74px;object-fit:cover;border-radius:8px}
+.bitem b{font-family:Oswald;font-weight:600;text-transform:uppercase;font-size:17px;display:block}
+.bitem span{font-size:14px;color:var(--mute)}
+.bitem .r{text-align:right;font-family:Kalam;color:var(--mute);font-size:15px;white-space:nowrap}
+.bitem .r em{display:block;font-style:normal;font-family:Oswald;letter-spacing:.12em;font-size:11px;color:var(--coral)}
+.bitem.or{border:2px dashed #ecc9b6}
+.back{background:none;border:none;font-family:Oswald;letter-spacing:.12em;color:var(--red);font-size:14px;margin-bottom:10px;padding:0}
+.calc{background:#fff;border-radius:12px;padding:12px 16px;margin-top:12px;font-size:15px}
+.calc div{display:flex;justify-content:space-between;padding:3px 0}
+.calc .t{font-family:Oswald;font-size:20px;border-top:1px dashed #ecc9b6;margin-top:4px;padding-top:6px}
+.calc .g{color:var(--green);font-weight:600}
+
+/* how */
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:26px;max-width:1000px;margin:0 auto}
+.step{background:var(--kraft);border-radius:6px;padding:26px 20px;text-align:center;box-shadow:0 8px 18px rgba(0,0,0,.08);transform:rotate(var(--r))}
+.step .n{font-family:"Caveat Brush",Kalam;font-size:52px;color:var(--red);line-height:1}
+.step b{display:block;font-family:Oswald;letter-spacing:.14em;text-transform:uppercase;margin:6px 0}
+.step p{font-family:Kalam;font-size:18px;color:#5a4636}
+footer{text-align:center;padding:50px 5vw 40px;font-family:Kalam;font-size:18px;color:var(--mute);position:relative;z-index:2}
+footer .sig{font-family:"Caveat Brush",Kalam;font-size:40px;color:var(--red)}
+
+/* modal */
+.ov{position:fixed;inset:0;background:rgba(29,27,58,.6);backdrop-filter:blur(4px);z-index:60;display:flex;align-items:flex-start;justify-content:center;padding:4vh 3vw;overflow-y:auto;opacity:0;pointer-events:none;transition:opacity .3s}
+.ov.on{opacity:1;pointer-events:auto}
+.modal{background:var(--cream);width:min(1060px,100%);border-radius:22px;box-shadow:0 30px 80px rgba(0,0,0,.4);position:relative;transform:translateY(30px) scale(.98);transition:transform .4s cubic-bezier(.2,1.3,.4,1);overflow:hidden}
+.ov.on .modal{transform:none}
+.x{position:absolute;top:12px;right:12px;width:42px;height:42px;border-radius:50%;border:none;background:#fff;font-size:22px;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.mtop{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:0}.mtop>div,.mbody{min-width:0}
+.gal{background:#fff;padding:22px;position:relative}
+.gal .main{position:relative;border-radius:14px;overflow:hidden;background:#fbeee5;aspect-ratio:1}
+.gal .main img{width:100%;height:100%;object-fit:contain;transition:opacity .3s}
+.gal .nav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:none;background:rgba(255,255,255,.9);font-size:18px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.gal .prev{left:10px}.gal .next{right:10px}
+.thumbs{display:flex;gap:8px;margin-top:12px;overflow-x:auto;padding-bottom:4px}
+.thumbs img{width:62px;height:62px;object-fit:cover;border-radius:8px;cursor:pointer;opacity:.6;border:2px solid transparent;flex:none;background:#fbeee5}
+.thumbs img.on{opacity:1;border-color:var(--red)}
+.buybox{padding:34px 34px 26px}
+.buybox .k{font-family:Oswald;letter-spacing:.22em;font-size:13px;color:var(--coral)}
+.buybox h2{font-family:Oswald;font-weight:700;text-transform:uppercase;font-size:clamp(32px,4vw,44px);line-height:.95;margin:6px 0 6px}
+.buybox .tl{font-family:Kalam;font-size:21px;color:var(--red)}
+.buybox .pr{margin:16px 0 4px;display:flex;align-items:baseline;gap:10px}
+.buybox .pr b{font-family:Oswald;font-size:40px}.buybox .pr s{font-family:Kalam;color:#b9a8a6;font-size:19px}
+.buybox .pr em{font-style:normal;font-size:12px;font-weight:600;color:#fff;background:var(--green);border-radius:20px;padding:2px 10px}
+.buybox .ship{font-size:14px;color:var(--green);margin-bottom:14px}
+.buybox p.desc{color:#4d4450;margin-bottom:14px}
+.opt{margin:10px 0 4px}
+.opt label{font-family:Oswald;letter-spacing:.12em;font-size:13px;display:block;margin-bottom:6px}
+.opt .ch{display:flex;gap:8px;flex-wrap:wrap}
+.opt .ch button{border:2px solid var(--ink);background:#fff;border-radius:20px;padding:7px 14px;font-size:14px}
+.opt .ch button.on{background:var(--ink);color:#fff}
+.qty{display:inline-flex;align-items:center;border:2px solid var(--ink);border-radius:30px;overflow:hidden;margin-right:10px}
+.qty button{width:38px;height:42px;border:none;background:none;font-size:18px}
+.qty span{width:30px;text-align:center;font-family:Oswald}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:14px}
+.mbody{padding:10px 34px 40px}
+.mbody h4{font-family:Oswald;text-transform:uppercase;letter-spacing:.06em;font-size:24px;margin:28px 0 12px;display:flex;align-items:center;gap:12px}
+.mbody h4::after{content:"";flex:1;height:1px;background:#ecc9b6}
+.lineup{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.lineup>div{background:#fff;border-radius:12px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.lineup i{font-style:normal;font-family:Oswald;color:#fff;background:var(--grad);width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;font-size:13px}
+.lineup b{display:block;font-size:15px}.lineup span{font-size:13.5px;color:var(--mute)}
+.inbox{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px 22px;list-style:none}
+.inbox li{padding:7px 0;border-bottom:1px dashed #ecc9b6}.inbox li::before{content:"\2740";color:var(--red);margin-right:9px}
+.samples{display:flex;gap:16px;overflow-x:auto;padding:6px 2px 16px}
+.samples img{height:240px;width:auto;border-radius:8px;box-shadow:0 8px 20px rgba(0,0,0,.15);cursor:zoom-in;transition:transform .25s;flex:none;background:#fff}
+.samples img:hover{transform:translateY(-4px) rotate(-1deg)}
+.how2{padding-left:20px}.how2 li{margin:6px 0}
+.revs{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.rev{background:#fff;border-radius:14px;padding:16px 18px;position:relative;border:2px dashed #ecc9b6}
+.rev .badge{position:absolute;top:-10px;right:12px;background:var(--ink);color:#fff;font-family:Oswald;letter-spacing:.1em;font-size:10.5px;padding:3px 9px;border-radius:10px}
+.rev .st{color:#e6b14a;letter-spacing:2px}
+.rev p{font-family:Kalam;font-size:17px;color:#5b5157;margin:6px 0}
+.rev small{color:var(--mute)}
+.light{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:80;display:none;align-items:center;justify-content:center;padding:4vh}
+.light.on{display:flex}.light img{max-height:92vh;max-width:92vw;border-radius:8px}
+
+/* cart drawer */
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--cream);z-index:70;transform:translateX(100%);transition:transform .45s cubic-bezier(.2,1,.3,1);display:flex;flex-direction:column;box-shadow:-20px 0 60px rgba(0,0,0,.3)}
+.drawer.on{transform:none}
+.dshade{position:fixed;inset:0;background:rgba(29,27,58,.45);z-index:65;opacity:0;pointer-events:none;transition:.3s}
+.dshade.on{opacity:1;pointer-events:auto}
+.dh{display:flex;align-items:center;justify-content:space-between;padding:20px 22px;background:var(--ink);color:#fff}
+.dh h3{font-family:"Caveat Brush",Kalam;font-weight:400;font-size:34px}
+.dh button{background:none;border:none;color:#fff;font-size:26px}
+.items{flex:1;overflow-y:auto;padding:14px 22px}
+.it{display:grid;grid-template-columns:70px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px dashed #ecc9b6}
+.it img{width:70px;height:70px;object-fit:cover;border-radius:8px}
+.it b{font-family:Oswald;font-weight:600;text-transform:uppercase;font-size:16px;display:block}
+.it small{color:var(--mute);font-size:13px}
+.it .q{display:flex;align-items:center;gap:6px;margin-top:6px}
+.it .q button{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--ink);background:#fff;line-height:1}
+.it .q button.rm{background:none;border:none;width:auto;height:auto;border-radius:0;color:var(--mute);font-size:12px;text-decoration:underline;margin-left:8px}
+.it .pr{font-family:Oswald;font-size:18px;text-align:right}
+.empty{text-align:center;padding:50px 10px;font-family:Kalam;font-size:20px;color:var(--mute)}
+.tip{background:#fff;border:2px dashed var(--coral);border-radius:12px;padding:12px 14px;margin:14px 0;font-size:14px}
+.tip button{margin-top:8px}
+.df{padding:18px 22px 22px;border-top:1px solid #ecc9b6;background:#fff}
+.df .sum{display:flex;justify-content:space-between;font-family:Oswald;font-size:22px;margin-bottom:4px}
+.df small{display:block;color:var(--green);margin-bottom:12px}
+.df .btn{display:block;width:100%;text-align:center;font-size:16px;padding:14px}
+.fallback{margin-top:10px;font-size:14px}
+.fallback a{display:block;margin-top:6px}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,120px);background:var(--ink);color:#fff;font-family:Kalam;font-size:19px;padding:12px 22px;border-radius:30px;z-index:90;transition:transform .45s cubic-bezier(.3,1.6,.5,1);box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.toast.on{transform:translate(-50%,0)}
+
+.rv{opacity:0;transform:translateY(30px);transition:opacity .8s,transform .8s}
+.rv.seen{opacity:1;transform:none}
+@media(max-width:860px){.pinned{display:none}.mtop{grid-template-columns:minmax(0,1fr)}.ov{padding:2vh 2.5vw}.game,.game.flip{grid-template-columns:1fr}.game.flip .gimg{order:0}.gift{grid-template-columns:1fr;padding:22px}.top nav a{display:none}.buybox,.mbody{padding-left:20px;padding-right:20px}.board{padding:18px 24px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv,.gift li{opacity:1;transform:none}}
+
+/* ===== glow-up + festive extras ===== */
+.pcard{transition:transform .4s cubic-bezier(.2,.8,.3,1.25),box-shadow .4s}
+.pcard:hover,.pcard.sel{transform:translateY(-10px) rotate(-.7deg) scale(1.025);box-shadow:0 0 0 3px rgba(226,48,78,.45),0 0 38px 8px rgba(255,196,110,.6),0 28px 46px rgba(120,20,30,.28);z-index:5}
+.cards>.pcard:nth-child(even):hover,.cards>.pcard.sel:nth-child(even){transform:translateY(-10px) rotate(.7deg) scale(1.025)}
+.pcard:hover .fairy svg,.pcard.sel .fairy svg{filter:brightness(1.35) drop-shadow(0 0 5px #ffd27a)}
+.pcard:hover .fairy circle,.pcard.sel .fairy circle{animation-duration:.9s}
+.pcard:hover .ptag,.pcard.sel .ptag{animation:swing 1.3s ease-in-out infinite;transform-origin:8px 50%}
+@keyframes swing{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(5deg)}}
+.pcard.flash .fairy circle{animation:flash .18s 4 alternate}
+@keyframes flash{from{opacity:1;filter:brightness(1.8)}to{opacity:.2}}
+.heartpop{position:absolute;pointer-events:none;font-size:26px;color:var(--red);z-index:9;animation:hpop 1s ease-out forwards;text-shadow:0 2px 6px rgba(226,48,78,.4)}
+@keyframes hpop{0%{opacity:0;transform:translate(-50%,0) scale(.4)}20%{opacity:1;transform:translate(-50%,-14px) scale(1.2)}100%{opacity:0;transform:translate(-50%,-70px) scale(.9)}}
+.strand{position:absolute;left:0;right:0;top:6px;height:46px;pointer-events:none;z-index:1}
+.strand svg{position:absolute;inset:0;width:100%;height:40px}
+.bulb{position:absolute;width:9px;height:12px;margin:-2px 0 0 -4.5px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;animation:twinkle 2.6s ease-in-out infinite}
+.bulb::before{content:"";position:absolute;top:-4px;left:2.5px;width:4px;height:4px;background:#5b4a3a;border-radius:1px}
+.bunting{position:relative;height:46px;z-index:2;margin-top:-6px}
+.bunting svg{width:100%;height:46px;display:block}
+.stripes{height:12px;margin-top:40px;background:repeating-linear-gradient(90deg,var(--red) 0 22px,#fff4ea 22px 44px);box-shadow:0 2px 4px rgba(0,0,0,.12)}
+.stripes+.corner{margin-top:0}
+.runner{position:relative;width:46%;margin:-6px auto 0;height:52px;z-index:2;background:repeating-linear-gradient(90deg,rgba(214,38,64,.85) 0 10px,transparent 10px 20px),repeating-linear-gradient(0deg,rgba(214,38,64,.55) 0 10px,#fff 10px 20px);clip-path:polygon(0 0,100% 0,100% 82%,96% 100%,92% 82%,88% 100%,84% 82%,80% 100%,76% 82%,72% 100%,68% 82%,64% 100%,60% 82%,56% 100%,52% 82%,48% 100%,44% 82%,40% 100%,36% 82%,32% 100%,28% 82%,24% 100%,20% 82%,16% 100%,12% 82%,8% 100%,4% 82%,0 100%);filter:drop-shadow(0 4px 4px rgba(0,0,0,.2))}
+.plank+.runner{margin-top:-26px}
+.linen{background-color:#fdf1e7}
+.easel .bd{border-color:#a3223d}
+.easel i{background:#7d1a30}
+.pinned::before{background:radial-gradient(circle at 35% 35%,#ff9a8a,var(--red) 60%,#7d1a30)}
+.ribbonhd::before{height:6px;background:repeating-linear-gradient(135deg,var(--red) 0 7px,#fff 7px 14px)}
+.ribbonhd .tagbox{background:var(--red)}
+.ribbonhd .tagbox small{color:#ffe1c9}.ribbonhd .tagbox span{color:#fff}
+.doodle{position:absolute;top:0;width:110px;opacity:.9;pointer-events:none}
+.doodle.l{left:-140px;transform:rotate(-8deg)}.doodle.r{right:-140px;transform:rotate(8deg)}
+.garland{position:absolute;top:0;width:34px;pointer-events:none;transform-origin:50% 0;animation:sway 4s ease-in-out infinite}
+.garland.l{left:4%}.garland.r{right:4%;animation-delay:-2s}
+@keyframes sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+.awning{background:repeating-linear-gradient(90deg,var(--red) 0 60px,#fff1e3 60px 120px)}
+@media(max-width:860px){.doodle,.garland{display:none}.runner{width:70%}}
+@media(prefers-reduced-motion:reduce){.pcard,.pcard:hover{transition:none}.bulb,.garland,.ptag{animation:none!important}}
+body.scrolling .pcard{pointer-events:none}
+</style>
+</head>
+<body>
+<div class="petals" id="petals"></div>
+
+<header class="top">
+  <a class="home" href="/"><img src="shop-img/ss-logo-white.png" alt="Sia Stevens logo">SIA STEVENS</a>
+  <nav><a href="#kits">Experience Kits</a><a href="#games">Card Games</a><a href="#bundles">Bundles</a><a href="/arcade">Play online</a>
+    <button class="cartbtn" id="cartBtn" aria-label="Open cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.3 11.2a2 2 0 0 1-2 1.8H8.3a2 2 0 0 1-2-1.8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>CART<b id="cartCount">0</b></button>
+  </nav>
+</header>
+<div class="ticker"><div id="tick"></div></div>
+<div class="awning"></div>
+<div class="lights" id="lights"></div>
+
+<div class="hero">
+  <div class="board"><div class="k">welcome to</div><h1>The Love <em>Shop</em></h1><p>little boxes of quality time, packed by hand</p></div>
+  <div class="swipehint">swipe the line, tap to look closer <span>&rarr;</span></div>
+</div>
+<div class="ropewrap">
+  <div class="rope" id="rope"><div class="track" id="track"></div></div>
+  <div class="arrows"><button id="rl" aria-label="Previous">&larr;</button><button id="rr" aria-label="Next">&rarr;</button></div>
+</div>
+
+<!-- EXPERIENCE KITS: the gift table -->
+<div class="corner linen" id="kits"><div class="strand"></div><div class="in">
+  <div class="woodsign rv"><div class="knot"></div><small>the gift table</small><span>Experience Kits</span></div>
+  <div class="lede rv"><span class="s">~ a whole evening in a box ~</span>Eight games, little gifts and about sixty minutes of real talk. Pick the one made for your people.</div>
+  <div class="cards two" id="kitCards"></div>
+  <div class="plank"></div>
+</div></div>
+
+<!-- CARD GAMES: the game corner -->
+<div class="corner cork" id="games"><div class="strand"></div><div class="in">
+  <div class="easel rv"><svg class="doodle l" viewBox="0 0 110 120" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M55 40 C40 18 12 28 22 50 C30 66 55 80 55 80 C55 80 80 66 88 50 C98 28 70 18 55 40Z" opacity=".85"/><path d="M20 100 l6 -14 l6 14 l-15 -9 h18z" stroke="#ffd27a"/><path d="M86 96 l3 -8 l3 8 l-8 -5 h10z"/><path d="M8 12 q6 6 0 12 M14 8 q6 6 0 12" opacity=".6"/></svg><svg class="doodle r" viewBox="0 0 110 120" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M55 40 C40 18 12 28 22 50 C30 66 55 80 55 80 C55 80 80 66 88 50 C98 28 70 18 55 40Z" opacity=".85"/><path d="M20 100 l6 -14 l6 14 l-15 -9 h18z" stroke="#ffd27a"/><path d="M86 96 l3 -8 l3 8 l-8 -5 h10z"/><path d="M8 12 q6 6 0 12 M14 8 q6 6 0 12" opacity=".6"/></svg><div class="bd"><small>the game corner</small><span>Card Games</span></div><i></i><i></i></div>
+  <div class="lede rv"><span class="s">~ for the table, the couch, the road ~</span>One game for learning each other. One for learning something new about love.</div>
+  <div id="pins"></div>
+  <div class="cards two" id="gameCards"></div>
+</div></div>
+
+<!-- BUNDLES: the gift-wrap station -->
+<div class="corner kraft" id="bundles"><div class="strand"></div><svg class="garland l" viewBox="0 0 34 300"><line x1="17" y1="0" x2="17" y2="270" stroke="#fff" stroke-width="1.5" stroke-dasharray="4 3"/><g fill="#e2304e"><path d="M17 74 C6 62 4 52 11 48 C15 46 17 50 17 52 C17 50 19 46 23 48 C30 52 28 62 17 74Z"/><path d="M17 154 C6 142 4 132 11 128 C15 126 17 130 17 132 C17 130 19 126 23 128 C30 132 28 142 17 154Z" fill="#fff4ea"/><path d="M17 234 C6 222 4 212 11 208 C15 206 17 210 17 212 C17 210 19 206 23 208 C30 212 28 222 17 234Z"/></g></svg><svg class="garland r" viewBox="0 0 34 300"><line x1="17" y1="0" x2="17" y2="270" stroke="#fff" stroke-width="1.5" stroke-dasharray="4 3"/><g fill="#e2304e"><path d="M17 74 C6 62 4 52 11 48 C15 46 17 50 17 52 C17 50 19 46 23 48 C30 52 28 62 17 74Z"/><path d="M17 154 C6 142 4 132 11 128 C15 126 17 130 17 132 C17 130 19 126 23 128 C30 132 28 142 17 154Z" fill="#fff4ea"/><path d="M17 234 C6 222 4 212 11 208 C15 206 17 210 17 212 C17 210 19 206 23 208 C30 212 28 222 17 234Z"/></g></svg><div class="in"><div class="bunting" id="bunt2" style="margin:0 -5vw 10px"></div>
+  <div class="ribbonhd rv"><div class="tagbox"><svg class="bow" viewBox="0 0 84 46"><path d="M42 23 C30 4 8 2 6 14 C4 26 26 28 42 23Z" fill="#f0b94a"/><path d="M42 23 C54 4 76 2 78 14 C80 26 58 28 42 23Z" fill="#f0b94a"/><path d="M42 23 L30 46 L36 44 L42 26 L48 44 L54 46Z" fill="#c98f22"/><circle cx="42" cy="23" r="6" fill="#c98f22"/></svg><small>the gift-wrap station</small><span>Bundles</span></div></div>
+  <div class="lede rv"><span class="s">~ better together, for less ~</span>Tap any bundle to see exactly what&rsquo;s inside, then tap an item for its details.</div>
+  <div class="cards" id="bundleCards"></div>
+</div></div>
+
+<section>
+  <div class="hd rv"><div class="s">~ easy as ~</div><h2>How ordering works</h2></div>
+  <div class="how">
+    <div class="step rv" style="--r:-2deg"><div class="n">1</div><b>Fill your cart</b><p>Tap anything to look inside, then add it.</p></div>
+    <div class="step rv" style="--r:1.5deg"><div class="n">2</div><b>Check out</b><p>Secure payment by Stripe. A receipt lands in your inbox.</p></div>
+    <div class="step rv" style="--r:-1deg"><div class="n">3</div><b>We ship, free</b><p>Packed by hand in Seattle, out the door in 3&ndash;5 business days.</p></div>
+  </div>
+</section>
+
+<footer><div class="sig">with love, Sia</div>Questions about an order? <a href="mailto:amilliongreenflags@gmail.com">amilliongreenflags@gmail.com</a><br><small>&copy; Sia Stevens &middot; <a href="/">siastevens.com</a></small></footer>
+
+<!-- product window -->
+<div class="ov" id="ov"><div class="modal" id="modal"></div></div>
+<div class="light" id="light"><img alt=""></div>
+<!-- cart -->
+<div class="dshade" id="dshade"></div>
+<aside class="drawer" id="drawer" aria-label="Your cart">
+  <div class="dh"><h3>Your basket</h3><button id="dclose" aria-label="Close cart">&times;</button></div>
+  <div class="items" id="items"></div>
+  <div class="df" id="dfoot"></div>
+</aside>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =================== SETTINGS: EDIT THESE ===================
+   1) STRIPE PAYMENT LINKS: one per product (starts with https://buy.stripe.com/...).
+      Used for "Buy now", and for checkout when the cart has a single item.  */
+const LINKS = {
+  datenight:   "",  // Date Night kit, $34.99
+  qualitytime: "",  // Quality Time kit, $34.99
+  oracle:      "",  // The Love Oracle, $19.99
+  trivia:      "",  // Did You Know Love?, $19.99
+  bookduo:     "",  // Book Duo, $34.99
+  gamenight:   "",  // Game Night, $34.99
+  dnwhtu:      "",  // Date Night + What Happened to Us, $49.99
+  qtamgf:      "",  // Quality Time + A Million Green Flags, $49.99
+  everything:  ""   // The Everything Box, $99.99 (with kit dropdown in Stripe)
+};
+/* 2) CART CHECKOUT: paste your checkout worker address here once it's set up
+      (see READ ME). Until then, multi-item carts check out one item at a time. */
+const CHECKOUT_URL = "https://us-central1-relationships101-b43ef.cloudfunctions.net/shopCheckout";
+/* 3) REVIEWS: replace the sample slots in REVIEWS (near the bottom) with real ones.
+      Set SHOW_REVIEWS to false to hide the review sections entirely.            */
+const SHOW_REVIEWS = false;
+/* ============================================================== */
+
+const LINEUP=[["Were You Listening?","Attention: how much you really catch"],["Face Off","What draws you to each other"],["Love Superpower","How each of you gives love"],["In Sync","How well you know each other"],["Fight Night","How you each handle friction"],["Consume or Create","Building things together"],["The Crystal Ball","Your forecast, together"],["Roll of Fate","The finale: get up and move"]];
+const P={
+ datenight:{cat:"kit",name:"Date Night",k:"Experience kit · for couples",short:"A whole date night in a box: eight games, cocoa, candlelight and a gift for finishing.",price:34.99,was:49.99,img:"kit-date-night-photo.jpg",
+  tl:"phones in the box, hearts on the table",
+  desc:"Everything you need for one unforgettable evening at home: eight games that get you laughing, talking and learning things about each other you didn't know, plus cozy little extras that set the mood. About sixty minutes. No prep. Just open the box.",
+  facts:[["Players","2"],["Time","about 60 min"],["Best for","couples, new or long-time"],["Ages","adults"]],
+  lineup:true,
+  inbox:["Open Me First card, lineup and score card","8 two-sided game cards","Hot cocoa for two","Tea lights and matches","A green flag in a bottle","2 pencils","A seed packet to plant together","A die for Roll of Fate","The Love Arcade token","A surprise gift for finishing"],
+  samples:["dn-1.jpg","dn-2.jpg","dn-3.jpg","dn-4.jpg","dn-5.jpg","dn-6.jpg"]},
+ qualitytime:{cat:"kit",name:"Quality Time",k:"Experience kit · friends & family",short:"Eight games for any two people who matter: best friends, sisters, a parent and grown child.",price:34.99,was:49.99,img:"kit-quality-time-photo.jpg",
+  tl:"for best friends, sisters, parents and grown kids",
+  desc:"The eight Love Arcade games, made for any two people who matter to each other. Laugh at how differently you fight, find out what you're really drawn to, write each other a promise for the year ahead and make something together to keep. Perfect for reconnecting.",
+  facts:[["Players","2"],["Time","about 60 min"],["Best for","friends and family"],["Ages","adults"]],
+  lineup:true,
+  inbox:["Open Me First card, lineup and score card","8 two-sided game cards","Coffee for two","Matching red thread bracelets","2 Our Year Ahead promise cards","Our Playlist card","2 pencils, a seed packet and a die","The Love Arcade token","Paint & Swap coasters, to make for each other","A surprise gift for finishing"],
+  samples:["qt-1.jpg","qt-2.jpg","qt-3.jpg","qt-4.jpg","qt-5.jpg","qt-6.jpg"]},
+ oracle:{cat:"game",name:"The Love Oracle",k:"Conversation card game",short:"54 Greek-inspired cards with questions that go deeper than “how was your day.”",price:19.99,was:29.99,img:"game-oracle-photo.jpg",
+  tl:"ask the oracle anything",
+  desc:"A 54-card deck inspired by Greek myth. Four suits (Vessel, Bow, Orchard and Butter) cover the parts of a relationship that matter most. Athena, Zeus and Hercules bring 'labors': small real-life commitments. Two wild Oracle cards let you ask anything at all.",
+  facts:[["Cards","54"],["Players","2 or a group"],["Time","20 to 45 min"],["Ages","adults"]],
+  howto:["Draw a card and ask the question: your partner, or anyone in a group.","Happy with the answer? Give them the card. If not, it goes in their own discard pile.","First to 10 cards wins, or the most cards when the deck runs out.","At the end, look at your discard pile: the suit with the most cards is where to grow next."],
+  inbox:["54 illustrated playing cards","4 suits plus Athena, Zeus and Hercules labor cards","2 wild Oracle cards","Suit guide and how-to-play card"],
+  samples:["or-2.jpg","or-3.jpg","or-4.jpg","or-5.jpg","or-6.jpg","or-1.jpg","or-7.jpg"]},
+ trivia:{cat:"game",name:"Did You Know Love?",k:"Relationship trivia",short:"200 surprising questions from real research on love. The “wait, really?” game.",price:19.99,was:29.99,img:"game-trivia-photo.jpg",
+  tl:"200 questions you'll be quoting for weeks",
+  desc:"Real findings from research on dating, love, gender, friendship and loneliness, turned into a fast, funny trivia game. Every answer comes with a one-line fun fact, and some cards have a Talk About It prompt that turns the table into a conversation.",
+  facts:[["Questions","200"],["Cards","50 plus how-to"],["Players","2 or teams"],["Time","about 20 min"]],
+  howto:["The reader draws a card and reads all 4 questions to the next player or team.","1 point per right answer. Miss one? The next team can steal it.","Talk About It prompts: everyone answers, no points, just stories.","First to 10 points wins. Pass the deck left."],
+  inbox:["50 trivia cards, 4 questions each","A How to Play card","Answers and fun facts on every card"],
+  samples:["tr-2.jpg","tr-3.jpg","tr-1.jpg","tr-4.jpg"]},
+ bookduo:{cat:"bundle",name:"The Book Duo",k:"Bundle",short:"The framework and the fable, together.",price:34.99,was:59.98,img:"bundle-books.jpg",
+  tl:"a field guide and a fable",
+  desc:"A Million Green Flags is the framework: how to build lasting relationships in the digital age. What Happened to Us is the story: a fable about why love fades and what keeps it. Read one, then the other.",
+  inbox:["A Million Green Flags (paperback)","What Happened to Us (paperback)"]},
+ gamenight:{cat:"bundle",name:"Game Night",k:"Bundle",short:"Both card games: one to learn each other, one to learn something new.",price:34.99,was:59.98,img:"bundle-game-night.jpg",
+  tl:"one to learn each other, one to learn something new",
+  desc:"The Love Oracle for deep conversations and Did You Know Love? for laughs and surprises. Together, they cover every kind of night.",
+  inbox:["The Love Oracle (54 cards)","Did You Know Love? (50 cards, 200 questions)"],samples:["or-2.jpg","or-5.jpg","tr-2.jpg","tr-1.jpg"]},
+ dnwhtu:{cat:"bundle",name:"Date Night + What Happened to Us",k:"Bundle",short:"The Date Night kit with the novel it grew out of.",price:49.99,was:79.98,img:"bundle-date-night-whtu.jpg",
+  tl:"play tonight, read it together after",
+  desc:"The Date Night experience kit with What Happened to Us, the fable of modern love the games grew out of.",
+  inbox:["Date Night experience kit (everything in the box)","What Happened to Us (paperback)"]},
+ qtamgf:{cat:"bundle",name:"Quality Time + A Million Green Flags",k:"Bundle",short:"The Quality Time kit with the book on building love that lasts.",price:49.99,was:79.98,img:"bundle-quality-time-amgf.jpg",
+  tl:"play together, grow the green flags",
+  desc:"The Quality Time experience kit with A Million Green Flags, the framework for building relationships that last, with anyone.",
+  inbox:["Quality Time experience kit (everything in the box)","A Million Green Flags (paperback)"]},
+ everything:{cat:"everything",name:"The Everything Box",k:"Best value · save $70",short:"One kit of your choice, both card games and both books.",price:99.99,was:169.95,img:"bundle-everything.jpg",
+  tl:"the whole stall, in one box",opt:["Date Night","Quality Time"],
+  desc:"One experience kit of your choice, both card games and both books. The most complete way to bring more connection home, or the gift that keeps giving all year.",
+  inbox:["One experience kit: Date Night or Quality Time (choose below)","The Love Oracle card game","Did You Know Love? trivia","A Million Green Flags","What Happened to Us"],
+  samples:["dn-1.jpg","qt-1.jpg","or-2.jpg","tr-2.jpg"]}
+};
+const ROPE=["datenight","qualitytime","oracle","trivia"];
+const ROPE_LINE={datenight:"A whole date night in a box",qualitytime:"The same magic, for any two people",oracle:"Questions that go deeper",trivia:"The “wait, really?” game"};
+const BUNDLES=["gamenight","dnwhtu","qtamgf","bookduo","everything"];
+const BOOKS={
+ book_amgf:{name:"A Million Green Flags",img:"book-amgf.jpg",was:29.99,link:"/amgf",line:"The framework: how to build lasting relationships in the digital age",
+  blurb:"We are the most connected generation in history, and the loneliest. A Million Green Flags is the manual nobody handed you: why effort disappeared, why commitment feels terrifying, and how to stop dodging red flags and start growing the green ones."},
+ book_whtu:{name:"What Happened to Us",img:"book-whtu.jpg",was:29.99,link:"/whtu",line:"The story: a fable of modern love",
+  blurb:"It ended on a Tuesday, over takeout they didn't finish. No fight, no betrayal. What Happened to Us follows one woman's search, from Seattle to the ruins of Greece, for why love fades and what keeps it."}
+};
+const INSIDE={gamenight:["oracle","trivia"],dnwhtu:["datenight","book_whtu"],qtamgf:["qualitytime","book_amgf"],bookduo:["book_amgf","book_whtu"],everything:[["datenight","qualitytime"],"oracle","trivia","book_amgf","book_whtu"]};
+/* Reviews: replace the samples with real customer reviews as they come in.
+   Format: {name:"First name, city", stars:5, text:"Their words."}         */
+const SAMPLE={name:"Customer name",stars:5,text:"Sample review: replace with a real customer's words about how this helped them connect.",sample:true};
+const REVIEWS={datenight:[SAMPLE,SAMPLE,SAMPLE],qualitytime:[SAMPLE,SAMPLE,SAMPLE],oracle:[SAMPLE,SAMPLE],trivia:[SAMPLE,SAMPLE],everything:[SAMPLE]};
+/* Your own photos: drop files named like datenight-1.jpg ... datenight-4.jpg into shop-img/photos/
+   and they appear in that product's gallery automatically. */
+const PHOTO_SLOTS=8;
+
+const $=s=>document.querySelector(s), money=n=>"$"+n.toFixed(2);
+const peg='<svg class="nail" viewBox="0 0 120 50"><path d="M14 50 L60 6 L106 50" fill="none" stroke="#9b6b45" stroke-width="1.6"/><circle cx="60" cy="6" r="5" fill="#c99b6d" stroke="#8a6342" stroke-width="1.2"/><circle cx="60" cy="6" r="1.6" fill="#8a6342"/></svg>';
+
+/* ---------- build sections ---------- */
+$('#track').innerHTML=ROPE.map((id,i)=>{const p=P[id];return `<div class="hang idle" style="--base:${[-1.5,1.2,-1,1.6][i]}deg" data-id="${id}"><div class="peg"></div><div class="pola" data-open="${id}"><img src="shop-img/${p.img}" alt="${p.name}"><div class="c">${p.k.toUpperCase()}</div><div class="t">${p.name}</div><div class="d">${ROPE_LINE[id]}</div><div class="p"><div><s>${money(p.was)}</s><span>${money(p.price)}</span></div><em>LOOK INSIDE &rarr;</em></div></div></div>`}).join('');
+const fairy=()=>{let c='';const pts=[[8,14],[40,30],[74,38],[110,40],[146,36],[182,28],[216,18],[250,10]];const col=["#ffd27a","#ff8f78","#ffe9b0","#ff6f91"];
+ pts.forEach((p,i)=>c+=`<circle cx="${p[0]}" cy="${p[1]+6}" r="4" fill="${col[i%4]}" style="filter:drop-shadow(0 0 4px ${col[i%4]});animation-delay:${(i*.33)%2.4}s"/>`);
+ return `<div class="fairy"><svg viewBox="0 0 260 56" preserveAspectRatio="none"><path d="M0 10 Q 40 34 80 40 T 160 38 T 260 6" fill="none" stroke="#5b4a3a" stroke-width="1.2"/>${c}</svg></div>`};
+function card(id){const p=P[id],save=p.cat==='bundle'||p.cat==='everything'?Math.round(p.was-p.price):0;
+ return `<div class="pcard rv" data-open="${id}">${fairy()}<div class="ph"><img src="shop-img/${p.img}" alt="${p.name}"></div>${save?`<div class="save"><small>SAVE</small><b>$${save}</b></div>`:''}
+ <div class="k">${p.k.toUpperCase()}</div><h3>${p.name}</h3><p>${p.short}</p>
+ <div class="bot"><div class="ptag"><s>${money(p.was)}</s><b>${money(p.price)}</b></div><div class="acts"><button class="btn ghost" data-open="${id}">Details</button><button class="btn" data-add="${id}">Add to cart</button></div></div></div>`}
+$('#kitCards').innerHTML=["datenight","qualitytime"].map(card).join('');
+$('#gameCards').innerHTML=["oracle","trivia"].map(card).join('');
+$('#bundleCards').innerHTML=BUNDLES.map(card).join('');
+$('#pins').innerHTML=[["or-2.jpg","3%","120px",-8],["tr-2.jpg","86%","110px",7],["or-5.jpg","1%","430px",6],["tr-3.jpg","88%","440px",-6]].map(x=>`<img class="pinned" src="shop-img/samples/${x[0]}" alt="" data-zoom="shop-img/samples/${x[0]}" style="left:${x[1]};top:${x[2]};transform:rotate(${x[3]}deg)">`).join('');
+
+
+/* ---------- festive extras ---------- */
+function strand(el){const N=innerWidth<700?3:6,per=7,cols=["#ffd27a","#e2304e","#fff1c9","#ff6f91"];let path='',b='';
+ for(let i=0;i<N;i++){const x0=i*600/N,x1=(i+1)*600/N;path+=`M${x0} 6 Q ${(x0+x1)/2} 62 ${x1} 6 `;
+  for(let k=1;k<per;k++){const t=k/per,x=(i+t)/N*100,y=6+112*t*(1-t),c=cols[(i*per+k)%4];b+=`<i class="bulb" style="left:${x}%;top:${y}px;background:${c};box-shadow:0 0 8px 2px ${c}aa;animation-delay:${((i*per+k)*.37)%2.6}s"></i>`}}
+ el.innerHTML=`<svg viewBox="0 0 600 40" preserveAspectRatio="none"><path d="${path}" fill="none" stroke="#5b4a3a" stroke-width="1.3" vector-effect="non-scaling-stroke"/></svg>`+b}
+document.querySelectorAll('.strand').forEach(strand);
+function bunting(el){const n=Math.max(8,Math.round(el.offsetWidth/56)),w=1000/n;let f='';
+ for(let i=0;i<n;i++){const x=i*w;f+=`<path d="M${x+3} 8 L${x+w-3} 8 L${x+w/2} 40Z" fill="${i%2?'#fff4ea':'#d42a45'}"/>`}
+ el.innerHTML=`<svg viewBox="0 0 1000 46" preserveAspectRatio="none"><path d="M0 8 H1000" stroke="#8a5a35" stroke-width="2"/>${f}</svg>`}
+['#bunt1','#bunt2'].forEach(q=>{const e=$(q);if(e)bunting(e)});
+let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{document.querySelectorAll('.strand').forEach(strand);['#bunt1','#bunt2'].forEach(q=>{const e=$(q);if(e)bunting(e)})},200)});
+let scT;addEventListener('scroll',()=>{document.body.classList.add('scrolling');clearTimeout(scT);scT=setTimeout(()=>document.body.classList.remove('scrolling'),180)},{passive:true});
+function celebrate(btn){const c=btn.closest('.pcard');if(!c)return;c.classList.remove('flash');void c.offsetWidth;c.classList.add('flash');
+ const r=btn.getBoundingClientRect(),cr=c.getBoundingClientRect(),h=document.createElement('span');h.className='heartpop';h.textContent='♥';
+ h.style.left=(r.left-cr.left+r.width/2)+'px';h.style.top=(r.top-cr.top-6)+'px';c.appendChild(h);setTimeout(()=>h.remove(),1000)}
+
+/* ---------- ticker, lights, petals ---------- */
+$('#tick').innerHTML=(["FREE SHIPPING","LAUNCH PRICES","PACKED BY HAND IN SEATTLE","GIFTS THAT GET PEOPLE TALKING","THE EVERYTHING BOX $99.99"].map(m=>`<span>&#10047; ${m}</span>`).join('')).repeat(4);
+(function(){const el=$('#lights'),n=Math.max(10,Math.round(innerWidth/70)),cols=["#ffd27a","#ff8f78","#ffe9b0","#ff6f91"];let d="M0 8",h="";
+ for(let i=0;i<n;i++){const a=i/n*100,b=(i+1)/n*100;d+=` Q ${(a+b)/2} 46 ${b} 8`;}
+ h+=`<svg viewBox="0 0 100 60" preserveAspectRatio="none"><path d="${d}" fill="none" stroke="#3b3b45" stroke-width=".35"/></svg>`;
+ for(let i=0;i<n;i++){const c=cols[i%4];h+=`<div class="bulb" style="left:${(i+.5)/n*100}%;top:24px;background:${c};box-shadow:0 0 12px ${c},0 0 26px ${c};animation-delay:${(i*.37)%2.6}s"></div>`}
+ el.innerHTML=h;})();
+(function(){const p=$('#petals');for(let k=0;k<14;k++){const s=document.createElement('span');s.textContent='❀';s.style.left=(Math.random()*110)+'%';s.style.animationDuration=(10+Math.random()*12)+'s';s.style.animationDelay=(-Math.random()*20)+'s';s.style.fontSize=(10+Math.random()*12)+'px';p.appendChild(s)}})();
+
+/* ---------- rope: drag, swipe, swing ---------- */
+(function(){
+ const rope=$('#rope'),track=$('#track'),hangs=[...track.querySelectorAll('.hang')];
+ function cord(){const w=track.scrollWidth,pts=hangs.map(h=>h.offsetLeft+h.offsetWidth/2);let d=`M0 18`;let prev=0;
+  pts.concat([w]).forEach(x=>{d+=` Q ${(prev+x)/2} 52 ${x} 18`;prev=x});
+  track.querySelector('svg.cord')?.remove();track.insertAdjacentHTML('afterbegin',`<svg class="cord" width="${w}" viewBox="0 0 ${w} 60"><path d="${d}" fill="none" stroke="#8a6342" stroke-width="3" stroke-linecap="round"/><path d="${d}" fill="none" stroke="#c99b6d" stroke-width="1.2" stroke-dasharray="6 5"/></svg>`);}
+ cord();addEventListener('resize',cord);
+ let last=rope.scrollLeft,lt=performance.now(),timer;
+ rope.addEventListener('scroll',()=>{const now=performance.now(),v=(rope.scrollLeft-last)/Math.max(16,now-lt);last=rope.scrollLeft;lt=now;
+  const tilt=Math.max(-14,Math.min(14,-v*9));hangs.forEach(h=>{h.classList.remove('idle');h.style.setProperty('--tilt',tilt+'deg')});
+  clearTimeout(timer);timer=setTimeout(()=>{hangs.forEach(h=>h.style.setProperty('--tilt','0deg'));setTimeout(()=>hangs.forEach(h=>h.classList.add('idle')),900)},90);},{passive:true});
+ let down=false,sx=0,sl=0,moved=0;
+ rope.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse')return;down=true;moved=0;sx=e.clientX;sl=rope.scrollLeft;rope.classList.add('drag')});
+ addEventListener('pointermove',e=>{if(!down)return;moved=Math.abs(e.clientX-sx);rope.scrollLeft=sl-(e.clientX-sx)});
+ addEventListener('pointerup',()=>{if(!down)return;down=false;rope.classList.remove('drag')});
+ rope.addEventListener('click',e=>{if(moved>6){e.stopPropagation();e.preventDefault();moved=0}},true);
+ const step=()=>hangs[0].offsetWidth+56;
+ $('#rl').onclick=()=>rope.scrollBy({left:-step(),behavior:'smooth'});
+ $('#rr').onclick=()=>rope.scrollBy({left:step(),behavior:'smooth'});
+})();
+
+/* ---------- product window ---------- */
+let cur=null,gi=0,gal=[],qty=1,opt=null;
+function gallery(id){const p=P[id];const own=[...Array(PHOTO_SLOTS)].map((_,k)=>`shop-img/photos/${id}-${k+1}.jpg`);return [`shop-img/${p.img}`,...own,...(p.samples||[]).map(s=>`shop-img/samples/${s}`)];}
+function stars(n){return '★★★★★'.slice(0,n)+'☆☆☆☆☆'.slice(0,5-n)}
+let backTo=null;
+function backBtn(){return backTo?`<button class="back" data-back="1">&larr; Back to ${P[backTo].name}</button>`:''}
+function galHTML(name){return `<div class="gal"><div class="main"><img id="gimg" src="${gal[0]}" alt="${name}">${gal.length>1?'<button class="nav prev">&larr;</button><button class="nav next">&rarr;</button>':''}</div><div class="thumbs" id="thumbs">${gal.length>1?gal.map((g,k)=>`<img src="${g}" data-k="${k}" class="${k?'':'on'}" alt="">`).join(''):''}</div></div>`}
+function finish(){$('#modal').querySelectorAll('#thumbs img').forEach(t=>t.onerror=()=>{const src=t.getAttribute('src');gal=gal.filter(g=>g!==src);t.remove();$('#thumbs').querySelectorAll('img').forEach((x,k)=>x.dataset.k=k);});
+ $('#ov').classList.add('on');document.body.classList.add('lock');$('#ov').scrollTop=0;}
+const priceBlock=p=>`<div class="pr"><b>${money(p.price)}</b><s>${money(p.was)}</s><em>SAVE ${money(p.was-p.price)}</em></div><div class="ship">&#10003; Free shipping &middot; ships in 3&ndash;5 business days</div>`;
+const buyRow=()=>`<div class="actions"><div class="qty"><button data-q="-1">&minus;</button><span id="qn">1</span><button data-q="1">+</button></div><button class="btn" id="madd">Add to cart</button><button class="btn ghost" id="mbuy">Buy now</button></div>`;
+const reviewsHTML=id=>{const revs=REVIEWS[id]||[];return SHOW_REVIEWS&&revs.length?`<h4>What people are saying</h4><div class="revs">${revs.map(r=>`<div class="rev">${r.sample?'<span class="badge">SAMPLE &middot; REPLACE</span>':''}<div class="st">${stars(r.stars)}</div><p>${r.text}</p><small>${r.name}</small></div>`).join('')}</div>`:''};
+function open(id,from){backTo=from||null;qty=1;gi=0;
+ if(BOOKS[id])return openBook(id);
+ const p=P[id];cur=id;opt=p.opt?p.opt[0]:null;
+ if(p.cat==='bundle'||p.cat==='everything')return openBundle(id);
+ gal=gallery(id);
+ $('#modal').innerHTML=`<button class="x" aria-label="Close">&times;</button>
+ <div class="mtop">${galHTML(p.name)}
+ <div class="buybox">${backBtn()}<div class="k">${p.k.toUpperCase()}</div><h2>${p.name}</h2><div class="tl">${p.tl}</div>
+ ${priceBlock(p)}<p class="desc">${p.desc}</p>
+ ${p.facts?`<div class="chips">${p.facts.map(f=>`<span><b>${f[0]}</b>${f[1]}</span>`).join('')}</div>`:''}
+ ${buyRow()}</div></div>
+ <div class="mbody">
+ ${p.lineup?`<h4>The lineup</h4><div class="lineup">${LINEUP.map((l,k)=>`<div><i>${k+1}</i><div><b>${l[0]}</b><span>${l[1]}</span></div></div>`).join('')}</div>`:''}
+ ${p.howto?`<h4>How to play</h4><ol class="how2">${p.howto.map(h=>`<li>${h}</li>`).join('')}</ol>`:''}
+ <h4>What&rsquo;s in the box</h4><ul class="inbox">${p.inbox.map(x=>`<li>${x}</li>`).join('')}</ul>
+ ${p.samples?`<h4>Sample cards</h4><div class="samples">${p.samples.map(s=>`<img src="shop-img/samples/${s}" data-zoom="shop-img/samples/${s}" alt="Sample card">`).join('')}</div>`:''}
+ ${reviewsHTML(id)}</div>`;
+ finish();
+}
+function itemInfo(x){if(BOOKS[x])return{img:BOOKS[x].img,name:BOOKS[x].name,line:BOOKS[x].line,was:BOOKS[x].was,tag:"BOOK"};const q=P[x];return{img:q.img,name:q.name,line:q.short,was:q.was,tag:q.k.toUpperCase()}}
+function openBundle(id){
+ const p=P[id],items=INSIDE[id];
+ const flat=items.flat();
+ gal=[`shop-img/${p.img}`,...[...Array(PHOTO_SLOTS)].map((_,k)=>`shop-img/photos/${id}-${k+1}.jpg`),...flat.map(x=>`shop-img/${itemInfo(x).img}`)];
+ let value=0;
+ const rows=items.map(x=>{
+  if(Array.isArray(x)){value+=itemInfo(x[0]).was;return x.map((y,k)=>{const i=itemInfo(y);return `${k?'<div style="text-align:center;font-family:Kalam;color:var(--red)">~ or ~</div>':''}<div class="bitem or" data-item="${y}"><img src="shop-img/${i.img}" alt=""><div><b>${i.name}</b><span>${i.line}</span></div><div class="r"><em>YOUR CHOICE</em>details &rarr;</div></div>`}).join('')}
+  const i=itemInfo(x);value+=i.was;return `<div class="bitem" data-item="${x}"><img src="shop-img/${i.img}" alt=""><div><b>${i.name}</b><span>${i.line}</span></div><div class="r"><em>${money(i.was)} VALUE</em>details &rarr;</div></div>`}).join('');
+ $('#modal').innerHTML=`<button class="x" aria-label="Close">&times;</button>
+ <div class="mtop">${galHTML(p.name)}
+ <div class="buybox"><div class="k">${p.k.toUpperCase()}</div><h2>${p.name}</h2><div class="tl">${p.tl}</div>
+ ${priceBlock(p)}<p class="desc">${p.desc}</p>
+ ${p.opt?`<div class="opt"><label>CHOOSE YOUR KIT</label><div class="ch">${p.opt.map((o,k)=>`<button class="${k?'':'on'}" data-o="${o}">${o}</button>`).join('')}</div></div>`:''}
+ ${buyRow()}
+ <div class="calc"><div><span>Bought separately</span><span>${money(value)}</span></div><div><span>Bundle price</span><span>${money(p.price)}</span></div><div class="t g"><span>You save</span><span>${money(value-p.price)}</span></div></div></div></div>
+ <div class="mbody"><h4>What&rsquo;s inside</h4><p style="color:var(--mute);margin:-4px 0 10px;font-family:Kalam;font-size:18px">Tap any item to see its details.</p><div class="blist">${rows}</div>${reviewsHTML(id)}</div>`;
+ finish();
+}
+function openBook(id){
+ const b=BOOKS[id];gal=[`shop-img/${b.img}`];
+ $('#modal').innerHTML=`<button class="x" aria-label="Close">&times;</button>
+ <div class="mtop">${galHTML(b.name)}
+ <div class="buybox">${backBtn()}<div class="k">BY SIA STEVENS</div><h2>${b.name}</h2><div class="tl">${b.line}</div>
+ <p class="desc" style="margin-top:14px">${b.blurb}</p>
+ <p style="font-size:14px;color:var(--mute);margin-bottom:14px">Paperback. Included in this bundle. Sold on its own on Amazon.</p>
+ <div class="actions"><a class="btn" href="${b.link}">Read more about the book</a>${backTo?'<button class="btn ghost" data-back="1">Back to bundle</button>':''}</div></div></div>`;
+ finish();
+}
+function show(k){gi=(k+gal.length)%gal.length;$('#gimg').src=gal[gi];$('#thumbs').querySelectorAll('img').forEach((t,j)=>t.classList.toggle('on',j===gi));}
+function closeM(){$('#ov').classList.remove('on');document.body.classList.remove('lock');}
+$('#ov').addEventListener('click',e=>{const t=e.target;
+ if(t===e.currentTarget||t.classList.contains('x'))return closeM();
+ const it=t.closest('[data-item]');if(it)return open(it.dataset.item,cur);
+ if(t.dataset.back)return open(backTo);
+ if(t.classList.contains('prev'))return show(gi-1);
+ if(t.classList.contains('next'))return show(gi+1);
+ if(t.dataset.k!==undefined&&t.closest('#thumbs'))return show(+t.dataset.k);
+ if(t.dataset.q){qty=Math.max(1,qty+ +t.dataset.q);$('#qn').textContent=qty;return}
+ if(t.dataset.o){opt=t.dataset.o;t.parentNode.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===t));return}
+ if(t.id==='madd'){add(cur,qty,opt);closeM();return}
+ if(t.id==='mbuy'){buyNow(cur,qty,opt);return}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeM();closeCart();$('#light').classList.remove('on')}
+ if($('#ov').classList.contains('on')){if(e.key==='ArrowRight')show(gi+1);if(e.key==='ArrowLeft')show(gi-1)}});
+document.addEventListener('click',e=>{
+ const z=e.target.closest('[data-zoom]');if(z){$('#light img').src=z.dataset.zoom;$('#light').classList.add('on');return}
+ const a=e.target.closest('[data-add]');if(a){e.stopPropagation();const id=a.dataset.add;if(P[id].opt){open(id);return}celebrate(a);add(id,1,null);return}
+ const o=e.target.closest('[data-open]');if(o&&!e.target.closest('.ov')){open(o.dataset.open)}
+});
+$('#light').onclick=()=>$('#light').classList.remove('on');
+async function goCheckout(items){try{const r=await fetch(CHECKOUT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items})});const j=await r.json();if(j.url){location.href=j.url;return}}catch(e){}toast('Checkout hiccup. Please try again.')}
+function buyNow(id,q,o){if(CHECKOUT_URL){goCheckout([{id,qty:q||1,opt:o||null}]);return}const u=LINKS[id];if(u){location.href=u}else{toast('Checkout opens soon ✿')}}
+
+/* ---------- cart (saved in the browser) ---------- */
+let cart=[];try{cart=JSON.parse(localStorage.getItem('loveShopCart')||'[]')}catch(e){}
+function save(){try{localStorage.setItem('loveShopCart',JSON.stringify(cart))}catch(e){}}
+function add(id,q,o){const f=cart.find(c=>c.id===id&&c.opt===o);if(f)f.qty+=q;else cart.push({id,qty:q,opt:o});save();render();
+ const b=$('#cartBtn');b.classList.remove('bump');void b.offsetWidth;b.classList.add('bump');toast(`${P[id].name} added to your basket ✿`);}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),2200)}
+function render(){
+ const n=cart.reduce((s,c)=>s+c.qty,0),cc=$('#cartCount');cc.textContent=n;cc.classList.toggle('on',n>0);
+ if(!cart.length){$('#items').innerHTML='<div class="empty">Your basket is empty.<br>Go find something lovely ✿</div>';$('#dfoot').innerHTML='';return}
+ const total=cart.reduce((s,c)=>s+P[c.id].price*c.qty,0),saved=cart.reduce((s,c)=>s+(P[c.id].was-P[c.id].price)*c.qty,0);
+ let tip='';const has=id=>cart.some(c=>c.id===id);
+ if(has('oracle')&&has('trivia'))tip=`<div class="tip">You have both card games. Swap them for the <b>Game Night</b> bundle and save $4.99.<br><button class="btn" data-swap="gamenight">Swap to Game Night</button></div>`;
+ $('#items').innerHTML=cart.map((c,i)=>{const p=P[c.id];return `<div class="it"><img src="shop-img/${p.img}" alt=""><div><b>${p.name}</b>${c.opt?`<small>Kit: ${c.opt}</small><br>`:''}<small>${money(p.price)} each</small><div class="q"><button data-dq="${i}" data-v="-1">&minus;</button>${c.qty}<button data-dq="${i}" data-v="1">+</button><button class="rm" data-rm="${i}">remove</button></div></div><div class="pr">${money(p.price*c.qty)}</div></div>`}).join('')+tip;
+ const single=cart.length===1&&cart[0].qty===1;
+ $('#dfoot').innerHTML=`<div class="sum"><span>Total</span><span>${money(total)}</span></div><small>You&rsquo;re saving ${money(saved)} &middot; free shipping</small><button class="btn" id="checkout">Checkout</button>
+  ${!CHECKOUT_URL&&!single?`<div class="fallback">Checking out several items together opens soon. For now, check out each item:${cart.map(c=>`<a class="btn ghost" href="${LINKS[c.id]||'#'}">${P[c.id].name}${c.qty>1?' (set quantity '+c.qty+')':''}</a>`).join('')}</div>`:''}`;
+}
+$('#drawer').addEventListener('click',e=>{const t=e.target;
+ if(t.dataset.dq!==undefined){const c=cart[+t.dataset.dq];c.qty+= +t.dataset.v;if(c.qty<1)cart.splice(+t.dataset.dq,1);save();render();return}
+ if(t.dataset.rm!==undefined){cart.splice(+t.dataset.rm,1);save();render();return}
+ if(t.dataset.swap){cart=cart.filter(c=>c.id!=='oracle'&&c.id!=='trivia');cart.push({id:'gamenight',qty:1,opt:null});save();render();return}
+ if(t.id==='checkout')checkout();
+});
+async function checkout(){
+ if(CHECKOUT_URL){goCheckout(cart);return}
+ if(cart.length===1&&cart[0].qty===1){buyNow(cart[0].id);return}
+ toast('Use the buttons below to check out each item ✿');
+}
+function openCart(){$('#drawer').classList.add('on');$('#dshade').classList.add('on')}
+function closeCart(){$('#drawer').classList.remove('on');$('#dshade').classList.remove('on')}
+$('#cartBtn').onclick=openCart;$('#dclose').onclick=closeCart;$('#dshade').onclick=closeCart;
+render();
+
+/* ---------- scroll reveal ---------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('seen');if(e.target.id==='gift')e.target.querySelectorAll('li').forEach((li,k)=>li.style.transitionDelay=(k*.12)+'s');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
