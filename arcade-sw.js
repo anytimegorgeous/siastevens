@@ -1,7 +1,7 @@
 /* The Love Arcade's offline keeper. It sits at the top of the site so it can also keep the Forecast,
    but it only ever touches the Arcade, the Forecast and their fonts. Every other page of the site
    goes to the network exactly as before. Bump VERSION whenever a booth changes. */
-const VERSION = "love-arcade-v4";
+const VERSION = "love-arcade-v5";
 const FILES = [
   "arcade/", "arcade/index.html", "arcade/arcade.js", "arcade/arcade.css", "arcade/old-safari.js", "arcade/manifest.webmanifest", "arcade/joystick-180.png", "arcade/joystick-512.png",
   "arcade/myth-or-fact.html", "arcade/love-lab.html", "arcade/text-back.html", "arcade/what-they-mean.html",

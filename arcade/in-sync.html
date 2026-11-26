@@ -111,7 +111,8 @@ const QS = [
 const $ = id => document.getElementById(id);
 let p = 1, i = 0, A = {1:[], 2:[]}, locked = false;
 function show(id){ ["s-intro","s-q","s-pass","s-end"].forEach(s => $(s).hidden = s !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
-function start(){ p = 1; i = 0; A = {1:[], 2:[]}; document.body.className = "p1"; show("s-q"); ask(); }
+function start(){ p = 1; i = 0; A = {1:[], 2:[]}; document.body.className = "p1"; show("s-q");
+  Arcade.track({screen: "s-q", total: QS.length, color: "#FF6B5C"}); ask(); }
 function ask(){
   locked = false;
   const c = p === 1 ? "var(--one)" : "var(--two)";
@@ -121,10 +122,12 @@ function ask(){
   const q = QS[i];
   $("q").innerHTML = q.q + (q.who ? "<small>You or your partner?</small>" : "");
   $("opts").innerHTML = q.o.map((o, k) => `<button class="opt" data-k="${k}">${o}</button>`).join("");
+  Arcade.step(i, i + 1, true);
 }
 function pick(btn){
   if (locked) return; locked = true;
   btn.classList.add("on"); A[p][i] = +btn.dataset.k;
+  Arcade.step(i + 1, i + 1, false);
   setTimeout(() => {
     i++;
     if (i < QS.length) return ask();
@@ -149,7 +152,7 @@ function end(){
 }
 $("opts").addEventListener("click", e => { const b = e.target.closest(".opt"); if (b) pick(b); });
 $("start").onclick = start;
-$("go2").onclick = () => { p = 2; i = 0; document.body.className = "p2"; show("s-q"); ask(); };
+$("go2").onclick = () => { p = 2; i = 0; document.body.className = "p2"; show("s-q"); Arcade.track({screen: "s-q", total: QS.length, color: "#16B8A6"}); ask(); };
 Arcade.init({again: start});
 </script>
 </body>

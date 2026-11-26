@@ -117,7 +117,10 @@ function setField(el, eaten, planted){
 const $ = id => document.getElementById(id);
 let i = 0, eaten = 0, planted = 0, locked = false, tm = 0;
 function show(id){ ["s-intro","s-q","s-end"].forEach(x => $(x).hidden = x !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
-function start(){ clearTimeout(tm); i = 0; eaten = 0; planted = 0; field($("f-q")); setField($("f-q"), 0, 0); show("s-q"); ask(); }
+function start(){ clearTimeout(tm); i = 0; eaten = 0; planted = 0; field($("f-q")); setField($("f-q"), 0, 0); show("s-q");
+  Arcade.track({screen: "s-q", total: N, color: "#7CC36E", min: 4, skipAfter: "row", onSkip: skip, onResult: end, onKeep: keep}); ask(); }
+function skip(){ if (locked) return; locked = true; i++; if (i < N) ask(); else end(); }
+function keep(){ show("s-q"); if (!locked) ask(); }
 function ask(){
   locked = false;
   const p = PAIRS[i];
@@ -125,22 +128,26 @@ function ask(){
   $("row").classList.remove("done");
   /* the two cards look the same; which side each sits on changes, and the label only shows once picked */
   $("row").innerHTML = Arcade.shuffle([0, 1]).map(c => `<button class="pk ${c ? "crea" : "cons"}" data-c="${c}"><i>${c ? "&#127793; Create" : "&#127822; Consume"}</i>${Arcade.esc(p[c])}</button>`).join("");
+  Arcade.step(planted + eaten, i + 1, true);
 }
 function pick(btn){
   if (locked) return; locked = true;
   btn.classList.add("on"); $("row").classList.add("done");
   if (btn.dataset.c === "1") planted++; else eaten++;
+  Arcade.step(planted + eaten, i + 1, false);
   setField($("f-q"), eaten, planted);
   tm = setTimeout(() => { i++; if (i < N) ask(); else end(); }, 900);
 }
 function end(){
-  const r = planted <= 2 ? ["A picked-over tree", "Comfort isn&rsquo;t the enemy. But a love that only consumes slowly burns down. Plant one thing this week."]
-    : planted <= 5 ? ["A young orchard", "You still make new things together. Make it a habit, not an accident, and the orchard fills in."]
+  const sh = planted / Math.max(1, planted + eaten);
+  const r = sh <= .25 ? ["A picked-over tree", "Comfort isn&rsquo;t the enemy. But a love that only consumes slowly burns down. Plant one thing this week."]
+    : sh <= .625 ? ["A young orchard", "You still make new things together. Make it a habit, not an accident, and the orchard fills in."]
     : ["A growing orchard", "You keep creating together. That&rsquo;s how love compounds instead of fading."];
   $("s-end").innerHTML = `<div class="field" id="f-end"></div>
     <p class="res-n">${planted} planted &middot; ${eaten} eaten</p>
     <h2 class="res-t">${r[0]}</h2><p class="res-p">${r[1]}</p>
     <p class="quote">&ldquo;Love consumed burns down. Love built compounds.&rdquo;</p>
+    ${Arcade.partial(planted + eaten)}
     ${Arcade.footer({chapter: 16, line: "The Orchard Theory: when novelty fades, create something new with the person."})}`;
   field($("f-end")); setField($("f-end"), eaten, planted);
   show("s-end");

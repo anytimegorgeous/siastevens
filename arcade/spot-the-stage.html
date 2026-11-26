@@ -122,14 +122,17 @@ const STALL = [
 ];
 const $ = id => document.getElementById(id);
 const ROUNDS = 10;
-let order = [], i = 0, pts = 0, right = 0, t0 = 0, raf = 0, locked = false, tm = 0;
+let order = [], i = 0, pts = 0, right = 0, t0 = 0, raf = 0, locked = false, tm = 0, done = 0;
 const LIMIT = () => Arcade.talk() ? 15000 : 7000;
 function show(id){ ["s-intro","s-q","s-own","s-end"].forEach(s => $(s).hidden = s !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
 function start(){
   const trap = SCENES[16], rest = Arcade.shuffle(SCENES.slice(0, 16)).slice(0, ROUNDS - 1);
   order = rest.slice(0, 6).concat([trap], rest.slice(6));
-  i = 0; pts = 0; right = 0; $("pts").textContent = "0"; show("s-q"); ask();
+  i = 0; done = 0; pts = 0; right = 0; $("pts").textContent = "0"; show("s-q");
+  Arcade.track({screen: "s-q", total: ROUNDS, color: "#14B37D", min: 5, onResult: early, onKeep: keep}); ask();
 }
+function early(){ cancelAnimationFrame(raf); clearTimeout(tm); locked = true; own(); }
+function keep(){ if (done > i) i++; show("s-q"); if (i < ROUNDS) ask(); else own(); }
 function ask(){
   locked = false;
   const s = order[i];
@@ -139,6 +142,7 @@ function ask(){
   const c = $("card"); c.classList.remove("flash"); void c.offsetWidth; c.classList.add("flash");
   $("pick").classList.remove("done"); [...$("pick").children].forEach(b => b.classList.remove("on"));
   t0 = performance.now(); cancelAnimationFrame(raf); tick();
+  Arcade.step(done, i + 1, true);
 }
 function tick(){
   const left = Math.max(0, 1 - (performance.now() - t0) / LIMIT());
@@ -151,6 +155,7 @@ function answer(stage, btn){
   const s = order[i], ok = stage === s[2];
   const left = Math.max(0, 1 - (performance.now() - t0) / LIMIT());
   if (ok){ right++; pts += 100 + Math.round(left * 100); }
+  done++; Arcade.step(done, i + 1, false);
   $("pts").textContent = pts;
   if (btn) btn.classList.add("on"); $("pick").classList.add("done");
   $("card").insertAdjacentHTML("beforeend", `<span class="burst ${ok ? "ok" : "no"}">${ok ? "Yes!" : stage ? "Nope" : "Too slow"}</span>`);
@@ -162,10 +167,10 @@ function own(){
   show("s-own");
 }
 function end(k){
-  const rank = right >= 9 ? "Stage Spotter Supreme" : right >= 6 ? "Natural" : "Still Warming Up";
+  const sc = right / Math.max(1, done), rank = sc >= .85 ? "Stage Spotter Supreme" : sc >= .6 ? "Natural" : "Still Warming Up";
   const s = STALL[k];
   $("s-end").innerHTML = `<p style="font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)">High score</p>
-    <p class="hi">${pts}</p><p class="rank">${rank} &middot; ${right}/${ROUNDS}</p>
+    <p class="hi">${pts}</p><p class="rank">${rank} &middot; ${right}/${done}</p>${Arcade.partial(done)}
     <div class="note"><b>Your stall: ${s[1]}</b>${s[2]} You spotted the stages everywhere. Your own love life is the hardest place to see them.</div>
     ${Arcade.footer({chapter: 5, line: "The three stages, and what restarts the cycle when one stalls."})}`;
   show("s-end");

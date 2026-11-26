@@ -151,6 +151,68 @@ function footer(o){
   </div>`;
 }
 
+
+/* Progress bar, "Show my result" and "skip": shared by the quiz and either/or booths.
+   A booth calls Arcade.track({...}) when a game starts and Arcade.step(done, current, open) on every
+   question: done = questions answered so far (skips don't count), current = the question on screen (1-based),
+   open = true while it is still waiting for an answer. */
+let T = null, trackObs = null;
+function el(id){ return document.getElementById(id); }
+function track(o){
+  T = Object.assign({bar: true, need: 3, min: 0}, o);
+  const scr = el(T.screen);
+  let bar = el("ac-track");
+  if (T.bar && !bar){
+    bar = document.createElement("div"); bar.id = "ac-track"; bar.className = "ac-track"; bar.setAttribute("aria-live", "polite");
+    bar.innerHTML = '<i><b></b></i><span></span><em aria-hidden="true">&#10084;</em>';
+    document.body.appendChild(bar);
+  }
+  if (bar){ bar.classList.remove("ready"); if (T.color) bar.style.setProperty("--ac-tc", T.color); }
+  if (!trackObs){ trackObs = new MutationObserver(syncTrack); }
+  trackObs.disconnect(); trackObs.observe(scr, {attributes: true, attributeFilter: ["hidden"]});
+  let more = el("ac-more");
+  if (T.onResult){
+    if (!more){ more = document.createElement("div"); more.id = "ac-more"; more.className = "ac-more"; }
+    more.innerHTML = '<button type="button" class="ac-btn ac-again">Show my result &rarr;</button>';
+    more.firstChild.onclick = () => T.onResult();
+    (el(T.moreIn) || scr).appendChild(more); more.hidden = true;
+  } else if (more) more.remove();
+  let sk = el("ac-skip");
+  if (T.onSkip){
+    if (!sk){ sk = document.createElement("button"); sk.type = "button"; sk.id = "ac-skip"; sk.className = "ac-skip"; }
+    sk.innerHTML = esc(T.skipLabel || "Neither is me") + " &rarr; skip";
+    sk.onclick = () => { sk.hidden = true; T.onSkip(); };
+    el(T.skipAfter).insertAdjacentElement("afterend", sk); sk.hidden = true;
+  } else if (sk) sk.remove();
+  syncTrack();
+}
+function syncTrack(){
+  const bar = el("ac-track"); if (!bar || !T) return;
+  bar.hidden = !T.bar || el(T.screen).hidden;
+}
+function step(done, current, open){
+  if (!T) return;
+  const bar = el("ac-track");
+  if (bar && T.bar){
+    bar.querySelector("b").style.width = Math.min(100, done / T.total * 100) + "%";
+    bar.querySelector("span").textContent = current >= T.total && open ? "Last one!" : `${Math.min(current, T.total)} of ${T.total}`;
+  }
+  const more = el("ac-more");
+  if (more){
+    const ready = done >= T.min && done < T.total && !(open && current >= T.total);
+    if (ready && more.hidden){ more.classList.remove("pop"); void more.offsetWidth; more.classList.add("pop"); if (bar) bar.classList.add("ready"); }
+    more.hidden = !ready;
+  }
+  const sk = el("ac-skip");
+  /* skipping is allowed while enough questions are left to still reach a real result */
+  if (sk) sk.hidden = !(open && done + (T.total - current) >= T.need);
+}
+/* the line under a result that came early */
+function partial(done){
+  if (!T || done >= T.total) return "";
+  return `<p class="ac-partial">Based on ${done} of ${T.total} answers. <button type="button" data-ac="keep">Keep going &rarr;</button></p>`;
+}
+
 let idleT = 0, opts = {};
 function poke(){
   clearTimeout(idleT);
@@ -171,6 +233,7 @@ function init(o){
   document.addEventListener("click", e => {
     const b = e.target.closest("[data-ac]");
     if (!b) return;
+    if (b.dataset.ac === "keep" && T && T.onKeep) { T.onKeep(); return; }
     if (b.dataset.ac === "next") home();
     else if (b.dataset.ac === "again" && opts.again) opts.again();
   });
@@ -181,5 +244,5 @@ function init(o){
   }
 }
 
-window.Arcade = {init, footer, shuffle, esc, qr, home, talk, eventMode, store, qrMatrix, qrSvg};
+window.Arcade = {init, footer, track, step, partial, shuffle, esc, qr, home, talk, eventMode, store, qrMatrix, qrSvg};
 })();

@@ -158,13 +158,15 @@ let i = 0, right = 0, marks = [], locked = false;
 function show(id){ ["s-intro","s-q","s-end"].forEach(s => $(s).hidden = s !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
 const L = "ABC";
 
-function start(){ i = 0; right = 0; marks = []; show("s-q"); ask(); }
+function start(){ i = 0; right = 0; marks = []; show("s-q");
+  Arcade.track({screen: "s-q", total: EXP.length + 1, color: "#14B88F"}); ask(); }
 function ask(){
   locked = false;
   const total = EXP.length + 1;
   $("count").textContent = `Experiment ${String(i + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
   $("prog").innerHTML = Array.from({length: total}, (_, k) => `<i class="${k < i ? (marks[k] ? "d" : "x") : k === i ? "n" : ""}"></i>`).join("");
   ["analyze","result","next","results"].forEach(x => $(x).hidden = true);
+  Arcade.step(i, i + 1, true);
   $("opts").classList.remove("done");
   if (i < EXP.length){
     const e = EXP[i];
@@ -180,6 +182,7 @@ function ask(){
 function pick(k, btn){
   if (locked) return; locked = true;
   btn.classList.add("pick");
+  Arcade.step(i + 1, i + 1, false);
   if (i === EXP.length){ setTimeout(() => end(k), 450); return; }
   const e = EXP[i], ok = k === e[4];
   marks[i] = ok; if (ok) right++;

@@ -107,7 +107,8 @@ const NEEDS = [
 const $ = id => document.getElementById(id);
 let i = 0, ans = [], locked = false;
 function show(id){ ["s-intro","s-q","s-end"].forEach(s => $(s).hidden = s !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
-function start(){ i = 0; ans = []; show("s-q"); ask(); }
+function start(){ i = 0; ans = []; show("s-q");
+  Arcade.track({screen: "s-q", total: NEEDS.length, color: "#B8892E"}); ask(); }
 function ask(){
   locked = false;
   const n = NEEDS[i];
@@ -116,10 +117,12 @@ function ask(){
   $("need").textContent = n[0]; $("awho").textContent = n[1];
   $("choose").classList.remove("done"); document.querySelectorAll(".ch").forEach(c => c.classList.remove("on"));
   $("memo").hidden = true; $("next").hidden = true; $("results").hidden = true;
+  Arcade.step(i, i + 1, true);
 }
 function pick(c, el){
   if (locked) return; locked = true;
   ans[i] = c; el.classList.add("on"); $("choose").classList.add("done");
+  Arcade.step(i + 1, i + 1, false);
   $("then").textContent = NEEDS[i][2]; $("memo").hidden = false;
   /* after six calls they choose: results now, or keep going (up to ten) */
   const more = i < NEEDS.length - 1;

@@ -111,20 +111,24 @@ const BOW = `<svg viewBox="0 0 60 120" aria-hidden="true"><path d="M20 4c40 20 4
 const ARROW = `<svg viewBox="0 0 120 12" preserveAspectRatio="none" aria-hidden="true"><path d="M0 6h104" stroke="#1E1410" stroke-width="3"/><path d="M104 1l14 5-14 5z" fill="#1E1410"/><path d="M0 1l10 5-10 5M8 1l10 5-10 5" stroke="#C0582E" stroke-width="2" fill="none"/></svg>`;
 function range(el){ el.innerHTML = `<div class="floor"></div><div class="target">${TARGET}</div><div class="bow">${BOW}</div><div class="arrow">${ARROW}</div>`; }
 const $ = id => document.getElementById(id);
-let order = [], i = 0, tally = {}, locked = false;
+let order = [], i = 0, tally = {}, locked = false, done = 0;
 function show(id){ ["s-intro","s-q","s-end"].forEach(s => $(s).hidden = s !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
-function start(){ order = Arcade.shuffle(SUITORS); i = 0; tally = {wordsTrusted:0, proofHeld:0, right:0}; show("s-q"); ask(); }
+function start(){ order = Arcade.shuffle(SUITORS); i = 0; done = 0; tally = {wordsTrusted:0, proofHeld:0, right:0}; show("s-q");
+  Arcade.track({screen: "s-q", total: order.length, color: "#D9A23B", min: 4, onResult: end, onKeep: keep}); ask(); }
+function keep(){ if (done > i) i++; show("s-q"); if (i < order.length) ask(); else end(); }
 function ask(){
   locked = false;
   const s = order[i];
   range($("range"));
   $("who").textContent = s[0]; $("what").textContent = s[1];
   $("acts").classList.remove("done"); $("verdict").hidden = true; $("next").hidden = true;
+  Arcade.step(done, i + 1, true);
 }
 function act(a){
   if (locked) return; locked = true;
   const s = order[i], kind = s[2], ok = (kind === "proof") === (a === "trust");
   if (ok) tally.right++;
+  done++; Arcade.step(done, i + 1, false);
   if (kind === "promise" && a === "trust") tally.wordsTrusted++;
   if (kind === "proof" && a === "hold") tally.proofHeld++;
   $("acts").classList.add("done");
@@ -150,7 +154,7 @@ function act(a){
   }
 }
 function end(){
-  const n = order.length;
+  const n = done;
   const r = tally.wordsTrusted >= 2 && tally.wordsTrusted >= tally.proofHeld
     ? ["The Romantic", "You believe what people say. It&rsquo;s generous, and it&rsquo;s expensive. Let the record do the choosing, not the speech."]
     : tally.proofHeld >= 2
@@ -159,6 +163,7 @@ function end(){
   $("s-end").innerHTML = `<div class="key" style="width:min(100%,520px)"></div>
     <p class="res-t">${r[0]}</p><p class="res-p">${r[1]}</p>
     <div class="stats"><span>${tally.right} of ${n} called right</span><span>Promises trusted: ${tally.wordsTrusted}</span><span>Proof held back: ${tally.proofHeld}</span></div>
+    ${Arcade.partial(done)}
     <p class="quote">&ldquo;You don&rsquo;t ask the heart. You ask the bow. Vows are free; labors cost.&rdquo;</p>
     ${Arcade.footer({chapter: 26, line: "The Labors Sort: how to let the record, not the speech, do the choosing."})}`;
   show("s-end");

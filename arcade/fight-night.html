@@ -107,9 +107,11 @@ const ROUNDS = [
   ["The fight is over. Or is it?", {ghost:"Silence until it fades.", nuke:"Plan to win it next time.", dodge:"Act like it never happened.", fix:"“Are we good? What do we do next time?”"}]
 ];
 const $ = id => document.getElementById(id);
-let i = 0, tally = {}, locked = false;
+let i = 0, tally = {}, locked = false, done = 0;
 function show(id){ ["s-intro","s-q","s-end"].forEach(s => $(s).hidden = s !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
-function start(){ i = 0; tally = {fix:0, ghost:0, nuke:0, dodge:0}; show("s-q"); ask(); }
+function start(){ i = 0; done = 0; tally = {fix:0, ghost:0, nuke:0, dodge:0}; show("s-q");
+  Arcade.track({screen: "s-q", total: ROUNDS.length, color: "#E8B23A", skipAfter: "moves", skipLabel: "None of these", onSkip: skip}); ask(); }
+function skip(){ if (locked) return; locked = true; i++; if (i < ROUNDS.length) ask(); else end(); }
 function ask(){
   locked = false;
   const r = ROUNDS[i];
@@ -118,10 +120,11 @@ function ask(){
   $("sit").textContent = r[0];
   $("moves").classList.remove("done"); $("hit").hidden = true;
   $("moves").innerHTML = Arcade.shuffle(Object.keys(r[1])).map(s => `<button class="mv" data-s="${s}">${Arcade.esc(r[1][s])}</button>`).join("");
+  Arcade.step(done, i + 1, true);
 }
 function pick(btn){
   if (locked) return; locked = true;
-  const s = btn.dataset.s; tally[s]++;
+  const s = btn.dataset.s; tally[s]++; done++; Arcade.step(done, i + 1, false);
   btn.classList.add("on"); $("moves").classList.add("done");
   const p = $("poster"); p.classList.remove("shake"); void p.offsetWidth; p.classList.add("shake");
   $("hit").innerHTML = STYLE[s].name + "!"; $("hit").hidden = false;
@@ -130,7 +133,7 @@ function pick(btn){
 function end(){
   /* a tie goes to the style that needs the warning most */
   const top = ["nuke","ghost","dodge","fix"].reduce((a, b) => tally[b] > tally[a] ? b : a);
-  const st = STYLE[top], strength = Math.round(tally.fix / ROUNDS.length * 10);
+  const st = STYLE[top], strength = Math.round(tally.fix / Math.max(1, done) * 10);
   const rows = ["fix","ghost","nuke","dodge"].map(k => `<div class="${k === top ? "top" : ""}"><span>${STYLE[k].name}</span><span>${tally[k]}</span></div>`).join("");
   $("s-end").innerHTML = `<div class="ropes"><i></i><i></i></div><p class="k">Your fight style</p><h2 class="belt slab">${st.name}</h2>
     <p class="line">${st.line}</p>

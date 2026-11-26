@@ -147,18 +147,23 @@ function setShip(el, s, a){
 const $ = id => document.getElementById(id);
 let i = 0, s = 0, a = 0, locked = false, tm = 0;
 function show(id){ ["s-intro","s-q","s-launch","s-end"].forEach(x => $(x).hidden = x !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
-function start(){ clearTimeout(tm); i = 0; s = 0; a = 0; harbor($("h-q")); setShip($("h-q"), 0, 0); show("s-q"); ask(); }
+function start(){ clearTimeout(tm); i = 0; s = 0; a = 0; harbor($("h-q")); setShip($("h-q"), 0, 0); show("s-q");
+  Arcade.track({screen: "s-q", total: QS.length, color: "#3FC1D9", min: 5, skipAfter: "two", onSkip: skip, onResult: launch, onKeep: keep}); ask(); }
+function skip(){ if (locked) return; locked = true; i++; if (i < QS.length) ask(); else launch(); }
+function keep(){ show("s-q"); if (!locked) ask(); }
 function ask(){
   locked = false;
   const q = QS[i];
   $("q").textContent = q[0];
   /* sides shuffle, so nobody learns "left is sail" */
   $("two").innerHTML = Arcade.shuffle([["s", q[1]], ["a", q[2]]]).map(o => `<button class="ch" data-p="${o[0]}">${Arcade.esc(o[1])}</button>`).join("");
+  Arcade.step(s + a, i + 1, true);
 }
 function pick(btn){
   if (locked) return; locked = true;
   btn.classList.add("on");
   if (btn.dataset.p === "s") s++; else a++;
+  Arcade.step(s + a, i + 1, false);
   setShip($("h-q"), s, a);
   tm = setTimeout(() => { i++; if (i < QS.length) ask(); else launch(); }, 520);
 }
@@ -166,7 +171,7 @@ function launch(){
   const h = $("h-end"); harbor(h); setShip(h, s, a);
   const boat = h.querySelector(".boat"); boat.classList.remove("bob");
   show("s-launch");
-  const kind = s >= 7 ? "sail" : a >= 7 ? "anchor" : "both";
+  const n = Math.max(1, s + a), kind = s / n >= .7 ? "sail" : a / n >= .7 ? "anchor" : "both";
   $("vpic").textContent = kind === "sail" ? "All that canvas, nothing holding it down…" : kind === "anchor" ? "Weighing anchor…" : "Full sail, steady keel…";
   tm = setTimeout(() => {
     boat.classList.add(kind === "sail" ? "sailaway" : kind === "anchor" ? "stuck" : "steady");
@@ -186,6 +191,7 @@ function end(kind){
   $("s-end").innerHTML = `<div class="harbor" id="h-res"></div>
     <p class="pct">${s} sail &middot; ${a} anchor</p>
     <h2 class="res-t">${R[0]}</h2><p class="res-p">${R[1]}</p>
+    ${Arcade.partial(s + a)}
     <p class="quote">Lasting couples aren&rsquo;t one or the other. They work out the balance between the two pulls, together.</p>
     ${Arcade.footer({chapter: 9, line: "The Two Pulls: why every lasting couple needs both a sail and an anchor."})}`;
   const h = $("h-res"); harbor(h); setShip(h, s, a);

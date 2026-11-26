@@ -31,3 +31,19 @@ h1,h2,h3,p{margin:0}
 @keyframes acPop{from{opacity:0;transform:translateY(14px) scale(.97)}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 @media (max-width:520px){.ac-foot{flex-direction:column;text-align:center}.ac-foot-txt{align-items:center}}
+
+/* progress bar, "Show my result" and skip (Arcade.track). A booth can tint the bar with --ac-tc. */
+.ac-track{position:fixed;top:14px;right:14px;z-index:49;display:flex;align-items:center;gap:9px;padding:9px 14px;border-radius:99px;
+  background:rgba(0,0,0,.35);color:#fff;font:600 .8125rem/1 system-ui,-apple-system,sans-serif;letter-spacing:.04em;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.ac-track i{display:block;width:min(26vw,150px);height:6px;border-radius:9px;background:rgba(255,255,255,.28);overflow:hidden}
+.ac-track b{display:block;height:100%;width:0;border-radius:inherit;background:var(--ac-tc,#FF6FAE);transition:width .45s ease}
+.ac-track span{white-space:nowrap;min-width:3.6em}
+.ac-track em{display:none;font-style:normal;color:var(--ac-tc,#FF6FAE)}
+.ac-track.ready em{display:inline;animation:acHeart .6s cubic-bezier(.2,.9,.25,1.4) both}
+@keyframes acHeart{0%{transform:scale(0)}60%{transform:scale(1.5)}100%{transform:scale(1)}}
+.ac-skip{display:block;margin:12px auto 0;padding:8px 12px;background:none;border:0;color:inherit;opacity:.72;font-size:.875rem;text-decoration:underline;text-underline-offset:3px}
+.ac-skip:hover{opacity:1}
+.ac-more{display:flex;justify-content:center;margin-top:18px}
+.ac-more .ac-btn{min-height:48px;font-size:1rem}
+.ac-partial{margin:4px auto 0;font-size:.875rem;opacity:.85;text-align:center}
+.ac-partial button{margin-left:6px;padding:6px 12px;border-radius:99px;border:1.5px solid currentColor;background:none;font-weight:700;font-size:.8125rem}

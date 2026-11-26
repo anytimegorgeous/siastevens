@@ -118,14 +118,16 @@ const LINES = [
     "Same sentence as the last scene. Only the pattern tells you which.", 11, "I’m avoiding people and calling it self-care."]
 ];
 const $ = id => document.getElementById(id);
-let order = [], i = 0, right = 0, marks = [], locked = false;
+let order = [], i = 0, right = 0, marks = [], locked = false, done = 0;
 function show(id){ ["s-intro","s-q","s-own","s-end"].forEach(s => $(s).hidden = s !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
 /* the two "focusing on myself" scenes stay together and in order, so the twist lands */
 function start(){
   const pair = [LINES[6], LINES[7]], rest = Arcade.shuffle(LINES.slice(0, 6));
   order = rest.slice(0, 4).concat(pair, rest.slice(4));
-  i = 0; right = 0; marks = []; show("s-q"); ask();
+  i = 0; done = 0; right = 0; marks = []; show("s-q");
+  Arcade.track({screen: "s-q", total: order.length, color: "#FFE14A", min: 4, onResult: own, onKeep: keep}); ask();
 }
+function keep(){ if (done > i) i++; show("s-q"); if (i < order.length) ask(); else own(); }
 function ask(){
   const l = order[i]; locked = false;
   $("reel").innerHTML = order.map((_, k) => `<i class="${k < i ? (marks[k] ? "d" : "x") : k === i ? "n" : ""}"></i>`).join("");
@@ -133,6 +135,7 @@ function ask(){
   $("quote").textContent = l[0];
   $("subt").innerHTML = "";
   $("prompt").hidden = false; $("note").hidden = true; $("next").hidden = true;
+  Arcade.step(done, i + 1, true);
   $("opts").classList.remove("done");
   $("opts").innerHTML = Arcade.shuffle(l[2].map((t, k) => ({t, k}))).map(o => `<button class="opt" data-k="${o.k}">${Arcade.esc(o.t)}</button>`).join("");
 }
@@ -140,6 +143,7 @@ function pick(btn){
   if (locked) return; locked = true;
   const l = order[i], ok = btn.dataset.k === "0";
   marks[i] = ok; if (ok) right++;
+  done++; Arcade.step(done, i + 1, false);
   $("opts").classList.add("done");
   btn.classList.add(ok ? "right" : "wrong");
   [...$("opts").children].forEach(b => { if (b.dataset.k === "0") b.classList.add("right"); });
@@ -154,12 +158,12 @@ function own(){
   show("s-own");
 }
 function end(s){
-  const n = order.length, rank = right >= 7 ? "Fluent in Excuse" : right >= 4 ? "Conversational" : "Lost in Translation";
+  const n = done, sc = right / Math.max(1, n), rank = sc >= .85 ? "Fluent in Excuse" : sc >= .5 ? "Conversational" : "Lost in Translation";
   const l = LINES[s];
   const shield = s >= 0
     ? `<div class="shield"><p class="k">Your shield</p><p class="q">&ldquo;${Arcade.esc(l[0])}&rdquo;</p><p class="u">What it might be covering: ${Arcade.esc(l[5])} Next time, say that instead. Once. Watch what it does to the conversation.</p></div>`
     : `<div class="shield"><p class="k">Your shield</p><p class="q">None. Clean.</p><p class="u">Or you&rsquo;re very good at shields. Catch yourself mid-sentence this week.</p></div>`;
-  $("s-end").innerHTML = `<div class="credits"><p class="slate">The end</p><p class="big">${rank}</p><p class="sc">${right} of ${n} decoded</p></div>${shield}
+  $("s-end").innerHTML = `<div class="credits"><p class="slate">The end</p><p class="big">${rank}</p><p class="sc">${right} of ${n} decoded</p></div>${Arcade.partial(done)}${shield}
     ${Arcade.footer({chapter: 5, line: "Knowing everything, building nothing: why the new vocabulary became a shield."})}`;
   show("s-end");
 }

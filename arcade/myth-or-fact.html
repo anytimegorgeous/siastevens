@@ -121,11 +121,13 @@ const ITEMS = [
   ["More options make you happier.", "myth", "Six jams outsold twenty-four, about ten to one. More choice, less choosing.", 4],
   ["Men are from Mars, women are from Venus.", "myth", "Same human wiring. Different details. Nobody’s from another planet.", 9]
 ];
-let order = [], i = 0, right = 0, misses = [], locked = false;
+let order = [], i = 0, right = 0, misses = [], locked = false, done = 0;
 const $ = id => document.getElementById(id);
 function show(id){ ["s-intro","s-q","s-end"].forEach(s => $(s).hidden = s !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
 
-function start(){ order = Arcade.shuffle(ITEMS); i = 0; right = 0; misses = []; show("s-q"); ask(); }
+function start(){ order = Arcade.shuffle(ITEMS); i = 0; done = 0; right = 0; misses = []; show("s-q");
+  Arcade.track({screen: "s-q", total: order.length, color: "#FFD23F", min: 5, onResult: end, onKeep: keep}); ask(); }
+function keep(){ if (done > i) i++; show("s-q"); if (i < order.length) ask(); else end(); }
 function ask(){
   const it = order[i]; locked = false;
   $("bulbs").innerHTML = order.map((_, k) => `<b class="${k < i ? (misses.includes(order[k]) ? "no" : "ok") : k === i ? "on" : ""}"></b>`).join("");
@@ -134,11 +136,13 @@ function ask(){
   $("stamp").className = "stamp"; $("stamp").textContent = "";
   $("buzzers").classList.remove("done"); document.querySelectorAll(".buzz").forEach(b => b.classList.remove("hit"));
   $("buzzers").hidden = false; $("reveal").hidden = true;
+  Arcade.step(done, i + 1, true);
 }
 function answer(a, btn){
   if (locked) return; locked = true;
   const it = order[i], ok = a === it[1];
   if (ok) right++; else misses.push(it);
+  done++; Arcade.step(done, i + 1, false);
   btn.classList.add("hit"); $("buzzers").classList.add("done");
   const st = $("stamp"); st.textContent = it[1] === "myth" ? "Busted!" : "True!"; st.className = "stamp " + it[1];
   void st.offsetWidth; st.classList.add("go");
@@ -152,12 +156,12 @@ function answer(a, btn){
 }
 function next(){ i++; if (i < order.length) ask(); else end(); }
 function end(){
-  const title = right >= 9 ? "Myth Buster" : right >= 6 ? "Sharp Eye" : "Myth Magnet";
+  const sc = right / Math.max(1, done), title = sc >= .85 ? "Myth Buster" : sc >= .6 ? "Sharp Eye" : "Myth Magnet";
   const m = misses[0];
   const steer = m
     ? `<div class="steer"><p class="k">The myth that&rsquo;s been steering you</p><p class="m">&ldquo;${Arcade.esc(m[0].replace(/\.$/, ""))}&rdquo;</p><p class="w">${Arcade.esc(m[2])}</p></div>`
-    : `<div class="steer"><p class="k">No myth is steering you</p><p class="w">Ten for ten. Now see if you live it.</p></div>`;
-  $("s-end").innerHTML = `<p class="ch">Your score</p><p class="score">${right}<small>/${order.length}</small></p><h2 class="title">${title}</h2>${steer}
+    : `<div class="steer"><p class="k">No myth is steering you</p><p class="w">${done === order.length ? "Ten for ten" : "Not one miss"}. Now see if you live it.</p></div>`;
+  $("s-end").innerHTML = `<p class="ch">Your score</p><p class="score">${right}<small>/${done}</small></p><h2 class="title">${title}</h2>${steer}${Arcade.partial(done)}
     ${Arcade.footer({chapter: m ? m[3] : 1, line: m ? "Every miss is a belief steering your love life. The book hands the steering back." : "Scan for the book these myths come from."})}`;
   show("s-end");
 }

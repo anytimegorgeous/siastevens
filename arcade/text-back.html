@@ -131,12 +131,13 @@ const $ = id => document.getElementById(id);
 let i = 0, tally = {give:0, hold:0, cold:0}, timers = [];
 function later(fn, ms){ timers.push(setTimeout(fn, ms)); }
 function show(id){ ["s-intro","s-q","s-end"].forEach(s => $(s).hidden = s !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
-function start(){ timers.forEach(clearTimeout); i = 0; tally = {give:0, hold:0, cold:0}; show("s-q"); chat(); }
+function start(){ timers.forEach(clearTimeout); i = 0; tally = {give:0, hold:0, cold:0}; show("s-q");
+  Arcade.track({screen: "s-q", total: CHATS.length, color: "#2F6BFF"}); chat(); }
 
 function chat(){
   const c = CHATS[i];
   $("av").textContent = c.n[0]; $("av").style.background = c.c;
-  $("name").textContent = c.n; $("ctx").textContent = c.ctx; $("step").textContent = `${i + 1} of ${CHATS.length}`;
+  $("name").textContent = c.n; $("ctx").textContent = c.ctx; $("step").textContent = `${i + 1} of ${CHATS.length}`; Arcade.step(i, i + 1, true);
   const th = $("thread"); th.innerHTML = `<p class="time">${c.t}</p>`;
   $("dock").innerHTML = "";
   let t = 300;
@@ -152,7 +153,7 @@ function chat(){
   }, t + 150);
 }
 function send(z){
-  const c = CHATS[i]; tally[z]++;
+  const c = CHATS[i]; tally[z]++; Arcade.step(i + 1, i + 1, false);
   $("dock").innerHTML = "";
   const th = $("thread");
   th.insertAdjacentHTML("beforeend", `<div class="b out">${Arcade.esc(c[z][0])}</div>`);

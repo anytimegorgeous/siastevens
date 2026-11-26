@@ -122,6 +122,7 @@ function start(){
   timers.forEach(clearTimeout); timers = [];
   let k; do { k = Math.floor(Math.random() * STORIES.length); } while (k === lastStory); lastStory = k;
   st = STORIES[k]; i = 0; marks = [];
+  Arcade.track({screen: "s-q", total: st.qs.length, color: "#7A4E36"});
   const per = Arcade.talk() ? 5200 : 3400;
   $("table").innerHTML = `<div class="who"><div class="av" style="background:${st.c}">${st.n[0]}</div><div><b>${st.n}</b><span>Across the table</span></div></div>`;
   show("s-tell");
@@ -136,12 +137,14 @@ function ask(){
   const q = st.qs[i];
   $("prog").innerHTML = st.qs.map((_, k) => `<i class="${k < i ? (marks[k] ? "ok" : "no") : ""}"></i>`).join("");
   $("q").textContent = q[0]; $("fb").textContent = "";
+  Arcade.step(i, i + 1, true);
   $("opts").classList.remove("done");
   $("opts").innerHTML = Arcade.shuffle([1, 2, 3]).map(k => `<button class="opt" data-k="${k}">${Arcade.esc(q[k])}</button>`).join("");
 }
 function pick(btn){
   if (locked) return; locked = true;
   const ok = btn.dataset.k === "1"; marks[i] = ok;
+  Arcade.step(i + 1, i + 1, false);
   $("opts").classList.add("done");
   [...$("opts").children].forEach(b => { if (b.dataset.k === "1") b.classList.add("ok"); });
   if (!ok) btn.classList.add("no");

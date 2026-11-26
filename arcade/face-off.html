@@ -60,6 +60,12 @@ body{background:var(--deep);color:var(--ink);font-family:"DM Sans",system-ui,san
 }
 /* clean games: no mid-game counters; scores come at the end */
 .hud{display:none!important}
+.fox{position:absolute;left:0;right:0;bottom:16px;z-index:5;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;color:#fff}
+.fox>*{pointer-events:auto}
+.fox .ac-skip{margin:0;background:rgba(0,0,0,.4);border-radius:99px;opacity:1;text-decoration:none;padding:9px 16px}
+.fox .ac-more{margin:0}
+.fox .ac-btn{background:var(--vs);border-color:var(--vs);color:var(--deep)}
+.res .ac-partial{color:#fff}
 </style>
 <script src="old-safari.js"></script>
 </head>
@@ -75,6 +81,7 @@ body{background:var(--deep);color:var(--ink);font-family:"DM Sans",system-ui,san
   <button class="side l" data-s="0"><span class="tap">This one</span><span id="lt"></span></button>
   <button class="side r" data-s="1"><span class="tap">Or this one</span><span id="rt"></span></button>
   <div class="vs" id="vs">VS</div>
+  <div class="fox" id="fox"><span id="foxa"></span></div>
 </section>
 
 <section class="scr" id="s-end" hidden><div class="res" id="res"></div></section>
@@ -116,7 +123,10 @@ const OVERLAY = {
 const $ = id => document.getElementById(id);
 let i = 0, picks = [], locked = false;
 function show(id){ ["s-intro","s-q","s-end"].forEach(s => $(s).hidden = s !== id); scrollTo(0,0); }
-function start(){ i = 0; picks = []; show("s-q"); ask(); }
+function start(){ i = 0; picks = []; show("s-q");
+  Arcade.track({screen: "s-q", total: DUELS.length, color: "#FFE500", min: 6, skipAfter: "foxa", moreIn: "fox", onSkip: skip, onResult: end, onKeep: keep}); ask(); }
+function skip(){ if (locked) return; locked = true; i++; if (i < DUELS.length) ask(); else end(); }
+function keep(){ show("s-q"); if (!locked) ask(); }
 function ask(){
   locked = false;
   const d = DUELS[i];
@@ -124,10 +134,11 @@ function ask(){
   $("lt").textContent = d[0]; $("rt").textContent = d[2];
   $("s-q").classList.remove("won"); document.querySelectorAll(".side").forEach(s => s.classList.remove("win"));
   const v = $("vs"); v.classList.remove("bang"); void v.offsetWidth; v.classList.add("bang");
+  Arcade.step(picks.length, i + 1, true);
 }
 function pick(side, el){
   if (locked) return; locked = true;
-  const d = DUELS[i]; picks.push(side ? d[3] : d[1]);
+  const d = DUELS[i]; picks.push(side ? d[3] : d[1]); Arcade.step(picks.length, i + 1, false);
   el.classList.add("win"); $("s-q").classList.add("won");
   setTimeout(() => { i++; if (i < DUELS.length) ask(); else end(); }, Arcade.talk() ? 900 : 520);
 }
@@ -142,6 +153,7 @@ function end(){
     <p class="line">${TRAIT[top][1]}</p>
     <div class="bars">${ranked.map((k, n) => `<div class="bar${count[k] === count[top] ? " top" : ""}"><span>${TRAIT[k][0]}</span><i><b data-w="${count[k] / 4 * 100}"></b></i><span>${count[k]}</span></div>`).join("")}</div>
     <p class="twist">${OVERLAY[top]}</p>
+    ${Arcade.partial(picks.length)}
     ${Arcade.footer({chapter: 6, line: "Attraction is a measurement, not magic. It moves, and it can move back."})}`;
   show("s-end");
   setTimeout(() => document.querySelectorAll(".bar b").forEach(b => b.style.width = b.dataset.w + "%"), 100);

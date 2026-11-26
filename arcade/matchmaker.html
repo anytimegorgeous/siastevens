@@ -112,7 +112,8 @@ const YOU = [
 const $ = id => document.getElementById(id);
 let order = [], i = 0, right = 0, locked = false;
 function show(id){ ["s-intro","s-q","s-own","s-end"].forEach(s => $(s).hidden = s !== id); $(id).classList.remove("pop"); void $(id).offsetWidth; $(id).classList.add("pop"); scrollTo(0,0); }
-function start(){ order = Arcade.shuffle(PEOPLE); i = 0; right = 0; show("s-q"); ask(); }
+function start(){ order = Arcade.shuffle(PEOPLE); i = 0; right = 0; show("s-q");
+  Arcade.track({screen: "s-q", total: order.length, color: "#FF4D7E"}); ask(); }
 function ask(){
   locked = false;
   const p = order[i];
@@ -123,11 +124,13 @@ function ask(){
   $("tix").classList.remove("done");
   $("tix").innerHTML = Arcade.shuffle(p[5].map((t, k) => ({t, k}))).map(o => `<button class="tk" data-k="${o.k}">${PIN}${Arcade.esc(o.t)}</button>`).join("");
   $("ask").hidden = false; $("fb").hidden = true; $("next").hidden = true;
+  Arcade.step(i, i + 1, true);
 }
 function pick(btn){
   if (locked) return; locked = true;
   const p = order[i], ok = btn.dataset.k === "0";
   if (ok) right++;
+  Arcade.step(i + 1, i + 1, false);
   $("tix").classList.add("done");
   [...$("tix").children].forEach(b => { if (b.dataset.k === "0") b.classList.add("ok"); });
   if (!ok) btn.classList.add("bad");
